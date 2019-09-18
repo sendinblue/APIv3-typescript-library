@@ -1,5 +1,5 @@
 {
-    "name": "APIv3-typescript-library",
+    "name": "sib-api-typescript-node-v3-sdk",
     "version": "0.0.1",
     "description": "SendinBlue's API v3 TypeScript Node Library",
     "main": "api.js",
