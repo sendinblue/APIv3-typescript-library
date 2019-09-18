@@ -23,24 +23,26 @@ npm install sib-api-typescript-node-v3-sdk --save
 
 ## Getting Started
 
-Please follow the [installation](#installation) instruction and execute the following sample code JS code for getAccount API:
+Please follow the [installation](#installation) instruction and execute the following sample code JS code :
 
 ```javascript
+// For getAccount API
+
 var SibApiV3Sdk = require('sib-api-typescript-node-v3-sdk');
 
-var api = new SibApiV3Sdk.AccountApi()
+var apiInstance = new SibApiV3Sdk.AccountApi()
 
 // Configure API key authorization: api-key
 
-var apiKey = api.authentications['apiKey'];
+var apiKey = apiInstance.authentications['apiKey'];
 apiKey.apiKey = "YOUR API KEY"
 
 // Configure API key authorization: partner-key
 
-var partnerKey = api.authentications['partnerKey'];
+var partnerKey = apiInstance.authentications['partnerKey'];
 partnerKey.apiKey = "YOUR API KEY"
 
-api.getAccount().then(function(data) {
+apiInstance.getAccount().then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
 }, function(error) {
   console.error(error);
@@ -48,6 +50,38 @@ api.getAccount().then(function(data) {
 
 
 ```
+
+```javascript
+//For getLists API
+
+var SibApiV3Sdk = require('sib-api-typescript-node-v3-sdk');
+
+var apiInstance = new SibApiV3Sdk.ContactsApi()
+
+// Configure API key authorization: api-key
+
+var apiKey = apiInstance.authentications['apiKey'];
+apiKey.apiKey = "YOUR API KEY"
+
+// Configure API key authorization: partner-key
+
+var partnerKey = apiInstance.authentications['partnerKey'];
+partnerKey.apiKey = "YOUR API KEY"
+
+var opts = { 
+  'limit': 10, // Number | Number of documents per page
+  'offset': 0 // Number | Index of the first document of the page
+};
+
+apiInstance.getLists(opts).then(function(data) {
+  console.log('API called successfully. Returned data: ' + data);
+}, function(error) {
+  console.error(error);
+});
+
+
+```
+
 
 For more examples, refer the https://github.com/sendinblue/APIv3-nodejs-library#documentation-for-api-endpoints
 
