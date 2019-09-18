@@ -5583,8 +5583,8 @@ class AttributesApi {
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
-            'apiKey': new ApiKeyAuth('header', 'apiKey'),
-            'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+            'apiKey': new ApiKeyAuth('header', 'api-key'),
+            'partnerKey': new ApiKeyAuth('header', 'partner-key'),
         };
         if (password) {
             if (basePath) {
@@ -5823,8 +5823,8 @@ class ContactsApi {
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
-            'apiKey': new ApiKeyAuth('header', 'apiKey'),
-            'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+            'apiKey': new ApiKeyAuth('header', 'api-key'),
+            'partnerKey': new ApiKeyAuth('header', 'partner-key'),
         };
         if (password) {
             if (basePath) {
@@ -7119,8 +7119,8 @@ class EmailCampaignsApi {
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
-            'apiKey': new ApiKeyAuth('header', 'apiKey'),
-            'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+            'apiKey': new ApiKeyAuth('header', 'api-key'),
+            'partnerKey': new ApiKeyAuth('header', 'partner-key'),
         };
         if (password) {
             if (basePath) {
@@ -7647,8 +7647,8 @@ class FoldersApi {
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
-            'apiKey': new ApiKeyAuth('header', 'apiKey'),
-            'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+            'apiKey': new ApiKeyAuth('header', 'api-key'),
+            'partnerKey': new ApiKeyAuth('header', 'partner-key'),
         };
         if (password) {
             if (basePath) {
@@ -7982,8 +7982,8 @@ class ListsApi {
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
-            'apiKey': new ApiKeyAuth('header', 'apiKey'),
-            'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+            'apiKey': new ApiKeyAuth('header', 'api-key'),
+            'partnerKey': new ApiKeyAuth('header', 'partner-key'),
         };
         if (password) {
             if (basePath) {
@@ -8466,8 +8466,8 @@ class ProcessApi {
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
-            'apiKey': new ApiKeyAuth('header', 'apiKey'),
-            'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+            'apiKey': new ApiKeyAuth('header', 'api-key'),
+            'partnerKey': new ApiKeyAuth('header', 'partner-key'),
         };
         if (password) {
             if (basePath) {
@@ -8603,8 +8603,8 @@ class ResellerApi {
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
-            'apiKey': new ApiKeyAuth('header', 'apiKey'),
-            'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+            'apiKey': new ApiKeyAuth('header', 'api-key'),
+            'partnerKey': new ApiKeyAuth('header', 'partner-key'),
         };
         if (password) {
             if (basePath) {
@@ -9361,8 +9361,8 @@ class SMSCampaignsApi {
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
-            'apiKey': new ApiKeyAuth('header', 'apiKey'),
-            'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+            'apiKey': new ApiKeyAuth('header', 'api-key'),
+            'partnerKey': new ApiKeyAuth('header', 'partner-key'),
         };
         if (password) {
             if (basePath) {
@@ -9886,8 +9886,8 @@ class SMTPApi {
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
-            'apiKey': new ApiKeyAuth('header', 'apiKey'),
-            'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+            'apiKey': new ApiKeyAuth('header', 'api-key'),
+            'partnerKey': new ApiKeyAuth('header', 'partner-key'),
         };
         if (password) {
             if (basePath) {
@@ -10642,8 +10642,8 @@ class SendersApi {
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
-            'apiKey': new ApiKeyAuth('header', 'apiKey'),
-            'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+            'apiKey': new ApiKeyAuth('header', 'api-key'),
+            'partnerKey': new ApiKeyAuth('header', 'partner-key'),
         };
         if (password) {
             if (basePath) {
@@ -10955,8 +10955,8 @@ class TransactionalSMSApi {
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
-            'apiKey': new ApiKeyAuth('header', 'apiKey'),
-            'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+            'apiKey': new ApiKeyAuth('header', 'api-key'),
+            'partnerKey': new ApiKeyAuth('header', 'partner-key'),
         };
         if (password) {
             if (basePath) {
@@ -11218,8 +11218,8 @@ class WebhooksApi {
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
-            'apiKey': new ApiKeyAuth('header', 'apiKey'),
-            'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+            'apiKey': new ApiKeyAuth('header', 'api-key'),
+            'partnerKey': new ApiKeyAuth('header', 'partner-key'),
         };
         if (password) {
             if (basePath) {

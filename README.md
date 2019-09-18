@@ -42,6 +42,12 @@ partnerKey.apiKey = "YOUR API KEY"
 
 api.getAccount().then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
+  api.getAttributes().then(function(data) {
+    console.log('API called successfully. Returned data: ' + data);
+  }, function(error) {
+    console.error(error);
+  });
+
 }, function(error) {
   console.error(error);
 });

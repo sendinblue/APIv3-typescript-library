@@ -8490,8 +8490,8 @@ export class AttributesApi {
 
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
-        'apiKey': new ApiKeyAuth('header', 'apiKey'),
-        'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
     }
 
     constructor(basePath?: string);
@@ -8792,8 +8792,8 @@ export class ContactsApi {
 
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
-        'apiKey': new ApiKeyAuth('header', 'apiKey'),
-        'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
     }
 
     constructor(basePath?: string);
@@ -10426,8 +10426,8 @@ export class EmailCampaignsApi {
 
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
-        'apiKey': new ApiKeyAuth('header', 'apiKey'),
-        'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
     }
 
     constructor(basePath?: string);
@@ -11092,8 +11092,8 @@ export class FoldersApi {
 
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
-        'apiKey': new ApiKeyAuth('header', 'apiKey'),
-        'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
     }
 
     constructor(basePath?: string);
@@ -11511,8 +11511,8 @@ export class ListsApi {
 
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
-        'apiKey': new ApiKeyAuth('header', 'apiKey'),
-        'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
     }
 
     constructor(basePath?: string);
@@ -12120,8 +12120,8 @@ export class ProcessApi {
 
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
-        'apiKey': new ApiKeyAuth('header', 'apiKey'),
-        'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
     }
 
     constructor(basePath?: string);
@@ -12286,8 +12286,8 @@ export class ResellerApi {
 
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
-        'apiKey': new ApiKeyAuth('header', 'apiKey'),
-        'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
     }
 
     constructor(basePath?: string);
@@ -13240,8 +13240,8 @@ export class SMSCampaignsApi {
 
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
-        'apiKey': new ApiKeyAuth('header', 'apiKey'),
-        'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
     }
 
     constructor(basePath?: string);
@@ -13901,8 +13901,8 @@ export class SMTPApi {
 
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
-        'apiKey': new ApiKeyAuth('header', 'apiKey'),
-        'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
     }
 
     constructor(basePath?: string);
@@ -14865,8 +14865,8 @@ export class SendersApi {
 
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
-        'apiKey': new ApiKeyAuth('header', 'apiKey'),
-        'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
     }
 
     constructor(basePath?: string);
@@ -15247,8 +15247,8 @@ export class TransactionalSMSApi {
 
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
-        'apiKey': new ApiKeyAuth('header', 'apiKey'),
-        'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
     }
 
     constructor(basePath?: string);
@@ -15583,8 +15583,8 @@ export class WebhooksApi {
 
     protected authentications = {
         'default': <Authentication>new VoidAuth(),
-        'apiKey': new ApiKeyAuth('header', 'apiKey'),
-        'partnerKey': new ApiKeyAuth('header', 'partnerKey'),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
     }
 
     constructor(basePath?: string);
