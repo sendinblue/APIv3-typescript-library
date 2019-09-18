@@ -13,7 +13,11 @@
         "type": "git",
         "url": "git+https://github.com/sendinblue/APIv3-typescript-library.git"
     },
-    "author": "Deepanshu Singh",
+    "author": {
+      "name": "SendinBlue",
+      "email": "developers@sendinblue.com",
+      "url": "https://www.sendinblue.com/"
+    },
     "dependencies": {
         "@types/bluebird": "*",
         "@types/request": "*",
