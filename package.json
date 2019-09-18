@@ -1,0 +1,38 @@
+{
+    "name": "sib-api-typescript-node-v3-sdk",
+    "version": "0.0.1",
+    "description": "SendinBlue's API v3 TypeScript Node Library",
+    "main": "api.js",
+    "types": "api.d.ts",
+    "scripts": {
+        "clean": "rm -Rf node_modules/ *.js",
+        "build": "tsc",
+        "test": "npm run build && node client.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sendinblue/APIv3-typescript-library.git"
+    },
+    "author": {
+        "name": "SendinBlue",
+        "email": "developers@sendinblue.com",
+        "url": "https://www.sendinblue.com/"
+    },
+    "dependencies": {
+        "@types/bluebird": "*",
+        "@types/request": "*",
+        "bluebird": "^3.5.0",
+        "request": "^2.81.0",
+        "rewire": "^3.0.2"
+    },
+    "bugs": {
+        "url": "https://github.com/sendinblue/APIv3-typescript-library/issues"
+    },
+    "homepage": "https://github.com/sendinblue/APIv3-typescript-library#readme",
+    "devDependencies": {
+        "typescript": "^2.4.2"
+    },
+    "publishConfig": {
+        "registry": "https://skimdb.npmjs.com/registry"
+    }
+}
