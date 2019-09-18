@@ -23,7 +23,7 @@ npm install sib-api-typescript-node-v3-sdk --save
 
 ## Getting Started
 
-Please follow the [installation](#installation) instruction and execute the following JS code:
+Please follow the [installation](#installation) instruction and execute the following sample code JS code for getAccount API:
 
 ```javascript
 var SibApiV3Sdk = require('sib-api-typescript-node-v3-sdk');
@@ -48,3 +48,6 @@ api.getAccount().then(function(data) {
 
 
 ```
+
+For more examples, refer the https://github.com/sendinblue/APIv3-nodejs-library#documentation-for-api-endpoints
+
