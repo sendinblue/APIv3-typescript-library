@@ -30,12 +30,12 @@ var SibApiV3Sdk = require('sib-api-typescript-node-v3-sdk');
 
 var api = new SibApiV3Sdk.AccountApi()
 
-// Configure API key authorization: api-key
+// Configure API key authorization: apiKey
 
 var apiKey = api.authentications['apiKey'];
 apiKey.apiKey = "YOUR API KEY"
 
-// Configure API key authorization: partner-key
+// Configure API key authorization: partnerKey
 
 var partnerKey = api.authentications['partnerKey'];
 partnerKey.apiKey = "YOUR API KEY"
