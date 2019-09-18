@@ -18,7 +18,7 @@ The following recommended installation requires [npm](https://npmjs.org/). If yo
 Then install it via:
 
 ```shell
-npm install sib-api-typescript-node-v3-sdk --save
+npm install sib-api-v3-typescript --save
 ```
 
 ## Getting Started
@@ -28,7 +28,7 @@ Once you have [installed](#installation) the node module in your project, you ca
 ```javascript
 // For getAccount API
 
-var SibApiV3Sdk = require('sib-api-typescript-node-v3-sdk');
+var SibApiV3Sdk = require('sib-api-v3-typescript');
 
 var apiInstance = new SibApiV3Sdk.AccountApi()
 
@@ -54,7 +54,7 @@ apiInstance.getAccount().then(function(data) {
 ```javascript
 //For getLists API
 
-var SibApiV3Sdk = require('sib-api-typescript-node-v3-sdk');
+var SibApiV3Sdk = require('sib-api-v3-typescript');
 
 var apiInstance = new SibApiV3Sdk.ContactsApi()
 
