@@ -23,7 +23,7 @@ npm install sib-api-typescript-node-v3-sdk --save
 
 ## Getting Started
 
-Please follow the [installation](#installation) instruction and execute the following sample code JS code :
+Once you have [installed](#installation) the node module in your project, you can execute the following sample code JS code :
 
 ```javascript
 // For getAccount API
