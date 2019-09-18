@@ -1,5 +1,5 @@
 {
-    "name": "sib-api-typescript-node-v3-sdk",
+    "name": "sib-api-v3-typescript",
     "version": "1.0.0",
     "description": "SendinBlue's API v3 TypeScript Node Library",
     "main": "api.js",
@@ -31,8 +31,5 @@
     "homepage": "https://github.com/sendinblue/APIv3-typescript-library#readme",
     "devDependencies": {
         "typescript": "^2.4.2"
-    },
-    "publishConfig": {
-        "registry": "https://skimdb.npmjs.com/registry"
     }
 }
