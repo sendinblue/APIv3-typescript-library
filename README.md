@@ -1,5 +1,5 @@
 # APIv3-typescript-library
-SendinBlue's API v3 TypeScript Library
+SendinBlue's API v3 TypeScript-Node Library
 
 SendinBlue's API exposes the entire SendinBlue features via a standardized programmatic interface. Please refer to the full [documentation](https://developers.sendinblue.com) to learn more.
 
