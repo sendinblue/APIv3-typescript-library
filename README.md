@@ -75,7 +75,7 @@ var opts = {
 
 apiInstance.getLists(opts).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
-  api.getAttributes().then(function(data) {
+  apiInstance.getAttributes().then(function(data) {
     console.log('API called successfully. Returned data: ' + data);
   }, function(error) {
     console.error(error);
