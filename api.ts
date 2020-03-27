@@ -1,6 +1,6 @@
 /**
  * SendinBlue API
- * SendinBlue provide a RESTFul API that can be used with any languages. With this API, you will be able to :   - Manage your campaigns and get the statistics   - Manage your contacts   - Send transactional Emails and SMS   - and much more...  You can download our wrappers at https://github.com/orgs/sendinblue  **Possible responses**   | Code | Message |   | :-------------: | ------------- |   | 200  | OK. Successful Request  |   | 201  | OK. Successful Creation |   | 202  | OK. Request accepted |   | 204  | OK. Successful Update/Deletion  |   | 400  | Error. Bad Request  |   | 401  | Error. Authentication Needed  |   | 402  | Error. Not enough credit, plan upgrade needed  |   | 403  | Error. Permission denied  |   | 404  | Error. Object does not exist |   | 405  | Error. Method not allowed  |
+ * SendinBlue provide a RESTFul API that can be used with any languages. With this API, you will be able to :   - Manage your campaigns and get the statistics   - Manage your contacts   - Send transactional Emails and SMS   - and much more...  You can download our wrappers at https://github.com/orgs/sendinblue  **Possible responses**   | Code | Message |   | :-------------: | ------------- |   | 200  | OK. Successful Request  |   | 201  | OK. Successful Creation |   | 202  | OK. Request accepted |   | 204  | OK. Successful Update/Deletion  |   | 400  | Error. Bad Request  |   | 401  | Error. Authentication Needed  |   | 402  | Error. Not enough credit, plan upgrade needed  |   | 403  | Error. Permission denied  |   | 404  | Error. Object does not exist |   | 405  | Error. Method not allowed  |   | 406  | Error. Not Acceptable  |
  *
  * OpenAPI spec version: 3.0.0
  * Contact: contact@sendinblue.com
@@ -12,7 +12,6 @@
 
 import localVarRequest = require('request');
 import http = require('http');
-import Promise = require('bluebird');
 
 let defaultBasePath = 'https://api.sendinblue.com/v3';
 
@@ -136,6 +135,84 @@ class ObjectSerializer {
     }
 }
 
+export class AbTestCampaignResult {
+    /**
+    * Winning Campaign Info. pending = Campaign has been picked for sending and winning version is yet to be decided, tie = A tie happened between both the versions, notAvailable = Campaign has not yet been picked for sending.
+    */
+    'winningVersion': AbTestCampaignResult.WinningVersionEnum;
+    /**
+    * Criteria choosen for winning version (Open/Click)
+    */
+    'winningCriteria': AbTestCampaignResult.WinningCriteriaEnum;
+    /**
+    * Subject Line of current winning version
+    */
+    'winningSubjectLine': string;
+    /**
+    * Open rate for current winning version
+    */
+    'openRate': string;
+    /**
+    * Click rate for current winning version
+    */
+    'clickRate': string;
+    /**
+    * Open/Click rate for the winner version
+    */
+    'winningVersionRate': string;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "winningVersion",
+            "baseName": "winningVersion",
+            "type": "AbTestCampaignResult.WinningVersionEnum"
+        },
+        {
+            "name": "winningCriteria",
+            "baseName": "winningCriteria",
+            "type": "AbTestCampaignResult.WinningCriteriaEnum"
+        },
+        {
+            "name": "winningSubjectLine",
+            "baseName": "winningSubjectLine",
+            "type": "string"
+        },
+        {
+            "name": "openRate",
+            "baseName": "openRate",
+            "type": "string"
+        },
+        {
+            "name": "clickRate",
+            "baseName": "clickRate",
+            "type": "string"
+        },
+        {
+            "name": "winningVersionRate",
+            "baseName": "winningVersionRate",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return AbTestCampaignResult.attributeTypeMap;
+    }
+}
+
+export namespace AbTestCampaignResult {
+    export enum WinningVersionEnum {
+        NotAvailable = <any> 'notAvailable',
+        Pending = <any> 'pending',
+        Tie = <any> 'tie',
+        A = <any> 'A',
+        B = <any> 'B'
+    }
+    export enum WinningCriteriaEnum {
+        Open = <any> 'Open',
+        Click = <any> 'Click'
+    }
+}
 export class AddChildDomain {
     /**
     * Sender domain to add for a specific child account
@@ -340,7 +417,7 @@ export class CreateChild {
 
 export class CreateContact {
     /**
-    * Email address of the user. Mandatory if \"sms\" field is not passed in \"attributes\" parameter'
+    * Email address of the user. Mandatory if \"SMS\" field is not passed in \"attributes\" parameter. Mobile Number in \"SMS\" field should be passed with proper country code. For example {'SMS':'+91xxxxxxxxxx'} or {'SMS':'0091xxxxxxxxxx'}
     */
     'email': string;
     /**
@@ -507,6 +584,18 @@ export class CreateEmailCampaign {
     * Choose the duration of the test in hours. Maximum is 7 days, pass 24*7 = 168 hours. The winning version will be sent at the end of the test. Mandatory if 'splitRule' >= 1 and < 50. If splitRule = 50, 'winnerDelay' is ignored if passed
     */
     'winnerDelay': number;
+    /**
+    * Available for dedicated ip clients. Set this to true if you wish to warm up your ip.
+    */
+    'ipWarmupEnable': boolean;
+    /**
+    * Mandatory if ipWarmupEnable is set to true. Set an initial quota greater than 1 for warming up your ip. We recommend you set a value of 3000.
+    */
+    'initialQuota': number;
+    /**
+    * Mandatory if ipWarmupEnable is set to true. Set a percentage increase rate for warming up your ip. We recommend you set the increase rate to 30% per day. If you want to send the same number of emails every day, set the daily increase value to 0%.
+    */
+    'increaseRate': number;
 
     static discriminator = undefined;
 
@@ -635,6 +724,21 @@ export class CreateEmailCampaign {
             "name": "winnerDelay",
             "baseName": "winnerDelay",
             "type": "number"
+        },
+        {
+            "name": "ipWarmupEnable",
+            "baseName": "ipWarmupEnable",
+            "type": "boolean"
+        },
+        {
+            "name": "initialQuota",
+            "baseName": "initialQuota",
+            "type": "number"
+        },
+        {
+            "name": "increaseRate",
+            "baseName": "increaseRate",
+            "type": "number"
         }    ];
 
     static getAttributeTypeMap() {
@@ -681,7 +785,7 @@ export class CreateEmailCampaignRecipients {
 }
 
 /**
-* Sender details including email and name (optional). For example {'name':'xyz' , 'email':'example@abc.com'}
+* Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example `{\"name\":\"xyz\", \"email\":\"example@abc.com\"}` , `{\"name\":\"xyz\", \"id\":123}`
 */
 export class CreateEmailCampaignSender {
     /**
@@ -692,6 +796,10 @@ export class CreateEmailCampaignSender {
     * Sender email
     */
     'email': string;
+    /**
+    * Select the sender for the campaign on the basis of sender id. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email).
+    */
+    'id': number;
 
     static discriminator = undefined;
 
@@ -705,6 +813,11 @@ export class CreateEmailCampaignSender {
             "name": "email",
             "baseName": "email",
             "type": "string"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
         }    ];
 
     static getAttributeTypeMap() {
@@ -1096,7 +1209,7 @@ export class CreateSmtpTemplate {
 }
 
 /**
-* Sender details including email and name (optional). For example {'name':'xyz' , 'email':'example@abc.com'}
+* Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example `{\"name\":\"xyz\", \"email\":\"example@abc.com\"}` , `{\"name\":\"xyz\", \"id\":123}`
 */
 export class CreateSmtpTemplateSender {
     /**
@@ -1107,6 +1220,10 @@ export class CreateSmtpTemplateSender {
     * Email of the sender
     */
     'email': string;
+    /**
+    * Select the sender for the template on the basis of sender id. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email).
+    */
+    'id': number;
 
     static discriminator = undefined;
 
@@ -1120,6 +1237,11 @@ export class CreateSmtpTemplateSender {
             "name": "email",
             "baseName": "email",
             "type": "string"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
         }    ];
 
     static getAttributeTypeMap() {
@@ -2093,6 +2215,26 @@ export class GetCampaignStats {
     }
 }
 
+export class GetChildAccountCreationStatus {
+    /**
+    * Status of child account creation whether it is successfully created (exists) or not.
+    */
+    'childAccountCreated': boolean;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "childAccountCreated",
+            "baseName": "childAccountCreated",
+            "type": "boolean"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetChildAccountCreationStatus.attributeTypeMap;
+    }
+}
+
 export class GetChildDomain {
     /**
     * Sender domain
@@ -2296,6 +2438,10 @@ export class GetChildrenList {
     * Your children's account information
     */
     'children': Array<any>;
+    /**
+    * Number of child accounts
+    */
+    'count': number;
 
     static discriminator = undefined;
 
@@ -2304,6 +2450,11 @@ export class GetChildrenList {
             "name": "children",
             "baseName": "children",
             "type": "Array<any>"
+        },
+        {
+            "name": "count",
+            "baseName": "count",
+            "type": "number"
         }    ];
 
     static getAttributeTypeMap() {
@@ -2672,6 +2823,53 @@ export class GetContacts {
     }
 }
 
+export class GetDeviceBrowserStats {
+    /**
+    * Number of total clicks for the campaign using the particular browser
+    */
+    'clickers': number;
+    /**
+    * Number of unique clicks for the campaign using the particular browser
+    */
+    'uniqueClicks': number;
+    /**
+    * Number of openings for the campaign using the particular browser
+    */
+    'viewed': number;
+    /**
+    * Number of unique openings for the campaign using the particular browser
+    */
+    'uniqueViews': number;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "clickers",
+            "baseName": "clickers",
+            "type": "number"
+        },
+        {
+            "name": "uniqueClicks",
+            "baseName": "uniqueClicks",
+            "type": "number"
+        },
+        {
+            "name": "viewed",
+            "baseName": "viewed",
+            "type": "number"
+        },
+        {
+            "name": "uniqueViews",
+            "baseName": "uniqueViews",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetDeviceBrowserStats.attributeTypeMap;
+    }
+}
+
 export class GetEmailCampaigns {
     'campaigns': Array<any>;
     /**
@@ -2841,6 +3039,10 @@ export class GetExtendedCampaignOverviewSender {
     * Sender email of the campaign
     */
     'email': string;
+    /**
+    * Sender id of the campaign
+    */
+    'id': string;
 
     static discriminator = undefined;
 
@@ -2853,6 +3055,11 @@ export class GetExtendedCampaignOverviewSender {
         {
             "name": "email",
             "baseName": "email",
+            "type": "string"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
             "type": "string"
         }    ];
 
@@ -2883,6 +3090,14 @@ export class GetExtendedCampaignStats {
     */
     'linksStats': any;
     'statsByDomain': GetStatsByDomain;
+    /**
+    * Statistics about the campaign on the basis of various devices
+    */
+    'statsByDevice': GetStatsByDevice;
+    /**
+    * Statistics about the campaign on the basis of various browsers
+    */
+    'statsByBrowser': GetStatsByBrowser;
 
     static discriminator = undefined;
 
@@ -2916,6 +3131,16 @@ export class GetExtendedCampaignStats {
             "name": "statsByDomain",
             "baseName": "statsByDomain",
             "type": "GetStatsByDomain"
+        },
+        {
+            "name": "statsByDevice",
+            "baseName": "statsByDevice",
+            "type": "GetStatsByDevice"
+        },
+        {
+            "name": "statsByBrowser",
+            "baseName": "statsByBrowser",
+            "type": "GetStatsByBrowser"
         }    ];
 
     static getAttributeTypeMap() {
@@ -3993,6 +4218,26 @@ export class GetSendersListSenders {
     }
 }
 
+export class GetSharedTemplateUrl {
+    /**
+    * A unique URL for the email campaign or transactional template. This URL can be shared with other Sendinblue users.
+    */
+    'sharedUrl': string;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "sharedUrl",
+            "baseName": "sharedUrl",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetSharedTemplateUrl.attributeTypeMap;
+    }
+}
+
 export class GetSmsCampaignOverview {
     /**
     * ID of the SMS Campaign
@@ -4412,6 +4657,10 @@ export class GetSmtpTemplateOverviewSender {
     * From email for the template
     */
     'email': string;
+    /**
+    * Sender id of the template
+    */
+    'id': string;
 
     static discriminator = undefined;
 
@@ -4424,6 +4673,11 @@ export class GetSmtpTemplateOverviewSender {
         {
             "name": "email",
             "baseName": "email",
+            "type": "string"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
             "type": "string"
         }    ];
 
@@ -4475,6 +4729,65 @@ export class GetSsoToken {
 
     static getAttributeTypeMap() {
         return GetSsoToken.attributeTypeMap;
+    }
+}
+
+export class GetStatsByBrowser extends null<String, GetDeviceBrowserStats> {
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+    ];
+
+    static getAttributeTypeMap() {
+        return super.getAttributeTypeMap().concat(GetStatsByBrowser.attributeTypeMap);
+    }
+}
+
+export class GetStatsByDevice {
+    /**
+    * Statistics of the campaign on the basis of desktop devices
+    */
+    'desktop': { [key: string]: GetDeviceBrowserStats; };
+    /**
+    * Statistics of the campaign on the basis of mobile devices
+    */
+    'mobile': { [key: string]: GetDeviceBrowserStats; };
+    /**
+    * Statistics of the campaign on the basis of tablet devices
+    */
+    'tablet': { [key: string]: GetDeviceBrowserStats; };
+    /**
+    * Statistics of the campaign on the basis of unknown devices
+    */
+    'unknown': { [key: string]: GetDeviceBrowserStats; };
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "desktop",
+            "baseName": "desktop",
+            "type": "{ [key: string]: GetDeviceBrowserStats; }"
+        },
+        {
+            "name": "mobile",
+            "baseName": "mobile",
+            "type": "{ [key: string]: GetDeviceBrowserStats; }"
+        },
+        {
+            "name": "tablet",
+            "baseName": "tablet",
+            "type": "{ [key: string]: GetDeviceBrowserStats; }"
+        },
+        {
+            "name": "unknown",
+            "baseName": "unknown",
+            "type": "{ [key: string]: GetDeviceBrowserStats; }"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetStatsByDevice.attributeTypeMap;
     }
 }
 
@@ -4591,6 +4904,118 @@ export class GetTransacAggregatedSmsReport {
     }
 }
 
+export class GetTransacBlockedContacts {
+    /**
+    * Count of blocked or unsubscribed contact
+    */
+    'count': number;
+    'contacts': Array<GetTransacBlockedContactsContacts>;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "count",
+            "baseName": "count",
+            "type": "number"
+        },
+        {
+            "name": "contacts",
+            "baseName": "contacts",
+            "type": "Array<GetTransacBlockedContactsContacts>"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetTransacBlockedContacts.attributeTypeMap;
+    }
+}
+
+export class GetTransacBlockedContactsContacts {
+    /**
+    * Email address of the blocked or unsubscribed contact
+    */
+    'email': string;
+    /**
+    * Sender email address of the blocked or unsubscribed contact
+    */
+    'senderEmail': string;
+    'reason': GetTransacBlockedContactsReason;
+    /**
+    * Date when the contact was blocked or unsubscribed on
+    */
+    'blockedAt': string;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string"
+        },
+        {
+            "name": "senderEmail",
+            "baseName": "senderEmail",
+            "type": "string"
+        },
+        {
+            "name": "reason",
+            "baseName": "reason",
+            "type": "GetTransacBlockedContactsReason"
+        },
+        {
+            "name": "blockedAt",
+            "baseName": "blockedAt",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetTransacBlockedContactsContacts.attributeTypeMap;
+    }
+}
+
+/**
+* Reason for blocking / unsubscribing
+*/
+export class GetTransacBlockedContactsReason {
+    /**
+    * Reason code for blocking / unsubscribing (This code is safe for comparison)
+    */
+    'code': GetTransacBlockedContactsReason.CodeEnum;
+    /**
+    * Reason for blocking / unsubscribing (This string is not safe for comparison)
+    */
+    'message': string;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "code",
+            "baseName": "code",
+            "type": "GetTransacBlockedContactsReason.CodeEnum"
+        },
+        {
+            "name": "message",
+            "baseName": "message",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetTransacBlockedContactsReason.attributeTypeMap;
+    }
+}
+
+export namespace GetTransacBlockedContactsReason {
+    export enum CodeEnum {
+        UnsubscribedViaMA = <any> 'unsubscribedViaMA',
+        UnsubscribedViaEmail = <any> 'unsubscribedViaEmail',
+        AdminBlocked = <any> 'adminBlocked',
+        UnsubscribedViaApi = <any> 'unsubscribedViaApi',
+        HardBounce = <any> 'hardBounce',
+        ContactFlaggedAsSpam = <any> 'contactFlaggedAsSpam'
+    }
+}
 export class GetTransacEmailContent {
     /**
     * Email address to which transactional email has been sent
@@ -5293,9 +5718,10 @@ export class RequestContactExport {
     */
     'exportAttributes': Array<string>;
     /**
-    * Set the filter for the contacts to be exported. For example, {'blacklisted':true} will export all the blacklisted contacts.
+    * This attribute has been deprecated and will be removed by January 1st, 2021. Only one of the two filter options (contactFilter or customContactFilter) can be passed in the request. Set the filter for the contacts to be exported. For example, {'blacklisted':true} will export all the blacklisted contacts.
     */
     'contactFilter': any;
+    'customContactFilter': RequestContactExportCustomContactFilter;
     /**
     * Webhook that will be called once the export process is finished
     */
@@ -5315,6 +5741,11 @@ export class RequestContactExport {
             "type": "any"
         },
         {
+            "name": "customContactFilter",
+            "baseName": "customContactFilter",
+            "type": "RequestContactExportCustomContactFilter"
+        },
+        {
             "name": "notifyUrl",
             "baseName": "notifyUrl",
             "type": "string"
@@ -5325,6 +5756,96 @@ export class RequestContactExport {
     }
 }
 
+/**
+* Only one of the two filter options (contactFilter or customContactFilter) can be passed in the request. Set the filter for the contacts to be exported.
+*/
+export class RequestContactExportCustomContactFilter {
+    /**
+    * Mandatory if neither actionForEmailCampaigns nor actionForSmsCampaigns is passed. This will export the contacts on the basis of provided action applied on contacts as per the list id. * allContacts - Fetch the list of all contacts for a particular list. * subscribed & unsubscribed - Fetch the list of subscribed / unsubscribed (blacklisted via any means) contacts for a particular list. * unsubscribedPerList - Fetch the list of contacts that are unsubscribed from a particular list only.
+    */
+    'actionForContacts': RequestContactExportCustomContactFilter.ActionForContactsEnum;
+    /**
+    * Mandatory if neither actionForContacts nor actionForSmsCampaigns is passed. This will export the contacts on the basis of provided action applied on email campaigns. * openers & nonOpeners - emailCampaignId is mandatory. Fetch the list of readers / non-readers for a particular email campaign. * clickers & nonClickers - emailCampaignId is mandatory. Fetch the list of clickers / non-clickers for a particular email campaign. * unsubscribed - emailCampaignId is mandatory. Fetch the list of all unsubscribed (blacklisted via any means) contacts for a particular email campaign. * hardBounces & softBounces - emailCampaignId is optional. Fetch the list of hard bounces / soft bounces for a particular / all email campaign(s).
+    */
+    'actionForEmailCampaigns': RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum;
+    /**
+    * Mandatory if neither actionForContacts nor actionForEmailCampaigns is passed. This will export the contacts on the basis of provided action applied on sms campaigns. * unsubscribed - Fetch the list of all unsubscribed (blacklisted via any means) contacts for all / particular sms campaigns. * hardBounces & softBounces - Fetch the list of hard bounces / soft bounces for all / particular sms campaigns.
+    */
+    'actionForSmsCampaigns': RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum;
+    /**
+    * Mandatory if actionForContacts is passed, ignored otherwise. Id of the list for which the corresponding action shall be applied in the filter.
+    */
+    'listId': number;
+    /**
+    * Considered only if actionForEmailCampaigns is passed, ignored otherwise. Mandatory if action is one of the following - openers, nonOpeners, clickers, nonClickers, unsubscribed. The id of the email campaign for which the corresponding action shall be applied in the filter.
+    */
+    'emailCampaignId': number;
+    /**
+    * Considered only if actionForSmsCampaigns is passed, ignored otherwise. The id of sms campaign for which the corresponding action shall be applied in the filter.
+    */
+    'smsCampaignId': number;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "actionForContacts",
+            "baseName": "actionForContacts",
+            "type": "RequestContactExportCustomContactFilter.ActionForContactsEnum"
+        },
+        {
+            "name": "actionForEmailCampaigns",
+            "baseName": "actionForEmailCampaigns",
+            "type": "RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum"
+        },
+        {
+            "name": "actionForSmsCampaigns",
+            "baseName": "actionForSmsCampaigns",
+            "type": "RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum"
+        },
+        {
+            "name": "listId",
+            "baseName": "listId",
+            "type": "number"
+        },
+        {
+            "name": "emailCampaignId",
+            "baseName": "emailCampaignId",
+            "type": "number"
+        },
+        {
+            "name": "smsCampaignId",
+            "baseName": "smsCampaignId",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return RequestContactExportCustomContactFilter.attributeTypeMap;
+    }
+}
+
+export namespace RequestContactExportCustomContactFilter {
+    export enum ActionForContactsEnum {
+        AllContacts = <any> 'allContacts',
+        Subscribed = <any> 'subscribed',
+        Unsubscribed = <any> 'unsubscribed',
+        UnsubscribedPerList = <any> 'unsubscribedPerList'
+    }
+    export enum ActionForEmailCampaignsEnum {
+        Openers = <any> 'openers',
+        NonOpeners = <any> 'nonOpeners',
+        Clickers = <any> 'clickers',
+        NonClickers = <any> 'nonClickers',
+        Unsubscribed = <any> 'unsubscribed',
+        HardBounces = <any> 'hardBounces',
+        SoftBounces = <any> 'softBounces'
+    }
+    export enum ActionForSmsCampaignsEnum {
+        HardBounces = <any> 'hardBounces',
+        SoftBounces = <any> 'softBounces',
+        Unsubscribed = <any> 'unsubscribed'
+    }
+}
 export class RequestContactImport {
     /**
     * Mandatory if fileBody is not defined. URL of the file to be imported (no local file). Possible file formats: .txt, .csv
@@ -5794,7 +6315,7 @@ export class SendSmtpEmail {
     'subject': string;
     'replyTo': SendSmtpEmailReplyTo;
     /**
-    * Pass the absolute URL (no local file) or the base64 content of the attachment along with the attachment name (Mandatory if attachment content is passed). For example, `[{\"url\":\"https://attachment.domain.com/myAttachmentFromUrl.jpg\", \"name\":\"My attachment 1\"}, {\"content\":\"base64 exmaple content\", \"name\":\"My attachment 2\"}]`. Allowed extensions for attachment file: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub, eps, odt, mp3, m4a, m4v, wma, ogg, flac, wav, aif, aifc, aiff, mp4, mov, avi, mkv, mpeg, mpg and wmv ( If 'templateId' is passed and is in New Template Language format then only attachment url is accepted. If template is in Old template Language format, then 'attachment' is ignored )
+    * Pass the absolute URL (no local file) or the base64 content of the attachment along with the attachment name (Mandatory if attachment content is passed). For example, `[{\"url\":\"https://attachment.domain.com/myAttachmentFromUrl.jpg\", \"name\":\"My attachment 1\"}, {\"content\":\"base64 exmaple content\", \"name\":\"My attachment 2\"}]`. Allowed extensions for attachment file: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub, eps, odt, mp3, m4a, m4v, wma, ogg, flac, wav, aif, aifc, aiff, mp4, mov, avi, mkv, mpeg, mpg and wmv ( If 'templateId' is passed and is in New Template Language format then both attachment url and content are accepted. If template is in Old template Language format, then 'attachment' is ignored )
     */
     'attachment': Array<SendSmtpEmailAttachment>;
     /**
@@ -5806,7 +6327,7 @@ export class SendSmtpEmail {
     */
     'templateId': number;
     /**
-    * Pass the set of attributes to customize the template. For example, {'FNAME':'Joe', 'LNAME':'Doe'}. It's considered only if template is in New Template Language format.
+    * Pass the set of attributes to customize the template. For example, {'FNAME':'Joe', 'LNAME':'Doe'}. It's considered only if template is in New Template Language format. Alternatively, you can pass the set of attributes to customize the template for each recipient. For this the email will be the key and its value will be a JSON containing attributes specific to each recipient. For example, `{'abc@example.com':{'name':'ABC', 'age':21}, 'xyz@example.com':{'name':'XYZ', 'age':25}}`
     */
     'params': any;
     /**
@@ -5932,7 +6453,7 @@ export class SendSmtpEmailBcc {
     */
     'email': string;
     /**
-    * Name of the recipient in bcc
+    * Name of the recipient in bcc. Maximum allowed characters are 70.
     */
     'name': string;
 
@@ -5961,7 +6482,7 @@ export class SendSmtpEmailCc {
     */
     'email': string;
     /**
-    * Name of the recipient in cc
+    * Name of the recipient in cc. Maximum allowed characters are 70.
     */
     'name': string;
 
@@ -5993,7 +6514,7 @@ export class SendSmtpEmailReplyTo {
     */
     'email': string;
     /**
-    * Name in reply to
+    * Name in reply to. Maximum allowed characters are 70.
     */
     'name': string;
 
@@ -6021,7 +6542,7 @@ export class SendSmtpEmailReplyTo {
 */
 export class SendSmtpEmailSender {
     /**
-    * Name of the sender from which the emails will be sent
+    * Name of the sender from which the emails will be sent. Maximum allowed characters are 70.
     */
     'name': string;
     /**
@@ -6054,7 +6575,7 @@ export class SendSmtpEmailTo {
     */
     'email': string;
     /**
-    * Name of the recipient
+    * Name of the recipient. Maximum allowed characters are 70.
     */
     'name': string;
 
@@ -6417,7 +6938,7 @@ export class UpdateChildDomain {
 
 export class UpdateContact {
     /**
-    * Pass the set of attributes to be updated. These attributes must be present in your account. To update existing email address of a contact with the new one please pass EMAIL in attribtes. For eg. { 'EMAIL':'newemail@domain.com', 'FNAME':'Ellie', 'LNAME':'Roger'}
+    * Pass the set of attributes to be updated. These attributes must be present in your account. To update existing email address of a contact with the new one please pass EMAIL in attribtes. For example, { 'EMAIL':'newemail@domain.com', 'FNAME':'Ellie', 'LNAME':'Roger'} `{ \"EMAIL\":\"newemail@domain.com\", \"FNAME\":\"Ellie\", \"LNAME\":\"Roger\"}`. Keep in mind transactional attributes can be updated the same way as normal attributes.  Mobile Number in \"SMS\" field should be passed with proper country code. For example {'SMS':'+91xxxxxxxxxx'} or {'SMS':'0091xxxxxxxxxx'}
     */
     'attributes': any;
     /**
@@ -6575,6 +7096,18 @@ export class UpdateEmailCampaign {
     * Choose the duration of the test in hours. Maximum is 7 days, pass 24*7 = 168 hours. The winning version will be sent at the end of the test. Considered if 'splitRule' >= 1 and < 50. If splitRule = 50, 'winnerDelay' is ignored if passed or alreday exist in record
     */
     'winnerDelay': number;
+    /**
+    * Available for dedicated ip clients. Set this to true if you wish to warm up your ip.
+    */
+    'ipWarmupEnable': boolean;
+    /**
+    * Set an initial quota greater than 1 for warming up your ip. We recommend you set a value of 3000.
+    */
+    'initialQuota': number;
+    /**
+    * Set a percentage increase rate for warming up your ip. We recommend you set the increase rate to 30% per day. If you want to send the same number of emails every day, set the daily increase value to 0%.
+    */
+    'increaseRate': number;
 
     static discriminator = undefined;
 
@@ -6703,6 +7236,21 @@ export class UpdateEmailCampaign {
             "name": "winnerDelay",
             "baseName": "winnerDelay",
             "type": "number"
+        },
+        {
+            "name": "ipWarmupEnable",
+            "baseName": "ipWarmupEnable",
+            "type": "boolean"
+        },
+        {
+            "name": "initialQuota",
+            "baseName": "initialQuota",
+            "type": "number"
+        },
+        {
+            "name": "increaseRate",
+            "baseName": "increaseRate",
+            "type": "number"
         }    ];
 
     static getAttributeTypeMap() {
@@ -6749,7 +7297,7 @@ export class UpdateEmailCampaignRecipients {
 }
 
 /**
-* Sender details including email and/or name. For example {'name':'xyz' , 'email':'example@abc.com'}
+* Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example `{\"name\":\"xyz\", \"email\":\"example@abc.com\"}` , `{\"name\":\"xyz\", \"id\":123}`
 */
 export class UpdateEmailCampaignSender {
     /**
@@ -6760,6 +7308,10 @@ export class UpdateEmailCampaignSender {
     * Sender email from which the campaign emails are sent
     */
     'email': string;
+    /**
+    * Select the sender for the campaign on the basis of sender id. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email).
+    */
+    'id': number;
 
     static discriminator = undefined;
 
@@ -6773,6 +7325,11 @@ export class UpdateEmailCampaignSender {
             "name": "email",
             "baseName": "email",
             "type": "string"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
         }    ];
 
     static getAttributeTypeMap() {
@@ -6999,7 +7556,7 @@ export class UpdateSmtpTemplate {
 }
 
 /**
-* Sender details including email and/or name. For example {'name':'xyz' , 'email':'example@abc.com'}
+* Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example `{\"name\":\"xyz\", \"email\":\"example@abc.com\"}` , `{\"name\":\"xyz\", \"id\":123}`
 */
 export class UpdateSmtpTemplateSender {
     /**
@@ -7010,6 +7567,10 @@ export class UpdateSmtpTemplateSender {
     * Email of the sender
     */
     'email': string;
+    /**
+    * Select the sender for the template on the basis of sender id. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email).
+    */
+    'id': number;
 
     static discriminator = undefined;
 
@@ -7023,6 +7584,11 @@ export class UpdateSmtpTemplateSender {
             "name": "email",
             "baseName": "email",
             "type": "string"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
         }    ];
 
     static getAttributeTypeMap() {
@@ -7087,6 +7653,35 @@ export namespace UpdateWebhook {
         ContactDeleted = <any> 'contactDeleted'
     }
 }
+export class UploadImageToGallery {
+    /**
+    * The absolute url of the image (no local file). Maximum allowed size for image is 2MB. Allowed extensions for images are - jpeg, jpg, png, bmp, gif.
+    */
+    'imageUrl': string;
+    /**
+    * Name of the image.
+    */
+    'name': string;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "imageUrl",
+            "baseName": "imageUrl",
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return UploadImageToGallery.attributeTypeMap;
+    }
+}
+
 export class GetChildInfo {
     /**
     * Login Email
@@ -8136,6 +8731,8 @@ export namespace GetEmailCampaign {
 }
 
 let enumsMap: {[index: string]: any} = {
+        "AbTestCampaignResult.WinningVersionEnum": AbTestCampaignResult.WinningVersionEnum,
+        "AbTestCampaignResult.WinningCriteriaEnum": AbTestCampaignResult.WinningCriteriaEnum,
         "CreateAttribute.TypeEnum": CreateAttribute.TypeEnum,
         "CreateEmailCampaign.WinnerCriteriaEnum": CreateEmailCampaign.WinnerCriteriaEnum,
         "CreateWebhook.EventsEnum": CreateWebhook.EventsEnum,
@@ -8152,7 +8749,11 @@ let enumsMap: {[index: string]: any} = {
         "GetProcess.StatusEnum": GetProcess.StatusEnum,
         "GetSmsCampaignOverview.StatusEnum": GetSmsCampaignOverview.StatusEnum,
         "GetSmsEventReportEvents.EventEnum": GetSmsEventReportEvents.EventEnum,
+        "GetTransacBlockedContactsReason.CodeEnum": GetTransacBlockedContactsReason.CodeEnum,
         "GetWebhook.TypeEnum": GetWebhook.TypeEnum,
+        "RequestContactExportCustomContactFilter.ActionForContactsEnum": RequestContactExportCustomContactFilter.ActionForContactsEnum,
+        "RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum": RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum,
+        "RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum": RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum,
         "RequestSmsRecipientExport.RecipientsTypeEnum": RequestSmsRecipientExport.RecipientsTypeEnum,
         "SendReport.LanguageEnum": SendReport.LanguageEnum,
         "SendReportEmail.ContentTypeEnum": SendReportEmail.ContentTypeEnum,
@@ -8168,6 +8769,7 @@ let enumsMap: {[index: string]: any} = {
 }
 
 let typeMap: {[index: string]: any} = {
+    "AbTestCampaignResult": AbTestCampaignResult,
     "AddChildDomain": AddChildDomain,
     "AddContactToList": AddContactToList,
     "AddCredits": AddCredits,
@@ -8207,6 +8809,7 @@ let typeMap: {[index: string]: any} = {
     "GetCampaignOverview": GetCampaignOverview,
     "GetCampaignRecipients": GetCampaignRecipients,
     "GetCampaignStats": GetCampaignStats,
+    "GetChildAccountCreationStatus": GetChildAccountCreationStatus,
     "GetChildDomain": GetChildDomain,
     "GetChildDomains": GetChildDomains,
     "GetChildInfoApiKeys": GetChildInfoApiKeys,
@@ -8223,6 +8826,7 @@ let typeMap: {[index: string]: any} = {
     "GetContactCampaignStatsUnsubscriptions": GetContactCampaignStatsUnsubscriptions,
     "GetContactDetails": GetContactDetails,
     "GetContacts": GetContacts,
+    "GetDeviceBrowserStats": GetDeviceBrowserStats,
     "GetEmailCampaigns": GetEmailCampaigns,
     "GetEmailEventReport": GetEmailEventReport,
     "GetEmailEventReportEvents": GetEmailEventReportEvents,
@@ -8254,6 +8858,7 @@ let typeMap: {[index: string]: any} = {
     "GetSendersList": GetSendersList,
     "GetSendersListIps": GetSendersListIps,
     "GetSendersListSenders": GetSendersListSenders,
+    "GetSharedTemplateUrl": GetSharedTemplateUrl,
     "GetSmsCampaignOverview": GetSmsCampaignOverview,
     "GetSmsCampaignStats": GetSmsCampaignStats,
     "GetSmsCampaigns": GetSmsCampaigns,
@@ -8263,8 +8868,13 @@ let typeMap: {[index: string]: any} = {
     "GetSmtpTemplateOverviewSender": GetSmtpTemplateOverviewSender,
     "GetSmtpTemplates": GetSmtpTemplates,
     "GetSsoToken": GetSsoToken,
+    "GetStatsByBrowser": GetStatsByBrowser,
+    "GetStatsByDevice": GetStatsByDevice,
     "GetStatsByDomain": GetStatsByDomain,
     "GetTransacAggregatedSmsReport": GetTransacAggregatedSmsReport,
+    "GetTransacBlockedContacts": GetTransacBlockedContacts,
+    "GetTransacBlockedContactsContacts": GetTransacBlockedContactsContacts,
+    "GetTransacBlockedContactsReason": GetTransacBlockedContactsReason,
     "GetTransacEmailContent": GetTransacEmailContent,
     "GetTransacEmailContentEvents": GetTransacEmailContentEvents,
     "GetTransacEmailsList": GetTransacEmailsList,
@@ -8284,6 +8894,7 @@ let typeMap: {[index: string]: any} = {
     "RemoveContactFromList": RemoveContactFromList,
     "RemoveCredits": RemoveCredits,
     "RequestContactExport": RequestContactExport,
+    "RequestContactExportCustomContactFilter": RequestContactExportCustomContactFilter,
     "RequestContactImport": RequestContactImport,
     "RequestContactImportNewList": RequestContactImportNewList,
     "RequestSmsRecipientExport": RequestSmsRecipientExport,
@@ -8319,6 +8930,7 @@ let typeMap: {[index: string]: any} = {
     "UpdateSmtpTemplate": UpdateSmtpTemplate,
     "UpdateSmtpTemplateSender": UpdateSmtpTemplateSender,
     "UpdateWebhook": UpdateWebhook,
+    "UploadImageToGallery": UploadImageToGallery,
     "GetChildInfo": GetChildInfo,
     "GetExtendedCampaignOverview": GetExtendedCampaignOverview,
     "GetExtendedClient": GetExtendedClient,
@@ -8431,7 +9043,7 @@ export class AccountApi {
      *
      * @summary Get your account informations, plans and credits details
      */
-    public getAccount () : Promise<{ response: http.ClientResponse; body: GetAccount;  }> {
+    public getAccount () : Promise<{ response: http.IncomingMessage; body: GetAccount;  }> {
         const localVarPath = this.basePath + '/account';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -8462,7 +9074,7 @@ export class AccountApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetAccount;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetAccount;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -8533,7 +9145,7 @@ export class AttributesApi {
      * @param attributeName Name of the attribute
      * @param createAttribute Values to create an attribute
      */
-    public createAttribute (attributeCategory: string, attributeName: string, createAttribute: CreateAttribute) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public createAttribute (attributeCategory: string, attributeName: string, createAttribute: CreateAttribute) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/attributes/{attributeCategory}/{attributeName}'
             .replace('{' + 'attributeCategory' + '}', encodeURIComponent(String(attributeCategory)))
             .replace('{' + 'attributeName' + '}', encodeURIComponent(String(attributeName)));
@@ -8582,7 +9194,7 @@ export class AttributesApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -8602,7 +9214,7 @@ export class AttributesApi {
      * @param attributeCategory Category of the attribute
      * @param attributeName Name of the existing attribute
      */
-    public deleteAttribute (attributeCategory: string, attributeName: string) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteAttribute (attributeCategory: string, attributeName: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/attributes/{attributeCategory}/{attributeName}'
             .replace('{' + 'attributeCategory' + '}', encodeURIComponent(String(attributeCategory)))
             .replace('{' + 'attributeName' + '}', encodeURIComponent(String(attributeName)));
@@ -8645,7 +9257,7 @@ export class AttributesApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -8663,7 +9275,7 @@ export class AttributesApi {
      *
      * @summary Lists all attributes
      */
-    public getAttributes () : Promise<{ response: http.ClientResponse; body: GetAttributes;  }> {
+    public getAttributes () : Promise<{ response: http.IncomingMessage; body: GetAttributes;  }> {
         const localVarPath = this.basePath + '/contacts/attributes';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -8694,7 +9306,7 @@ export class AttributesApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetAttributes;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetAttributes;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -8716,7 +9328,7 @@ export class AttributesApi {
      * @param attributeName Name of the existing attribute
      * @param updateAttribute Values to update an attribute
      */
-    public updateAttribute (attributeCategory: string, attributeName: string, updateAttribute: UpdateAttribute) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateAttribute (attributeCategory: string, attributeName: string, updateAttribute: UpdateAttribute) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/attributes/{attributeCategory}/{attributeName}'
             .replace('{' + 'attributeCategory' + '}', encodeURIComponent(String(attributeCategory)))
             .replace('{' + 'attributeName' + '}', encodeURIComponent(String(attributeName)));
@@ -8765,7 +9377,7 @@ export class AttributesApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -8834,7 +9446,7 @@ export class ContactsApi {
      * @param listId Id of the list
      * @param contactEmails Emails addresses of the contacts
      */
-    public addContactToList (listId: number, contactEmails: AddContactToList) : Promise<{ response: http.ClientResponse; body: PostContactInfo;  }> {
+    public addContactToList (listId: number, contactEmails: AddContactToList) : Promise<{ response: http.IncomingMessage; body: PostContactInfo;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts/add'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -8877,7 +9489,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: PostContactInfo;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: PostContactInfo;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -8899,7 +9511,7 @@ export class ContactsApi {
      * @param attributeName Name of the attribute
      * @param createAttribute Values to create an attribute
      */
-    public createAttribute (attributeCategory: string, attributeName: string, createAttribute: CreateAttribute) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public createAttribute (attributeCategory: string, attributeName: string, createAttribute: CreateAttribute) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/attributes/{attributeCategory}/{attributeName}'
             .replace('{' + 'attributeCategory' + '}', encodeURIComponent(String(attributeCategory)))
             .replace('{' + 'attributeName' + '}', encodeURIComponent(String(attributeName)));
@@ -8948,7 +9560,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -8967,7 +9579,7 @@ export class ContactsApi {
      * @summary Create a contact
      * @param createContact Values to create a contact
      */
-    public createContact (createContact: CreateContact) : Promise<{ response: http.ClientResponse; body: CreateUpdateContactModel;  }> {
+    public createContact (createContact: CreateContact) : Promise<{ response: http.IncomingMessage; body: CreateUpdateContactModel;  }> {
         const localVarPath = this.basePath + '/contacts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9004,7 +9616,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreateUpdateContactModel;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreateUpdateContactModel;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9024,7 +9636,7 @@ export class ContactsApi {
      * @summary Create a folder
      * @param createFolder Name of the folder
      */
-    public createFolder (createFolder: CreateUpdateFolder) : Promise<{ response: http.ClientResponse; body: CreateModel;  }> {
+    public createFolder (createFolder: CreateUpdateFolder) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/contacts/folders';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9061,7 +9673,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreateModel;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9081,7 +9693,7 @@ export class ContactsApi {
      * @summary Create a list
      * @param createList Values to create a list
      */
-    public createList (createList: CreateList) : Promise<{ response: http.ClientResponse; body: CreateModel;  }> {
+    public createList (createList: CreateList) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/contacts/lists';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9118,7 +9730,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreateModel;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9139,7 +9751,7 @@ export class ContactsApi {
      * @param attributeCategory Category of the attribute
      * @param attributeName Name of the existing attribute
      */
-    public deleteAttribute (attributeCategory: string, attributeName: string) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteAttribute (attributeCategory: string, attributeName: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/attributes/{attributeCategory}/{attributeName}'
             .replace('{' + 'attributeCategory' + '}', encodeURIComponent(String(attributeCategory)))
             .replace('{' + 'attributeName' + '}', encodeURIComponent(String(attributeName)));
@@ -9182,7 +9794,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9201,7 +9813,7 @@ export class ContactsApi {
      * @summary Deletes a contact
      * @param email Email (urlencoded) of the contact
      */
-    public deleteContact (email: string) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteContact (email: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/{email}'
             .replace('{' + 'email' + '}', encodeURIComponent(String(email)));
         let localVarQueryParameters: any = {};
@@ -9238,7 +9850,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9257,7 +9869,7 @@ export class ContactsApi {
      * @summary Delete a folder (and all its lists)
      * @param folderId Id of the folder
      */
-    public deleteFolder (folderId: number) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteFolder (folderId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         let localVarQueryParameters: any = {};
@@ -9294,7 +9906,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9313,7 +9925,7 @@ export class ContactsApi {
      * @summary Delete a list
      * @param listId Id of the list
      */
-    public deleteList (listId: number) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteList (listId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -9350,7 +9962,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9368,7 +9980,7 @@ export class ContactsApi {
      *
      * @summary Lists all attributes
      */
-    public getAttributes () : Promise<{ response: http.ClientResponse; body: GetAttributes;  }> {
+    public getAttributes () : Promise<{ response: http.IncomingMessage; body: GetAttributes;  }> {
         const localVarPath = this.basePath + '/contacts/attributes';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9399,7 +10011,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetAttributes;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetAttributes;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9419,7 +10031,7 @@ export class ContactsApi {
      * @summary Retrieves contact informations
      * @param email Email (urlencoded) of the contact OR its SMS attribute value
      */
-    public getContactInfo (email: string) : Promise<{ response: http.ClientResponse; body: GetExtendedContactDetails;  }> {
+    public getContactInfo (email: string) : Promise<{ response: http.IncomingMessage; body: GetExtendedContactDetails;  }> {
         const localVarPath = this.basePath + '/contacts/{email}'
             .replace('{' + 'email' + '}', encodeURIComponent(String(email)));
         let localVarQueryParameters: any = {};
@@ -9456,7 +10068,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetExtendedContactDetails;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetExtendedContactDetails;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9476,7 +10088,7 @@ export class ContactsApi {
      * @summary Get the campaigns statistics for a contact
      * @param email Email address (urlencoded) of the contact
      */
-    public getContactStats (email: string) : Promise<{ response: http.ClientResponse; body: GetContactCampaignStats;  }> {
+    public getContactStats (email: string) : Promise<{ response: http.IncomingMessage; body: GetContactCampaignStats;  }> {
         const localVarPath = this.basePath + '/contacts/{email}/campaignStats'
             .replace('{' + 'email' + '}', encodeURIComponent(String(email)));
         let localVarQueryParameters: any = {};
@@ -9513,7 +10125,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetContactCampaignStats;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetContactCampaignStats;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9535,7 +10147,7 @@ export class ContactsApi {
      * @param offset Index of the first document of the page
      * @param modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result.
      */
-    public getContacts (limit?: number, offset?: number, modifiedSince?: Date) : Promise<{ response: http.ClientResponse; body: GetContacts;  }> {
+    public getContacts (limit?: number, offset?: number, modifiedSince?: Date) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
         const localVarPath = this.basePath + '/contacts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9578,7 +10190,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetContacts;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetContacts;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9601,7 +10213,7 @@ export class ContactsApi {
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
      */
-    public getContactsFromList (listId: number, modifiedSince?: Date, limit?: number, offset?: number) : Promise<{ response: http.ClientResponse; body: GetContacts;  }> {
+    public getContactsFromList (listId: number, modifiedSince?: Date, limit?: number, offset?: number) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -9650,7 +10262,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetContacts;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetContacts;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9670,7 +10282,7 @@ export class ContactsApi {
      * @summary Returns folder details
      * @param folderId id of the folder
      */
-    public getFolder (folderId: number) : Promise<{ response: http.ClientResponse; body: GetFolder;  }> {
+    public getFolder (folderId: number) : Promise<{ response: http.IncomingMessage; body: GetFolder;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         let localVarQueryParameters: any = {};
@@ -9707,7 +10319,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetFolder;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetFolder;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9729,7 +10341,7 @@ export class ContactsApi {
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
      */
-    public getFolderLists (folderId: number, limit?: number, offset?: number) : Promise<{ response: http.ClientResponse; body: GetFolderLists;  }> {
+    public getFolderLists (folderId: number, limit?: number, offset?: number) : Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}/lists'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         let localVarQueryParameters: any = {};
@@ -9774,7 +10386,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetFolderLists;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9795,7 +10407,7 @@ export class ContactsApi {
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
      */
-    public getFolders (limit: number, offset: number) : Promise<{ response: http.ClientResponse; body: GetFolders;  }> {
+    public getFolders (limit: number, offset: number) : Promise<{ response: http.IncomingMessage; body: GetFolders;  }> {
         const localVarPath = this.basePath + '/contacts/folders';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9844,7 +10456,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetFolders;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetFolders;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9864,7 +10476,7 @@ export class ContactsApi {
      * @summary Get the details of a list
      * @param listId Id of the list
      */
-    public getList (listId: number) : Promise<{ response: http.ClientResponse; body: GetExtendedList;  }> {
+    public getList (listId: number) : Promise<{ response: http.IncomingMessage; body: GetExtendedList;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -9901,7 +10513,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetExtendedList;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetExtendedList;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9922,7 +10534,7 @@ export class ContactsApi {
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
      */
-    public getLists (limit?: number, offset?: number) : Promise<{ response: http.ClientResponse; body: GetLists;  }> {
+    public getLists (limit?: number, offset?: number) : Promise<{ response: http.IncomingMessage; body: GetLists;  }> {
         const localVarPath = this.basePath + '/contacts/lists';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9961,7 +10573,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetLists;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetLists;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -9981,7 +10593,7 @@ export class ContactsApi {
      * @summary Import contacts
      * @param requestContactImport Values to import contacts in Sendinblue. To know more about the expected format, please have a look at &#x60;&#x60;https://help.sendinblue.com/hc/en-us/articles/209499265-Build-contacts-lists-for-your-email-marketing-campaigns&#x60;&#x60;
      */
-    public importContacts (requestContactImport: RequestContactImport) : Promise<{ response: http.ClientResponse; body: CreatedProcessId;  }> {
+    public importContacts (requestContactImport: RequestContactImport) : Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }> {
         const localVarPath = this.basePath + '/contacts/import';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -10018,7 +10630,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreatedProcessId;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10039,7 +10651,7 @@ export class ContactsApi {
      * @param listId Id of the list
      * @param contactEmails Emails adresses of the contact
      */
-    public removeContactFromList (listId: number, contactEmails: RemoveContactFromList) : Promise<{ response: http.ClientResponse; body: PostContactInfo;  }> {
+    public removeContactFromList (listId: number, contactEmails: RemoveContactFromList) : Promise<{ response: http.IncomingMessage; body: PostContactInfo;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts/remove'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -10082,7 +10694,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: PostContactInfo;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: PostContactInfo;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10102,7 +10714,7 @@ export class ContactsApi {
      * @summary Export contacts
      * @param requestContactExport Values to request a contact export
      */
-    public requestContactExport (requestContactExport: RequestContactExport) : Promise<{ response: http.ClientResponse; body: CreatedProcessId;  }> {
+    public requestContactExport (requestContactExport: RequestContactExport) : Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }> {
         const localVarPath = this.basePath + '/contacts/export';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -10139,7 +10751,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreatedProcessId;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10161,7 +10773,7 @@ export class ContactsApi {
      * @param attributeName Name of the existing attribute
      * @param updateAttribute Values to update an attribute
      */
-    public updateAttribute (attributeCategory: string, attributeName: string, updateAttribute: UpdateAttribute) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateAttribute (attributeCategory: string, attributeName: string, updateAttribute: UpdateAttribute) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/attributes/{attributeCategory}/{attributeName}'
             .replace('{' + 'attributeCategory' + '}', encodeURIComponent(String(attributeCategory)))
             .replace('{' + 'attributeName' + '}', encodeURIComponent(String(attributeName)));
@@ -10210,7 +10822,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10230,7 +10842,7 @@ export class ContactsApi {
      * @param email Email (urlencoded) of the contact
      * @param updateContact Values to update a contact
      */
-    public updateContact (email: string, updateContact: UpdateContact) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateContact (email: string, updateContact: UpdateContact) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/{email}'
             .replace('{' + 'email' + '}', encodeURIComponent(String(email)));
         let localVarQueryParameters: any = {};
@@ -10273,7 +10885,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10293,7 +10905,7 @@ export class ContactsApi {
      * @param folderId Id of the folder
      * @param updateFolder Name of the folder
      */
-    public updateFolder (folderId: number, updateFolder: CreateUpdateFolder) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateFolder (folderId: number, updateFolder: CreateUpdateFolder) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         let localVarQueryParameters: any = {};
@@ -10336,7 +10948,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10356,7 +10968,7 @@ export class ContactsApi {
      * @param listId Id of the list
      * @param updateList Values to update a list
      */
-    public updateList (listId: number, updateList: UpdateList) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateList (listId: number, updateList: UpdateList) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -10399,7 +11011,7 @@ export class ContactsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10467,7 +11079,7 @@ export class EmailCampaignsApi {
      * @summary Create an email campaign
      * @param emailCampaigns Values to create a campaign
      */
-    public createEmailCampaign (emailCampaigns: CreateEmailCampaign) : Promise<{ response: http.ClientResponse; body: CreateModel;  }> {
+    public createEmailCampaign (emailCampaigns: CreateEmailCampaign) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/emailCampaigns';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -10504,7 +11116,7 @@ export class EmailCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreateModel;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10524,7 +11136,7 @@ export class EmailCampaignsApi {
      * @summary Delete an email campaign
      * @param campaignId id of the campaign
      */
-    public deleteEmailCampaign (campaignId: number) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteEmailCampaign (campaignId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -10561,7 +11173,7 @@ export class EmailCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10581,7 +11193,7 @@ export class EmailCampaignsApi {
      * @param campaignId Id of the campaign
      * @param recipientExport Values to send for a recipient export request
      */
-    public emailExportRecipients (campaignId: number, recipientExport?: EmailExportRecipients) : Promise<{ response: http.ClientResponse; body: CreatedProcessId;  }> {
+    public emailExportRecipients (campaignId: number, recipientExport?: EmailExportRecipients) : Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/exportRecipients'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -10619,7 +11231,7 @@ export class EmailCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreatedProcessId;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10635,11 +11247,68 @@ export class EmailCampaignsApi {
         });
     }
     /**
+     * Obtain winning version of an A/B test email campaign
+     * @summary Get A/B test email campaign result
+     * @param campaignId Id of the A/B test campaign
+     */
+    public getAbTestCampaignResult (campaignId: number) : Promise<{ response: http.IncomingMessage; body: AbTestCampaignResult;  }> {
+        const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/abTestCampaignResult'
+            .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'campaignId' is not null or undefined
+        if (campaignId === null || campaignId === undefined) {
+            throw new Error('Required parameter campaignId was null or undefined when calling getAbTestCampaignResult.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: AbTestCampaignResult;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "AbTestCampaignResult");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
      *
      * @summary Get campaign informations
      * @param campaignId Id of the campaign
      */
-    public getEmailCampaign (campaignId: number) : Promise<{ response: http.ClientResponse; body: GetEmailCampaign;  }> {
+    public getEmailCampaign (campaignId: number) : Promise<{ response: http.IncomingMessage; body: GetEmailCampaign;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -10676,7 +11345,7 @@ export class EmailCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetEmailCampaign;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetEmailCampaign;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10701,7 +11370,7 @@ export class EmailCampaignsApi {
      * @param limit Number of documents per page
      * @param offset Index of the first document in the page
      */
-    public getEmailCampaigns (type?: string, status?: string, startDate?: Date, endDate?: Date, limit?: number, offset?: number) : Promise<{ response: http.ClientResponse; body: GetEmailCampaigns;  }> {
+    public getEmailCampaigns (type?: string, status?: string, startDate?: Date, endDate?: Date, limit?: number, offset?: number) : Promise<{ response: http.IncomingMessage; body: GetEmailCampaigns;  }> {
         const localVarPath = this.basePath + '/emailCampaigns';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -10756,7 +11425,7 @@ export class EmailCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetEmailCampaigns;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetEmailCampaigns;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10772,11 +11441,68 @@ export class EmailCampaignsApi {
         });
     }
     /**
+     * Get a unique URL to share & import an email template from one Sendinblue account to another.
+     * @summary Get a shared template url
+     * @param campaignId Id of the campaign or template
+     */
+    public getSharedTemplateUrl (campaignId: number) : Promise<{ response: http.IncomingMessage; body: GetSharedTemplateUrl;  }> {
+        const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/sharedUrl'
+            .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'campaignId' is not null or undefined
+        if (campaignId === null || campaignId === undefined) {
+            throw new Error('Required parameter campaignId was null or undefined when calling getSharedTemplateUrl.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: GetSharedTemplateUrl;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "GetSharedTemplateUrl");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
      *
-     * @summary Send an email campaign id of the campaign immediately
+     * @summary Send an email campaign immediately, based on campaignId
      * @param campaignId Id of the campaign
      */
-    public sendEmailCampaignNow (campaignId: number) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public sendEmailCampaignNow (campaignId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/sendNow'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -10813,7 +11539,7 @@ export class EmailCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10833,7 +11559,7 @@ export class EmailCampaignsApi {
      * @param campaignId Id of the campaign
      * @param sendReport Values for send a report
      */
-    public sendReport (campaignId: number, sendReport: SendReport) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public sendReport (campaignId: number, sendReport: SendReport) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/sendReport'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -10876,7 +11602,7 @@ export class EmailCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10896,7 +11622,7 @@ export class EmailCampaignsApi {
      * @param campaignId Id of the campaign
      * @param emailTo
      */
-    public sendTestEmail (campaignId: number, emailTo: SendTestEmail) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public sendTestEmail (campaignId: number, emailTo: SendTestEmail) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/sendTest'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -10939,7 +11665,7 @@ export class EmailCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -10959,7 +11685,7 @@ export class EmailCampaignsApi {
      * @param campaignId Id of the campaign
      * @param status Status of the campaign
      */
-    public updateCampaignStatus (campaignId: number, status: UpdateCampaignStatus) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateCampaignStatus (campaignId: number, status: UpdateCampaignStatus) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/status'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -11002,7 +11728,7 @@ export class EmailCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11022,7 +11748,7 @@ export class EmailCampaignsApi {
      * @param campaignId Id of the campaign
      * @param emailCampaign Values to update a campaign
      */
-    public updateEmailCampaign (campaignId: number, emailCampaign: UpdateEmailCampaign) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateEmailCampaign (campaignId: number, emailCampaign: UpdateEmailCampaign) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -11065,7 +11791,63 @@ export class EmailCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     *
+     * @summary Upload an image to your account's image gallery
+     * @param uploadImage Parameters to upload an image
+     */
+    public uploadImageToGallery (uploadImage: UploadImageToGallery) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/emailCampaigns/images';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'uploadImage' is not null or undefined
+        if (uploadImage === null || uploadImage === undefined) {
+            throw new Error('Required parameter uploadImage was null or undefined when calling uploadImageToGallery.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(uploadImage, "UploadImageToGallery")
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11133,7 +11915,7 @@ export class FoldersApi {
      * @summary Create a folder
      * @param createFolder Name of the folder
      */
-    public createFolder (createFolder: CreateUpdateFolder) : Promise<{ response: http.ClientResponse; body: CreateModel;  }> {
+    public createFolder (createFolder: CreateUpdateFolder) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/contacts/folders';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11170,7 +11952,7 @@ export class FoldersApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreateModel;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11190,7 +11972,7 @@ export class FoldersApi {
      * @summary Delete a folder (and all its lists)
      * @param folderId Id of the folder
      */
-    public deleteFolder (folderId: number) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteFolder (folderId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         let localVarQueryParameters: any = {};
@@ -11227,7 +12009,7 @@ export class FoldersApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11246,7 +12028,7 @@ export class FoldersApi {
      * @summary Returns folder details
      * @param folderId id of the folder
      */
-    public getFolder (folderId: number) : Promise<{ response: http.ClientResponse; body: GetFolder;  }> {
+    public getFolder (folderId: number) : Promise<{ response: http.IncomingMessage; body: GetFolder;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         let localVarQueryParameters: any = {};
@@ -11283,7 +12065,7 @@ export class FoldersApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetFolder;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetFolder;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11305,7 +12087,7 @@ export class FoldersApi {
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
      */
-    public getFolderLists (folderId: number, limit?: number, offset?: number) : Promise<{ response: http.ClientResponse; body: GetFolderLists;  }> {
+    public getFolderLists (folderId: number, limit?: number, offset?: number) : Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}/lists'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         let localVarQueryParameters: any = {};
@@ -11350,7 +12132,7 @@ export class FoldersApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetFolderLists;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11371,7 +12153,7 @@ export class FoldersApi {
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
      */
-    public getFolders (limit: number, offset: number) : Promise<{ response: http.ClientResponse; body: GetFolders;  }> {
+    public getFolders (limit: number, offset: number) : Promise<{ response: http.IncomingMessage; body: GetFolders;  }> {
         const localVarPath = this.basePath + '/contacts/folders';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11420,7 +12202,7 @@ export class FoldersApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetFolders;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetFolders;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11441,7 +12223,7 @@ export class FoldersApi {
      * @param folderId Id of the folder
      * @param updateFolder Name of the folder
      */
-    public updateFolder (folderId: number, updateFolder: CreateUpdateFolder) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateFolder (folderId: number, updateFolder: CreateUpdateFolder) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         let localVarQueryParameters: any = {};
@@ -11484,7 +12266,7 @@ export class FoldersApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11553,7 +12335,7 @@ export class ListsApi {
      * @param listId Id of the list
      * @param contactEmails Emails addresses of the contacts
      */
-    public addContactToList (listId: number, contactEmails: AddContactToList) : Promise<{ response: http.ClientResponse; body: PostContactInfo;  }> {
+    public addContactToList (listId: number, contactEmails: AddContactToList) : Promise<{ response: http.IncomingMessage; body: PostContactInfo;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts/add'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -11596,7 +12378,7 @@ export class ListsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: PostContactInfo;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: PostContactInfo;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11616,7 +12398,7 @@ export class ListsApi {
      * @summary Create a list
      * @param createList Values to create a list
      */
-    public createList (createList: CreateList) : Promise<{ response: http.ClientResponse; body: CreateModel;  }> {
+    public createList (createList: CreateList) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/contacts/lists';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11653,7 +12435,7 @@ export class ListsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreateModel;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11673,7 +12455,7 @@ export class ListsApi {
      * @summary Delete a list
      * @param listId Id of the list
      */
-    public deleteList (listId: number) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteList (listId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -11710,7 +12492,7 @@ export class ListsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11732,7 +12514,7 @@ export class ListsApi {
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
      */
-    public getContactsFromList (listId: number, modifiedSince?: Date, limit?: number, offset?: number) : Promise<{ response: http.ClientResponse; body: GetContacts;  }> {
+    public getContactsFromList (listId: number, modifiedSince?: Date, limit?: number, offset?: number) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -11781,7 +12563,7 @@ export class ListsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetContacts;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetContacts;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11803,7 +12585,7 @@ export class ListsApi {
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
      */
-    public getFolderLists (folderId: number, limit?: number, offset?: number) : Promise<{ response: http.ClientResponse; body: GetFolderLists;  }> {
+    public getFolderLists (folderId: number, limit?: number, offset?: number) : Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}/lists'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         let localVarQueryParameters: any = {};
@@ -11848,7 +12630,7 @@ export class ListsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetFolderLists;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11868,7 +12650,7 @@ export class ListsApi {
      * @summary Get the details of a list
      * @param listId Id of the list
      */
-    public getList (listId: number) : Promise<{ response: http.ClientResponse; body: GetExtendedList;  }> {
+    public getList (listId: number) : Promise<{ response: http.IncomingMessage; body: GetExtendedList;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -11905,7 +12687,7 @@ export class ListsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetExtendedList;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetExtendedList;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11926,7 +12708,7 @@ export class ListsApi {
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
      */
-    public getLists (limit?: number, offset?: number) : Promise<{ response: http.ClientResponse; body: GetLists;  }> {
+    public getLists (limit?: number, offset?: number) : Promise<{ response: http.IncomingMessage; body: GetLists;  }> {
         const localVarPath = this.basePath + '/contacts/lists';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11965,7 +12747,7 @@ export class ListsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetLists;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetLists;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -11986,7 +12768,7 @@ export class ListsApi {
      * @param listId Id of the list
      * @param contactEmails Emails adresses of the contact
      */
-    public removeContactFromList (listId: number, contactEmails: RemoveContactFromList) : Promise<{ response: http.ClientResponse; body: PostContactInfo;  }> {
+    public removeContactFromList (listId: number, contactEmails: RemoveContactFromList) : Promise<{ response: http.IncomingMessage; body: PostContactInfo;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts/remove'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -12029,7 +12811,7 @@ export class ListsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: PostContactInfo;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: PostContactInfo;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12050,7 +12832,7 @@ export class ListsApi {
      * @param listId Id of the list
      * @param updateList Values to update a list
      */
-    public updateList (listId: number, updateList: UpdateList) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateList (listId: number, updateList: UpdateList) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -12093,7 +12875,7 @@ export class ListsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12161,7 +12943,7 @@ export class ProcessApi {
      * @summary Return the informations for a process
      * @param processId Id of the process
      */
-    public getProcess (processId: number) : Promise<{ response: http.ClientResponse; body: GetProcess;  }> {
+    public getProcess (processId: number) : Promise<{ response: http.IncomingMessage; body: GetProcess;  }> {
         const localVarPath = this.basePath + '/processes/{processId}'
             .replace('{' + 'processId' + '}', encodeURIComponent(String(processId)));
         let localVarQueryParameters: any = {};
@@ -12198,7 +12980,7 @@ export class ProcessApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetProcess;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetProcess;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12219,7 +13001,7 @@ export class ProcessApi {
      * @param limit Number limitation for the result returned
      * @param offset Beginning point in the list to retrieve from.
      */
-    public getProcesses (limit?: number, offset?: number) : Promise<{ response: http.ClientResponse; body: GetProcesses;  }> {
+    public getProcesses (limit?: number, offset?: number) : Promise<{ response: http.IncomingMessage; body: GetProcesses;  }> {
         const localVarPath = this.basePath + '/processes';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -12258,7 +13040,7 @@ export class ProcessApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetProcesses;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetProcesses;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12328,7 +13110,7 @@ export class ResellerApi {
      * @param childAuthKey auth key of reseller&#39;s child
      * @param addCredits Values to post to add credit to a specific child account
      */
-    public addCredits (childAuthKey: string, addCredits: AddCredits) : Promise<{ response: http.ClientResponse; body: RemainingCreditModel;  }> {
+    public addCredits (childAuthKey: string, addCredits: AddCredits) : Promise<{ response: http.IncomingMessage; body: RemainingCreditModel;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/credits/add'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
         let localVarQueryParameters: any = {};
@@ -12371,7 +13153,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: RemainingCreditModel;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: RemainingCreditModel;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12392,7 +13174,7 @@ export class ResellerApi {
      * @param childAuthKey auth key of reseller&#39;s child
      * @param ip IP to associate
      */
-    public associateIpToChild (childAuthKey: string, ip: ManageIp) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public associateIpToChild (childAuthKey: string, ip: ManageIp) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/ips/associate'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
         let localVarQueryParameters: any = {};
@@ -12435,7 +13217,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12453,9 +13235,9 @@ export class ResellerApi {
      *
      * @summary Creates a domain for a child account
      * @param childAuthKey auth key of reseller&#39;s child
-     * @param addChildDomain Sender domain to add for a specific child account
+     * @param addChildDomain Sender domain to add for a specific child account. This will not be displayed to the parent account.
      */
-    public createChildDomain (childAuthKey: string, addChildDomain: AddChildDomain) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public createChildDomain (childAuthKey: string, addChildDomain: AddChildDomain) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
         let localVarQueryParameters: any = {};
@@ -12498,7 +13280,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12517,7 +13299,7 @@ export class ResellerApi {
      * @summary Creates a reseller child
      * @param resellerChild reseller child to add
      */
-    public createResellerChild (resellerChild?: CreateChild) : Promise<{ response: http.ClientResponse; body: CreateReseller;  }> {
+    public createResellerChild (resellerChild?: CreateChild) : Promise<{ response: http.IncomingMessage; body: CreateReseller;  }> {
         const localVarPath = this.basePath + '/reseller/children';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -12549,7 +13331,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreateReseller;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreateReseller;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12570,7 +13352,7 @@ export class ResellerApi {
      * @param childAuthKey auth key of reseller&#39;s child
      * @param domainName Pass the existing domain that needs to be deleted
      */
-    public deleteChildDomain (childAuthKey: string, domainName: string) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteChildDomain (childAuthKey: string, domainName: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains/{domainName}'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)))
             .replace('{' + 'domainName' + '}', encodeURIComponent(String(domainName)));
@@ -12613,7 +13395,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12632,7 +13414,7 @@ export class ResellerApi {
      * @summary Deletes a single reseller child based on the childAuthKey supplied
      * @param childAuthKey auth key of reseller&#39;s child
      */
-    public deleteResellerChild (childAuthKey: string) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteResellerChild (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
         let localVarQueryParameters: any = {};
@@ -12669,7 +13451,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12689,7 +13471,7 @@ export class ResellerApi {
      * @param childAuthKey auth key of reseller&#39;s child
      * @param ip IP to dissociate
      */
-    public dissociateIpFromChild (childAuthKey: string, ip: ManageIp) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public dissociateIpFromChild (childAuthKey: string, ip: ManageIp) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/ips/dissociate'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
         let localVarQueryParameters: any = {};
@@ -12732,7 +13514,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12748,10 +13530,67 @@ export class ResellerApi {
     }
     /**
      *
+     * @summary Returns the status of reseller's child account creation, whether it is successfully created (exists) or not based on the childAuthKey supplied
+     * @param childAuthKey auth key of reseller&#39;s child
+     */
+    public getChildAccountCreationStatus (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body: GetChildAccountCreationStatus;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/accountCreationStatus'
+            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'childAuthKey' is not null or undefined
+        if (childAuthKey === null || childAuthKey === undefined) {
+            throw new Error('Required parameter childAuthKey was null or undefined when calling getChildAccountCreationStatus.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: GetChildAccountCreationStatus;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "GetChildAccountCreationStatus");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     *
      * @summary Gets all the sender domains of a specific child account
      * @param childAuthKey auth key of reseller&#39;s child
      */
-    public getChildDomains (childAuthKey: string) : Promise<{ response: http.ClientResponse; body: GetChildDomains;  }> {
+    public getChildDomains (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body: GetChildDomains;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
         let localVarQueryParameters: any = {};
@@ -12788,7 +13627,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetChildDomains;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetChildDomains;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12808,7 +13647,7 @@ export class ResellerApi {
      * @summary Gets the info about a specific child account
      * @param childAuthKey auth key of reseller&#39;s child
      */
-    public getChildInfo (childAuthKey: string) : Promise<{ response: http.ClientResponse; body: GetChildInfo;  }> {
+    public getChildInfo (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body: GetChildInfo;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
         let localVarQueryParameters: any = {};
@@ -12845,7 +13684,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetChildInfo;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetChildInfo;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12863,12 +13702,22 @@ export class ResellerApi {
     /**
      *
      * @summary Gets the list of all reseller's children accounts
+     * @param limit Number of documents for child accounts information per page
+     * @param offset Index of the first document in the page
      */
-    public getResellerChilds () : Promise<{ response: http.ClientResponse; body: GetChildrenList;  }> {
+    public getResellerChilds (limit?: number, offset?: number) : Promise<{ response: http.IncomingMessage; body: GetChildrenList;  }> {
         const localVarPath = this.basePath + '/reseller/children';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        if (limit !== undefined) {
+            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
+        }
+
+        if (offset !== undefined) {
+            localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
 
 
         let localVarUseFormData = false;
@@ -12895,7 +13744,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetChildrenList;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetChildrenList;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12915,7 +13764,7 @@ export class ResellerApi {
      * @summary Get session token to access Sendinblue (SSO)
      * @param childAuthKey auth key of reseller&#39;s child
      */
-    public getSsoToken (childAuthKey: string) : Promise<{ response: http.ClientResponse; body: GetSsoToken;  }> {
+    public getSsoToken (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body: GetSsoToken;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/auth'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
         let localVarQueryParameters: any = {};
@@ -12952,7 +13801,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetSsoToken;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetSsoToken;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -12973,7 +13822,7 @@ export class ResellerApi {
      * @param childAuthKey auth key of reseller&#39;s child
      * @param removeCredits Values to post to remove email or SMS credits from a specific child account
      */
-    public removeCredits (childAuthKey: string, removeCredits: RemoveCredits) : Promise<{ response: http.ClientResponse; body: RemainingCreditModel;  }> {
+    public removeCredits (childAuthKey: string, removeCredits: RemoveCredits) : Promise<{ response: http.IncomingMessage; body: RemainingCreditModel;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/credits/remove'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
         let localVarQueryParameters: any = {};
@@ -13016,7 +13865,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: RemainingCreditModel;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: RemainingCreditModel;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13037,7 +13886,7 @@ export class ResellerApi {
      * @param childAuthKey auth key of reseller&#39;s child
      * @param updateChildAccountStatus values to update in child account status
      */
-    public updateChildAccountStatus (childAuthKey: string, updateChildAccountStatus: UpdateChildAccountStatus) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateChildAccountStatus (childAuthKey: string, updateChildAccountStatus: UpdateChildAccountStatus) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/accountStatus'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
         let localVarQueryParameters: any = {};
@@ -13080,7 +13929,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13101,7 +13950,7 @@ export class ResellerApi {
      * @param domainName Pass the existing domain that needs to be updated
      * @param updateChildDomain value to update for sender domain
      */
-    public updateChildDomain (childAuthKey: string, domainName: string, updateChildDomain: UpdateChildDomain) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateChildDomain (childAuthKey: string, domainName: string, updateChildDomain: UpdateChildDomain) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains/{domainName}'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)))
             .replace('{' + 'domainName' + '}', encodeURIComponent(String(domainName)));
@@ -13150,7 +13999,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13170,7 +14019,7 @@ export class ResellerApi {
      * @param childAuthKey auth key of reseller&#39;s child
      * @param resellerChild values to update in child profile
      */
-    public updateResellerChild (childAuthKey: string, resellerChild: UpdateChild) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateResellerChild (childAuthKey: string, resellerChild: UpdateChild) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
         let localVarQueryParameters: any = {};
@@ -13213,7 +14062,7 @@ export class ResellerApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13281,7 +14130,7 @@ export class SMSCampaignsApi {
      * @summary Creates an SMS campaign
      * @param createSmsCampaign Values to create an SMS Campaign
      */
-    public createSmsCampaign (createSmsCampaign: CreateSmsCampaign) : Promise<{ response: http.ClientResponse; body: CreateModel;  }> {
+    public createSmsCampaign (createSmsCampaign: CreateSmsCampaign) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/smsCampaigns';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13318,7 +14167,7 @@ export class SMSCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreateModel;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13338,7 +14187,7 @@ export class SMSCampaignsApi {
      * @summary Delete the SMS campaign
      * @param campaignId id of the SMS campaign
      */
-    public deleteSmsCampaign (campaignId: number) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteSmsCampaign (campaignId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -13375,7 +14224,7 @@ export class SMSCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13394,7 +14243,7 @@ export class SMSCampaignsApi {
      * @summary Get an SMS campaign
      * @param campaignId id of the SMS campaign
      */
-    public getSmsCampaign (campaignId: number) : Promise<{ response: http.ClientResponse; body: GetSmsCampaign;  }> {
+    public getSmsCampaign (campaignId: number) : Promise<{ response: http.IncomingMessage; body: GetSmsCampaign;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -13431,7 +14280,7 @@ export class SMSCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetSmsCampaign;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetSmsCampaign;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13455,7 +14304,7 @@ export class SMSCampaignsApi {
      * @param limit Number limitation for the result returned
      * @param offset Beginning point in the list to retrieve from.
      */
-    public getSmsCampaigns (status?: string, startDate?: Date, endDate?: Date, limit?: number, offset?: number) : Promise<{ response: http.ClientResponse; body: GetSmsCampaigns;  }> {
+    public getSmsCampaigns (status?: string, startDate?: Date, endDate?: Date, limit?: number, offset?: number) : Promise<{ response: http.IncomingMessage; body: GetSmsCampaigns;  }> {
         const localVarPath = this.basePath + '/smsCampaigns';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13506,7 +14355,7 @@ export class SMSCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetSmsCampaigns;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetSmsCampaigns;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13527,7 +14376,7 @@ export class SMSCampaignsApi {
      * @param campaignId id of the campaign
      * @param recipientExport Values to send for a recipient export request
      */
-    public requestSmsRecipientExport (campaignId: number, recipientExport?: RequestSmsRecipientExport) : Promise<{ response: http.ClientResponse; body: CreatedProcessId;  }> {
+    public requestSmsRecipientExport (campaignId: number, recipientExport?: RequestSmsRecipientExport) : Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/exportRecipients'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -13565,7 +14414,7 @@ export class SMSCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreatedProcessId;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13585,7 +14434,7 @@ export class SMSCampaignsApi {
      * @summary Send your SMS campaign immediately
      * @param campaignId id of the campaign
      */
-    public sendSmsCampaignNow (campaignId: number) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public sendSmsCampaignNow (campaignId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/sendNow'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -13622,7 +14471,7 @@ export class SMSCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13642,7 +14491,7 @@ export class SMSCampaignsApi {
      * @param campaignId id of the campaign
      * @param sendReport Values for send a report
      */
-    public sendSmsReport (campaignId: number, sendReport: SendReport) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public sendSmsReport (campaignId: number, sendReport: SendReport) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/sendReport'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -13685,7 +14534,7 @@ export class SMSCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13705,7 +14554,7 @@ export class SMSCampaignsApi {
      * @param campaignId Id of the SMS campaign
      * @param phoneNumber Mobile number of the recipient with the country code. This number must belong to one of your contacts in SendinBlue account and must not be blacklisted
      */
-    public sendTestSms (campaignId: number, phoneNumber: SendTestSms) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public sendTestSms (campaignId: number, phoneNumber: SendTestSms) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/sendTest'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -13748,7 +14597,7 @@ export class SMSCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13768,7 +14617,7 @@ export class SMSCampaignsApi {
      * @param campaignId id of the SMS campaign
      * @param updateSmsCampaign Values to update an SMS Campaign
      */
-    public updateSmsCampaign (campaignId: number, updateSmsCampaign: UpdateSmsCampaign) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateSmsCampaign (campaignId: number, updateSmsCampaign: UpdateSmsCampaign) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -13811,7 +14660,7 @@ export class SMSCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13831,7 +14680,7 @@ export class SMSCampaignsApi {
      * @param campaignId id of the campaign
      * @param status Status of the campaign.
      */
-    public updateSmsCampaignStatus (campaignId: number, status: UpdateCampaignStatus) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateSmsCampaignStatus (campaignId: number, status: UpdateCampaignStatus) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/status'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         let localVarQueryParameters: any = {};
@@ -13874,7 +14723,7 @@ export class SMSCampaignsApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13942,7 +14791,7 @@ export class SMTPApi {
      * @summary Create a transactional email template
      * @param smtpTemplate values to update in transactional email template
      */
-    public createSmtpTemplate (smtpTemplate: CreateSmtpTemplate) : Promise<{ response: http.ClientResponse; body: CreateModel;  }> {
+    public createSmtpTemplate (smtpTemplate: CreateSmtpTemplate) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/smtp/templates';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13979,7 +14828,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreateModel;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -13999,7 +14848,7 @@ export class SMTPApi {
      * @summary Delete hardbounces
      * @param deleteHardbounces values to delete hardbounces
      */
-    public deleteHardbounces (deleteHardbounces?: DeleteHardbounces) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteHardbounces (deleteHardbounces?: DeleteHardbounces) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/deleteHardbounces';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14031,7 +14880,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14050,7 +14899,7 @@ export class SMTPApi {
      * @summary Delete an inactive transactional email template
      * @param templateId id of the template
      */
-    public deleteSmtpTemplate (templateId: number) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteSmtpTemplate (templateId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/templates/{templateId}'
             .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
         let localVarQueryParameters: any = {};
@@ -14087,7 +14936,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14109,7 +14958,7 @@ export class SMTPApi {
      * @param days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39;
      * @param tag Tag of the emails
      */
-    public getAggregatedSmtpReport (startDate?: string, endDate?: string, days?: number, tag?: string) : Promise<{ response: http.ClientResponse; body: GetAggregatedReport;  }> {
+    public getAggregatedSmtpReport (startDate?: string, endDate?: string, days?: number, tag?: string) : Promise<{ response: http.IncomingMessage; body: GetAggregatedReport;  }> {
         const localVarPath = this.basePath + '/smtp/statistics/aggregatedReport';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14156,7 +15005,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetAggregatedReport;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetAggregatedReport;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14185,7 +15034,7 @@ export class SMTPApi {
      * @param messageId Filter on a specific message id
      * @param templateId Filter on a specific template id
      */
-    public getEmailEventReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, email?: string, event?: string, tags?: string, messageId?: string, templateId?: number) : Promise<{ response: http.ClientResponse; body: GetEmailEventReport;  }> {
+    public getEmailEventReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, email?: string, event?: string, tags?: string, messageId?: string, templateId?: number) : Promise<{ response: http.IncomingMessage; body: GetEmailEventReport;  }> {
         const localVarPath = this.basePath + '/smtp/statistics/events';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14256,7 +15105,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetEmailEventReport;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetEmailEventReport;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14281,7 +15130,7 @@ export class SMTPApi {
      * @param days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39;
      * @param tag Tag of the emails
      */
-    public getSmtpReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, tag?: string) : Promise<{ response: http.ClientResponse; body: GetReports;  }> {
+    public getSmtpReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, tag?: string) : Promise<{ response: http.IncomingMessage; body: GetReports;  }> {
         const localVarPath = this.basePath + '/smtp/statistics/reports';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14336,7 +15185,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetReports;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetReports;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14356,7 +15205,7 @@ export class SMTPApi {
      * @summary Returns the template informations
      * @param templateId id of the template
      */
-    public getSmtpTemplate (templateId: number) : Promise<{ response: http.ClientResponse; body: GetSmtpTemplateOverview;  }> {
+    public getSmtpTemplate (templateId: number) : Promise<{ response: http.IncomingMessage; body: GetSmtpTemplateOverview;  }> {
         const localVarPath = this.basePath + '/smtp/templates/{templateId}'
             .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
         let localVarQueryParameters: any = {};
@@ -14393,7 +15242,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetSmtpTemplateOverview;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetSmtpTemplateOverview;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14415,7 +15264,7 @@ export class SMTPApi {
      * @param limit Number of documents returned per page
      * @param offset Index of the first document in the page
      */
-    public getSmtpTemplates (templateStatus?: boolean, limit?: number, offset?: number) : Promise<{ response: http.ClientResponse; body: GetSmtpTemplates;  }> {
+    public getSmtpTemplates (templateStatus?: boolean, limit?: number, offset?: number) : Promise<{ response: http.IncomingMessage; body: GetSmtpTemplates;  }> {
         const localVarPath = this.basePath + '/smtp/templates';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14458,7 +15307,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetSmtpTemplates;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetSmtpTemplates;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14475,10 +15324,85 @@ export class SMTPApi {
     }
     /**
      *
+     * @summary Get the list of blocked or unsubscribed transactional contacts
+     * @param startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts
+     * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts
+     * @param limit Number of documents returned per page
+     * @param offset Index of the first document on the page
+     * @param senders Comma separated list of emails of the senders from which contacts are blocked or unsubscribed
+     */
+    public getTransacBlockedContacts (startDate?: string, endDate?: string, limit?: number, offset?: number, senders?: Array<string>) : Promise<{ response: http.IncomingMessage; body: GetTransacBlockedContacts;  }> {
+        const localVarPath = this.basePath + '/smtp/blockedContacts';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        if (startDate !== undefined) {
+            localVarQueryParameters['startDate'] = ObjectSerializer.serialize(startDate, "string");
+        }
+
+        if (endDate !== undefined) {
+            localVarQueryParameters['endDate'] = ObjectSerializer.serialize(endDate, "string");
+        }
+
+        if (limit !== undefined) {
+            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
+        }
+
+        if (offset !== undefined) {
+            localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
+
+        if (senders !== undefined) {
+            localVarQueryParameters['senders'] = ObjectSerializer.serialize(senders, "Array<string>");
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: GetTransacBlockedContacts;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "GetTransacBlockedContacts");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     *
      * @summary Get the personalized content of a sent transactional email
      * @param uuid Unique id of the transactional email that has been sent to a particular contact
      */
-    public getTransacEmailContent (uuid: string) : Promise<{ response: http.ClientResponse; body: GetTransacEmailContent;  }> {
+    public getTransacEmailContent (uuid: string) : Promise<{ response: http.IncomingMessage; body: GetTransacEmailContent;  }> {
         const localVarPath = this.basePath + '/smtp/emails/{uuid}'
             .replace('{' + 'uuid' + '}', encodeURIComponent(String(uuid)));
         let localVarQueryParameters: any = {};
@@ -14515,7 +15439,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetTransacEmailContent;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetTransacEmailContent;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14539,7 +15463,7 @@ export class SMTPApi {
      * @param startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month.
      * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month.
      */
-    public getTransacEmailsList (email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string) : Promise<{ response: http.ClientResponse; body: GetTransacEmailsList;  }> {
+    public getTransacEmailsList (email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string) : Promise<{ response: http.IncomingMessage; body: GetTransacEmailsList;  }> {
         const localVarPath = this.basePath + '/smtp/emails';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14590,7 +15514,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetTransacEmailsList;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetTransacEmailsList;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14611,7 +15535,7 @@ export class SMTPApi {
      * @param templateId Id of the template
      * @param sendEmail
      */
-    public sendTemplate (templateId: number, sendEmail: SendEmail) : Promise<{ response: http.ClientResponse; body: SendTemplateEmail;  }> {
+    public sendTemplate (templateId: number, sendEmail: SendEmail) : Promise<{ response: http.IncomingMessage; body: SendTemplateEmail;  }> {
         const localVarPath = this.basePath + '/smtp/templates/{templateId}/send'
             .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
         let localVarQueryParameters: any = {};
@@ -14654,7 +15578,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: SendTemplateEmail;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: SendTemplateEmail;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14675,7 +15599,7 @@ export class SMTPApi {
      * @param templateId Id of the template
      * @param sendTestEmail
      */
-    public sendTestTemplate (templateId: number, sendTestEmail: SendTestEmail) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public sendTestTemplate (templateId: number, sendTestEmail: SendTestEmail) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/templates/{templateId}/sendTest'
             .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
         let localVarQueryParameters: any = {};
@@ -14718,7 +15642,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14737,7 +15661,7 @@ export class SMTPApi {
      * @summary Send a transactional email
      * @param sendSmtpEmail Values to send a transactional email
      */
-    public sendTransacEmail (sendSmtpEmail: SendSmtpEmail) : Promise<{ response: http.ClientResponse; body: CreateSmtpEmail;  }> {
+    public sendTransacEmail (sendSmtpEmail: SendSmtpEmail) : Promise<{ response: http.IncomingMessage; body: CreateSmtpEmail;  }> {
         const localVarPath = this.basePath + '/smtp/email';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14774,7 +15698,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreateSmtpEmail;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreateSmtpEmail;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14791,11 +15715,123 @@ export class SMTPApi {
     }
     /**
      *
+     * @summary Unblock or resubscribe a transactional contact
+     * @param email contact email (urlencoded) to unblock.
+     */
+    public smtpBlockedContactsEmailDelete (email: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/smtp/blockedContacts/{email}'
+            .replace('{' + 'email' + '}', encodeURIComponent(String(email)));
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'email' is not null or undefined
+        if (email === null || email === undefined) {
+            throw new Error('Required parameter email was null or undefined when calling smtpBlockedContactsEmailDelete.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'DELETE',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     *
+     * @summary Delete an SMTP transactional log
+     * @param messageId MessageId of the transactional log to delete
+     */
+    public smtpLogMessageIdDelete (messageId: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/smtp/log/{messageId}'
+            .replace('{' + 'messageId' + '}', encodeURIComponent(String(messageId)));
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'messageId' is not null or undefined
+        if (messageId === null || messageId === undefined) {
+            throw new Error('Required parameter messageId was null or undefined when calling smtpLogMessageIdDelete.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'DELETE',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     *
      * @summary Updates a transactional email templates
      * @param templateId id of the template
      * @param smtpTemplate values to update in transactional email template
      */
-    public updateSmtpTemplate (templateId: number, smtpTemplate: UpdateSmtpTemplate) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateSmtpTemplate (templateId: number, smtpTemplate: UpdateSmtpTemplate) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/templates/{templateId}'
             .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
         let localVarQueryParameters: any = {};
@@ -14838,7 +15874,7 @@ export class SMTPApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14906,7 +15942,7 @@ export class SendersApi {
      * @summary Create a new sender
      * @param sender sender&#39;s name
      */
-    public createSender (sender?: CreateSender) : Promise<{ response: http.ClientResponse; body: CreateSenderModel;  }> {
+    public createSender (sender?: CreateSender) : Promise<{ response: http.IncomingMessage; body: CreateSenderModel;  }> {
         const localVarPath = this.basePath + '/senders';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14938,7 +15974,7 @@ export class SendersApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreateSenderModel;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreateSenderModel;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -14958,7 +15994,7 @@ export class SendersApi {
      * @summary Delete a sender
      * @param senderId Id of the sender
      */
-    public deleteSender (senderId: number) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteSender (senderId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/senders/{senderId}'
             .replace('{' + 'senderId' + '}', encodeURIComponent(String(senderId)));
         let localVarQueryParameters: any = {};
@@ -14995,7 +16031,7 @@ export class SendersApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15013,7 +16049,7 @@ export class SendersApi {
      *
      * @summary Return all the dedicated IPs for your account
      */
-    public getIps () : Promise<{ response: http.ClientResponse; body: GetIps;  }> {
+    public getIps () : Promise<{ response: http.IncomingMessage; body: GetIps;  }> {
         const localVarPath = this.basePath + '/senders/ips';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15044,7 +16080,7 @@ export class SendersApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetIps;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetIps;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15064,7 +16100,7 @@ export class SendersApi {
      * @summary Return all the dedicated IPs for a sender
      * @param senderId Id of the sender
      */
-    public getIpsFromSender (senderId: number) : Promise<{ response: http.ClientResponse; body: GetIpsFromSender;  }> {
+    public getIpsFromSender (senderId: number) : Promise<{ response: http.IncomingMessage; body: GetIpsFromSender;  }> {
         const localVarPath = this.basePath + '/senders/{senderId}/ips'
             .replace('{' + 'senderId' + '}', encodeURIComponent(String(senderId)));
         let localVarQueryParameters: any = {};
@@ -15101,7 +16137,7 @@ export class SendersApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetIpsFromSender;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetIpsFromSender;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15122,7 +16158,7 @@ export class SendersApi {
      * @param ip Filter your senders for a specific ip (available for dedicated IP usage only)
      * @param domain Filter your senders for a specific domain
      */
-    public getSenders (ip?: string, domain?: string) : Promise<{ response: http.ClientResponse; body: GetSendersList;  }> {
+    public getSenders (ip?: string, domain?: string) : Promise<{ response: http.IncomingMessage; body: GetSendersList;  }> {
         const localVarPath = this.basePath + '/senders';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15161,7 +16197,7 @@ export class SendersApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetSendersList;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetSendersList;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15182,7 +16218,7 @@ export class SendersApi {
      * @param senderId Id of the sender
      * @param sender sender&#39;s name
      */
-    public updateSender (senderId: number, sender?: UpdateSender) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateSender (senderId: number, sender?: UpdateSender) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/senders/{senderId}'
             .replace('{' + 'senderId' + '}', encodeURIComponent(String(senderId)));
         let localVarQueryParameters: any = {};
@@ -15220,7 +16256,7 @@ export class SendersApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15295,7 +16331,7 @@ export class TransactionalSMSApi {
      * @param event Filter the report for specific events
      * @param tags Filter the report for specific tags passed as a serialized urlencoded array
      */
-    public getSmsEvents (limit?: number, startDate?: string, endDate?: string, offset?: number, days?: number, phoneNumber?: string, event?: string, tags?: string) : Promise<{ response: http.ClientResponse; body: GetSmsEventReport;  }> {
+    public getSmsEvents (limit?: number, startDate?: string, endDate?: string, offset?: number, days?: number, phoneNumber?: string, event?: string, tags?: string) : Promise<{ response: http.IncomingMessage; body: GetSmsEventReport;  }> {
         const localVarPath = this.basePath + '/transactionalSMS/statistics/events';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15358,7 +16394,7 @@ export class TransactionalSMSApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetSmsEventReport;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetSmsEventReport;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15381,7 +16417,7 @@ export class TransactionalSMSApi {
      * @param days Number of days in the past including today (positive integer). Not compatible with startDate and endDate
      * @param tag Filter on a tag
      */
-    public getTransacAggregatedSmsReport (startDate?: string, endDate?: string, days?: number, tag?: string) : Promise<{ response: http.ClientResponse; body: GetTransacAggregatedSmsReport;  }> {
+    public getTransacAggregatedSmsReport (startDate?: string, endDate?: string, days?: number, tag?: string) : Promise<{ response: http.IncomingMessage; body: GetTransacAggregatedSmsReport;  }> {
         const localVarPath = this.basePath + '/transactionalSMS/statistics/aggregatedReport';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15428,7 +16464,7 @@ export class TransactionalSMSApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetTransacAggregatedSmsReport;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetTransacAggregatedSmsReport;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15451,7 +16487,7 @@ export class TransactionalSMSApi {
      * @param days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39;
      * @param tag Filter on a tag
      */
-    public getTransacSmsReport (startDate?: string, endDate?: string, days?: number, tag?: string) : Promise<{ response: http.ClientResponse; body: GetTransacSmsReport;  }> {
+    public getTransacSmsReport (startDate?: string, endDate?: string, days?: number, tag?: string) : Promise<{ response: http.IncomingMessage; body: GetTransacSmsReport;  }> {
         const localVarPath = this.basePath + '/transactionalSMS/statistics/reports';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15498,7 +16534,7 @@ export class TransactionalSMSApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetTransacSmsReport;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetTransacSmsReport;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15518,7 +16554,7 @@ export class TransactionalSMSApi {
      * @summary Send the SMS campaign to the specified mobile number
      * @param sendTransacSms Values to send a transactional SMS
      */
-    public sendTransacSms (sendTransacSms: SendTransacSms) : Promise<{ response: http.ClientResponse; body: SendSms;  }> {
+    public sendTransacSms (sendTransacSms: SendTransacSms) : Promise<{ response: http.IncomingMessage; body: SendSms;  }> {
         const localVarPath = this.basePath + '/transactionalSMS/sms';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15555,7 +16591,7 @@ export class TransactionalSMSApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: SendSms;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: SendSms;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15624,7 +16660,7 @@ export class WebhooksApi {
      * @summary Create a webhook
      * @param createWebhook Values to create a webhook
      */
-    public createWebhook (createWebhook: CreateWebhook) : Promise<{ response: http.ClientResponse; body: CreateModel;  }> {
+    public createWebhook (createWebhook: CreateWebhook) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/webhooks';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15661,7 +16697,7 @@ export class WebhooksApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: CreateModel;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15681,7 +16717,7 @@ export class WebhooksApi {
      * @summary Delete a webhook
      * @param webhookId Id of the webhook
      */
-    public deleteWebhook (webhookId: number) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public deleteWebhook (webhookId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/webhooks/{webhookId}'
             .replace('{' + 'webhookId' + '}', encodeURIComponent(String(webhookId)));
         let localVarQueryParameters: any = {};
@@ -15718,7 +16754,7 @@ export class WebhooksApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15737,7 +16773,7 @@ export class WebhooksApi {
      * @summary Get a webhook details
      * @param webhookId Id of the webhook
      */
-    public getWebhook (webhookId: number) : Promise<{ response: http.ClientResponse; body: GetWebhook;  }> {
+    public getWebhook (webhookId: number) : Promise<{ response: http.IncomingMessage; body: GetWebhook;  }> {
         const localVarPath = this.basePath + '/webhooks/{webhookId}'
             .replace('{' + 'webhookId' + '}', encodeURIComponent(String(webhookId)));
         let localVarQueryParameters: any = {};
@@ -15774,7 +16810,7 @@ export class WebhooksApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetWebhook;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetWebhook;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15794,7 +16830,7 @@ export class WebhooksApi {
      * @summary Get all webhooks
      * @param type Filter on webhook type
      */
-    public getWebhooks (type?: string) : Promise<{ response: http.ClientResponse; body: GetWebhooks;  }> {
+    public getWebhooks (type?: string) : Promise<{ response: http.IncomingMessage; body: GetWebhooks;  }> {
         const localVarPath = this.basePath + '/webhooks';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15829,7 +16865,7 @@ export class WebhooksApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: GetWebhooks;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: GetWebhooks;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -15850,7 +16886,7 @@ export class WebhooksApi {
      * @param webhookId Id of the webhook
      * @param updateWebhook Values to update a webhook
      */
-    public updateWebhook (webhookId: number, updateWebhook: UpdateWebhook) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public updateWebhook (webhookId: number, updateWebhook: UpdateWebhook) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/webhooks/{webhookId}'
             .replace('{' + 'webhookId' + '}', encodeURIComponent(String(webhookId)));
         let localVarQueryParameters: any = {};
@@ -15893,7 +16929,7 @@ export class WebhooksApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);

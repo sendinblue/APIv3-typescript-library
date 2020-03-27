@@ -1,6 +1,37 @@
 import localVarRequest = require('request');
 import http = require('http');
-import Promise = require('bluebird');
+export declare class AbTestCampaignResult {
+    'winningVersion': AbTestCampaignResult.WinningVersionEnum;
+    'winningCriteria': AbTestCampaignResult.WinningCriteriaEnum;
+    'winningSubjectLine': string;
+    'openRate': string;
+    'clickRate': string;
+    'winningVersionRate': string;
+    static discriminator: undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
+export declare namespace AbTestCampaignResult {
+    enum WinningVersionEnum {
+        NotAvailable,
+        Pending,
+        Tie,
+        A,
+        B
+    }
+    enum WinningCriteriaEnum {
+        Open,
+        Click
+    }
+}
 export declare class AddChildDomain {
     'domain': string;
     static discriminator: undefined;
@@ -149,6 +180,9 @@ export declare class CreateEmailCampaign {
     'splitRule': number;
     'winnerCriteria': CreateEmailCampaign.WinnerCriteriaEnum;
     'winnerDelay': number;
+    'ipWarmupEnable': boolean;
+    'initialQuota': number;
+    'increaseRate': number;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -185,6 +219,7 @@ export declare class CreateEmailCampaignRecipients {
 export declare class CreateEmailCampaignSender {
     'name': string;
     'email': string;
+    'id': number;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -361,6 +396,7 @@ export declare class CreateSmtpTemplate {
 export declare class CreateSmtpTemplateSender {
     'name': string;
     'email': string;
+    'id': number;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -778,6 +814,20 @@ export declare class GetCampaignStats {
         type: string;
     }[];
 }
+export declare class GetChildAccountCreationStatus {
+    'childAccountCreated': boolean;
+    static discriminator: undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
 export declare class GetChildDomain {
     'domain': string;
     'active': boolean;
@@ -880,6 +930,7 @@ export declare class GetChildInfoStatistics {
 }
 export declare class GetChildrenList {
     'children': Array<any>;
+    'count': number;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -1030,6 +1081,23 @@ export declare class GetContacts {
         type: string;
     }[];
 }
+export declare class GetDeviceBrowserStats {
+    'clickers': number;
+    'uniqueClicks': number;
+    'viewed': number;
+    'uniqueViews': number;
+    static discriminator: undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
 export declare class GetEmailCampaigns {
     'campaigns': Array<any>;
     'count': number;
@@ -1101,6 +1169,7 @@ export declare namespace GetEmailEventReportEvents {
 export declare class GetExtendedCampaignOverviewSender {
     'name': string;
     'email': string;
+    'id': string;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -1120,6 +1189,8 @@ export declare class GetExtendedCampaignStats {
     'remaining': number;
     'linksStats': any;
     'statsByDomain': GetStatsByDomain;
+    'statsByDevice': GetStatsByDevice;
+    'statsByBrowser': GetStatsByBrowser;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -1564,6 +1635,20 @@ export declare class GetSendersListSenders {
         type: string;
     }[];
 }
+export declare class GetSharedTemplateUrl {
+    'sharedUrl': string;
+    static discriminator: undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
 export declare class GetSmsCampaignOverview {
     'id': number;
     'name': string;
@@ -1705,6 +1790,7 @@ export declare class GetSmtpTemplateOverview {
 export declare class GetSmtpTemplateOverviewSender {
     'name': string;
     'email': string;
+    'id': string;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -1734,6 +1820,40 @@ export declare class GetSmtpTemplates {
 }
 export declare class GetSsoToken {
     'token': string;
+    static discriminator: undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
+export declare class GetStatsByBrowser extends null<String, GetDeviceBrowserStats> {
+    static discriminator: undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): any;
+}
+export declare class GetStatsByDevice {
+    'desktop': {
+        [key: string]: GetDeviceBrowserStats;
+    };
+    'mobile': {
+        [key: string]: GetDeviceBrowserStats;
+    };
+    'tablet': {
+        [key: string]: GetDeviceBrowserStats;
+    };
+    'unknown': {
+        [key: string]: GetDeviceBrowserStats;
+    };
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -1777,6 +1897,63 @@ export declare class GetTransacAggregatedSmsReport {
         baseName: string;
         type: string;
     }[];
+}
+export declare class GetTransacBlockedContacts {
+    'count': number;
+    'contacts': Array<GetTransacBlockedContactsContacts>;
+    static discriminator: undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
+export declare class GetTransacBlockedContactsContacts {
+    'email': string;
+    'senderEmail': string;
+    'reason': GetTransacBlockedContactsReason;
+    'blockedAt': string;
+    static discriminator: undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
+export declare class GetTransacBlockedContactsReason {
+    'code': GetTransacBlockedContactsReason.CodeEnum;
+    'message': string;
+    static discriminator: undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
+export declare namespace GetTransacBlockedContactsReason {
+    enum CodeEnum {
+        UnsubscribedViaMA,
+        UnsubscribedViaEmail,
+        AdminBlocked,
+        UnsubscribedViaApi,
+        HardBounce,
+        ContactFlaggedAsSpam
+    }
 }
 export declare class GetTransacEmailContent {
     'email': string;
@@ -2080,6 +2257,7 @@ export declare class RemoveCredits {
 export declare class RequestContactExport {
     'exportAttributes': Array<string>;
     'contactFilter': any;
+    'customContactFilter': RequestContactExportCustomContactFilter;
     'notifyUrl': string;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
@@ -2092,6 +2270,47 @@ export declare class RequestContactExport {
         baseName: string;
         type: string;
     }[];
+}
+export declare class RequestContactExportCustomContactFilter {
+    'actionForContacts': RequestContactExportCustomContactFilter.ActionForContactsEnum;
+    'actionForEmailCampaigns': RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum;
+    'actionForSmsCampaigns': RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum;
+    'listId': number;
+    'emailCampaignId': number;
+    'smsCampaignId': number;
+    static discriminator: undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
+export declare namespace RequestContactExportCustomContactFilter {
+    enum ActionForContactsEnum {
+        AllContacts,
+        Subscribed,
+        Unsubscribed,
+        UnsubscribedPerList
+    }
+    enum ActionForEmailCampaignsEnum {
+        Openers,
+        NonOpeners,
+        Clickers,
+        NonClickers,
+        Unsubscribed,
+        HardBounces,
+        SoftBounces
+    }
+    enum ActionForSmsCampaignsEnum {
+        HardBounces,
+        SoftBounces,
+        Unsubscribed
+    }
 }
 export declare class RequestContactImport {
     'fileUrl': string;
@@ -2593,6 +2812,9 @@ export declare class UpdateEmailCampaign {
     'splitRule': number;
     'winnerCriteria': UpdateEmailCampaign.WinnerCriteriaEnum;
     'winnerDelay': number;
+    'ipWarmupEnable': boolean;
+    'initialQuota': number;
+    'increaseRate': number;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -2629,6 +2851,7 @@ export declare class UpdateEmailCampaignRecipients {
 export declare class UpdateEmailCampaignSender {
     'name': string;
     'email': string;
+    'id': number;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -2716,6 +2939,7 @@ export declare class UpdateSmtpTemplate {
 export declare class UpdateSmtpTemplateSender {
     'name': string;
     'email': string;
+    'id': number;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -2762,6 +2986,21 @@ export declare namespace UpdateWebhook {
         ContactUpdated,
         ContactDeleted
     }
+}
+export declare class UploadImageToGallery {
+    'imageUrl': string;
+    'name': string;
+    static discriminator: undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
 }
 export declare class GetChildInfo {
     'email': string;
@@ -3056,7 +3295,7 @@ export declare class AccountApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: AccountApiApiKeys, value: string): void;
     getAccount(): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetAccount;
     }>;
 }
@@ -3079,19 +3318,19 @@ export declare class AttributesApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: AttributesApiApiKeys, value: string): void;
     createAttribute(attributeCategory: string, attributeName: string, createAttribute: CreateAttribute): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     deleteAttribute(attributeCategory: string, attributeName: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     getAttributes(): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetAttributes;
     }>;
     updateAttribute(attributeCategory: string, attributeName: string, updateAttribute: UpdateAttribute): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
 }
@@ -3114,107 +3353,107 @@ export declare class ContactsApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: ContactsApiApiKeys, value: string): void;
     addContactToList(listId: number, contactEmails: AddContactToList): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: PostContactInfo;
     }>;
     createAttribute(attributeCategory: string, attributeName: string, createAttribute: CreateAttribute): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     createContact(createContact: CreateContact): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreateUpdateContactModel;
     }>;
     createFolder(createFolder: CreateUpdateFolder): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreateModel;
     }>;
     createList(createList: CreateList): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreateModel;
     }>;
     deleteAttribute(attributeCategory: string, attributeName: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     deleteContact(email: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     deleteFolder(folderId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     deleteList(listId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     getAttributes(): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetAttributes;
     }>;
     getContactInfo(email: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetExtendedContactDetails;
     }>;
     getContactStats(email: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetContactCampaignStats;
     }>;
     getContacts(limit?: number, offset?: number, modifiedSince?: Date): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetContacts;
     }>;
     getContactsFromList(listId: number, modifiedSince?: Date, limit?: number, offset?: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetContacts;
     }>;
     getFolder(folderId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetFolder;
     }>;
     getFolderLists(folderId: number, limit?: number, offset?: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetFolderLists;
     }>;
     getFolders(limit: number, offset: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetFolders;
     }>;
     getList(listId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetExtendedList;
     }>;
     getLists(limit?: number, offset?: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetLists;
     }>;
     importContacts(requestContactImport: RequestContactImport): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreatedProcessId;
     }>;
     removeContactFromList(listId: number, contactEmails: RemoveContactFromList): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: PostContactInfo;
     }>;
     requestContactExport(requestContactExport: RequestContactExport): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreatedProcessId;
     }>;
     updateAttribute(attributeCategory: string, attributeName: string, updateAttribute: UpdateAttribute): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     updateContact(email: string, updateContact: UpdateContact): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     updateFolder(folderId: number, updateFolder: CreateUpdateFolder): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     updateList(listId: number, updateList: UpdateList): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
 }
@@ -3237,43 +3476,55 @@ export declare class EmailCampaignsApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: EmailCampaignsApiApiKeys, value: string): void;
     createEmailCampaign(emailCampaigns: CreateEmailCampaign): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreateModel;
     }>;
     deleteEmailCampaign(campaignId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     emailExportRecipients(campaignId: number, recipientExport?: EmailExportRecipients): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreatedProcessId;
     }>;
+    getAbTestCampaignResult(campaignId: number): Promise<{
+        response: http.IncomingMessage;
+        body: AbTestCampaignResult;
+    }>;
     getEmailCampaign(campaignId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetEmailCampaign;
     }>;
     getEmailCampaigns(type?: string, status?: string, startDate?: Date, endDate?: Date, limit?: number, offset?: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetEmailCampaigns;
     }>;
+    getSharedTemplateUrl(campaignId: number): Promise<{
+        response: http.IncomingMessage;
+        body: GetSharedTemplateUrl;
+    }>;
     sendEmailCampaignNow(campaignId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     sendReport(campaignId: number, sendReport: SendReport): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     sendTestEmail(campaignId: number, emailTo: SendTestEmail): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     updateCampaignStatus(campaignId: number, status: UpdateCampaignStatus): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     updateEmailCampaign(campaignId: number, emailCampaign: UpdateEmailCampaign): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
+        body?: any;
+    }>;
+    uploadImageToGallery(uploadImage: UploadImageToGallery): Promise<{
+        response: http.IncomingMessage;
         body?: any;
     }>;
 }
@@ -3296,27 +3547,27 @@ export declare class FoldersApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: FoldersApiApiKeys, value: string): void;
     createFolder(createFolder: CreateUpdateFolder): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreateModel;
     }>;
     deleteFolder(folderId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     getFolder(folderId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetFolder;
     }>;
     getFolderLists(folderId: number, limit?: number, offset?: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetFolderLists;
     }>;
     getFolders(limit: number, offset: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetFolders;
     }>;
     updateFolder(folderId: number, updateFolder: CreateUpdateFolder): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
 }
@@ -3339,39 +3590,39 @@ export declare class ListsApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: ListsApiApiKeys, value: string): void;
     addContactToList(listId: number, contactEmails: AddContactToList): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: PostContactInfo;
     }>;
     createList(createList: CreateList): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreateModel;
     }>;
     deleteList(listId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     getContactsFromList(listId: number, modifiedSince?: Date, limit?: number, offset?: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetContacts;
     }>;
     getFolderLists(folderId: number, limit?: number, offset?: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetFolderLists;
     }>;
     getList(listId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetExtendedList;
     }>;
     getLists(limit?: number, offset?: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetLists;
     }>;
     removeContactFromList(listId: number, contactEmails: RemoveContactFromList): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: PostContactInfo;
     }>;
     updateList(listId: number, updateList: UpdateList): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
 }
@@ -3394,11 +3645,11 @@ export declare class ProcessApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: ProcessApiApiKeys, value: string): void;
     getProcess(processId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetProcess;
     }>;
     getProcesses(limit?: number, offset?: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetProcesses;
     }>;
 }
@@ -3421,63 +3672,67 @@ export declare class ResellerApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: ResellerApiApiKeys, value: string): void;
     addCredits(childAuthKey: string, addCredits: AddCredits): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: RemainingCreditModel;
     }>;
     associateIpToChild(childAuthKey: string, ip: ManageIp): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     createChildDomain(childAuthKey: string, addChildDomain: AddChildDomain): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     createResellerChild(resellerChild?: CreateChild): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreateReseller;
     }>;
     deleteChildDomain(childAuthKey: string, domainName: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     deleteResellerChild(childAuthKey: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     dissociateIpFromChild(childAuthKey: string, ip: ManageIp): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
+    getChildAccountCreationStatus(childAuthKey: string): Promise<{
+        response: http.IncomingMessage;
+        body: GetChildAccountCreationStatus;
+    }>;
     getChildDomains(childAuthKey: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetChildDomains;
     }>;
     getChildInfo(childAuthKey: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetChildInfo;
     }>;
-    getResellerChilds(): Promise<{
-        response: http.ClientResponse;
+    getResellerChilds(limit?: number, offset?: number): Promise<{
+        response: http.IncomingMessage;
         body: GetChildrenList;
     }>;
     getSsoToken(childAuthKey: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetSsoToken;
     }>;
     removeCredits(childAuthKey: string, removeCredits: RemoveCredits): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: RemainingCreditModel;
     }>;
     updateChildAccountStatus(childAuthKey: string, updateChildAccountStatus: UpdateChildAccountStatus): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     updateChildDomain(childAuthKey: string, domainName: string, updateChildDomain: UpdateChildDomain): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     updateResellerChild(childAuthKey: string, resellerChild: UpdateChild): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
 }
@@ -3500,43 +3755,43 @@ export declare class SMSCampaignsApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: SMSCampaignsApiApiKeys, value: string): void;
     createSmsCampaign(createSmsCampaign: CreateSmsCampaign): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreateModel;
     }>;
     deleteSmsCampaign(campaignId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     getSmsCampaign(campaignId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetSmsCampaign;
     }>;
     getSmsCampaigns(status?: string, startDate?: Date, endDate?: Date, limit?: number, offset?: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetSmsCampaigns;
     }>;
     requestSmsRecipientExport(campaignId: number, recipientExport?: RequestSmsRecipientExport): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreatedProcessId;
     }>;
     sendSmsCampaignNow(campaignId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     sendSmsReport(campaignId: number, sendReport: SendReport): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     sendTestSms(campaignId: number, phoneNumber: SendTestSms): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     updateSmsCampaign(campaignId: number, updateSmsCampaign: UpdateSmsCampaign): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     updateSmsCampaignStatus(campaignId: number, status: UpdateCampaignStatus): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
 }
@@ -3559,59 +3814,71 @@ export declare class SMTPApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: SMTPApiApiKeys, value: string): void;
     createSmtpTemplate(smtpTemplate: CreateSmtpTemplate): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreateModel;
     }>;
     deleteHardbounces(deleteHardbounces?: DeleteHardbounces): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     deleteSmtpTemplate(templateId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     getAggregatedSmtpReport(startDate?: string, endDate?: string, days?: number, tag?: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetAggregatedReport;
     }>;
     getEmailEventReport(limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, email?: string, event?: string, tags?: string, messageId?: string, templateId?: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetEmailEventReport;
     }>;
     getSmtpReport(limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, tag?: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetReports;
     }>;
     getSmtpTemplate(templateId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetSmtpTemplateOverview;
     }>;
     getSmtpTemplates(templateStatus?: boolean, limit?: number, offset?: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetSmtpTemplates;
     }>;
+    getTransacBlockedContacts(startDate?: string, endDate?: string, limit?: number, offset?: number, senders?: Array<string>): Promise<{
+        response: http.IncomingMessage;
+        body: GetTransacBlockedContacts;
+    }>;
     getTransacEmailContent(uuid: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetTransacEmailContent;
     }>;
     getTransacEmailsList(email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetTransacEmailsList;
     }>;
     sendTemplate(templateId: number, sendEmail: SendEmail): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: SendTemplateEmail;
     }>;
     sendTestTemplate(templateId: number, sendTestEmail: SendTestEmail): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     sendTransacEmail(sendSmtpEmail: SendSmtpEmail): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreateSmtpEmail;
     }>;
+    smtpBlockedContactsEmailDelete(email: string): Promise<{
+        response: http.IncomingMessage;
+        body?: any;
+    }>;
+    smtpLogMessageIdDelete(messageId: string): Promise<{
+        response: http.IncomingMessage;
+        body?: any;
+    }>;
     updateSmtpTemplate(templateId: number, smtpTemplate: UpdateSmtpTemplate): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
 }
@@ -3634,27 +3901,27 @@ export declare class SendersApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: SendersApiApiKeys, value: string): void;
     createSender(sender?: CreateSender): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreateSenderModel;
     }>;
     deleteSender(senderId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     getIps(): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetIps;
     }>;
     getIpsFromSender(senderId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetIpsFromSender;
     }>;
     getSenders(ip?: string, domain?: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetSendersList;
     }>;
     updateSender(senderId: number, sender?: UpdateSender): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
 }
@@ -3677,19 +3944,19 @@ export declare class TransactionalSMSApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: TransactionalSMSApiApiKeys, value: string): void;
     getSmsEvents(limit?: number, startDate?: string, endDate?: string, offset?: number, days?: number, phoneNumber?: string, event?: string, tags?: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetSmsEventReport;
     }>;
     getTransacAggregatedSmsReport(startDate?: string, endDate?: string, days?: number, tag?: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetTransacAggregatedSmsReport;
     }>;
     getTransacSmsReport(startDate?: string, endDate?: string, days?: number, tag?: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetTransacSmsReport;
     }>;
     sendTransacSms(sendTransacSms: SendTransacSms): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: SendSms;
     }>;
 }
@@ -3712,23 +3979,23 @@ export declare class WebhooksApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: WebhooksApiApiKeys, value: string): void;
     createWebhook(createWebhook: CreateWebhook): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: CreateModel;
     }>;
     deleteWebhook(webhookId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
     getWebhook(webhookId: number): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetWebhook;
     }>;
     getWebhooks(type?: string): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body: GetWebhooks;
     }>;
     updateWebhook(webhookId: number, updateWebhook: UpdateWebhook): Promise<{
-        response: http.ClientResponse;
+        response: http.IncomingMessage;
         body?: any;
     }>;
 }
