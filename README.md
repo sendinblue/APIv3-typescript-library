@@ -68,7 +68,7 @@ apiKey.apiKey = "YOUR API KEY"
 var partnerKey = apiInstance.authentications['partnerKey'];
 partnerKey.apiKey = "YOUR API KEY"
 
-var opts = { 
+var opts = {
   'limit': 10, // Number | Number of documents per page
   'offset': 0 // Number | Index of the first document of the page
 };
@@ -90,4 +90,3 @@ apiInstance.getLists(opts).then(function(data) {
 
 
 For more examples, refer the https://github.com/sendinblue/APIv3-nodejs-library#documentation-for-api-endpoints
-

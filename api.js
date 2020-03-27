@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const localVarRequest = require("request");
-const Promise = require("bluebird");
 let defaultBasePath = 'https://api.sendinblue.com/v3';
 let primitives = [
     "string",
@@ -119,6 +118,60 @@ class ObjectSerializer {
         }
     }
 }
+class AbTestCampaignResult {
+    static getAttributeTypeMap() {
+        return AbTestCampaignResult.attributeTypeMap;
+    }
+}
+AbTestCampaignResult.discriminator = undefined;
+AbTestCampaignResult.attributeTypeMap = [
+    {
+        "name": "winningVersion",
+        "baseName": "winningVersion",
+        "type": "AbTestCampaignResult.WinningVersionEnum"
+    },
+    {
+        "name": "winningCriteria",
+        "baseName": "winningCriteria",
+        "type": "AbTestCampaignResult.WinningCriteriaEnum"
+    },
+    {
+        "name": "winningSubjectLine",
+        "baseName": "winningSubjectLine",
+        "type": "string"
+    },
+    {
+        "name": "openRate",
+        "baseName": "openRate",
+        "type": "string"
+    },
+    {
+        "name": "clickRate",
+        "baseName": "clickRate",
+        "type": "string"
+    },
+    {
+        "name": "winningVersionRate",
+        "baseName": "winningVersionRate",
+        "type": "string"
+    }
+];
+exports.AbTestCampaignResult = AbTestCampaignResult;
+(function (AbTestCampaignResult) {
+    let WinningVersionEnum;
+    (function (WinningVersionEnum) {
+        WinningVersionEnum[WinningVersionEnum["NotAvailable"] = 'notAvailable'] = "NotAvailable";
+        WinningVersionEnum[WinningVersionEnum["Pending"] = 'pending'] = "Pending";
+        WinningVersionEnum[WinningVersionEnum["Tie"] = 'tie'] = "Tie";
+        WinningVersionEnum[WinningVersionEnum["A"] = 'A'] = "A";
+        WinningVersionEnum[WinningVersionEnum["B"] = 'B'] = "B";
+    })(WinningVersionEnum = AbTestCampaignResult.WinningVersionEnum || (AbTestCampaignResult.WinningVersionEnum = {}));
+    let WinningCriteriaEnum;
+    (function (WinningCriteriaEnum) {
+        WinningCriteriaEnum[WinningCriteriaEnum["Open"] = 'Open'] = "Open";
+        WinningCriteriaEnum[WinningCriteriaEnum["Click"] = 'Click'] = "Click";
+    })(WinningCriteriaEnum = AbTestCampaignResult.WinningCriteriaEnum || (AbTestCampaignResult.WinningCriteriaEnum = {}));
+})(AbTestCampaignResult = exports.AbTestCampaignResult || (exports.AbTestCampaignResult = {}));
 class AddChildDomain {
     static getAttributeTypeMap() {
         return AddChildDomain.attributeTypeMap;
@@ -429,6 +482,21 @@ CreateEmailCampaign.attributeTypeMap = [
         "name": "winnerDelay",
         "baseName": "winnerDelay",
         "type": "number"
+    },
+    {
+        "name": "ipWarmupEnable",
+        "baseName": "ipWarmupEnable",
+        "type": "boolean"
+    },
+    {
+        "name": "initialQuota",
+        "baseName": "initialQuota",
+        "type": "number"
+    },
+    {
+        "name": "increaseRate",
+        "baseName": "increaseRate",
+        "type": "number"
     }
 ];
 exports.CreateEmailCampaign = CreateEmailCampaign;
@@ -474,6 +542,11 @@ CreateEmailCampaignSender.attributeTypeMap = [
         "name": "email",
         "baseName": "email",
         "type": "string"
+    },
+    {
+        "name": "id",
+        "baseName": "id",
+        "type": "number"
     }
 ];
 exports.CreateEmailCampaignSender = CreateEmailCampaignSender;
@@ -738,6 +811,11 @@ CreateSmtpTemplateSender.attributeTypeMap = [
         "name": "email",
         "baseName": "email",
         "type": "string"
+    },
+    {
+        "name": "id",
+        "baseName": "id",
+        "type": "number"
     }
 ];
 exports.CreateSmtpTemplateSender = CreateSmtpTemplateSender;
@@ -1384,6 +1462,20 @@ GetCampaignStats.attributeTypeMap = [
     }
 ];
 exports.GetCampaignStats = GetCampaignStats;
+class GetChildAccountCreationStatus {
+    static getAttributeTypeMap() {
+        return GetChildAccountCreationStatus.attributeTypeMap;
+    }
+}
+GetChildAccountCreationStatus.discriminator = undefined;
+GetChildAccountCreationStatus.attributeTypeMap = [
+    {
+        "name": "childAccountCreated",
+        "baseName": "childAccountCreated",
+        "type": "boolean"
+    }
+];
+exports.GetChildAccountCreationStatus = GetChildAccountCreationStatus;
 class GetChildDomain {
     static getAttributeTypeMap() {
         return GetChildDomain.attributeTypeMap;
@@ -1522,6 +1614,11 @@ GetChildrenList.attributeTypeMap = [
         "name": "children",
         "baseName": "children",
         "type": "Array<any>"
+    },
+    {
+        "name": "count",
+        "baseName": "count",
+        "type": "number"
     }
 ];
 exports.GetChildrenList = GetChildrenList;
@@ -1767,6 +1864,35 @@ GetContacts.attributeTypeMap = [
     }
 ];
 exports.GetContacts = GetContacts;
+class GetDeviceBrowserStats {
+    static getAttributeTypeMap() {
+        return GetDeviceBrowserStats.attributeTypeMap;
+    }
+}
+GetDeviceBrowserStats.discriminator = undefined;
+GetDeviceBrowserStats.attributeTypeMap = [
+    {
+        "name": "clickers",
+        "baseName": "clickers",
+        "type": "number"
+    },
+    {
+        "name": "uniqueClicks",
+        "baseName": "uniqueClicks",
+        "type": "number"
+    },
+    {
+        "name": "viewed",
+        "baseName": "viewed",
+        "type": "number"
+    },
+    {
+        "name": "uniqueViews",
+        "baseName": "uniqueViews",
+        "type": "number"
+    }
+];
+exports.GetDeviceBrowserStats = GetDeviceBrowserStats;
 class GetEmailCampaigns {
     static getAttributeTypeMap() {
         return GetEmailCampaigns.attributeTypeMap;
@@ -1892,6 +2018,11 @@ GetExtendedCampaignOverviewSender.attributeTypeMap = [
         "name": "email",
         "baseName": "email",
         "type": "string"
+    },
+    {
+        "name": "id",
+        "baseName": "id",
+        "type": "string"
     }
 ];
 exports.GetExtendedCampaignOverviewSender = GetExtendedCampaignOverviewSender;
@@ -1931,6 +2062,16 @@ GetExtendedCampaignStats.attributeTypeMap = [
         "name": "statsByDomain",
         "baseName": "statsByDomain",
         "type": "GetStatsByDomain"
+    },
+    {
+        "name": "statsByDevice",
+        "baseName": "statsByDevice",
+        "type": "GetStatsByDevice"
+    },
+    {
+        "name": "statsByBrowser",
+        "baseName": "statsByBrowser",
+        "type": "GetStatsByBrowser"
     }
 ];
 exports.GetExtendedCampaignStats = GetExtendedCampaignStats;
@@ -2611,6 +2752,20 @@ GetSendersListSenders.attributeTypeMap = [
     }
 ];
 exports.GetSendersListSenders = GetSendersListSenders;
+class GetSharedTemplateUrl {
+    static getAttributeTypeMap() {
+        return GetSharedTemplateUrl.attributeTypeMap;
+    }
+}
+GetSharedTemplateUrl.discriminator = undefined;
+GetSharedTemplateUrl.attributeTypeMap = [
+    {
+        "name": "sharedUrl",
+        "baseName": "sharedUrl",
+        "type": "string"
+    }
+];
+exports.GetSharedTemplateUrl = GetSharedTemplateUrl;
 class GetSmsCampaignOverview {
     static getAttributeTypeMap() {
         return GetSmsCampaignOverview.attributeTypeMap;
@@ -2891,6 +3046,11 @@ GetSmtpTemplateOverviewSender.attributeTypeMap = [
         "name": "email",
         "baseName": "email",
         "type": "string"
+    },
+    {
+        "name": "id",
+        "baseName": "id",
+        "type": "string"
     }
 ];
 exports.GetSmtpTemplateOverviewSender = GetSmtpTemplateOverviewSender;
@@ -2927,6 +3087,43 @@ GetSsoToken.attributeTypeMap = [
     }
 ];
 exports.GetSsoToken = GetSsoToken;
+class GetStatsByBrowser extends null {
+    static getAttributeTypeMap() {
+        return super.getAttributeTypeMap().concat(GetStatsByBrowser.attributeTypeMap);
+    }
+}
+GetStatsByBrowser.discriminator = undefined;
+GetStatsByBrowser.attributeTypeMap = [];
+exports.GetStatsByBrowser = GetStatsByBrowser;
+class GetStatsByDevice {
+    static getAttributeTypeMap() {
+        return GetStatsByDevice.attributeTypeMap;
+    }
+}
+GetStatsByDevice.discriminator = undefined;
+GetStatsByDevice.attributeTypeMap = [
+    {
+        "name": "desktop",
+        "baseName": "desktop",
+        "type": "{ [key: string]: GetDeviceBrowserStats; }"
+    },
+    {
+        "name": "mobile",
+        "baseName": "mobile",
+        "type": "{ [key: string]: GetDeviceBrowserStats; }"
+    },
+    {
+        "name": "tablet",
+        "baseName": "tablet",
+        "type": "{ [key: string]: GetDeviceBrowserStats; }"
+    },
+    {
+        "name": "unknown",
+        "baseName": "unknown",
+        "type": "{ [key: string]: GetDeviceBrowserStats; }"
+    }
+];
+exports.GetStatsByDevice = GetStatsByDevice;
 class GetStatsByDomain extends null {
     static getAttributeTypeMap() {
         return super.getAttributeTypeMap().concat(GetStatsByDomain.attributeTypeMap);
@@ -2994,6 +3191,84 @@ GetTransacAggregatedSmsReport.attributeTypeMap = [
     }
 ];
 exports.GetTransacAggregatedSmsReport = GetTransacAggregatedSmsReport;
+class GetTransacBlockedContacts {
+    static getAttributeTypeMap() {
+        return GetTransacBlockedContacts.attributeTypeMap;
+    }
+}
+GetTransacBlockedContacts.discriminator = undefined;
+GetTransacBlockedContacts.attributeTypeMap = [
+    {
+        "name": "count",
+        "baseName": "count",
+        "type": "number"
+    },
+    {
+        "name": "contacts",
+        "baseName": "contacts",
+        "type": "Array<GetTransacBlockedContactsContacts>"
+    }
+];
+exports.GetTransacBlockedContacts = GetTransacBlockedContacts;
+class GetTransacBlockedContactsContacts {
+    static getAttributeTypeMap() {
+        return GetTransacBlockedContactsContacts.attributeTypeMap;
+    }
+}
+GetTransacBlockedContactsContacts.discriminator = undefined;
+GetTransacBlockedContactsContacts.attributeTypeMap = [
+    {
+        "name": "email",
+        "baseName": "email",
+        "type": "string"
+    },
+    {
+        "name": "senderEmail",
+        "baseName": "senderEmail",
+        "type": "string"
+    },
+    {
+        "name": "reason",
+        "baseName": "reason",
+        "type": "GetTransacBlockedContactsReason"
+    },
+    {
+        "name": "blockedAt",
+        "baseName": "blockedAt",
+        "type": "string"
+    }
+];
+exports.GetTransacBlockedContactsContacts = GetTransacBlockedContactsContacts;
+class GetTransacBlockedContactsReason {
+    static getAttributeTypeMap() {
+        return GetTransacBlockedContactsReason.attributeTypeMap;
+    }
+}
+GetTransacBlockedContactsReason.discriminator = undefined;
+GetTransacBlockedContactsReason.attributeTypeMap = [
+    {
+        "name": "code",
+        "baseName": "code",
+        "type": "GetTransacBlockedContactsReason.CodeEnum"
+    },
+    {
+        "name": "message",
+        "baseName": "message",
+        "type": "string"
+    }
+];
+exports.GetTransacBlockedContactsReason = GetTransacBlockedContactsReason;
+(function (GetTransacBlockedContactsReason) {
+    let CodeEnum;
+    (function (CodeEnum) {
+        CodeEnum[CodeEnum["UnsubscribedViaMA"] = 'unsubscribedViaMA'] = "UnsubscribedViaMA";
+        CodeEnum[CodeEnum["UnsubscribedViaEmail"] = 'unsubscribedViaEmail'] = "UnsubscribedViaEmail";
+        CodeEnum[CodeEnum["AdminBlocked"] = 'adminBlocked'] = "AdminBlocked";
+        CodeEnum[CodeEnum["UnsubscribedViaApi"] = 'unsubscribedViaApi'] = "UnsubscribedViaApi";
+        CodeEnum[CodeEnum["HardBounce"] = 'hardBounce'] = "HardBounce";
+        CodeEnum[CodeEnum["ContactFlaggedAsSpam"] = 'contactFlaggedAsSpam'] = "ContactFlaggedAsSpam";
+    })(CodeEnum = GetTransacBlockedContactsReason.CodeEnum || (GetTransacBlockedContactsReason.CodeEnum = {}));
+})(GetTransacBlockedContactsReason = exports.GetTransacBlockedContactsReason || (exports.GetTransacBlockedContactsReason = {}));
 class GetTransacEmailContent {
     static getAttributeTypeMap() {
         return GetTransacEmailContent.attributeTypeMap;
@@ -3476,12 +3751,81 @@ RequestContactExport.attributeTypeMap = [
         "type": "any"
     },
     {
+        "name": "customContactFilter",
+        "baseName": "customContactFilter",
+        "type": "RequestContactExportCustomContactFilter"
+    },
+    {
         "name": "notifyUrl",
         "baseName": "notifyUrl",
         "type": "string"
     }
 ];
 exports.RequestContactExport = RequestContactExport;
+class RequestContactExportCustomContactFilter {
+    static getAttributeTypeMap() {
+        return RequestContactExportCustomContactFilter.attributeTypeMap;
+    }
+}
+RequestContactExportCustomContactFilter.discriminator = undefined;
+RequestContactExportCustomContactFilter.attributeTypeMap = [
+    {
+        "name": "actionForContacts",
+        "baseName": "actionForContacts",
+        "type": "RequestContactExportCustomContactFilter.ActionForContactsEnum"
+    },
+    {
+        "name": "actionForEmailCampaigns",
+        "baseName": "actionForEmailCampaigns",
+        "type": "RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum"
+    },
+    {
+        "name": "actionForSmsCampaigns",
+        "baseName": "actionForSmsCampaigns",
+        "type": "RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum"
+    },
+    {
+        "name": "listId",
+        "baseName": "listId",
+        "type": "number"
+    },
+    {
+        "name": "emailCampaignId",
+        "baseName": "emailCampaignId",
+        "type": "number"
+    },
+    {
+        "name": "smsCampaignId",
+        "baseName": "smsCampaignId",
+        "type": "number"
+    }
+];
+exports.RequestContactExportCustomContactFilter = RequestContactExportCustomContactFilter;
+(function (RequestContactExportCustomContactFilter) {
+    let ActionForContactsEnum;
+    (function (ActionForContactsEnum) {
+        ActionForContactsEnum[ActionForContactsEnum["AllContacts"] = 'allContacts'] = "AllContacts";
+        ActionForContactsEnum[ActionForContactsEnum["Subscribed"] = 'subscribed'] = "Subscribed";
+        ActionForContactsEnum[ActionForContactsEnum["Unsubscribed"] = 'unsubscribed'] = "Unsubscribed";
+        ActionForContactsEnum[ActionForContactsEnum["UnsubscribedPerList"] = 'unsubscribedPerList'] = "UnsubscribedPerList";
+    })(ActionForContactsEnum = RequestContactExportCustomContactFilter.ActionForContactsEnum || (RequestContactExportCustomContactFilter.ActionForContactsEnum = {}));
+    let ActionForEmailCampaignsEnum;
+    (function (ActionForEmailCampaignsEnum) {
+        ActionForEmailCampaignsEnum[ActionForEmailCampaignsEnum["Openers"] = 'openers'] = "Openers";
+        ActionForEmailCampaignsEnum[ActionForEmailCampaignsEnum["NonOpeners"] = 'nonOpeners'] = "NonOpeners";
+        ActionForEmailCampaignsEnum[ActionForEmailCampaignsEnum["Clickers"] = 'clickers'] = "Clickers";
+        ActionForEmailCampaignsEnum[ActionForEmailCampaignsEnum["NonClickers"] = 'nonClickers'] = "NonClickers";
+        ActionForEmailCampaignsEnum[ActionForEmailCampaignsEnum["Unsubscribed"] = 'unsubscribed'] = "Unsubscribed";
+        ActionForEmailCampaignsEnum[ActionForEmailCampaignsEnum["HardBounces"] = 'hardBounces'] = "HardBounces";
+        ActionForEmailCampaignsEnum[ActionForEmailCampaignsEnum["SoftBounces"] = 'softBounces'] = "SoftBounces";
+    })(ActionForEmailCampaignsEnum = RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum || (RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum = {}));
+    let ActionForSmsCampaignsEnum;
+    (function (ActionForSmsCampaignsEnum) {
+        ActionForSmsCampaignsEnum[ActionForSmsCampaignsEnum["HardBounces"] = 'hardBounces'] = "HardBounces";
+        ActionForSmsCampaignsEnum[ActionForSmsCampaignsEnum["SoftBounces"] = 'softBounces'] = "SoftBounces";
+        ActionForSmsCampaignsEnum[ActionForSmsCampaignsEnum["Unsubscribed"] = 'unsubscribed'] = "Unsubscribed";
+    })(ActionForSmsCampaignsEnum = RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum || (RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum = {}));
+})(RequestContactExportCustomContactFilter = exports.RequestContactExportCustomContactFilter || (exports.RequestContactExportCustomContactFilter = {}));
 class RequestContactImport {
     static getAttributeTypeMap() {
         return RequestContactImport.attributeTypeMap;
@@ -4356,6 +4700,21 @@ UpdateEmailCampaign.attributeTypeMap = [
         "name": "winnerDelay",
         "baseName": "winnerDelay",
         "type": "number"
+    },
+    {
+        "name": "ipWarmupEnable",
+        "baseName": "ipWarmupEnable",
+        "type": "boolean"
+    },
+    {
+        "name": "initialQuota",
+        "baseName": "initialQuota",
+        "type": "number"
+    },
+    {
+        "name": "increaseRate",
+        "baseName": "increaseRate",
+        "type": "number"
     }
 ];
 exports.UpdateEmailCampaign = UpdateEmailCampaign;
@@ -4401,6 +4760,11 @@ UpdateEmailCampaignSender.attributeTypeMap = [
         "name": "email",
         "baseName": "email",
         "type": "string"
+    },
+    {
+        "name": "id",
+        "baseName": "id",
+        "type": "number"
     }
 ];
 exports.UpdateEmailCampaignSender = UpdateEmailCampaignSender;
@@ -4556,6 +4920,11 @@ UpdateSmtpTemplateSender.attributeTypeMap = [
         "name": "email",
         "baseName": "email",
         "type": "string"
+    },
+    {
+        "name": "id",
+        "baseName": "id",
+        "type": "number"
     }
 ];
 exports.UpdateSmtpTemplateSender = UpdateSmtpTemplateSender;
@@ -4603,6 +4972,25 @@ exports.UpdateWebhook = UpdateWebhook;
         EventsEnum[EventsEnum["ContactDeleted"] = 'contactDeleted'] = "ContactDeleted";
     })(EventsEnum = UpdateWebhook.EventsEnum || (UpdateWebhook.EventsEnum = {}));
 })(UpdateWebhook = exports.UpdateWebhook || (exports.UpdateWebhook = {}));
+class UploadImageToGallery {
+    static getAttributeTypeMap() {
+        return UploadImageToGallery.attributeTypeMap;
+    }
+}
+UploadImageToGallery.discriminator = undefined;
+UploadImageToGallery.attributeTypeMap = [
+    {
+        "name": "imageUrl",
+        "baseName": "imageUrl",
+        "type": "string"
+    },
+    {
+        "name": "name",
+        "baseName": "name",
+        "type": "string"
+    }
+];
+exports.UploadImageToGallery = UploadImageToGallery;
 class GetChildInfo {
     static getAttributeTypeMap() {
         return GetChildInfo.attributeTypeMap;
@@ -5259,6 +5647,8 @@ exports.GetEmailCampaign = GetEmailCampaign;
     })(StatusEnum = GetEmailCampaign.StatusEnum || (GetEmailCampaign.StatusEnum = {}));
 })(GetEmailCampaign = exports.GetEmailCampaign || (exports.GetEmailCampaign = {}));
 let enumsMap = {
+    "AbTestCampaignResult.WinningVersionEnum": AbTestCampaignResult.WinningVersionEnum,
+    "AbTestCampaignResult.WinningCriteriaEnum": AbTestCampaignResult.WinningCriteriaEnum,
     "CreateAttribute.TypeEnum": CreateAttribute.TypeEnum,
     "CreateEmailCampaign.WinnerCriteriaEnum": CreateEmailCampaign.WinnerCriteriaEnum,
     "CreateWebhook.EventsEnum": CreateWebhook.EventsEnum,
@@ -5275,7 +5665,11 @@ let enumsMap = {
     "GetProcess.StatusEnum": GetProcess.StatusEnum,
     "GetSmsCampaignOverview.StatusEnum": GetSmsCampaignOverview.StatusEnum,
     "GetSmsEventReportEvents.EventEnum": GetSmsEventReportEvents.EventEnum,
+    "GetTransacBlockedContactsReason.CodeEnum": GetTransacBlockedContactsReason.CodeEnum,
     "GetWebhook.TypeEnum": GetWebhook.TypeEnum,
+    "RequestContactExportCustomContactFilter.ActionForContactsEnum": RequestContactExportCustomContactFilter.ActionForContactsEnum,
+    "RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum": RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum,
+    "RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum": RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum,
     "RequestSmsRecipientExport.RecipientsTypeEnum": RequestSmsRecipientExport.RecipientsTypeEnum,
     "SendReport.LanguageEnum": SendReport.LanguageEnum,
     "SendReportEmail.ContentTypeEnum": SendReportEmail.ContentTypeEnum,
@@ -5290,6 +5684,7 @@ let enumsMap = {
     "GetEmailCampaign.StatusEnum": GetEmailCampaign.StatusEnum,
 };
 let typeMap = {
+    "AbTestCampaignResult": AbTestCampaignResult,
     "AddChildDomain": AddChildDomain,
     "AddContactToList": AddContactToList,
     "AddCredits": AddCredits,
@@ -5329,6 +5724,7 @@ let typeMap = {
     "GetCampaignOverview": GetCampaignOverview,
     "GetCampaignRecipients": GetCampaignRecipients,
     "GetCampaignStats": GetCampaignStats,
+    "GetChildAccountCreationStatus": GetChildAccountCreationStatus,
     "GetChildDomain": GetChildDomain,
     "GetChildDomains": GetChildDomains,
     "GetChildInfoApiKeys": GetChildInfoApiKeys,
@@ -5345,6 +5741,7 @@ let typeMap = {
     "GetContactCampaignStatsUnsubscriptions": GetContactCampaignStatsUnsubscriptions,
     "GetContactDetails": GetContactDetails,
     "GetContacts": GetContacts,
+    "GetDeviceBrowserStats": GetDeviceBrowserStats,
     "GetEmailCampaigns": GetEmailCampaigns,
     "GetEmailEventReport": GetEmailEventReport,
     "GetEmailEventReportEvents": GetEmailEventReportEvents,
@@ -5376,6 +5773,7 @@ let typeMap = {
     "GetSendersList": GetSendersList,
     "GetSendersListIps": GetSendersListIps,
     "GetSendersListSenders": GetSendersListSenders,
+    "GetSharedTemplateUrl": GetSharedTemplateUrl,
     "GetSmsCampaignOverview": GetSmsCampaignOverview,
     "GetSmsCampaignStats": GetSmsCampaignStats,
     "GetSmsCampaigns": GetSmsCampaigns,
@@ -5385,8 +5783,13 @@ let typeMap = {
     "GetSmtpTemplateOverviewSender": GetSmtpTemplateOverviewSender,
     "GetSmtpTemplates": GetSmtpTemplates,
     "GetSsoToken": GetSsoToken,
+    "GetStatsByBrowser": GetStatsByBrowser,
+    "GetStatsByDevice": GetStatsByDevice,
     "GetStatsByDomain": GetStatsByDomain,
     "GetTransacAggregatedSmsReport": GetTransacAggregatedSmsReport,
+    "GetTransacBlockedContacts": GetTransacBlockedContacts,
+    "GetTransacBlockedContactsContacts": GetTransacBlockedContactsContacts,
+    "GetTransacBlockedContactsReason": GetTransacBlockedContactsReason,
     "GetTransacEmailContent": GetTransacEmailContent,
     "GetTransacEmailContentEvents": GetTransacEmailContentEvents,
     "GetTransacEmailsList": GetTransacEmailsList,
@@ -5406,6 +5809,7 @@ let typeMap = {
     "RemoveContactFromList": RemoveContactFromList,
     "RemoveCredits": RemoveCredits,
     "RequestContactExport": RequestContactExport,
+    "RequestContactExportCustomContactFilter": RequestContactExportCustomContactFilter,
     "RequestContactImport": RequestContactImport,
     "RequestContactImportNewList": RequestContactImportNewList,
     "RequestSmsRecipientExport": RequestSmsRecipientExport,
@@ -5441,6 +5845,7 @@ let typeMap = {
     "UpdateSmtpTemplate": UpdateSmtpTemplate,
     "UpdateSmtpTemplateSender": UpdateSmtpTemplateSender,
     "UpdateWebhook": UpdateWebhook,
+    "UploadImageToGallery": UploadImageToGallery,
     "GetChildInfo": GetChildInfo,
     "GetExtendedCampaignOverview": GetExtendedCampaignOverview,
     "GetExtendedClient": GetExtendedClient,
@@ -7286,6 +7691,52 @@ class EmailCampaignsApi {
             });
         });
     }
+    getAbTestCampaignResult(campaignId) {
+        const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/abTestCampaignResult'
+            .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
+        let localVarQueryParameters = {};
+        let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        let localVarFormParams = {};
+        if (campaignId === null || campaignId === undefined) {
+            throw new Error('Required parameter campaignId was null or undefined when calling getAbTestCampaignResult.');
+        }
+        let localVarUseFormData = false;
+        let localVarRequestOptions = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
+            }
+            else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    body = ObjectSerializer.deserialize(body, "AbTestCampaignResult");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    }
+                    else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
     getEmailCampaign(campaignId) {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
@@ -7382,6 +7833,52 @@ class EmailCampaignsApi {
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "GetEmailCampaigns");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    }
+                    else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    getSharedTemplateUrl(campaignId) {
+        const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/sharedUrl'
+            .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
+        let localVarQueryParameters = {};
+        let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        let localVarFormParams = {};
+        if (campaignId === null || campaignId === undefined) {
+            throw new Error('Required parameter campaignId was null or undefined when calling getSharedTemplateUrl.');
+        }
+        let localVarUseFormData = false;
+        let localVarRequestOptions = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
+            }
+            else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    body = ObjectSerializer.deserialize(body, "GetSharedTemplateUrl");
                     if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
@@ -7605,6 +8102,51 @@ class EmailCampaignsApi {
             useQuerystring: this._useQuerystring,
             json: true,
             body: ObjectSerializer.serialize(emailCampaign, "UpdateEmailCampaign")
+        };
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
+            }
+            else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    }
+                    else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    uploadImageToGallery(uploadImage) {
+        const localVarPath = this.basePath + '/emailCampaigns/images';
+        let localVarQueryParameters = {};
+        let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        let localVarFormParams = {};
+        if (uploadImage === null || uploadImage === undefined) {
+            throw new Error('Required parameter uploadImage was null or undefined when calling uploadImageToGallery.');
+        }
+        let localVarUseFormData = false;
+        let localVarRequestOptions = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(uploadImage, "UploadImageToGallery")
         };
         this.authentications.apiKey.applyToRequest(localVarRequestOptions);
         this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
@@ -8966,6 +9508,52 @@ class ResellerApi {
             });
         });
     }
+    getChildAccountCreationStatus(childAuthKey) {
+        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/accountCreationStatus'
+            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+        let localVarQueryParameters = {};
+        let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        let localVarFormParams = {};
+        if (childAuthKey === null || childAuthKey === undefined) {
+            throw new Error('Required parameter childAuthKey was null or undefined when calling getChildAccountCreationStatus.');
+        }
+        let localVarUseFormData = false;
+        let localVarRequestOptions = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
+            }
+            else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    body = ObjectSerializer.deserialize(body, "GetChildAccountCreationStatus");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    }
+                    else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
     getChildDomains(childAuthKey) {
         const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains'
             .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
@@ -9058,11 +9646,17 @@ class ResellerApi {
             });
         });
     }
-    getResellerChilds() {
+    getResellerChilds(limit, offset) {
         const localVarPath = this.basePath + '/reseller/children';
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
+        if (limit !== undefined) {
+            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
+        }
+        if (offset !== undefined) {
+            localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
         let localVarUseFormData = false;
         let localVarRequestOptions = {
             method: 'GET',
@@ -10331,6 +10925,63 @@ class SMTPApi {
             });
         });
     }
+    getTransacBlockedContacts(startDate, endDate, limit, offset, senders) {
+        const localVarPath = this.basePath + '/smtp/blockedContacts';
+        let localVarQueryParameters = {};
+        let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        let localVarFormParams = {};
+        if (startDate !== undefined) {
+            localVarQueryParameters['startDate'] = ObjectSerializer.serialize(startDate, "string");
+        }
+        if (endDate !== undefined) {
+            localVarQueryParameters['endDate'] = ObjectSerializer.serialize(endDate, "string");
+        }
+        if (limit !== undefined) {
+            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
+        }
+        if (offset !== undefined) {
+            localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
+        if (senders !== undefined) {
+            localVarQueryParameters['senders'] = ObjectSerializer.serialize(senders, "Array<string>");
+        }
+        let localVarUseFormData = false;
+        let localVarRequestOptions = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
+            }
+            else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    body = ObjectSerializer.deserialize(body, "GetTransacBlockedContacts");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    }
+                    else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
     getTransacEmailContent(uuid) {
         const localVarPath = this.basePath + '/smtp/emails/{uuid}'
             .replace('{' + 'uuid' + '}', encodeURIComponent(String(uuid)));
@@ -10569,6 +11220,96 @@ class SMTPApi {
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "CreateSmtpEmail");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    }
+                    else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    smtpBlockedContactsEmailDelete(email) {
+        const localVarPath = this.basePath + '/smtp/blockedContacts/{email}'
+            .replace('{' + 'email' + '}', encodeURIComponent(String(email)));
+        let localVarQueryParameters = {};
+        let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        let localVarFormParams = {};
+        if (email === null || email === undefined) {
+            throw new Error('Required parameter email was null or undefined when calling smtpBlockedContactsEmailDelete.');
+        }
+        let localVarUseFormData = false;
+        let localVarRequestOptions = {
+            method: 'DELETE',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
+            }
+            else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    }
+                    else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    smtpLogMessageIdDelete(messageId) {
+        const localVarPath = this.basePath + '/smtp/log/{messageId}'
+            .replace('{' + 'messageId' + '}', encodeURIComponent(String(messageId)));
+        let localVarQueryParameters = {};
+        let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        let localVarFormParams = {};
+        if (messageId === null || messageId === undefined) {
+            throw new Error('Required parameter messageId was null or undefined when calling smtpLogMessageIdDelete.');
+        }
+        let localVarUseFormData = false;
+        let localVarRequestOptions = {
+            method: 'DELETE',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
+            }
+            else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
                     if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
