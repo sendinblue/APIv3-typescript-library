@@ -154,6 +154,25 @@ export declare class CreateContact {
         type: string;
     }[];
 }
+export declare class CreateDoiContact {
+    'email': string;
+    'attributes': any;
+    'includeListIds': Array<number>;
+    'excludeListIds': Array<number>;
+    'templateId': number;
+    'redirectionUrl': string;
+    static discriminator: undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
 export declare class CreateEmailCampaign {
     'tag': string;
     'sender': CreateEmailCampaignSender;
@@ -1917,7 +1936,7 @@ export declare class GetTransacBlockedContactsContacts {
     'email': string;
     'senderEmail': string;
     'reason': GetTransacBlockedContactsReason;
-    'blockedAt': string;
+    'blockedAt': Date;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -2011,6 +2030,8 @@ export declare class GetTransacEmailsListTransactionalEmails {
     'messageId': string;
     'uuid': string;
     'date': Date;
+    'from': string;
+    'tags': Array<string>;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -3053,6 +3074,7 @@ export declare class GetExtendedCampaignOverview {
     'mirrorActive': boolean;
     'recurring': boolean;
     'sentDate': Date;
+    'returnBounce': number;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -3224,6 +3246,7 @@ export declare class GetEmailCampaign {
     'mirrorActive': boolean;
     'recurring': boolean;
     'sentDate': Date;
+    'returnBounce': number;
     'recipients': any;
     'statistics': any;
     static discriminator: undefined;
@@ -3364,6 +3387,10 @@ export declare class ContactsApi {
         response: http.IncomingMessage;
         body: CreateUpdateContactModel;
     }>;
+    createDoiContact(createDoiContact: CreateDoiContact): Promise<{
+        response: http.IncomingMessage;
+        body?: any;
+    }>;
     createFolder(createFolder: CreateUpdateFolder): Promise<{
         response: http.IncomingMessage;
         body: CreateModel;
@@ -3396,7 +3423,7 @@ export declare class ContactsApi {
         response: http.IncomingMessage;
         body: GetExtendedContactDetails;
     }>;
-    getContactStats(email: string): Promise<{
+    getContactStats(email: string, startDate?: string, endDate?: string): Promise<{
         response: http.IncomingMessage;
         body: GetContactCampaignStats;
     }>;
