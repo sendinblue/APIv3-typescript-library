@@ -351,6 +351,45 @@ CreateContact.attributeTypeMap = [
     }
 ];
 exports.CreateContact = CreateContact;
+class CreateDoiContact {
+    static getAttributeTypeMap() {
+        return CreateDoiContact.attributeTypeMap;
+    }
+}
+CreateDoiContact.discriminator = undefined;
+CreateDoiContact.attributeTypeMap = [
+    {
+        "name": "email",
+        "baseName": "email",
+        "type": "string"
+    },
+    {
+        "name": "attributes",
+        "baseName": "attributes",
+        "type": "any"
+    },
+    {
+        "name": "includeListIds",
+        "baseName": "includeListIds",
+        "type": "Array<number>"
+    },
+    {
+        "name": "excludeListIds",
+        "baseName": "excludeListIds",
+        "type": "Array<number>"
+    },
+    {
+        "name": "templateId",
+        "baseName": "templateId",
+        "type": "number"
+    },
+    {
+        "name": "redirectionUrl",
+        "baseName": "redirectionUrl",
+        "type": "string"
+    }
+];
+exports.CreateDoiContact = CreateDoiContact;
 class CreateEmailCampaign {
     static getAttributeTypeMap() {
         return CreateEmailCampaign.attributeTypeMap;
@@ -3235,7 +3274,7 @@ GetTransacBlockedContactsContacts.attributeTypeMap = [
     {
         "name": "blockedAt",
         "baseName": "blockedAt",
-        "type": "string"
+        "type": "Date"
     }
 ];
 exports.GetTransacBlockedContactsContacts = GetTransacBlockedContactsContacts;
@@ -3382,6 +3421,16 @@ GetTransacEmailsListTransactionalEmails.attributeTypeMap = [
         "name": "date",
         "baseName": "date",
         "type": "Date"
+    },
+    {
+        "name": "from",
+        "baseName": "from",
+        "type": "string"
+    },
+    {
+        "name": "tags",
+        "baseName": "tags",
+        "type": "Array<string>"
     }
 ];
 exports.GetTransacEmailsListTransactionalEmails = GetTransacEmailsListTransactionalEmails;
@@ -5191,6 +5240,11 @@ GetExtendedCampaignOverview.attributeTypeMap = [
         "name": "sentDate",
         "baseName": "sentDate",
         "type": "Date"
+    },
+    {
+        "name": "returnBounce",
+        "baseName": "returnBounce",
+        "type": "number"
     }
 ];
 exports.GetExtendedCampaignOverview = GetExtendedCampaignOverview;
@@ -5619,6 +5673,11 @@ GetEmailCampaign.attributeTypeMap = [
         "type": "Date"
     },
     {
+        "name": "returnBounce",
+        "baseName": "returnBounce",
+        "type": "number"
+    },
+    {
         "name": "recipients",
         "baseName": "recipients",
         "type": "any"
@@ -5692,6 +5751,7 @@ let typeMap = {
     "CreateAttributeEnumeration": CreateAttributeEnumeration,
     "CreateChild": CreateChild,
     "CreateContact": CreateContact,
+    "CreateDoiContact": CreateDoiContact,
     "CreateEmailCampaign": CreateEmailCampaign,
     "CreateEmailCampaignRecipients": CreateEmailCampaignRecipients,
     "CreateEmailCampaignSender": CreateEmailCampaignSender,
@@ -6406,6 +6466,51 @@ class ContactsApi {
             });
         });
     }
+    createDoiContact(createDoiContact) {
+        const localVarPath = this.basePath + '/contacts/doubleOptinConfirmation';
+        let localVarQueryParameters = {};
+        let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        let localVarFormParams = {};
+        if (createDoiContact === null || createDoiContact === undefined) {
+            throw new Error('Required parameter createDoiContact was null or undefined when calling createDoiContact.');
+        }
+        let localVarUseFormData = false;
+        let localVarRequestOptions = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(createDoiContact, "CreateDoiContact")
+        };
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
+            }
+            else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    }
+                    else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
     createFolder(createFolder) {
         const localVarPath = this.basePath + '/contacts/folders';
         let localVarQueryParameters = {};
@@ -6770,7 +6875,7 @@ class ContactsApi {
             });
         });
     }
-    getContactStats(email) {
+    getContactStats(email, startDate, endDate) {
         const localVarPath = this.basePath + '/contacts/{email}/campaignStats'
             .replace('{' + 'email' + '}', encodeURIComponent(String(email)));
         let localVarQueryParameters = {};
@@ -6778,6 +6883,12 @@ class ContactsApi {
         let localVarFormParams = {};
         if (email === null || email === undefined) {
             throw new Error('Required parameter email was null or undefined when calling getContactStats.');
+        }
+        if (startDate !== undefined) {
+            localVarQueryParameters['startDate'] = ObjectSerializer.serialize(startDate, "string");
+        }
+        if (endDate !== undefined) {
+            localVarQueryParameters['endDate'] = ObjectSerializer.serialize(endDate, "string");
         }
         let localVarUseFormData = false;
         let localVarRequestOptions = {

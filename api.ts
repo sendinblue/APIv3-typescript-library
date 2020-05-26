@@ -235,7 +235,7 @@ export class AddChildDomain {
 
 export class AddContactToList {
     /**
-    * Emails to add to a list
+    * Emails to add to a list. You can pass a maximum of 150 emails for addition in one request. If you need to add the emails in bulk, please prefer /contacts/import api.
     */
     'emails': Array<string>;
 
@@ -288,7 +288,7 @@ export class CreateAttribute {
     */
     'value': string;
     /**
-    * List of values and labels that the attribute can take. Use only if the attribute's category is \"category\". For example, [{'value':1, 'label':'male'}, {'value':2, 'label':'female'}]
+    * List of values and labels that the attribute can take. Use only if the attribute's category is \"category\". For example, [{\"value\":1, \"label\":\"male\"}, {\"value\":2, \"label\":\"female\"}]
     */
     'enumeration': Array<CreateAttributeEnumeration>;
     /**
@@ -417,11 +417,11 @@ export class CreateChild {
 
 export class CreateContact {
     /**
-    * Email address of the user. Mandatory if \"SMS\" field is not passed in \"attributes\" parameter. Mobile Number in \"SMS\" field should be passed with proper country code. For example {'SMS':'+91xxxxxxxxxx'} or {'SMS':'0091xxxxxxxxxx'}
+    * Email address of the user. Mandatory if \"SMS\" field is not passed in \"attributes\" parameter. Mobile Number in \"SMS\" field should be passed with proper country code. For example {\"SMS\":\"+91xxxxxxxxxx\"} or {\"SMS\":\"0091xxxxxxxxxx\"}
     */
     'email': string;
     /**
-    * Pass the set of attributes and their values. These attributes must be present in your SendinBlue account. For eg. {'FNAME':'Elly', 'LNAME':'Roger'}
+    * Pass the set of attributes and their values. These attributes must be present in your SendinBlue account. For eg. {\"FNAME\":\"Elly\", \"LNAME\":\"Roger\"}
     */
     'attributes': any;
     /**
@@ -489,6 +489,71 @@ export class CreateContact {
     }
 }
 
+export class CreateDoiContact {
+    /**
+    * Email address where the confirmation email will be sent. This email address will be the identifier for all other contact attributes.
+    */
+    'email': string;
+    /**
+    * Pass the set of attributes and their values. These attributes must be present in your SendinBlue account. For eg. {'FNAME':'Elly', 'LNAME':'Roger'}
+    */
+    'attributes': any;
+    /**
+    * Lists under user account where contact should be added
+    */
+    'includeListIds': Array<number>;
+    /**
+    * Lists under user account where contact should not be added
+    */
+    'excludeListIds': Array<number>;
+    /**
+    * Id of the DOI template
+    */
+    'templateId': number;
+    /**
+    * URL of the web page that user will be redirected to after clicking on the double opt in URL.
+    */
+    'redirectionUrl': string;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string"
+        },
+        {
+            "name": "attributes",
+            "baseName": "attributes",
+            "type": "any"
+        },
+        {
+            "name": "includeListIds",
+            "baseName": "includeListIds",
+            "type": "Array<number>"
+        },
+        {
+            "name": "excludeListIds",
+            "baseName": "excludeListIds",
+            "type": "Array<number>"
+        },
+        {
+            "name": "templateId",
+            "baseName": "templateId",
+            "type": "number"
+        },
+        {
+            "name": "redirectionUrl",
+            "baseName": "redirectionUrl",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return CreateDoiContact.attributeTypeMap;
+    }
+}
+
 export class CreateEmailCampaign {
     /**
     * Tag of the campaign
@@ -553,7 +618,7 @@ export class CreateEmailCampaign {
     */
     'utmCampaign': string;
     /**
-    * Pass the set of attributes to customize the type classic campaign. For example, {'FNAME':'Joe', 'LNAME':'Doe'}. Only available if 'type' is 'classic'. It's considered only if campaign is in New Template Language format. The New Template Language is dependent on the values of 'subject', 'htmlContent/htmlUrl', 'sender.name' & 'toField'
+    * Pass the set of attributes to customize the type classic campaign. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}. Only available if 'type' is 'classic'. It's considered only if campaign is in New Template Language format. The New Template Language is dependent on the values of 'subject', 'htmlContent/htmlUrl', 'sender.name' & 'toField'
     */
     'params': any;
     /**
@@ -4943,7 +5008,7 @@ export class GetTransacBlockedContactsContacts {
     /**
     * Date when the contact was blocked or unsubscribed on
     */
-    'blockedAt': string;
+    'blockedAt': Date;
 
     static discriminator = undefined;
 
@@ -4966,7 +5031,7 @@ export class GetTransacBlockedContactsContacts {
         {
             "name": "blockedAt",
             "baseName": "blockedAt",
-            "type": "string"
+            "type": "Date"
         }    ];
 
     static getAttributeTypeMap() {
@@ -5161,6 +5226,14 @@ export class GetTransacEmailsListTransactionalEmails {
     * Date on which transactional email was sent
     */
     'date': Date;
+    /**
+    * Email address of the sender from which the email was sent
+    */
+    'from': string;
+    /**
+    * Tags used for your email
+    */
+    'tags': Array<string>;
 
     static discriminator = undefined;
 
@@ -5194,6 +5267,16 @@ export class GetTransacEmailsListTransactionalEmails {
             "name": "date",
             "baseName": "date",
             "type": "Date"
+        },
+        {
+            "name": "from",
+            "baseName": "from",
+            "type": "string"
+        },
+        {
+            "name": "tags",
+            "baseName": "tags",
+            "type": "Array<string>"
         }    ];
 
     static getAttributeTypeMap() {
@@ -5656,7 +5739,7 @@ export class RemainingCreditModelReseller {
 
 export class RemoveContactFromList {
     /**
-    * Required if 'all' is false. Emails to remove from a list
+    * Required if 'all' is false. Emails to remove from a list. You can pass a maximum of 150 emails for removal in one request.
     */
     'emails': Array<string>;
     /**
@@ -5718,7 +5801,7 @@ export class RequestContactExport {
     */
     'exportAttributes': Array<string>;
     /**
-    * This attribute has been deprecated and will be removed by January 1st, 2021. Only one of the two filter options (contactFilter or customContactFilter) can be passed in the request. Set the filter for the contacts to be exported. For example, {'blacklisted':true} will export all the blacklisted contacts.
+    * This attribute has been deprecated and will be removed by January 1st, 2021. Only one of the two filter options (contactFilter or customContactFilter) can be passed in the request. Set the filter for the contacts to be exported. For example, {\"blacklisted\":true} will export all the blacklisted contacts.
     */
     'contactFilter': any;
     'customContactFilter': RequestContactExportCustomContactFilter;
@@ -5852,7 +5935,7 @@ export class RequestContactImport {
     */
     'fileUrl': string;
     /**
-    * Mandatory if fileUrl is not defined. CSV content to be imported. Use semicolon to separate multiple attributes
+    * Mandatory if fileUrl is not defined. CSV content to be imported. Use semicolon to separate multiple attributes. Maximum allowed file body size is 10MB . However we recommend a safe limit of around 8 MB to avoid the issues caused due to increase of file body size while parsing. Please use fileUrl instead to import bigger files.
     */
     'fileBody': string;
     /**
@@ -6028,15 +6111,15 @@ export class SendEmail {
     */
     'attachmentUrl': string;
     /**
-    * Pass the list of content (base64 encoded) and name of the attachment. For example, [{'content':'base64 encoded content 1', 'name':'attcahment1'}, {'content':'base64 encoded content 2', 'name':'attcahment2'}].
+    * Pass the list of content (base64 encoded) and name of the attachment. For example, [{\"content\":\"base64 encoded content 1\", \"name\":\"attcahment1\"}, {\"content\":\"base64 encoded content 2\", \"name\":\"attcahment2\"}].
     */
     'attachment': Array<SendEmailAttachment>;
     /**
-    * Pass the set of headers that shall be sent along the mail headers in the original email. 'sender.ip' header can be set (only for dedicated ip users) to mention the IP to be used for sending transactional emails. For example, {'Content-Type':'text/html', 'charset':'iso-8859-1', 'sender.ip':'1.2.3.4'}
+    * Pass the set of headers that shall be sent along the mail headers in the original email. 'sender.ip' header can be set (only for dedicated ip users) to mention the IP to be used for sending transactional emails. Headers are allowed in `This-Case-Only` (i.e. words separated by hyphen with first letter of each word in capital letter), they will be converted to such case styling if not in this format in the request payload. For example, {\"Content-Type\":\"text/html\", \"charset\":\"iso-8859-1\", \"sender.ip\":\"1.2.3.4\"}
     */
     'headers': any;
     /**
-    * Pass the set of attributes to customize the template. For example, {'FNAME':'Joe', 'LNAME':'Doe'}
+    * Pass the set of attributes to customize the template. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}
     */
     'attributes': any;
     /**
@@ -6290,7 +6373,7 @@ export class SendSms {
 export class SendSmtpEmail {
     'sender': SendSmtpEmailSender;
     /**
-    * List of email addresses and names (optional) of the recipients. For example, [{'name':'Jimmy', 'email':'jimmy98@example.com'}, {'name':'Joe', 'email':'joe@example.com'}]
+    * List of email addresses and names (optional) of the recipients. For example, [{\"name\":\"Jimmy\", \"email\":\"jimmy98@example.com\"}, {\"name\":\"Joe\", \"email\":\"joe@example.com\"}]
     */
     'to': Array<SendSmtpEmailTo>;
     /**
@@ -6319,7 +6402,7 @@ export class SendSmtpEmail {
     */
     'attachment': Array<SendSmtpEmailAttachment>;
     /**
-    * Pass the set of custom headers (not the standard headers) that shall be sent along the mail headers in the original email. 'sender.ip' header can be set (only for dedicated ip users) to mention the IP to be used for sending transactional emails. For example, `{\"sender.ip\":\"1.2.3.4\", \"X-Mailin-custom\":\"some_custom_header\"}`.
+    * Pass the set of custom headers (not the standard headers) that shall be sent along the mail headers in the original email. 'sender.ip' header can be set (only for dedicated ip users) to mention the IP to be used for sending transactional emails. Headers are allowed in `This-Case-Only` (i.e. words separated by hyphen with first letter of each word in capital letter), they will be converted to such case styling if not in this format in the request payload. For example, `{\"sender.ip\":\"1.2.3.4\", \"X-Mailin-custom\":\"some_custom_header\"}`.
     */
     'headers': any;
     /**
@@ -6327,7 +6410,7 @@ export class SendSmtpEmail {
     */
     'templateId': number;
     /**
-    * Pass the set of attributes to customize the template. For example, {'FNAME':'Joe', 'LNAME':'Doe'}. It's considered only if template is in New Template Language format. Alternatively, you can pass the set of attributes to customize the template for each recipient. For this the email will be the key and its value will be a JSON containing attributes specific to each recipient. For example, `{'abc@example.com':{'name':'ABC', 'age':21}, 'xyz@example.com':{'name':'XYZ', 'age':25}}`
+    * Pass the set of attributes to customize the template. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}. It's considered only if template is in New Template Language format.
     */
     'params': any;
     /**
@@ -6506,7 +6589,7 @@ export class SendSmtpEmailCc {
 }
 
 /**
-* Email (required), along with name (optional), on which transactional mail recipients will be able to reply back. For example, {'email':'ann6533@example.com', 'name':'Ann'}.
+* Email (required), along with name (optional), on which transactional mail recipients will be able to reply back. For example, {\"email\":\"ann6533@example.com\", \"name\":\"Ann\"}.
 */
 export class SendSmtpEmailReplyTo {
     /**
@@ -6538,7 +6621,7 @@ export class SendSmtpEmailReplyTo {
 }
 
 /**
-* Mandatory if 'templateId' is not passed. Pass name (optional) and email of sender from which emails will be sent. For example, {'name':'Mary from MyShop', 'email':'no-reply@myshop.com'}
+* Mandatory if 'templateId' is not passed. Pass name (optional) and email of sender from which emails will be sent. For example, {\"name\":\"Mary from MyShop\", \"email\":\"no-reply@myshop.com\"}
 */
 export class SendSmtpEmailSender {
     /**
@@ -6735,7 +6818,7 @@ export class UpdateAttribute {
     */
     'value': string;
     /**
-    * List of the values and labels that the attribute can take. Use only if the attribute's category is \"category\". For example, [{'value':1, 'label':'male'}, {'value':2, 'label':'female'}]
+    * List of the values and labels that the attribute can take. Use only if the attribute's category is \"category\". For example, [{\"value\":1, \"label\":\"male\"}, {\"value\":2, \"label\":\"female\"}]
     */
     'enumeration': Array<UpdateAttributeEnumeration>;
 
@@ -6938,7 +7021,7 @@ export class UpdateChildDomain {
 
 export class UpdateContact {
     /**
-    * Pass the set of attributes to be updated. These attributes must be present in your account. To update existing email address of a contact with the new one please pass EMAIL in attribtes. For example, { 'EMAIL':'newemail@domain.com', 'FNAME':'Ellie', 'LNAME':'Roger'} `{ \"EMAIL\":\"newemail@domain.com\", \"FNAME\":\"Ellie\", \"LNAME\":\"Roger\"}`. Keep in mind transactional attributes can be updated the same way as normal attributes.  Mobile Number in \"SMS\" field should be passed with proper country code. For example {'SMS':'+91xxxxxxxxxx'} or {'SMS':'0091xxxxxxxxxx'}
+    * Pass the set of attributes to be updated. These attributes must be present in your account. To update existing email address of a contact with the new one please pass EMAIL in attribtes. For example, `{ \"EMAIL\":\"newemail@domain.com\", \"FNAME\":\"Ellie\", \"LNAME\":\"Roger\"}`. Keep in mind transactional attributes can be updated the same way as normal attributes. Mobile Number in \"SMS\" field should be passed with proper country code. For example {\"SMS\":\"+91xxxxxxxxxx\"} or {\"SMS\":\"0091xxxxxxxxxx\"}
     */
     'attributes': any;
     /**
@@ -7065,7 +7148,7 @@ export class UpdateEmailCampaign {
     */
     'utmCampaign': string;
     /**
-    * Pass the set of attributes to customize the type 'classic' campaign. For example, {'FNAME':'Joe', 'LNAME':'Doe'}. The 'params' field will get updated, only if the campaign is in New Template Language, else ignored. The New Template Language is dependent on the values of 'subject', 'htmlContent/htmlUrl', 'sender.name' & 'toField'
+    * Pass the set of attributes to customize the type 'classic' campaign. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}. The 'params' field will get updated, only if the campaign is in New Template Language, else ignored. The New Template Language is dependent on the values of 'subject', 'htmlContent/htmlUrl', 'sender.name' & 'toField'
     */
     'params': any;
     /**
@@ -7875,6 +7958,10 @@ export class GetExtendedCampaignOverview {
     * Sent UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ). Only available if 'status' of the campaign is 'sent'
     */
     'sentDate': Date;
+    /**
+    * Total number of non-delivered campaigns for a particular campaign id.
+    */
+    'returnBounce': number;
 
     static discriminator = undefined;
 
@@ -8018,6 +8105,11 @@ export class GetExtendedCampaignOverview {
             "name": "sentDate",
             "baseName": "sentDate",
             "type": "Date"
+        },
+        {
+            "name": "returnBounce",
+            "baseName": "returnBounce",
+            "type": "number"
         }    ];
 
     static getAttributeTypeMap() {
@@ -8553,6 +8645,10 @@ export class GetEmailCampaign {
     * Sent UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ). Only available if 'status' of the campaign is 'sent'
     */
     'sentDate': Date;
+    /**
+    * Total number of non-delivered campaigns for a particular campaign id.
+    */
+    'returnBounce': number;
     'recipients': any;
     'statistics': any;
 
@@ -8700,6 +8796,11 @@ export class GetEmailCampaign {
             "type": "Date"
         },
         {
+            "name": "returnBounce",
+            "baseName": "returnBounce",
+            "type": "number"
+        },
+        {
             "name": "recipients",
             "baseName": "recipients",
             "type": "any"
@@ -8777,6 +8878,7 @@ let typeMap: {[index: string]: any} = {
     "CreateAttributeEnumeration": CreateAttributeEnumeration,
     "CreateChild": CreateChild,
     "CreateContact": CreateContact,
+    "CreateDoiContact": CreateDoiContact,
     "CreateEmailCampaign": CreateEmailCampaign,
     "CreateEmailCampaignRecipients": CreateEmailCampaignRecipients,
     "CreateEmailCampaignSender": CreateEmailCampaignSender,
@@ -9041,7 +9143,7 @@ export class AccountApi {
     }
     /**
      *
-     * @summary Get your account informations, plans and credits details
+     * @summary Get your account information, plan and credits details
      */
     public getAccount () : Promise<{ response: http.IncomingMessage; body: GetAccount;  }> {
         const localVarPath = this.basePath + '/account';
@@ -9140,7 +9242,7 @@ export class AttributesApi {
     }
     /**
      *
-     * @summary Creates contact attribute
+     * @summary Create contact attribute
      * @param attributeCategory Category of the attribute
      * @param attributeName Name of the attribute
      * @param createAttribute Values to create an attribute
@@ -9210,7 +9312,7 @@ export class AttributesApi {
     }
     /**
      *
-     * @summary Deletes an attribute
+     * @summary Delete an attribute
      * @param attributeCategory Category of the attribute
      * @param attributeName Name of the existing attribute
      */
@@ -9273,7 +9375,7 @@ export class AttributesApi {
     }
     /**
      *
-     * @summary Lists all attributes
+     * @summary List all attributes
      */
     public getAttributes () : Promise<{ response: http.IncomingMessage; body: GetAttributes;  }> {
         const localVarPath = this.basePath + '/contacts/attributes';
@@ -9323,7 +9425,7 @@ export class AttributesApi {
     }
     /**
      *
-     * @summary Updates contact attribute
+     * @summary Update contact attribute
      * @param attributeCategory Category of the attribute
      * @param attributeName Name of the existing attribute
      * @param updateAttribute Values to update an attribute
@@ -9506,7 +9608,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Creates contact attribute
+     * @summary Create contact attribute
      * @param attributeCategory Category of the attribute
      * @param attributeName Name of the attribute
      * @param createAttribute Values to create an attribute
@@ -9633,6 +9735,62 @@ export class ContactsApi {
     }
     /**
      *
+     * @summary Create a contact to trigger the DOI workflow from a Landing Page form
+     * @param createDoiContact Values to create the DOI contact
+     */
+    public createDoiContact (createDoiContact: CreateDoiContact) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/contacts/doubleOptinConfirmation';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'createDoiContact' is not null or undefined
+        if (createDoiContact === null || createDoiContact === undefined) {
+            throw new Error('Required parameter createDoiContact was null or undefined when calling createDoiContact.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(createDoiContact, "CreateDoiContact")
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     *
      * @summary Create a folder
      * @param createFolder Name of the folder
      */
@@ -9747,7 +9905,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Deletes an attribute
+     * @summary Delete an attribute
      * @param attributeCategory Category of the attribute
      * @param attributeName Name of the existing attribute
      */
@@ -9810,7 +9968,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Deletes a contact
+     * @summary Delete a contact
      * @param email Email (urlencoded) of the contact
      */
     public deleteContact (email: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
@@ -9978,7 +10136,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Lists all attributes
+     * @summary List all attributes
      */
     public getAttributes () : Promise<{ response: http.IncomingMessage; body: GetAttributes;  }> {
         const localVarPath = this.basePath + '/contacts/attributes';
@@ -10028,7 +10186,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Retrieves contact informations
+     * @summary Get a contact's details
      * @param email Email (urlencoded) of the contact OR its SMS attribute value
      */
     public getContactInfo (email: string) : Promise<{ response: http.IncomingMessage; body: GetExtendedContactDetails;  }> {
@@ -10085,10 +10243,12 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Get the campaigns statistics for a contact
+     * @summary Get email campaigns' statistics for a contact
      * @param email Email address (urlencoded) of the contact
+     * @param startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be lower than equal to endDate
+     * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be greater than equal to startDate
      */
-    public getContactStats (email: string) : Promise<{ response: http.IncomingMessage; body: GetContactCampaignStats;  }> {
+    public getContactStats (email: string, startDate?: string, endDate?: string) : Promise<{ response: http.IncomingMessage; body: GetContactCampaignStats;  }> {
         const localVarPath = this.basePath + '/contacts/{email}/campaignStats'
             .replace('{' + 'email' + '}', encodeURIComponent(String(email)));
         let localVarQueryParameters: any = {};
@@ -10098,6 +10258,14 @@ export class ContactsApi {
         // verify required parameter 'email' is not null or undefined
         if (email === null || email === undefined) {
             throw new Error('Required parameter email was null or undefined when calling getContactStats.');
+        }
+
+        if (startDate !== undefined) {
+            localVarQueryParameters['startDate'] = ObjectSerializer.serialize(startDate, "string");
+        }
+
+        if (endDate !== undefined) {
+            localVarQueryParameters['endDate'] = ObjectSerializer.serialize(endDate, "string");
         }
 
 
@@ -10207,7 +10375,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Get the contacts in a list
+     * @summary Get contacts in a list
      * @param listId Id of the list
      * @param modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result.
      * @param limit Number of documents per page
@@ -10279,7 +10447,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Returns folder details
+     * @summary Returns a folder's details
      * @param folderId id of the folder
      */
     public getFolder (folderId: number) : Promise<{ response: http.IncomingMessage; body: GetFolder;  }> {
@@ -10336,7 +10504,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Get the lists in a folder
+     * @summary Get lists in a folder
      * @param folderId Id of the folder
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
@@ -10403,7 +10571,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Get all the folders
+     * @summary Get all folders
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
      */
@@ -10473,7 +10641,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Get the details of a list
+     * @summary Get a list's details
      * @param listId Id of the list
      */
     public getList (listId: number) : Promise<{ response: http.IncomingMessage; body: GetExtendedList;  }> {
@@ -10647,7 +10815,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Remove existing contacts from a list
+     * @summary Delete a contact from a list
      * @param listId Id of the list
      * @param contactEmails Emails adresses of the contact
      */
@@ -10768,7 +10936,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Updates contact attribute
+     * @summary Update contact attribute
      * @param attributeCategory Category of the attribute
      * @param attributeName Name of the existing attribute
      * @param updateAttribute Values to update an attribute
@@ -10838,7 +11006,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Updates a contact
+     * @summary Update a contact
      * @param email Email (urlencoded) of the contact
      * @param updateContact Values to update a contact
      */
@@ -10901,7 +11069,7 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Update a contact folder
+     * @summary Update a folder
      * @param folderId Id of the folder
      * @param updateFolder Name of the folder
      */
@@ -11189,7 +11357,7 @@ export class EmailCampaignsApi {
     }
     /**
      *
-     * @summary Export the recipients of a campaign
+     * @summary Export the recipients of an email campaign
      * @param campaignId Id of the campaign
      * @param recipientExport Values to send for a recipient export request
      */
@@ -11248,7 +11416,7 @@ export class EmailCampaignsApi {
     }
     /**
      * Obtain winning version of an A/B test email campaign
-     * @summary Get A/B test email campaign result
+     * @summary Get an A/B test email campaign results
      * @param campaignId Id of the A/B test campaign
      */
     public getAbTestCampaignResult (campaignId: number) : Promise<{ response: http.IncomingMessage; body: AbTestCampaignResult;  }> {
@@ -11305,7 +11473,7 @@ export class EmailCampaignsApi {
     }
     /**
      *
-     * @summary Get campaign informations
+     * @summary Get an email campaign report
      * @param campaignId Id of the campaign
      */
     public getEmailCampaign (campaignId: number) : Promise<{ response: http.IncomingMessage; body: GetEmailCampaign;  }> {
@@ -11362,7 +11530,7 @@ export class EmailCampaignsApi {
     }
     /**
      *
-     * @summary Return all your created campaigns
+     * @summary Return all your created email campaigns
      * @param type Filter on the type of the campaigns
      * @param status Filter on the status of the campaign
      * @param startDate Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; )
@@ -11555,7 +11723,7 @@ export class EmailCampaignsApi {
     }
     /**
      * A PDF will be sent to the specified email addresses
-     * @summary Send the report of a campaigns
+     * @summary Send the report of a campaign
      * @param campaignId Id of the campaign
      * @param sendReport Values for send a report
      */
@@ -11681,7 +11849,7 @@ export class EmailCampaignsApi {
     }
     /**
      *
-     * @summary Update a campaign status
+     * @summary Update an email campaign status
      * @param campaignId Id of the campaign
      * @param status Status of the campaign
      */
@@ -11744,7 +11912,7 @@ export class EmailCampaignsApi {
     }
     /**
      *
-     * @summary Update a campaign
+     * @summary Update an email campaign
      * @param campaignId Id of the campaign
      * @param emailCampaign Values to update a campaign
      */
@@ -12025,7 +12193,7 @@ export class FoldersApi {
     }
     /**
      *
-     * @summary Returns folder details
+     * @summary Returns a folder's details
      * @param folderId id of the folder
      */
     public getFolder (folderId: number) : Promise<{ response: http.IncomingMessage; body: GetFolder;  }> {
@@ -12082,7 +12250,7 @@ export class FoldersApi {
     }
     /**
      *
-     * @summary Get the lists in a folder
+     * @summary Get lists in a folder
      * @param folderId Id of the folder
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
@@ -12149,7 +12317,7 @@ export class FoldersApi {
     }
     /**
      *
-     * @summary Get all the folders
+     * @summary Get all folders
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
      */
@@ -12219,7 +12387,7 @@ export class FoldersApi {
     }
     /**
      *
-     * @summary Update a contact folder
+     * @summary Update a folder
      * @param folderId Id of the folder
      * @param updateFolder Name of the folder
      */
@@ -12508,7 +12676,7 @@ export class ListsApi {
     }
     /**
      *
-     * @summary Get the contacts in a list
+     * @summary Get contacts in a list
      * @param listId Id of the list
      * @param modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result.
      * @param limit Number of documents per page
@@ -12580,7 +12748,7 @@ export class ListsApi {
     }
     /**
      *
-     * @summary Get the lists in a folder
+     * @summary Get lists in a folder
      * @param folderId Id of the folder
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
@@ -12647,7 +12815,7 @@ export class ListsApi {
     }
     /**
      *
-     * @summary Get the details of a list
+     * @summary Get a list's details
      * @param listId Id of the list
      */
     public getList (listId: number) : Promise<{ response: http.IncomingMessage; body: GetExtendedList;  }> {
@@ -12764,7 +12932,7 @@ export class ListsApi {
     }
     /**
      *
-     * @summary Remove existing contacts from a list
+     * @summary Delete a contact from a list
      * @param listId Id of the list
      * @param contactEmails Emails adresses of the contact
      */
@@ -13233,7 +13401,7 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Creates a domain for a child account
+     * @summary Create a domain for a child account
      * @param childAuthKey auth key of reseller&#39;s child
      * @param addChildDomain Sender domain to add for a specific child account. This will not be displayed to the parent account.
      */
@@ -13348,7 +13516,7 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Deletes the sender domain of the reseller child based on the childAuthKey and domainName passed
+     * @summary Delete the sender domain of the reseller child based on the childAuthKey and domainName passed
      * @param childAuthKey auth key of reseller&#39;s child
      * @param domainName Pass the existing domain that needs to be deleted
      */
@@ -13411,7 +13579,7 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Deletes a single reseller child based on the childAuthKey supplied
+     * @summary Delete a single reseller child based on the childAuthKey supplied
      * @param childAuthKey auth key of reseller&#39;s child
      */
     public deleteResellerChild (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
@@ -13530,7 +13698,7 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Returns the status of reseller's child account creation, whether it is successfully created (exists) or not based on the childAuthKey supplied
+     * @summary Get the status of a reseller's child account creation, whether it is successfully created (exists) or not based on the childAuthKey supplied
      * @param childAuthKey auth key of reseller&#39;s child
      */
     public getChildAccountCreationStatus (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body: GetChildAccountCreationStatus;  }> {
@@ -13587,7 +13755,7 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Gets all the sender domains of a specific child account
+     * @summary Get all sender domains for a specific child account
      * @param childAuthKey auth key of reseller&#39;s child
      */
     public getChildDomains (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body: GetChildDomains;  }> {
@@ -13644,7 +13812,7 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Gets the info about a specific child account
+     * @summary Get a child account's details
      * @param childAuthKey auth key of reseller&#39;s child
      */
     public getChildInfo (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body: GetChildInfo;  }> {
@@ -13701,7 +13869,7 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Gets the list of all reseller's children accounts
+     * @summary Get the list of all children accounts
      * @param limit Number of documents for child accounts information per page
      * @param offset Index of the first document in the page
      */
@@ -13882,7 +14050,7 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Updates infos of reseller's child account status based on the childAuthKey supplied
+     * @summary Update info of reseller's child account status based on the childAuthKey supplied
      * @param childAuthKey auth key of reseller&#39;s child
      * @param updateChildAccountStatus values to update in child account status
      */
@@ -13945,7 +14113,7 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Updates the sender domain of reseller's child based on the childAuthKey and domainName passed
+     * @summary Update the sender domain of reseller's child based on the childAuthKey and domainName passed
      * @param childAuthKey auth key of reseller&#39;s child
      * @param domainName Pass the existing domain that needs to be updated
      * @param updateChildDomain value to update for sender domain
@@ -14015,7 +14183,7 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Updates infos of reseller's child based on the childAuthKey supplied
+     * @summary Update info of reseller's child based on the childAuthKey supplied
      * @param childAuthKey auth key of reseller&#39;s child
      * @param resellerChild values to update in child profile
      */
@@ -14184,7 +14352,7 @@ export class SMSCampaignsApi {
     }
     /**
      *
-     * @summary Delete the SMS campaign
+     * @summary Delete an SMS campaign
      * @param campaignId id of the SMS campaign
      */
     public deleteSmsCampaign (campaignId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
@@ -14297,7 +14465,7 @@ export class SMSCampaignsApi {
     }
     /**
      *
-     * @summary Returns the informations for all your created SMS campaigns
+     * @summary Returns the information for all your created SMS campaigns
      * @param status Status of campaign.
      * @param startDate Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent sms campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; )
      * @param endDate Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent sms campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; )
@@ -14372,7 +14540,7 @@ export class SMSCampaignsApi {
     }
     /**
      * It returns the background process ID which on completion calls the notify URL that you have set in the input.
-     * @summary Exports the recipients of the specified campaign.
+     * @summary Export an SMS campaign's recipients
      * @param campaignId id of the campaign
      * @param recipientExport Values to send for a recipient export request
      */
@@ -14487,7 +14655,7 @@ export class SMSCampaignsApi {
     }
     /**
      * Send report of Sent and Archived campaign, to the specified email addresses, with respective data and a pdf attachment in detail.
-     * @summary Send report of SMS campaigns
+     * @summary Send an SMS campaign's report
      * @param campaignId id of the campaign
      * @param sendReport Values for send a report
      */
@@ -14550,7 +14718,7 @@ export class SMSCampaignsApi {
     }
     /**
      *
-     * @summary Send an SMS
+     * @summary Send a test SMS campaign
      * @param campaignId Id of the SMS campaign
      * @param phoneNumber Mobile number of the recipient with the country code. This number must belong to one of your contacts in SendinBlue account and must not be blacklisted
      */
@@ -14613,7 +14781,7 @@ export class SMSCampaignsApi {
     }
     /**
      *
-     * @summary Updates an SMS campaign
+     * @summary Update an SMS campaign
      * @param campaignId id of the SMS campaign
      * @param updateSmsCampaign Values to update an SMS Campaign
      */
@@ -14676,7 +14844,7 @@ export class SMSCampaignsApi {
     }
     /**
      *
-     * @summary Update the campaign status
+     * @summary Update a campaign's status
      * @param campaignId id of the campaign
      * @param status Status of the campaign.
      */
@@ -14788,7 +14956,7 @@ export class SMTPApi {
     }
     /**
      *
-     * @summary Create a transactional email template
+     * @summary Create an email template
      * @param smtpTemplate values to update in transactional email template
      */
     public createSmtpTemplate (smtpTemplate: CreateSmtpTemplate) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
@@ -14896,7 +15064,7 @@ export class SMTPApi {
     }
     /**
      *
-     * @summary Delete an inactive transactional email template
+     * @summary Delete an inactive email template
      * @param templateId id of the template
      */
     public deleteSmtpTemplate (templateId: number) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
@@ -15202,7 +15370,7 @@ export class SMTPApi {
     }
     /**
      *
-     * @summary Returns the template informations
+     * @summary Returns the template information
      * @param templateId id of the template
      */
     public getSmtpTemplate (templateId: number) : Promise<{ response: http.IncomingMessage; body: GetSmtpTemplateOverview;  }> {
@@ -15259,7 +15427,7 @@ export class SMTPApi {
     }
     /**
      *
-     * @summary Get the list of transactional email templates
+     * @summary Get the list of email templates
      * @param templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false
      * @param limit Number of documents returned per page
      * @param offset Index of the first document in the page
@@ -15827,7 +15995,7 @@ export class SMTPApi {
     }
     /**
      *
-     * @summary Updates a transactional email templates
+     * @summary Update an email template
      * @param templateId id of the template
      * @param smtpTemplate values to update in transactional email template
      */
@@ -16047,7 +16215,7 @@ export class SendersApi {
     }
     /**
      *
-     * @summary Return all the dedicated IPs for your account
+     * @summary Get all the dedicated IPs for your account
      */
     public getIps () : Promise<{ response: http.IncomingMessage; body: GetIps;  }> {
         const localVarPath = this.basePath + '/senders/ips';
@@ -16097,7 +16265,7 @@ export class SendersApi {
     }
     /**
      *
-     * @summary Return all the dedicated IPs for a sender
+     * @summary Get all the dedicated IPs for a sender
      * @param senderId Id of the sender
      */
     public getIpsFromSender (senderId: number) : Promise<{ response: http.IncomingMessage; body: GetIpsFromSender;  }> {
@@ -16321,7 +16489,7 @@ export class TransactionalSMSApi {
     }
     /**
      *
-     * @summary Get all the SMS activity (unaggregated events)
+     * @summary Get all your SMS activity (unaggregated events)
      * @param limit Number of documents per page
      * @param startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report
      * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report
@@ -16551,7 +16719,7 @@ export class TransactionalSMSApi {
     }
     /**
      *
-     * @summary Send the SMS campaign to the specified mobile number
+     * @summary Send the SMS campaign to a mobile number
      * @param sendTransacSms Values to send a transactional SMS
      */
     public sendTransacSms (sendTransacSms: SendTransacSms) : Promise<{ response: http.IncomingMessage; body: SendSms;  }> {
