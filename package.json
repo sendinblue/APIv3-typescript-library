@@ -2,6 +2,7 @@
     "name": "sib-api-v3-typescript",
     "version": "1.2.1",
     "description": "NodeJS client for sib-api-v3-typescript",
+    "repository": "GIT_USER_ID/GIT_REPO_ID",
     "main": "api.js",
     "types": "api.d.ts",
     "scripts": {
@@ -9,15 +10,7 @@
         "build": "tsc",
         "test": "npm run build && node client.js"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/sendinblue/APIv3-typescript-library.git"
-    },
-    "author": {
-        "name": "SendinBlue",
-        "email": "developers@sendinblue.com",
-        "url": "https://www.sendinblue.com/"
-    },
+    "author": "Swagger Codegen Contributors",
     "license": "Unlicense",
     "dependencies": {
         "bluebird": "^3.5.0",
@@ -25,10 +18,6 @@
         "@types/bluebird": "*",
         "@types/request": "*"
     },
-    "bugs": {
-        "url": "https://github.com/sendinblue/APIv3-typescript-library/issues"
-    },
-    "homepage": "https://github.com/sendinblue/APIv3-typescript-library#readme",
     "devDependencies": {
         "typescript": "^2.4.2"
     }
