@@ -304,9 +304,25 @@ CreateChild.attributeTypeMap = [
         "name": "password",
         "baseName": "password",
         "type": "string"
+    },
+    {
+        "name": "language",
+        "baseName": "language",
+        "type": "CreateChild.LanguageEnum"
     }
 ];
 exports.CreateChild = CreateChild;
+(function (CreateChild) {
+    let LanguageEnum;
+    (function (LanguageEnum) {
+        LanguageEnum[LanguageEnum["Fr"] = 'fr'] = "Fr";
+        LanguageEnum[LanguageEnum["Es"] = 'es'] = "Es";
+        LanguageEnum[LanguageEnum["Pt"] = 'pt'] = "Pt";
+        LanguageEnum[LanguageEnum["It"] = 'it'] = "It";
+        LanguageEnum[LanguageEnum["De"] = 'de'] = "De";
+        LanguageEnum[LanguageEnum["En"] = 'en'] = "En";
+    })(LanguageEnum = CreateChild.LanguageEnum || (CreateChild.LanguageEnum = {}));
+})(CreateChild = exports.CreateChild || (exports.CreateChild = {}));
 class CreateContact {
     static getAttributeTypeMap() {
         return CreateContact.attributeTypeMap;
@@ -633,6 +649,11 @@ CreateReseller.attributeTypeMap = [
         "name": "authKey",
         "baseName": "authKey",
         "type": "string"
+    },
+    {
+        "name": "id",
+        "baseName": "id",
+        "type": "number"
     }
 ];
 exports.CreateReseller = CreateReseller;
@@ -918,6 +939,7 @@ exports.CreateWebhook = CreateWebhook;
 (function (CreateWebhook) {
     let EventsEnum;
     (function (EventsEnum) {
+        EventsEnum[EventsEnum["Sent"] = 'sent'] = "Sent";
         EventsEnum[EventsEnum["HardBounce"] = 'hardBounce'] = "HardBounce";
         EventsEnum[EventsEnum["SoftBounce"] = 'softBounce'] = "SoftBounce";
         EventsEnum[EventsEnum["Blocked"] = 'blocked'] = "Blocked";
@@ -3066,6 +3088,11 @@ GetSmtpTemplateOverview.attributeTypeMap = [
         "name": "modifiedAt",
         "baseName": "modifiedAt",
         "type": "Date"
+    },
+    {
+        "name": "doiTemplate",
+        "baseName": "doiTemplate",
+        "type": "boolean"
     }
 ];
 exports.GetSmtpTemplateOverview = GetSmtpTemplateOverview;
@@ -3620,6 +3647,11 @@ PostContactInfoContacts.attributeTypeMap = [
     {
         "name": "total",
         "baseName": "total",
+        "type": "number"
+    },
+    {
+        "name": "processId",
+        "baseName": "processId",
         "type": "number"
     }
 ];
@@ -4561,6 +4593,11 @@ UpdateChildAccountStatus.attributeTypeMap = [
     {
         "name": "marketingAutomation",
         "baseName": "marketingAutomation",
+        "type": "boolean"
+    },
+    {
+        "name": "smsCampaign",
+        "baseName": "smsCampaign",
         "type": "boolean"
     }
 ];
@@ -5709,6 +5746,7 @@ let enumsMap = {
     "AbTestCampaignResult.WinningVersionEnum": AbTestCampaignResult.WinningVersionEnum,
     "AbTestCampaignResult.WinningCriteriaEnum": AbTestCampaignResult.WinningCriteriaEnum,
     "CreateAttribute.TypeEnum": CreateAttribute.TypeEnum,
+    "CreateChild.LanguageEnum": CreateChild.LanguageEnum,
     "CreateEmailCampaign.WinnerCriteriaEnum": CreateEmailCampaign.WinnerCriteriaEnum,
     "CreateWebhook.EventsEnum": CreateWebhook.EventsEnum,
     "CreateWebhook.TypeEnum": CreateWebhook.TypeEnum,
@@ -9285,14 +9323,14 @@ class ResellerApi {
     setApiKey(key, value) {
         this.authentications[ResellerApiApiKeys[key]].apiKey = value;
     }
-    addCredits(childAuthKey, addCredits) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/credits/add'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    addCredits(childIdentifier, addCredits) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/credits/add'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling addCredits.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling addCredits.');
         }
         if (addCredits === null || addCredits === undefined) {
             throw new Error('Required parameter addCredits was null or undefined when calling addCredits.');
@@ -9335,14 +9373,14 @@ class ResellerApi {
             });
         });
     }
-    associateIpToChild(childAuthKey, ip) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/ips/associate'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    associateIpToChild(childIdentifier, ip) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/ips/associate'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling associateIpToChild.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling associateIpToChild.');
         }
         if (ip === null || ip === undefined) {
             throw new Error('Required parameter ip was null or undefined when calling associateIpToChild.');
@@ -9384,14 +9422,14 @@ class ResellerApi {
             });
         });
     }
-    createChildDomain(childAuthKey, addChildDomain) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    createChildDomain(childIdentifier, addChildDomain) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling createChildDomain.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling createChildDomain.');
         }
         if (addChildDomain === null || addChildDomain === undefined) {
             throw new Error('Required parameter addChildDomain was null or undefined when calling createChildDomain.');
@@ -9476,15 +9514,15 @@ class ResellerApi {
             });
         });
     }
-    deleteChildDomain(childAuthKey, domainName) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains/{domainName}'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)))
+    deleteChildDomain(childIdentifier, domainName) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains/{domainName}'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)))
             .replace('{' + 'domainName' + '}', encodeURIComponent(String(domainName)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling deleteChildDomain.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling deleteChildDomain.');
         }
         if (domainName === null || domainName === undefined) {
             throw new Error('Required parameter domainName was null or undefined when calling deleteChildDomain.');
@@ -9525,14 +9563,14 @@ class ResellerApi {
             });
         });
     }
-    deleteResellerChild(childAuthKey) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    deleteResellerChild(childIdentifier) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling deleteResellerChild.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling deleteResellerChild.');
         }
         let localVarUseFormData = false;
         let localVarRequestOptions = {
@@ -9570,14 +9608,14 @@ class ResellerApi {
             });
         });
     }
-    dissociateIpFromChild(childAuthKey, ip) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/ips/dissociate'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    dissociateIpFromChild(childIdentifier, ip) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/ips/dissociate'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling dissociateIpFromChild.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling dissociateIpFromChild.');
         }
         if (ip === null || ip === undefined) {
             throw new Error('Required parameter ip was null or undefined when calling dissociateIpFromChild.');
@@ -9619,14 +9657,14 @@ class ResellerApi {
             });
         });
     }
-    getChildAccountCreationStatus(childAuthKey) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/accountCreationStatus'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    getChildAccountCreationStatus(childIdentifier) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/accountCreationStatus'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling getChildAccountCreationStatus.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling getChildAccountCreationStatus.');
         }
         let localVarUseFormData = false;
         let localVarRequestOptions = {
@@ -9665,14 +9703,14 @@ class ResellerApi {
             });
         });
     }
-    getChildDomains(childAuthKey) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    getChildDomains(childIdentifier) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling getChildDomains.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling getChildDomains.');
         }
         let localVarUseFormData = false;
         let localVarRequestOptions = {
@@ -9711,14 +9749,14 @@ class ResellerApi {
             });
         });
     }
-    getChildInfo(childAuthKey) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    getChildInfo(childIdentifier) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling getChildInfo.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling getChildInfo.');
         }
         let localVarUseFormData = false;
         let localVarRequestOptions = {
@@ -9805,14 +9843,14 @@ class ResellerApi {
             });
         });
     }
-    getSsoToken(childAuthKey) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/auth'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    getSsoToken(childIdentifier) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/auth'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling getSsoToken.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling getSsoToken.');
         }
         let localVarUseFormData = false;
         let localVarRequestOptions = {
@@ -9851,14 +9889,14 @@ class ResellerApi {
             });
         });
     }
-    removeCredits(childAuthKey, removeCredits) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/credits/remove'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    removeCredits(childIdentifier, removeCredits) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/credits/remove'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling removeCredits.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling removeCredits.');
         }
         if (removeCredits === null || removeCredits === undefined) {
             throw new Error('Required parameter removeCredits was null or undefined when calling removeCredits.');
@@ -9901,14 +9939,14 @@ class ResellerApi {
             });
         });
     }
-    updateChildAccountStatus(childAuthKey, updateChildAccountStatus) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/accountStatus'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    updateChildAccountStatus(childIdentifier, updateChildAccountStatus) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/accountStatus'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling updateChildAccountStatus.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling updateChildAccountStatus.');
         }
         if (updateChildAccountStatus === null || updateChildAccountStatus === undefined) {
             throw new Error('Required parameter updateChildAccountStatus was null or undefined when calling updateChildAccountStatus.');
@@ -9950,15 +9988,15 @@ class ResellerApi {
             });
         });
     }
-    updateChildDomain(childAuthKey, domainName, updateChildDomain) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains/{domainName}'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)))
+    updateChildDomain(childIdentifier, domainName, updateChildDomain) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains/{domainName}'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)))
             .replace('{' + 'domainName' + '}', encodeURIComponent(String(domainName)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling updateChildDomain.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling updateChildDomain.');
         }
         if (domainName === null || domainName === undefined) {
             throw new Error('Required parameter domainName was null or undefined when calling updateChildDomain.');
@@ -10003,14 +10041,14 @@ class ResellerApi {
             });
         });
     }
-    updateResellerChild(childAuthKey, resellerChild) {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    updateResellerChild(childIdentifier, resellerChild) {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters = {};
         let localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         let localVarFormParams = {};
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling updateResellerChild.');
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling updateResellerChild.');
         }
         if (resellerChild === null || resellerChild === undefined) {
             throw new Error('Required parameter resellerChild was null or undefined when calling updateResellerChild.');

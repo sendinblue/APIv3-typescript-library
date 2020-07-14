@@ -122,6 +122,7 @@ export declare class CreateChild {
     'lastName': string;
     'companyName': string;
     'password': string;
+    'language': CreateChild.LanguageEnum;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -133,6 +134,16 @@ export declare class CreateChild {
         baseName: string;
         type: string;
     }[];
+}
+export declare namespace CreateChild {
+    enum LanguageEnum {
+        Fr,
+        Es,
+        Pt,
+        It,
+        De,
+        En
+    }
 }
 export declare class CreateContact {
     'email': string;
@@ -282,6 +293,7 @@ export declare class CreateModel {
 }
 export declare class CreateReseller {
     'authKey': string;
+    'id': number;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -475,6 +487,7 @@ export declare class CreateWebhook {
 }
 export declare namespace CreateWebhook {
     enum EventsEnum {
+        Sent,
         HardBounce,
         SoftBounce,
         Blocked,
@@ -1794,6 +1807,7 @@ export declare class GetSmtpTemplateOverview {
     'htmlContent': string;
     'createdAt': Date;
     'modifiedAt': Date;
+    'doiTemplate': boolean;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -2153,6 +2167,7 @@ export declare class PostContactInfoContacts {
     'success': Array<string>;
     'failure': Array<string>;
     'total': number;
+    'processId': number;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -2762,6 +2777,7 @@ export declare class UpdateChildAccountStatus {
     'transactionalEmail': boolean;
     'transactionalSms': boolean;
     'marketingAutomation': boolean;
+    'smsCampaign': boolean;
     static discriminator: undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -3698,15 +3714,15 @@ export declare class ResellerApi {
     basePath: string;
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: ResellerApiApiKeys, value: string): void;
-    addCredits(childAuthKey: string, addCredits: AddCredits): Promise<{
+    addCredits(childIdentifier: string, addCredits: AddCredits): Promise<{
         response: http.IncomingMessage;
         body: RemainingCreditModel;
     }>;
-    associateIpToChild(childAuthKey: string, ip: ManageIp): Promise<{
+    associateIpToChild(childIdentifier: string, ip: ManageIp): Promise<{
         response: http.IncomingMessage;
         body?: any;
     }>;
-    createChildDomain(childAuthKey: string, addChildDomain: AddChildDomain): Promise<{
+    createChildDomain(childIdentifier: string, addChildDomain: AddChildDomain): Promise<{
         response: http.IncomingMessage;
         body?: any;
     }>;
@@ -3714,27 +3730,27 @@ export declare class ResellerApi {
         response: http.IncomingMessage;
         body: CreateReseller;
     }>;
-    deleteChildDomain(childAuthKey: string, domainName: string): Promise<{
+    deleteChildDomain(childIdentifier: string, domainName: string): Promise<{
         response: http.IncomingMessage;
         body?: any;
     }>;
-    deleteResellerChild(childAuthKey: string): Promise<{
+    deleteResellerChild(childIdentifier: string): Promise<{
         response: http.IncomingMessage;
         body?: any;
     }>;
-    dissociateIpFromChild(childAuthKey: string, ip: ManageIp): Promise<{
+    dissociateIpFromChild(childIdentifier: string, ip: ManageIp): Promise<{
         response: http.IncomingMessage;
         body?: any;
     }>;
-    getChildAccountCreationStatus(childAuthKey: string): Promise<{
+    getChildAccountCreationStatus(childIdentifier: string): Promise<{
         response: http.IncomingMessage;
         body: GetChildAccountCreationStatus;
     }>;
-    getChildDomains(childAuthKey: string): Promise<{
+    getChildDomains(childIdentifier: string): Promise<{
         response: http.IncomingMessage;
         body: GetChildDomains;
     }>;
-    getChildInfo(childAuthKey: string): Promise<{
+    getChildInfo(childIdentifier: string): Promise<{
         response: http.IncomingMessage;
         body: GetChildInfo;
     }>;
@@ -3742,23 +3758,23 @@ export declare class ResellerApi {
         response: http.IncomingMessage;
         body: GetChildrenList;
     }>;
-    getSsoToken(childAuthKey: string): Promise<{
+    getSsoToken(childIdentifier: string): Promise<{
         response: http.IncomingMessage;
         body: GetSsoToken;
     }>;
-    removeCredits(childAuthKey: string, removeCredits: RemoveCredits): Promise<{
+    removeCredits(childIdentifier: string, removeCredits: RemoveCredits): Promise<{
         response: http.IncomingMessage;
         body: RemainingCreditModel;
     }>;
-    updateChildAccountStatus(childAuthKey: string, updateChildAccountStatus: UpdateChildAccountStatus): Promise<{
+    updateChildAccountStatus(childIdentifier: string, updateChildAccountStatus: UpdateChildAccountStatus): Promise<{
         response: http.IncomingMessage;
         body?: any;
     }>;
-    updateChildDomain(childAuthKey: string, domainName: string, updateChildDomain: UpdateChildDomain): Promise<{
+    updateChildDomain(childIdentifier: string, domainName: string, updateChildDomain: UpdateChildDomain): Promise<{
         response: http.IncomingMessage;
         body?: any;
     }>;
-    updateResellerChild(childAuthKey: string, resellerChild: UpdateChild): Promise<{
+    updateResellerChild(childIdentifier: string, resellerChild: UpdateChild): Promise<{
         response: http.IncomingMessage;
         body?: any;
     }>;
