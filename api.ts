@@ -380,6 +380,10 @@ export class CreateChild {
     * Password for the child account to login
     */
     'password': string;
+    /**
+    * Language of the child account
+    */
+    'language': CreateChild.LanguageEnum;
 
     static discriminator = undefined;
 
@@ -408,6 +412,11 @@ export class CreateChild {
             "name": "password",
             "baseName": "password",
             "type": "string"
+        },
+        {
+            "name": "language",
+            "baseName": "language",
+            "type": "CreateChild.LanguageEnum"
         }    ];
 
     static getAttributeTypeMap() {
@@ -415,6 +424,16 @@ export class CreateChild {
     }
 }
 
+export namespace CreateChild {
+    export enum LanguageEnum {
+        Fr = <any> 'fr',
+        Es = <any> 'es',
+        Pt = <any> 'pt',
+        It = <any> 'it',
+        De = <any> 'de',
+        En = <any> 'en'
+    }
+}
 export class CreateContact {
     /**
     * Email address of the user. Mandatory if \"SMS\" field is not passed in \"attributes\" parameter. Mobile Number in \"SMS\" field should be passed with proper country code. For example {\"SMS\":\"+91xxxxxxxxxx\"} or {\"SMS\":\"0091xxxxxxxxxx\"}
@@ -507,11 +526,11 @@ export class CreateDoiContact {
     */
     'excludeListIds': Array<number>;
     /**
-    * Id of the DOI template
+    * Id of the Double opt-in (DOI) template
     */
     'templateId': number;
     /**
-    * URL of the web page that user will be redirected to after clicking on the double opt in URL.
+    * URL of the web page that user will be redirected to after clicking on the double opt in URL. When editing your DOI template you can reference this URL by using the tag {{ params.DOIurl }}.
     */
     'redirectionUrl': string;
 
@@ -944,6 +963,10 @@ export class CreateReseller {
     * AuthKey of Reseller child created
     */
     'authKey': string;
+    /**
+    * Id of Reseller child created
+    */
+    'id': number;
 
     static discriminator = undefined;
 
@@ -952,6 +975,11 @@ export class CreateReseller {
             "name": "authKey",
             "baseName": "authKey",
             "type": "string"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
         }    ];
 
     static getAttributeTypeMap() {
@@ -965,7 +993,7 @@ export class CreateSender {
     */
     'name': string;
     /**
-    * From Email to use for the sender
+    * From email to use for the sender. A verification email will be sent to this address.
     */
     'email': string;
     /**
@@ -1364,7 +1392,7 @@ export class CreateWebhook {
     */
     'description': string;
     /**
-    * Events triggering the webhook. Possible values for Transactional type webhook – request, delivered, hardBounce, softBounce, blocked, spam, invalid, deferred, click, opened, uniqueOpened and unsubscribed and possible values for Marketing type webhook – spam, opened, click, hardBounce, softBounce, unsubscribed, listAddition & delivered
+    * Events triggering the webhook. Possible values for Transactional type webhook – sent, request, delivered, hardBounce, softBounce, blocked, spam, invalid, deferred, click, opened, uniqueOpened and unsubscribed and possible values for Marketing type webhook – spam, opened, click, hardBounce, softBounce, unsubscribed, listAddition & delivered
     */
     'events': Array<CreateWebhook.EventsEnum>;
     /**
@@ -1403,6 +1431,7 @@ export class CreateWebhook {
 
 export namespace CreateWebhook {
     export enum EventsEnum {
+        Sent = <any> 'sent',
         HardBounce = <any> 'hardBounce',
         SoftBounce = <any> 'softBounce',
         Blocked = <any> 'blocked',
@@ -1484,7 +1513,7 @@ export class DeleteHardbounces {
 
 export class EmailExportRecipients {
     /**
-    * Webhook called once the export process is finished
+    * Webhook called once the export process is finished. For reference, https://help.sendinblue.com/hc/en-us/articles/360007666479
     */
     'notifyURL': string;
     /**
@@ -4643,6 +4672,10 @@ export class GetSmtpTemplateOverview {
     * Last modification UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
     'modifiedAt': Date;
+    /**
+    * It is true if template is a valid Double opt-in (DOI) template, otherwise it is false. This field will be available only in case of single template detail call.
+    */
+    'doiTemplate': boolean;
 
     static discriminator = undefined;
 
@@ -4706,6 +4739,11 @@ export class GetSmtpTemplateOverview {
             "name": "modifiedAt",
             "baseName": "modifiedAt",
             "type": "Date"
+        },
+        {
+            "name": "doiTemplate",
+            "baseName": "doiTemplate",
+            "type": "boolean"
         }    ];
 
     static getAttributeTypeMap() {
@@ -5540,6 +5578,10 @@ export class PostContactInfoContacts {
     * Displays the count of total number of contacts removed from list when user opts for \"all\" option.
     */
     'total': number;
+    /**
+    * Id of the process created to remove contacts from list when user opts for \"all\" option.
+    */
+    'processId': number;
 
     static discriminator = undefined;
 
@@ -5557,6 +5599,11 @@ export class PostContactInfoContacts {
         {
             "name": "total",
             "baseName": "total",
+            "type": "number"
+        },
+        {
+            "name": "processId",
+            "baseName": "processId",
             "type": "number"
         }    ];
 
@@ -5743,7 +5790,7 @@ export class RemoveContactFromList {
     */
     'emails': Array<string>;
     /**
-    * Required if 'emails' is empty. Remove all existing contacts from a list
+    * Required if 'emails' is empty. Remove all existing contacts from a list.  A process will be created in this scenario. You can fetch the process details to know about the progress
     */
     'all': boolean;
 
@@ -5806,7 +5853,7 @@ export class RequestContactExport {
     'contactFilter': any;
     'customContactFilter': RequestContactExportCustomContactFilter;
     /**
-    * Webhook that will be called once the export process is finished
+    * Webhook that will be called once the export process is finished. For reference, https://help.sendinblue.com/hc/en-us/articles/360007666479
     */
     'notifyUrl': string;
 
@@ -5943,7 +5990,7 @@ export class RequestContactImport {
     */
     'listIds': Array<number>;
     /**
-    * URL that will be called once the export process is finished
+    * URL that will be called once the import process is finished. For reference, https://help.sendinblue.com/hc/en-us/articles/360007666479
     */
     'notifyUrl': string;
     'newList': RequestContactImportNewList;
@@ -6052,7 +6099,7 @@ export class RequestContactImportNewList {
 
 export class RequestSmsRecipientExport {
     /**
-    * URL that will be called once the export process is finished
+    * URL that will be called once the export process is finished. For reference, https://help.sendinblue.com/hc/en-us/articles/360007666479
     */
     'notifyURL': string;
     /**
@@ -6398,7 +6445,7 @@ export class SendSmtpEmail {
     'subject': string;
     'replyTo': SendSmtpEmailReplyTo;
     /**
-    * Pass the absolute URL (no local file) or the base64 content of the attachment along with the attachment name (Mandatory if attachment content is passed). For example, `[{\"url\":\"https://attachment.domain.com/myAttachmentFromUrl.jpg\", \"name\":\"My attachment 1\"}, {\"content\":\"base64 exmaple content\", \"name\":\"My attachment 2\"}]`. Allowed extensions for attachment file: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub, eps, odt, mp3, m4a, m4v, wma, ogg, flac, wav, aif, aifc, aiff, mp4, mov, avi, mkv, mpeg, mpg and wmv ( If 'templateId' is passed and is in New Template Language format then both attachment url and content are accepted. If template is in Old template Language format, then 'attachment' is ignored )
+    * Pass the absolute URL (no local file) or the base64 content of the attachment along with the attachment name (Mandatory if attachment content is passed). For example, `[{\"url\":\"https://attachment.domain.com/myAttachmentFromUrl.jpg\", \"name\":\"myAttachmentFromUrl.jpg\"}, {\"content\":\"base64 example content\", \"name\":\"myAttachmentFromBase64.jpg\"}]`. Allowed extensions for attachment file: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub, eps, odt, mp3, m4a, m4v, wma, ogg, flac, wav, aif, aifc, aiff, mp4, mov, avi, mkv, mpeg, mpg and wmv ( If 'templateId' is passed and is in New Template Language format then both attachment url and content are accepted. If template is in Old template Language format, then 'attachment' is ignored )
     */
     'attachment': Array<SendSmtpEmailAttachment>;
     /**
@@ -6974,6 +7021,10 @@ export class UpdateChildAccountStatus {
     * Status of Marketing Automation Platform activation for your account (true=enabled, false=disabled)
     */
     'marketingAutomation': boolean;
+    /**
+    * Status of SMS Campaign Platform activation for your account (true=enabled, false=disabled)
+    */
+    'smsCampaign': boolean;
 
     static discriminator = undefined;
 
@@ -6991,6 +7042,11 @@ export class UpdateChildAccountStatus {
         {
             "name": "marketingAutomation",
             "baseName": "marketingAutomation",
+            "type": "boolean"
+        },
+        {
+            "name": "smsCampaign",
+            "baseName": "smsCampaign",
             "type": "boolean"
         }    ];
 
@@ -8835,6 +8891,7 @@ let enumsMap: {[index: string]: any} = {
         "AbTestCampaignResult.WinningVersionEnum": AbTestCampaignResult.WinningVersionEnum,
         "AbTestCampaignResult.WinningCriteriaEnum": AbTestCampaignResult.WinningCriteriaEnum,
         "CreateAttribute.TypeEnum": CreateAttribute.TypeEnum,
+        "CreateChild.LanguageEnum": CreateChild.LanguageEnum,
         "CreateEmailCampaign.WinnerCriteriaEnum": CreateEmailCampaign.WinnerCriteriaEnum,
         "CreateWebhook.EventsEnum": CreateWebhook.EventsEnum,
         "CreateWebhook.TypeEnum": CreateWebhook.TypeEnum,
@@ -9735,8 +9792,8 @@ export class ContactsApi {
     }
     /**
      *
-     * @summary Create a contact to trigger the DOI workflow from a Landing Page form
-     * @param createDoiContact Values to create the DOI contact
+     * @summary Create Contact via DOI (Double-Opt-In) Flow
+     * @param createDoiContact Values to create the Double opt-in (DOI) contact
      */
     public createDoiContact (createDoiContact: CreateDoiContact) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/doubleOptinConfirmation';
@@ -13275,19 +13332,19 @@ export class ResellerApi {
     /**
      *
      * @summary Add Email and/or SMS credits to a specific child account
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param addCredits Values to post to add credit to a specific child account
      */
-    public addCredits (childAuthKey: string, addCredits: AddCredits) : Promise<{ response: http.IncomingMessage; body: RemainingCreditModel;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/credits/add'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    public addCredits (childIdentifier: string, addCredits: AddCredits) : Promise<{ response: http.IncomingMessage; body: RemainingCreditModel;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/credits/add'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling addCredits.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling addCredits.');
         }
 
         // verify required parameter 'addCredits' is not null or undefined
@@ -13339,19 +13396,19 @@ export class ResellerApi {
     /**
      *
      * @summary Associate a dedicated IP to the child
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param ip IP to associate
      */
-    public associateIpToChild (childAuthKey: string, ip: ManageIp) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/ips/associate'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    public associateIpToChild (childIdentifier: string, ip: ManageIp) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/ips/associate'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling associateIpToChild.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling associateIpToChild.');
         }
 
         // verify required parameter 'ip' is not null or undefined
@@ -13402,19 +13459,19 @@ export class ResellerApi {
     /**
      *
      * @summary Create a domain for a child account
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param addChildDomain Sender domain to add for a specific child account. This will not be displayed to the parent account.
      */
-    public createChildDomain (childAuthKey: string, addChildDomain: AddChildDomain) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    public createChildDomain (childIdentifier: string, addChildDomain: AddChildDomain) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling createChildDomain.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling createChildDomain.');
         }
 
         // verify required parameter 'addChildDomain' is not null or undefined
@@ -13516,21 +13573,21 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Delete the sender domain of the reseller child based on the childAuthKey and domainName passed
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @summary Delete the sender domain of the reseller child based on the childIdentifier and domainName passed
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param domainName Pass the existing domain that needs to be deleted
      */
-    public deleteChildDomain (childAuthKey: string, domainName: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains/{domainName}'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)))
+    public deleteChildDomain (childIdentifier: string, domainName: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains/{domainName}'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)))
             .replace('{' + 'domainName' + '}', encodeURIComponent(String(domainName)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling deleteChildDomain.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling deleteChildDomain.');
         }
 
         // verify required parameter 'domainName' is not null or undefined
@@ -13579,19 +13636,19 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Delete a single reseller child based on the childAuthKey supplied
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @summary Delete a single reseller child based on the child identifier supplied
+     * @param childIdentifier Either auth key or child id of reseller&#39;s child
      */
-    public deleteResellerChild (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    public deleteResellerChild (childIdentifier: string) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling deleteResellerChild.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling deleteResellerChild.');
         }
 
 
@@ -13636,19 +13693,19 @@ export class ResellerApi {
     /**
      *
      * @summary Dissociate a dedicated IP to the child
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param ip IP to dissociate
      */
-    public dissociateIpFromChild (childAuthKey: string, ip: ManageIp) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/ips/dissociate'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    public dissociateIpFromChild (childIdentifier: string, ip: ManageIp) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/ips/dissociate'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling dissociateIpFromChild.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling dissociateIpFromChild.');
         }
 
         // verify required parameter 'ip' is not null or undefined
@@ -13698,19 +13755,19 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Get the status of a reseller's child account creation, whether it is successfully created (exists) or not based on the childAuthKey supplied
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @summary Get the status of a reseller's child account creation, whether it is successfully created (exists) or not based on the identifier supplied
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      */
-    public getChildAccountCreationStatus (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body: GetChildAccountCreationStatus;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/accountCreationStatus'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    public getChildAccountCreationStatus (childIdentifier: string) : Promise<{ response: http.IncomingMessage; body: GetChildAccountCreationStatus;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/accountCreationStatus'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling getChildAccountCreationStatus.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling getChildAccountCreationStatus.');
         }
 
 
@@ -13756,18 +13813,18 @@ export class ResellerApi {
     /**
      *
      * @summary Get all sender domains for a specific child account
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      */
-    public getChildDomains (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body: GetChildDomains;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    public getChildDomains (childIdentifier: string) : Promise<{ response: http.IncomingMessage; body: GetChildDomains;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling getChildDomains.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling getChildDomains.');
         }
 
 
@@ -13813,18 +13870,18 @@ export class ResellerApi {
     /**
      *
      * @summary Get a child account's details
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      */
-    public getChildInfo (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body: GetChildInfo;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    public getChildInfo (childIdentifier: string) : Promise<{ response: http.IncomingMessage; body: GetChildInfo;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling getChildInfo.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling getChildInfo.');
         }
 
 
@@ -13930,18 +13987,18 @@ export class ResellerApi {
     /**
      * It returns a session [token] which will remain valid for a short period of time. A child account will be able to access a white-labeled section by using the following url pattern => https:/email.mydomain.com/login/sso?token=[token]
      * @summary Get session token to access Sendinblue (SSO)
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      */
-    public getSsoToken (childAuthKey: string) : Promise<{ response: http.IncomingMessage; body: GetSsoToken;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/auth'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    public getSsoToken (childIdentifier: string) : Promise<{ response: http.IncomingMessage; body: GetSsoToken;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/auth'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling getSsoToken.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling getSsoToken.');
         }
 
 
@@ -13987,19 +14044,19 @@ export class ResellerApi {
     /**
      *
      * @summary Remove Email and/or SMS credits from a specific child account
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param removeCredits Values to post to remove email or SMS credits from a specific child account
      */
-    public removeCredits (childAuthKey: string, removeCredits: RemoveCredits) : Promise<{ response: http.IncomingMessage; body: RemainingCreditModel;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/credits/remove'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    public removeCredits (childIdentifier: string, removeCredits: RemoveCredits) : Promise<{ response: http.IncomingMessage; body: RemainingCreditModel;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/credits/remove'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling removeCredits.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling removeCredits.');
         }
 
         // verify required parameter 'removeCredits' is not null or undefined
@@ -14050,20 +14107,20 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Update info of reseller's child account status based on the childAuthKey supplied
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @summary Update info of reseller's child account status based on the childIdentifier supplied
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param updateChildAccountStatus values to update in child account status
      */
-    public updateChildAccountStatus (childAuthKey: string, updateChildAccountStatus: UpdateChildAccountStatus) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/accountStatus'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    public updateChildAccountStatus (childIdentifier: string, updateChildAccountStatus: UpdateChildAccountStatus) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/accountStatus'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling updateChildAccountStatus.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling updateChildAccountStatus.');
         }
 
         // verify required parameter 'updateChildAccountStatus' is not null or undefined
@@ -14113,22 +14170,22 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Update the sender domain of reseller's child based on the childAuthKey and domainName passed
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @summary Update the sender domain of reseller's child based on the childIdentifier and domainName passed
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param domainName Pass the existing domain that needs to be updated
      * @param updateChildDomain value to update for sender domain
      */
-    public updateChildDomain (childAuthKey: string, domainName: string, updateChildDomain: UpdateChildDomain) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}/domains/{domainName}'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)))
+    public updateChildDomain (childIdentifier: string, domainName: string, updateChildDomain: UpdateChildDomain) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains/{domainName}'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)))
             .replace('{' + 'domainName' + '}', encodeURIComponent(String(domainName)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling updateChildDomain.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling updateChildDomain.');
         }
 
         // verify required parameter 'domainName' is not null or undefined
@@ -14183,20 +14240,20 @@ export class ResellerApi {
     }
     /**
      *
-     * @summary Update info of reseller's child based on the childAuthKey supplied
-     * @param childAuthKey auth key of reseller&#39;s child
+     * @summary Update info of reseller's child based on the child identifier supplied
+     * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param resellerChild values to update in child profile
      */
-    public updateResellerChild (childAuthKey: string, resellerChild: UpdateChild) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/reseller/children/{childAuthKey}'
-            .replace('{' + 'childAuthKey' + '}', encodeURIComponent(String(childAuthKey)));
+    public updateResellerChild (childIdentifier: string, resellerChild: UpdateChild) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/reseller/children/{childIdentifier}'
+            .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'childAuthKey' is not null or undefined
-        if (childAuthKey === null || childAuthKey === undefined) {
-            throw new Error('Required parameter childAuthKey was null or undefined when calling updateResellerChild.');
+        // verify required parameter 'childIdentifier' is not null or undefined
+        if (childIdentifier === null || childIdentifier === undefined) {
+            throw new Error('Required parameter childIdentifier was null or undefined when calling updateResellerChild.');
         }
 
         // verify required parameter 'resellerChild' is not null or undefined
@@ -16719,7 +16776,7 @@ export class TransactionalSMSApi {
     }
     /**
      *
-     * @summary Send the SMS campaign to a mobile number
+     * @summary Send SMS message to a mobile number
      * @param sendTransacSms Values to send a transactional SMS
      */
     public sendTransacSms (sendTransacSms: SendTransacSms) : Promise<{ response: http.IncomingMessage; body: SendSms;  }> {
