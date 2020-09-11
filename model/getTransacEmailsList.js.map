@@ -1,0 +1,1 @@
+{"version":3,"file":"getTransacEmailsList.js","sourceRoot":"","sources":["getTransacEmailsList.ts"],"names":[],"mappings":";;AAeA;IAYI,MAAM,CAAC,mBAAmB;QACtB,OAAO,oBAAoB,CAAC,gBAAgB,CAAC;IACjD,CAAC;;AAXM,kCAAa,GAAuB,SAAS,CAAC;AAE9C,qCAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,qBAAqB;QAC7B,UAAU,EAAE,qBAAqB;QACjC,MAAM,EAAE,gDAAgD;KAC3D;CAAK,CAAC;AAVf,oDAeC"}
