@@ -1,0 +1,15 @@
+import { GetIpFromSender } from './getIpFromSender';
+export declare class GetIpsFromSender {
+    'ips': Array<GetIpFromSender>;
+    static discriminator: string | undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}

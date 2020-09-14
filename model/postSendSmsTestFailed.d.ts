@@ -1,0 +1,17 @@
+export declare class PostSendSmsTestFailed {
+    'code': number;
+    'message': string;
+    'unexistingSms'?: Array<string>;
+    'withoutListSms'?: Array<string>;
+    static discriminator: string | undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
