@@ -404,7 +404,6 @@ let enumsMap: {[index: string]: any} = {
         "RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum": RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum,
         "RequestSmsRecipientExport.RecipientsTypeEnum": RequestSmsRecipientExport.RecipientsTypeEnum,
         "SendReport.LanguageEnum": SendReport.LanguageEnum,
-        "SendReportEmail.ContentTypeEnum": SendReportEmail.ContentTypeEnum,
         "SendTransacSms.TypeEnum": SendTransacSms.TypeEnum,
         "UpdateCampaignStatus.StatusEnum": UpdateCampaignStatus.StatusEnum,
         "UpdateEmailCampaign.WinnerCriteriaEnum": UpdateEmailCampaign.WinnerCriteriaEnum,

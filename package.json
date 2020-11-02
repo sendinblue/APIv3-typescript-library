@@ -1,6 +1,6 @@
 {
     "name": "sib-api-v3-typescript",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "NodeJS client for sib-api-v3-typescript",
     "main": "api.js",
     "types": "api.d.ts",
@@ -18,7 +18,7 @@
         "email": "developers@sendinblue.com",
         "url": "https://www.sendinblue.com/"
     },
-    "license": "Unlicense",
+    "license": "MIT",
     "dependencies": {
         "bluebird": "^3.5.0",
         "request": "^2.81.0",

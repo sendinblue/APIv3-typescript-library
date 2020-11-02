@@ -403,7 +403,6 @@ let enumsMap = {
     "RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum": requestContactExportCustomContactFilter_1.RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum,
     "RequestSmsRecipientExport.RecipientsTypeEnum": requestSmsRecipientExport_1.RequestSmsRecipientExport.RecipientsTypeEnum,
     "SendReport.LanguageEnum": sendReport_1.SendReport.LanguageEnum,
-    "SendReportEmail.ContentTypeEnum": sendReportEmail_1.SendReportEmail.ContentTypeEnum,
     "SendTransacSms.TypeEnum": sendTransacSms_1.SendTransacSms.TypeEnum,
     "UpdateCampaignStatus.StatusEnum": updateCampaignStatus_1.UpdateCampaignStatus.StatusEnum,
     "UpdateEmailCampaign.WinnerCriteriaEnum": updateEmailCampaign_1.UpdateEmailCampaign.WinnerCriteriaEnum,
