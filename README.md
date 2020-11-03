@@ -26,54 +26,36 @@ npm install sib-api-v3-typescript --save
 Once you have [installed](#installation) the node module in your project, you can execute the following sample code JS code :
 
 ```javascript
-// For getAccount API
+const SibApiV3Sdk = require('sib-api-v3-typescript');
 
-var SibApiV3Sdk = require('sib-api-v3-typescript');
-
-var apiInstance = new SibApiV3Sdk.AccountApi()
+let apiInstance = new SibApiV3Sdk.AccountApi()
 
 // Configure API key authorization: api-key
 
-var apiKey = apiInstance.authentications['apiKey'];
+let apiKey = apiInstance.authentications['apiKey'];
 apiKey.apiKey = "YOUR API KEY"
-
-// Configure API key authorization: partner-key
-
-var partnerKey = apiInstance.authentications['partnerKey'];
-partnerKey.apiKey = "YOUR API KEY"
 
 apiInstance.getAccount().then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
 }, function(error) {
   console.error(error);
 });
-
-
 ```
 
 ```javascript
-//For getLists API
+const SibApiV3Sdk = require('sib-api-v3-typescript');
 
-var SibApiV3Sdk = require('sib-api-v3-typescript');
-
-var apiInstance = new SibApiV3Sdk.ContactsApi()
+let apiInstance = new SibApiV3Sdk.ContactsApi()
 
 // Configure API key authorization: apiKey
 
-var apiKey = apiInstance.authentications['apiKey'];
+let apiKey = apiInstance.authentications['apiKey'];
 apiKey.apiKey = "YOUR API KEY"
 
-// Configure API key authorization: partnerKey
+let limit = 10; // Number | Number of documents per page
+let offset = 0; // Number | Index of the first document of the page
 
-var partnerKey = apiInstance.authentications['partnerKey'];
-partnerKey.apiKey = "YOUR API KEY"
-
-var opts = {
-  'limit': 10, // Number | Number of documents per page
-  'offset': 0 // Number | Index of the first document of the page
-};
-
-apiInstance.getLists(opts).then(function(data) {
+apiInstance.getLists(limit, offset).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
   apiInstance.getAttributes().then(function(data) {
     console.log('API called successfully. Returned data: ' + data);
@@ -84,9 +66,6 @@ apiInstance.getLists(opts).then(function(data) {
 }, function(error) {
   console.error(error);
 });
-
-
 ```
 
-
-For more examples, refer the https://github.com/sendinblue/APIv3-nodejs-library#documentation-for-api-endpoints
+For more examples, refer the [Endpoints Guide](https://developers.sendinblue.com/reference)

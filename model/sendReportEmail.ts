@@ -13,31 +13,15 @@
 import { RequestFile } from '../api';
 
 /**
-* Email sending credentials including subject, body, to, cc etc.
+* Custom attributes for the report email.
 */
 export class SendReportEmail {
-    /**
-    * Subject of the email message
-    */
-    'subject': string;
     /**
     * Email addresses of the recipients
     */
     'to': Array<string>;
     /**
-    * Type of the message body
-    */
-    'contentType'?: SendReportEmail.ContentTypeEnum;
-    /**
-    * Email addresses of the recipients in bcc
-    */
-    'bcc'?: Array<string>;
-    /**
-    * Email addresses of the recipients in cc
-    */
-    'cc'?: Array<string>;
-    /**
-    * Body of the email message
+    * Custom text message to be presented in the report email.
     */
     'body': string;
 
@@ -45,28 +29,8 @@ export class SendReportEmail {
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "subject",
-            "baseName": "subject",
-            "type": "string"
-        },
-        {
             "name": "to",
             "baseName": "to",
-            "type": "Array<string>"
-        },
-        {
-            "name": "contentType",
-            "baseName": "contentType",
-            "type": "SendReportEmail.ContentTypeEnum"
-        },
-        {
-            "name": "bcc",
-            "baseName": "bcc",
-            "type": "Array<string>"
-        },
-        {
-            "name": "cc",
-            "baseName": "cc",
             "type": "Array<string>"
         },
         {
@@ -80,9 +44,3 @@ export class SendReportEmail {
     }
 }
 
-export namespace SendReportEmail {
-    export enum ContentTypeEnum {
-        Text = <any> 'text',
-        Html = <any> 'html'
-    }
-}

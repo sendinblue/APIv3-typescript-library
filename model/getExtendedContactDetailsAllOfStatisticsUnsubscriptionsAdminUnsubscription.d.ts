@@ -1,6 +1,6 @@
 export declare class GetExtendedContactDetailsAllOfStatisticsUnsubscriptionsAdminUnsubscription {
     'eventTime': Date;
-    'ip': string;
+    'ip'?: string;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

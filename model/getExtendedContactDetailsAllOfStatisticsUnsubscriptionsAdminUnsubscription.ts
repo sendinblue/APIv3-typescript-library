@@ -20,7 +20,7 @@ export class GetExtendedContactDetailsAllOfStatisticsUnsubscriptionsAdminUnsubsc
     /**
     * IP from which the user has been unsubscribed
     */
-    'ip': string;
+    'ip'?: string;
 
     static discriminator: string | undefined = undefined;
 
