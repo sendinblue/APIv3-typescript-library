@@ -59,7 +59,9 @@ export enum ContactsApiApiKeys {
 
 export class ContactsApi {
     protected _basePath = defaultBasePath;
-    protected _defaultHeaders : any = {};
+    protected _defaultHeaders : any = {
+        'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
+    };
     protected _useQuerystring : boolean = false;
 
     protected authentications = {

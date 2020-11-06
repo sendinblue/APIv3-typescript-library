@@ -21,7 +21,9 @@ var ProcessApiApiKeys;
 class ProcessApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this._defaultHeaders = {};
+        this._defaultHeaders = {
+            'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
+        };
         this._useQuerystring = false;
         this.authentications = {
             'default': new models_1.VoidAuth(),
