@@ -57,7 +57,7 @@ export declare class ListsApi {
         response: http.IncomingMessage;
         body?: any;
     }>;
-    getContactsFromList(listId: number, modifiedSince?: Date, limit?: number, offset?: number, options?: {
+    getContactsFromList(listId: number, modifiedSince?: Date, limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -65,7 +65,7 @@ export declare class ListsApi {
         response: http.IncomingMessage;
         body: GetContacts;
     }>;
-    getFolderLists(folderId: number, limit?: number, offset?: number, options?: {
+    getFolderLists(folderId: number, limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -81,7 +81,7 @@ export declare class ListsApi {
         response: http.IncomingMessage;
         body: GetExtendedList;
     }>;
-    getLists(limit?: number, offset?: number, options?: {
+    getLists(limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };

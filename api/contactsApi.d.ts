@@ -152,7 +152,7 @@ export declare class ContactsApi {
         response: http.IncomingMessage;
         body: GetContactCampaignStats;
     }>;
-    getContacts(limit?: number, offset?: number, modifiedSince?: Date, options?: {
+    getContacts(limit?: number, offset?: number, modifiedSince?: Date, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -160,7 +160,7 @@ export declare class ContactsApi {
         response: http.IncomingMessage;
         body: GetContacts;
     }>;
-    getContactsFromList(listId: number, modifiedSince?: Date, limit?: number, offset?: number, options?: {
+    getContactsFromList(listId: number, modifiedSince?: Date, limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -176,7 +176,7 @@ export declare class ContactsApi {
         response: http.IncomingMessage;
         body: GetFolder;
     }>;
-    getFolderLists(folderId: number, limit?: number, offset?: number, options?: {
+    getFolderLists(folderId: number, limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -184,7 +184,7 @@ export declare class ContactsApi {
         response: http.IncomingMessage;
         body: GetFolderLists;
     }>;
-    getFolders(limit: number, offset: number, options?: {
+    getFolders(limit: number, offset: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -200,7 +200,7 @@ export declare class ContactsApi {
         response: http.IncomingMessage;
         body: GetExtendedList;
     }>;
-    getLists(limit?: number, offset?: number, options?: {
+    getLists(limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };

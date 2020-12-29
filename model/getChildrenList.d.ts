@@ -1,7 +1,7 @@
 import { GetChildInfo } from './getChildInfo';
 export declare class GetChildrenList {
     'children'?: Array<GetChildInfo & object>;
-    'count': number;
+    'count'?: number;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

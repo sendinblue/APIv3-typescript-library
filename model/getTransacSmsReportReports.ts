@@ -16,43 +16,43 @@ export class GetTransacSmsReportReports {
     /**
     * Date for which statistics are retrieved
     */
-    'date': string;
+    'date'?: string;
     /**
     * Number of requests for the date
     */
-    'requests': number;
+    'requests'?: number;
     /**
     * Number of delivered SMS for the date
     */
-    'delivered': number;
+    'delivered'?: number;
     /**
     * Number of hardbounces for the date
     */
-    'hardBounces': number;
+    'hardBounces'?: number;
     /**
     * Number of softbounces for the date
     */
-    'softBounces': number;
+    'softBounces'?: number;
     /**
     * Number of blocked contact for the date
     */
-    'blocked': number;
+    'blocked'?: number;
     /**
     * Number of unsubscription for the date
     */
-    'unsubscribed': number;
+    'unsubscribed'?: number;
     /**
     * Number of answered SMS for the date
     */
-    'replied': number;
+    'replied'?: number;
     /**
     * Number of accepted for the date
     */
-    'accepted': number;
+    'accepted'?: number;
     /**
     * Number of rejected for the date
     */
-    'rejected': number;
+    'rejected'?: number;
 
     static discriminator: string | undefined = undefined;
 

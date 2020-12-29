@@ -34,7 +34,7 @@ export class GetExtendedCampaignOverviewAllOf {
     /**
     * Customisation of the \"to\" field of the campaign
     */
-    'toField': string;
+    'toField'?: string;
     /**
     * HTML content of the campaign
     */
@@ -46,7 +46,7 @@ export class GetExtendedCampaignOverviewAllOf {
     /**
     * Tag of the campaign
     */
-    'tag': string;
+    'tag'?: string;
     /**
     * Creation UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */

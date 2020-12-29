@@ -56,6 +56,11 @@ GetEmailEventReportEvents.attributeTypeMap = [
         "name": "from",
         "baseName": "from",
         "type": "string"
+    },
+    {
+        "name": "templateId",
+        "baseName": "templateId",
+        "type": "number"
     }
 ];
 exports.GetEmailEventReportEvents = GetEmailEventReportEvents;
@@ -74,6 +79,7 @@ exports.GetEmailEventReportEvents = GetEmailEventReportEvents;
         EventEnum[EventEnum["Deferred"] = 'deferred'] = "Deferred";
         EventEnum[EventEnum["Blocked"] = 'blocked'] = "Blocked";
         EventEnum[EventEnum["Unsubscribed"] = 'unsubscribed'] = "Unsubscribed";
+        EventEnum[EventEnum["Error"] = 'error'] = "Error";
     })(EventEnum = GetEmailEventReportEvents.EventEnum || (GetEmailEventReportEvents.EventEnum = {}));
 })(GetEmailEventReportEvents = exports.GetEmailEventReportEvents || (exports.GetEmailEventReportEvents = {}));
 //# sourceMappingURL=getEmailEventReportEvents.js.map

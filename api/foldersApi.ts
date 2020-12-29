@@ -40,7 +40,7 @@ export enum FoldersApiApiKeys {
 export class FoldersApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.0.3/ts-node'
     };
     protected _useQuerystring : boolean = false;
 
@@ -74,7 +74,11 @@ export class FoldersApi {
     }
 
     set defaultHeaders(defaultHeaders: any) {
-        this._defaultHeaders = defaultHeaders;
+        if (defaultHeaders['user-agent'] && defaultHeaders['user-agent'].substr(0,11).toLowerCase() !== 'sendinblue_') {
+            this._defaultHeaders = this._defaultHeaders;
+        } else {
+            this._defaultHeaders = defaultHeaders;
+        }
     }
 
     get defaultHeaders() {
@@ -327,8 +331,9 @@ export class FoldersApi {
      * @param folderId Id of the folder
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getFolderLists (folderId: number, limit?: number, offset?: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }> {
+    public async getFolderLists (folderId: number, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}/lists'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         let localVarQueryParameters: any = {};
@@ -353,6 +358,10 @@ export class FoldersApi {
 
         if (offset !== undefined) {
             localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -411,8 +420,9 @@ export class FoldersApi {
      * @summary Get all folders
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getFolders (limit: number, offset: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetFolders;  }> {
+    public async getFolders (limit: number, offset: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetFolders;  }> {
         const localVarPath = this.basePath + '/contacts/folders';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -441,6 +451,10 @@ export class FoldersApi {
 
         if (offset !== undefined) {
             localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);

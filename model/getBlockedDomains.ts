@@ -12,32 +12,26 @@
 
 import { RequestFile } from '../api';
 
-export class GetChildDomain {
+/**
+* list of blocked domains
+*/
+export class GetBlockedDomains {
     /**
-    * Sender domain
+    * List of all blocked domains
     */
-    'domain'?: string;
-    /**
-    * indicates whether a domain is verified or not
-    */
-    'active'?: boolean;
+    'domains': Array<string>;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "domain",
-            "baseName": "domain",
-            "type": "string"
-        },
-        {
-            "name": "active",
-            "baseName": "active",
-            "type": "boolean"
+            "name": "domains",
+            "baseName": "domains",
+            "type": "Array<string>"
         }    ];
 
     static getAttributeTypeMap() {
-        return GetChildDomain.attributeTypeMap;
+        return GetBlockedDomains.attributeTypeMap;
     }
 }
 

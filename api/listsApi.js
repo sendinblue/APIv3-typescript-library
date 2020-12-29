@@ -22,7 +22,7 @@ class ListsApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
         this._defaultHeaders = {
-            'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
+            'user-agent': 'sendinblue_clientAPI/v2.0.3/ts-node'
         };
         this._useQuerystring = false;
         this.authentications = {
@@ -49,7 +49,12 @@ class ListsApi {
         this._basePath = basePath;
     }
     set defaultHeaders(defaultHeaders) {
-        this._defaultHeaders = defaultHeaders;
+        if (defaultHeaders['user-agent'] && defaultHeaders['user-agent'].substr(0, 11).toLowerCase() !== 'sendinblue_') {
+            this._defaultHeaders = this._defaultHeaders;
+        }
+        else {
+            this._defaultHeaders = defaultHeaders;
+        }
     }
     get defaultHeaders() {
         return this._defaultHeaders;
@@ -270,7 +275,7 @@ class ListsApi {
             });
         });
     }
-    getContactsFromList(listId, modifiedSince, limit, offset, options = { headers: {} }) {
+    getContactsFromList(listId, modifiedSince, limit, offset, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts'
                 .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
@@ -295,6 +300,9 @@ class ListsApi {
             }
             if (offset !== undefined) {
                 localVarQueryParameters['offset'] = models_1.ObjectSerializer.serialize(offset, "number");
+            }
+            if (sort !== undefined) {
+                localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
             let localVarUseFormData = false;
@@ -346,7 +354,7 @@ class ListsApi {
             });
         });
     }
-    getFolderLists(folderId, limit, offset, options = { headers: {} }) {
+    getFolderLists(folderId, limit, offset, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/folders/{folderId}/lists'
                 .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
@@ -368,6 +376,9 @@ class ListsApi {
             }
             if (offset !== undefined) {
                 localVarQueryParameters['offset'] = models_1.ObjectSerializer.serialize(offset, "number");
+            }
+            if (sort !== undefined) {
+                localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
             let localVarUseFormData = false;
@@ -486,7 +497,7 @@ class ListsApi {
             });
         });
     }
-    getLists(limit, offset, options = { headers: {} }) {
+    getLists(limit, offset, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/lists';
             let localVarQueryParameters = {};
@@ -504,6 +515,9 @@ class ListsApi {
             }
             if (offset !== undefined) {
                 localVarQueryParameters['offset'] = models_1.ObjectSerializer.serialize(offset, "number");
+            }
+            if (sort !== undefined) {
+                localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
             let localVarUseFormData = false;

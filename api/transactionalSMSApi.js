@@ -22,7 +22,7 @@ class TransactionalSMSApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
         this._defaultHeaders = {
-            'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
+            'user-agent': 'sendinblue_clientAPI/v2.0.3/ts-node'
         };
         this._useQuerystring = false;
         this.authentications = {
@@ -49,7 +49,12 @@ class TransactionalSMSApi {
         this._basePath = basePath;
     }
     set defaultHeaders(defaultHeaders) {
-        this._defaultHeaders = defaultHeaders;
+        if (defaultHeaders['user-agent'] && defaultHeaders['user-agent'].substr(0, 11).toLowerCase() !== 'sendinblue_') {
+            this._defaultHeaders = this._defaultHeaders;
+        }
+        else {
+            this._defaultHeaders = defaultHeaders;
+        }
     }
     get defaultHeaders() {
         return this._defaultHeaders;
@@ -66,7 +71,7 @@ class TransactionalSMSApi {
     addInterceptor(interceptor) {
         this.interceptors.push(interceptor);
     }
-    getSmsEvents(limit, startDate, endDate, offset, days, phoneNumber, event, tags, options = { headers: {} }) {
+    getSmsEvents(limit, startDate, endDate, offset, days, phoneNumber, event, tags, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/transactionalSMS/statistics/events';
             let localVarQueryParameters = {};
@@ -102,6 +107,9 @@ class TransactionalSMSApi {
             }
             if (tags !== undefined) {
                 localVarQueryParameters['tags'] = models_1.ObjectSerializer.serialize(tags, "string");
+            }
+            if (sort !== undefined) {
+                localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
             let localVarUseFormData = false;
@@ -228,7 +236,7 @@ class TransactionalSMSApi {
             });
         });
     }
-    getTransacSmsReport(startDate, endDate, days, tag, options = { headers: {} }) {
+    getTransacSmsReport(startDate, endDate, days, tag, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/transactionalSMS/statistics/reports';
             let localVarQueryParameters = {};
@@ -252,6 +260,9 @@ class TransactionalSMSApi {
             }
             if (tag !== undefined) {
                 localVarQueryParameters['tag'] = models_1.ObjectSerializer.serialize(tag, "string");
+            }
+            if (sort !== undefined) {
+                localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
             let localVarUseFormData = false;

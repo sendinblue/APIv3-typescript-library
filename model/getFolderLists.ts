@@ -14,11 +14,11 @@ import { RequestFile } from '../api';
 import { GetList } from './getList';
 
 export class GetFolderLists {
-    'lists': Array<GetList>;
+    'lists'?: Array<GetList>;
     /**
     * Number of lists in the folder
     */
-    'count': number;
+    'count'?: number;
 
     static discriminator: string | undefined = undefined;
 

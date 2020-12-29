@@ -10,6 +10,7 @@ __export(require("./abTestVersionStats"));
 __export(require("./addChildDomain"));
 __export(require("./addContactToList"));
 __export(require("./addCredits"));
+__export(require("./blockDomain"));
 __export(require("./createAttribute"));
 __export(require("./createAttributeEnumeration"));
 __export(require("./createChild"));
@@ -46,6 +47,7 @@ __export(require("./getAggregatedReport"));
 __export(require("./getAttributes"));
 __export(require("./getAttributesAttributes"));
 __export(require("./getAttributesEnumeration"));
+__export(require("./getBlockedDomains"));
 __export(require("./getCampaignOverview"));
 __export(require("./getCampaignRecipients"));
 __export(require("./getCampaignStats"));
@@ -189,6 +191,7 @@ const abTestVersionStats_1 = require("./abTestVersionStats");
 const addChildDomain_1 = require("./addChildDomain");
 const addContactToList_1 = require("./addContactToList");
 const addCredits_1 = require("./addCredits");
+const blockDomain_1 = require("./blockDomain");
 const createAttribute_1 = require("./createAttribute");
 const createAttributeEnumeration_1 = require("./createAttributeEnumeration");
 const createChild_1 = require("./createChild");
@@ -225,6 +228,7 @@ const getAggregatedReport_1 = require("./getAggregatedReport");
 const getAttributes_1 = require("./getAttributes");
 const getAttributesAttributes_1 = require("./getAttributesAttributes");
 const getAttributesEnumeration_1 = require("./getAttributesEnumeration");
+const getBlockedDomains_1 = require("./getBlockedDomains");
 const getCampaignOverview_1 = require("./getCampaignOverview");
 const getCampaignRecipients_1 = require("./getCampaignRecipients");
 const getCampaignStats_1 = require("./getCampaignStats");
@@ -416,6 +420,7 @@ let typeMap = {
     "AddChildDomain": addChildDomain_1.AddChildDomain,
     "AddContactToList": addContactToList_1.AddContactToList,
     "AddCredits": addCredits_1.AddCredits,
+    "BlockDomain": blockDomain_1.BlockDomain,
     "CreateAttribute": createAttribute_1.CreateAttribute,
     "CreateAttributeEnumeration": createAttributeEnumeration_1.CreateAttributeEnumeration,
     "CreateChild": createChild_1.CreateChild,
@@ -452,6 +457,7 @@ let typeMap = {
     "GetAttributes": getAttributes_1.GetAttributes,
     "GetAttributesAttributes": getAttributesAttributes_1.GetAttributesAttributes,
     "GetAttributesEnumeration": getAttributesEnumeration_1.GetAttributesEnumeration,
+    "GetBlockedDomains": getBlockedDomains_1.GetBlockedDomains,
     "GetCampaignOverview": getCampaignOverview_1.GetCampaignOverview,
     "GetCampaignRecipients": getCampaignRecipients_1.GetCampaignRecipients,
     "GetCampaignStats": getCampaignStats_1.GetCampaignStats,

@@ -21,9 +21,7 @@ var AccountApiApiKeys;
 class AccountApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this._defaultHeaders = {
-            'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
-        };
+        this._defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.0.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new models_1.VoidAuth(),
@@ -42,6 +40,7 @@ class AccountApi {
             }
         }
     }
+    ;
     set useQuerystring(value) {
         this._useQuerystring = value;
     }
@@ -49,7 +48,12 @@ class AccountApi {
         this._basePath = basePath;
     }
     set defaultHeaders(defaultHeaders) {
-        this._defaultHeaders = defaultHeaders;
+        if (defaultHeaders['user-agent'] && defaultHeaders['user-agent'].substr(0, 11).toLowerCase() !== 'sendinblue_') {
+            this._defaultHeaders = this._defaultHeaders;
+        }
+        else {
+            this._defaultHeaders = defaultHeaders;
+        }
     }
     get defaultHeaders() {
         return this._defaultHeaders;

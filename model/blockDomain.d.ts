@@ -1,7 +1,5 @@
-import { GetExtendedCampaignOverview } from './getExtendedCampaignOverview';
-export declare class GetEmailCampaigns {
-    'campaigns'?: Array<GetExtendedCampaignOverview & object>;
-    'count'?: number;
+export declare class BlockDomain {
+    'domain': string;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

@@ -13,19 +13,19 @@
 import { RequestFile } from '../api';
 
 /**
-* Mandatory if `templateId` is not passed. Pass name (optional) and email or id of sender from which emails will be sent. `name` will be ignored if passed along with sender `id`. For example, {\"name\":\"Mary from MyShop\", \"email\":\"no-reply@myshop.com\"} or {\"id\":2}
+* Mandatory if `templateId` is not passed. Pass `name` (optional) and `email` OR `id` of sender from which emails will be sent. `name` will be ignored if passed along with sender `id`. For example, {\"name\":\"Mary from MyShop\", \"email\":\"no-reply@myshop.com\"} or {\"id\":2}
 */
 export class SendSmtpEmailSender {
     /**
-    * Name of the sender from which the emails will be sent. Maximum allowed characters are 70.
+    * Name of the sender from which the emails will be sent. Maximum allowed characters are 70. Applicable only when email is passed.
     */
     'name'?: string;
     /**
-    * Email of the sender from which the emails will be sent
+    * Email of the sender from which the emails will be sent. Mandatory if sender id is not passed.
     */
-    'email': string;
+    'email'?: string;
     /**
-    * Id of the sender from which the emails will be sent
+    * Id of the sender from which the emails will be sent. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email). Mandatory if email is not passed.
     */
     'id'?: number;
 

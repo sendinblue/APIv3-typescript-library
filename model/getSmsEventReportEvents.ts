@@ -16,19 +16,19 @@ export class GetSmsEventReportEvents {
     /**
     * Phone number which has generated the event
     */
-    'phoneNumber': string;
+    'phoneNumber'?: string;
     /**
     * UTC date-time on which the event has been generated
     */
-    'date': Date;
+    'date'?: Date;
     /**
     * Message ID which generated the event
     */
-    'messageId': string;
+    'messageId'?: string;
     /**
     * Event which occurred
     */
-    'event': GetSmsEventReportEvents.EventEnum;
+    'event'?: GetSmsEventReportEvents.EventEnum;
     /**
     * Reason of bounce (only available if the event is hardbounce or softbounce)
     */

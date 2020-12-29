@@ -28,7 +28,7 @@ export declare class TransactionalSMSApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: TransactionalSMSApiApiKeys, value: string): void;
     addInterceptor(interceptor: Interceptor): void;
-    getSmsEvents(limit?: number, startDate?: string, endDate?: string, offset?: number, days?: number, phoneNumber?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'sent' | 'accepted' | 'unsubscription' | 'replies' | 'blocked', tags?: string, options?: {
+    getSmsEvents(limit?: number, startDate?: string, endDate?: string, offset?: number, days?: number, phoneNumber?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'sent' | 'accepted' | 'unsubscription' | 'replies' | 'blocked', tags?: string, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -44,7 +44,7 @@ export declare class TransactionalSMSApi {
         response: http.IncomingMessage;
         body: GetTransacAggregatedSmsReport;
     }>;
-    getTransacSmsReport(startDate?: string, endDate?: string, days?: number, tag?: string, options?: {
+    getTransacSmsReport(startDate?: string, endDate?: string, days?: number, tag?: string, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };

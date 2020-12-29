@@ -21,7 +21,7 @@ export class GetProcesses {
     /**
     * Number of processes available on your account
     */
-    'count': number;
+    'count'?: number;
 
     static discriminator: string | undefined = undefined;
 

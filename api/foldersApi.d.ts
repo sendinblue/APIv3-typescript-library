@@ -52,7 +52,7 @@ export declare class FoldersApi {
         response: http.IncomingMessage;
         body: GetFolder;
     }>;
-    getFolderLists(folderId: number, limit?: number, offset?: number, options?: {
+    getFolderLists(folderId: number, limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -60,7 +60,7 @@ export declare class FoldersApi {
         response: http.IncomingMessage;
         body: GetFolderLists;
     }>;
-    getFolders(limit: number, offset: number, options?: {
+    getFolders(limit: number, offset: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };

@@ -53,6 +53,10 @@ export class GetEmailEventReportEvents {
     * Sender email from which the emails are sent
     */
     'from'?: string;
+    /**
+    * ID of the template (only available if the email is template based)
+    */
+    'templateId'?: number;
 
     static discriminator: string | undefined = undefined;
 
@@ -106,6 +110,11 @@ export class GetEmailEventReportEvents {
             "name": "from",
             "baseName": "from",
             "type": "string"
+        },
+        {
+            "name": "templateId",
+            "baseName": "templateId",
+            "type": "number"
         }    ];
 
     static getAttributeTypeMap() {
@@ -126,6 +135,7 @@ export namespace GetEmailEventReportEvents {
         Invalid = <any> 'invalid',
         Deferred = <any> 'deferred',
         Blocked = <any> 'blocked',
-        Unsubscribed = <any> 'unsubscribed'
+        Unsubscribed = <any> 'unsubscribed',
+        Error = <any> 'error'
     }
 }

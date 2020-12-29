@@ -46,7 +46,7 @@ export enum SMSCampaignsApiApiKeys {
 export class SMSCampaignsApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.0.3/ts-node'
     };
     protected _useQuerystring : boolean = false;
 
@@ -80,7 +80,11 @@ export class SMSCampaignsApi {
     }
 
     set defaultHeaders(defaultHeaders: any) {
-        this._defaultHeaders = defaultHeaders;
+        if (defaultHeaders['user-agent'] && defaultHeaders['user-agent'].substr(0,11).toLowerCase() !== 'sendinblue_') {
+            this._defaultHeaders = this._defaultHeaders;
+        } else {
+            this._defaultHeaders = defaultHeaders;
+        }
     }
 
     get defaultHeaders() {
@@ -335,8 +339,9 @@ export class SMSCampaignsApi {
      * @param endDate Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent sms campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either \&#39;status\&#39; not passed and if passed is set to \&#39;sent\&#39; )
      * @param limit Number limitation for the result returned
      * @param offset Beginning point in the list to retrieve from.
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getSmsCampaigns (status?: 'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess', startDate?: Date, endDate?: Date, limit?: number, offset?: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetSmsCampaigns;  }> {
+    public async getSmsCampaigns (status?: 'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess', startDate?: Date, endDate?: Date, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetSmsCampaigns;  }> {
         const localVarPath = this.basePath + '/smsCampaigns';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -367,6 +372,10 @@ export class SMSCampaignsApi {
 
         if (offset !== undefined) {
             localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);

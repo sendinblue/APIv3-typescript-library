@@ -1,6 +1,6 @@
 {
     "name": "sib-api-v3-typescript",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "description": "NodeJS client for sib-api-v3-typescript",
     "main": "api.js",
     "types": "api.d.ts",

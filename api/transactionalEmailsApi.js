@@ -22,7 +22,7 @@ class TransactionalEmailsApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
         this._defaultHeaders = {
-            'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
+            'user-agent': 'sendinblue_clientAPI/v2.0.3/ts-node'
         };
         this._useQuerystring = false;
         this.authentications = {
@@ -49,7 +49,12 @@ class TransactionalEmailsApi {
         this._basePath = basePath;
     }
     set defaultHeaders(defaultHeaders) {
-        this._defaultHeaders = defaultHeaders;
+        if (defaultHeaders['user-agent'] && defaultHeaders['user-agent'].substr(0, 11).toLowerCase() !== 'sendinblue_') {
+            this._defaultHeaders = this._defaultHeaders;
+        }
+        else {
+            this._defaultHeaders = defaultHeaders;
+        }
     }
     get defaultHeaders() {
         return this._defaultHeaders;
@@ -65,6 +70,72 @@ class TransactionalEmailsApi {
     }
     addInterceptor(interceptor) {
         this.interceptors.push(interceptor);
+    }
+    blockNewDomain(blockDomain, options = { headers: {} }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const localVarPath = this.basePath + '/smtp/blockedDomains';
+            let localVarQueryParameters = {};
+            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const produces = ['application/json'];
+            if (produces.indexOf('application/json') >= 0) {
+                localVarHeaderParams.Accept = 'application/json';
+            }
+            else {
+                localVarHeaderParams.Accept = produces.join(',');
+            }
+            let localVarFormParams = {};
+            if (blockDomain === null || blockDomain === undefined) {
+                throw new Error('Required parameter blockDomain was null or undefined when calling blockNewDomain.');
+            }
+            Object.assign(localVarHeaderParams, options.headers);
+            let localVarUseFormData = false;
+            let localVarRequestOptions = {
+                method: 'POST',
+                qs: localVarQueryParameters,
+                headers: localVarHeaderParams,
+                uri: localVarPath,
+                useQuerystring: this._useQuerystring,
+                json: true,
+                body: models_1.ObjectSerializer.serialize(blockDomain, "BlockDomain")
+            };
+            let authenticationPromise = Promise.resolve();
+            if (this.authentications.apiKey.apiKey) {
+                authenticationPromise = authenticationPromise.then(() => this.authentications.apiKey.applyToRequest(localVarRequestOptions));
+            }
+            if (this.authentications.partnerKey.apiKey) {
+                authenticationPromise = authenticationPromise.then(() => this.authentications.partnerKey.applyToRequest(localVarRequestOptions));
+            }
+            authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
+            let interceptorPromise = authenticationPromise;
+            for (const interceptor of this.interceptors) {
+                interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
+            }
+            return interceptorPromise.then(() => {
+                if (Object.keys(localVarFormParams).length) {
+                    if (localVarUseFormData) {
+                        localVarRequestOptions.formData = localVarFormParams;
+                    }
+                    else {
+                        localVarRequestOptions.form = localVarFormParams;
+                    }
+                }
+                return new Promise((resolve, reject) => {
+                    localVarRequest(localVarRequestOptions, (error, response, body) => {
+                        if (error) {
+                            reject(error);
+                        }
+                        else {
+                            if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                                resolve({ response: response, body: body });
+                            }
+                            else {
+                                reject(new apis_1.HttpError(response, body, response.statusCode));
+                            }
+                        }
+                    });
+                });
+            });
+        });
     }
     createSmtpTemplate(smtpTemplate, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -121,6 +192,72 @@ class TransactionalEmailsApi {
                         }
                         else {
                             body = models_1.ObjectSerializer.deserialize(body, "CreateModel");
+                            if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                                resolve({ response: response, body: body });
+                            }
+                            else {
+                                reject(new apis_1.HttpError(response, body, response.statusCode));
+                            }
+                        }
+                    });
+                });
+            });
+        });
+    }
+    deleteBlockedDomain(domain, options = { headers: {} }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const localVarPath = this.basePath + '/smtp/blockedDomains/{domain}'
+                .replace('{' + 'domain' + '}', encodeURIComponent(String(domain)));
+            let localVarQueryParameters = {};
+            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const produces = ['application/json'];
+            if (produces.indexOf('application/json') >= 0) {
+                localVarHeaderParams.Accept = 'application/json';
+            }
+            else {
+                localVarHeaderParams.Accept = produces.join(',');
+            }
+            let localVarFormParams = {};
+            if (domain === null || domain === undefined) {
+                throw new Error('Required parameter domain was null or undefined when calling deleteBlockedDomain.');
+            }
+            Object.assign(localVarHeaderParams, options.headers);
+            let localVarUseFormData = false;
+            let localVarRequestOptions = {
+                method: 'DELETE',
+                qs: localVarQueryParameters,
+                headers: localVarHeaderParams,
+                uri: localVarPath,
+                useQuerystring: this._useQuerystring,
+                json: true,
+            };
+            let authenticationPromise = Promise.resolve();
+            if (this.authentications.apiKey.apiKey) {
+                authenticationPromise = authenticationPromise.then(() => this.authentications.apiKey.applyToRequest(localVarRequestOptions));
+            }
+            if (this.authentications.partnerKey.apiKey) {
+                authenticationPromise = authenticationPromise.then(() => this.authentications.partnerKey.applyToRequest(localVarRequestOptions));
+            }
+            authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
+            let interceptorPromise = authenticationPromise;
+            for (const interceptor of this.interceptors) {
+                interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
+            }
+            return interceptorPromise.then(() => {
+                if (Object.keys(localVarFormParams).length) {
+                    if (localVarUseFormData) {
+                        localVarRequestOptions.formData = localVarFormParams;
+                    }
+                    else {
+                        localVarRequestOptions.form = localVarFormParams;
+                    }
+                }
+                return new Promise((resolve, reject) => {
+                    localVarRequest(localVarRequestOptions, (error, response, body) => {
+                        if (error) {
+                            reject(error);
+                        }
+                        else {
                             if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                                 resolve({ response: response, body: body });
                             }
@@ -337,7 +474,70 @@ class TransactionalEmailsApi {
             });
         });
     }
-    getEmailEventReport(limit, offset, startDate, endDate, days, email, event, tags, messageId, templateId, options = { headers: {} }) {
+    getBlockedDomains(options = { headers: {} }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const localVarPath = this.basePath + '/smtp/blockedDomains';
+            let localVarQueryParameters = {};
+            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const produces = ['application/json'];
+            if (produces.indexOf('application/json') >= 0) {
+                localVarHeaderParams.Accept = 'application/json';
+            }
+            else {
+                localVarHeaderParams.Accept = produces.join(',');
+            }
+            let localVarFormParams = {};
+            Object.assign(localVarHeaderParams, options.headers);
+            let localVarUseFormData = false;
+            let localVarRequestOptions = {
+                method: 'GET',
+                qs: localVarQueryParameters,
+                headers: localVarHeaderParams,
+                uri: localVarPath,
+                useQuerystring: this._useQuerystring,
+                json: true,
+            };
+            let authenticationPromise = Promise.resolve();
+            if (this.authentications.apiKey.apiKey) {
+                authenticationPromise = authenticationPromise.then(() => this.authentications.apiKey.applyToRequest(localVarRequestOptions));
+            }
+            if (this.authentications.partnerKey.apiKey) {
+                authenticationPromise = authenticationPromise.then(() => this.authentications.partnerKey.applyToRequest(localVarRequestOptions));
+            }
+            authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
+            let interceptorPromise = authenticationPromise;
+            for (const interceptor of this.interceptors) {
+                interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
+            }
+            return interceptorPromise.then(() => {
+                if (Object.keys(localVarFormParams).length) {
+                    if (localVarUseFormData) {
+                        localVarRequestOptions.formData = localVarFormParams;
+                    }
+                    else {
+                        localVarRequestOptions.form = localVarFormParams;
+                    }
+                }
+                return new Promise((resolve, reject) => {
+                    localVarRequest(localVarRequestOptions, (error, response, body) => {
+                        if (error) {
+                            reject(error);
+                        }
+                        else {
+                            body = models_1.ObjectSerializer.deserialize(body, "GetBlockedDomains");
+                            if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                                resolve({ response: response, body: body });
+                            }
+                            else {
+                                reject(new apis_1.HttpError(response, body, response.statusCode));
+                            }
+                        }
+                    });
+                });
+            });
+        });
+    }
+    getEmailEventReport(limit, offset, startDate, endDate, days, email, event, tags, messageId, templateId, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/statistics/events';
             let localVarQueryParameters = {};
@@ -369,7 +569,7 @@ class TransactionalEmailsApi {
                 localVarQueryParameters['email'] = models_1.ObjectSerializer.serialize(email, "string");
             }
             if (event !== undefined) {
-                localVarQueryParameters['event'] = models_1.ObjectSerializer.serialize(event, "'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'spam' | 'requests' | 'opened' | 'clicks' | 'invalid' | 'deferred' | 'blocked' | 'unsubscribed'");
+                localVarQueryParameters['event'] = models_1.ObjectSerializer.serialize(event, "'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'spam' | 'requests' | 'opened' | 'clicks' | 'invalid' | 'deferred' | 'blocked' | 'unsubscribed' | 'error'");
             }
             if (tags !== undefined) {
                 localVarQueryParameters['tags'] = models_1.ObjectSerializer.serialize(tags, "string");
@@ -379,6 +579,9 @@ class TransactionalEmailsApi {
             }
             if (templateId !== undefined) {
                 localVarQueryParameters['templateId'] = models_1.ObjectSerializer.serialize(templateId, "number");
+            }
+            if (sort !== undefined) {
+                localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
             let localVarUseFormData = false;
@@ -430,7 +633,7 @@ class TransactionalEmailsApi {
             });
         });
     }
-    getSmtpReport(limit, offset, startDate, endDate, days, tag, options = { headers: {} }) {
+    getSmtpReport(limit, offset, startDate, endDate, days, tag, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/statistics/reports';
             let localVarQueryParameters = {};
@@ -460,6 +663,9 @@ class TransactionalEmailsApi {
             }
             if (tag !== undefined) {
                 localVarQueryParameters['tag'] = models_1.ObjectSerializer.serialize(tag, "string");
+            }
+            if (sort !== undefined) {
+                localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
             let localVarUseFormData = false;
@@ -578,7 +784,7 @@ class TransactionalEmailsApi {
             });
         });
     }
-    getSmtpTemplates(templateStatus, limit, offset, options = { headers: {} }) {
+    getSmtpTemplates(templateStatus, limit, offset, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/templates';
             let localVarQueryParameters = {};
@@ -599,6 +805,9 @@ class TransactionalEmailsApi {
             }
             if (offset !== undefined) {
                 localVarQueryParameters['offset'] = models_1.ObjectSerializer.serialize(offset, "number");
+            }
+            if (sort !== undefined) {
+                localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
             let localVarUseFormData = false;
@@ -650,7 +859,7 @@ class TransactionalEmailsApi {
             });
         });
     }
-    getTransacBlockedContacts(startDate, endDate, limit, offset, senders, options = { headers: {} }) {
+    getTransacBlockedContacts(startDate, endDate, limit, offset, senders, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/blockedContacts';
             let localVarQueryParameters = {};
@@ -677,6 +886,9 @@ class TransactionalEmailsApi {
             }
             if (senders !== undefined) {
                 localVarQueryParameters['senders'] = models_1.ObjectSerializer.serialize(senders, "Array<string>");
+            }
+            if (sort !== undefined) {
+                localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
             let localVarUseFormData = false;
@@ -795,7 +1007,7 @@ class TransactionalEmailsApi {
             });
         });
     }
-    getTransacEmailsList(email, templateId, messageId, startDate, endDate, options = { headers: {} }) {
+    getTransacEmailsList(email, templateId, messageId, startDate, endDate, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/emails';
             let localVarQueryParameters = {};
@@ -822,6 +1034,9 @@ class TransactionalEmailsApi {
             }
             if (endDate !== undefined) {
                 localVarQueryParameters['endDate'] = models_1.ObjectSerializer.serialize(endDate, "string");
+            }
+            if (sort !== undefined) {
+                localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
             let localVarUseFormData = false;
