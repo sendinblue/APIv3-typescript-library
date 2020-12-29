@@ -1,8 +1,8 @@
 export declare class GetSmsEventReportEvents {
-    'phoneNumber': string;
-    'date': Date;
-    'messageId': string;
-    'event': GetSmsEventReportEvents.EventEnum;
+    'phoneNumber'?: string;
+    'date'?: Date;
+    'messageId'?: string;
+    'event'?: GetSmsEventReportEvents.EventEnum;
     'reason'?: string;
     'reply'?: string;
     'tag'?: string;

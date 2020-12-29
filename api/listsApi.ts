@@ -45,7 +45,7 @@ export enum ListsApiApiKeys {
 export class ListsApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.1.0/ts-node'
     };
     protected _useQuerystring : boolean = false;
 
@@ -79,7 +79,11 @@ export class ListsApi {
     }
 
     set defaultHeaders(defaultHeaders: any) {
-        this._defaultHeaders = defaultHeaders;
+        if (defaultHeaders['user-agent'] && defaultHeaders['user-agent'].substr(0,11).toLowerCase() !== 'sendinblue_') {
+            this._defaultHeaders = this._defaultHeaders;
+        } else {
+            this._defaultHeaders = defaultHeaders;
+        }
     }
 
     get defaultHeaders() {
@@ -340,8 +344,9 @@ export class ListsApi {
      * @param modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result.
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getContactsFromList (listId: number, modifiedSince?: Date, limit?: number, offset?: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
+    public async getContactsFromList (listId: number, modifiedSince?: Date, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -370,6 +375,10 @@ export class ListsApi {
 
         if (offset !== undefined) {
             localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -429,8 +438,9 @@ export class ListsApi {
      * @param folderId Id of the folder
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getFolderLists (folderId: number, limit?: number, offset?: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }> {
+    public async getFolderLists (folderId: number, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}/lists'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         let localVarQueryParameters: any = {};
@@ -455,6 +465,10 @@ export class ListsApi {
 
         if (offset !== undefined) {
             localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -588,8 +602,9 @@ export class ListsApi {
      * @summary Get all the lists
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getLists (limit?: number, offset?: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetLists;  }> {
+    public async getLists (limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetLists;  }> {
         const localVarPath = this.basePath + '/contacts/lists';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -608,6 +623,10 @@ export class ListsApi {
 
         if (offset !== undefined) {
             localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);

@@ -1,7 +1,7 @@
 import { GetSmsCampaignOverview } from './getSmsCampaignOverview';
 export declare class GetSmsCampaigns {
     'campaigns'?: Array<GetSmsCampaignOverview & object>;
-    'count': number;
+    'count'?: number;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

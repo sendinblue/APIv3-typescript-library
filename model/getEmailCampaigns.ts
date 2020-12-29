@@ -18,7 +18,7 @@ export class GetEmailCampaigns {
     /**
     * Number of Email campaigns retrieved
     */
-    'count': number;
+    'count'?: number;
 
     static discriminator: string | undefined = undefined;
 

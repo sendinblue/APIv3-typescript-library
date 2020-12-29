@@ -40,7 +40,7 @@ export enum WebhooksApiApiKeys {
 export class WebhooksApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.1.0/ts-node'
     };
     protected _useQuerystring : boolean = false;
 
@@ -74,7 +74,11 @@ export class WebhooksApi {
     }
 
     set defaultHeaders(defaultHeaders: any) {
-        this._defaultHeaders = defaultHeaders;
+        if (defaultHeaders['user-agent'] && defaultHeaders['user-agent'].substr(0,11).toLowerCase() !== 'sendinblue_') {
+            this._defaultHeaders = this._defaultHeaders;
+        } else {
+            this._defaultHeaders = defaultHeaders;
+        }
     }
 
     get defaultHeaders() {

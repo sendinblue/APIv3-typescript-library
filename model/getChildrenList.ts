@@ -21,7 +21,7 @@ export class GetChildrenList {
     /**
     * Number of child accounts
     */
-    'count': number;
+    'count'?: number;
 
     static discriminator: string | undefined = undefined;
 

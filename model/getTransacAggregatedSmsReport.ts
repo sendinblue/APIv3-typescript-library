@@ -16,43 +16,43 @@ export class GetTransacAggregatedSmsReport {
     /**
     * Time frame of the report
     */
-    'range': string;
+    'range'?: string;
     /**
     * Number of requests for the timeframe
     */
-    'requests': number;
+    'requests'?: number;
     /**
     * Number of delivered SMS for the timeframe
     */
-    'delivered': number;
+    'delivered'?: number;
     /**
     * Number of hardbounces for the timeframe
     */
-    'hardBounces': number;
+    'hardBounces'?: number;
     /**
     * Number of softbounces for the timeframe
     */
-    'softBounces': number;
+    'softBounces'?: number;
     /**
     * Number of blocked contact for the timeframe
     */
-    'blocked': number;
+    'blocked'?: number;
     /**
     * Number of unsubscription for the timeframe
     */
-    'unsubscribed': number;
+    'unsubscribed'?: number;
     /**
     * Number of answered SMS for the timeframe
     */
-    'replied': number;
+    'replied'?: number;
     /**
     * Number of accepted for the timeframe
     */
-    'accepted': number;
+    'accepted'?: number;
     /**
     * Number of rejected for the timeframe
     */
-    'rejected': number;
+    'rejected'?: number;
 
     static discriminator: string | undefined = undefined;
 

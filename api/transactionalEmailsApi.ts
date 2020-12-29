@@ -14,12 +14,14 @@ import localVarRequest = require('request');
 import http = require('http');
 
 /* tslint:disable:no-unused-locals */
+import { BlockDomain } from '../model/blockDomain';
 import { CreateModel } from '../model/createModel';
 import { CreateSmtpEmail } from '../model/createSmtpEmail';
 import { CreateSmtpTemplate } from '../model/createSmtpTemplate';
 import { DeleteHardbounces } from '../model/deleteHardbounces';
 import { ErrorModel } from '../model/errorModel';
 import { GetAggregatedReport } from '../model/getAggregatedReport';
+import { GetBlockedDomains } from '../model/getBlockedDomains';
 import { GetEmailEventReport } from '../model/getEmailEventReport';
 import { GetReports } from '../model/getReports';
 import { GetSmtpTemplateOverview } from '../model/getSmtpTemplateOverview';
@@ -53,7 +55,7 @@ export enum TransactionalEmailsApiApiKeys {
 export class TransactionalEmailsApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.1.0/ts-node'
     };
     protected _useQuerystring : boolean = false;
 
@@ -87,7 +89,11 @@ export class TransactionalEmailsApi {
     }
 
     set defaultHeaders(defaultHeaders: any) {
-        this._defaultHeaders = defaultHeaders;
+        if (defaultHeaders['user-agent'] && defaultHeaders['user-agent'].substr(0,11).toLowerCase() !== 'sendinblue_') {
+            this._defaultHeaders = this._defaultHeaders;
+        } else {
+            this._defaultHeaders = defaultHeaders;
+        }
     }
 
     get defaultHeaders() {
@@ -110,6 +116,80 @@ export class TransactionalEmailsApi {
         this.interceptors.push(interceptor);
     }
 
+    /**
+     * Blocks a new domain in order to avoid messages being sent to the same
+     * @summary Add a new domain to the list of blocked domains
+     * @param blockDomain 
+     */
+    public async blockNewDomain (blockDomain: BlockDomain, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/smtp/blockedDomains';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
+        const produces = ['application/json'];
+        // give precedence to 'application/json'
+        if (produces.indexOf('application/json') >= 0) {
+            localVarHeaderParams.Accept = 'application/json';
+        } else {
+            localVarHeaderParams.Accept = produces.join(',');
+        }
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'blockDomain' is not null or undefined
+        if (blockDomain === null || blockDomain === undefined) {
+            throw new Error('Required parameter blockDomain was null or undefined when calling blockNewDomain.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(blockDomain, "BlockDomain")
+        };
+
+        let authenticationPromise = Promise.resolve();
+        if (this.authentications.apiKey.apiKey) {
+            authenticationPromise = authenticationPromise.then(() => this.authentications.apiKey.applyToRequest(localVarRequestOptions));
+        }
+        if (this.authentications.partnerKey.apiKey) {
+            authenticationPromise = authenticationPromise.then(() => this.authentications.partnerKey.applyToRequest(localVarRequestOptions));
+        }
+        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
+
+        let interceptorPromise = authenticationPromise;
+        for (const interceptor of this.interceptors) {
+            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
+        }
+
+        return interceptorPromise.then(() => {
+            if (Object.keys(localVarFormParams).length) {
+                if (localVarUseFormData) {
+                    (<any>localVarRequestOptions).formData = localVarFormParams;
+                } else {
+                    localVarRequestOptions.form = localVarFormParams;
+                }
+            }
+            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
+                localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                            resolve({ response: response, body: body });
+                        } else {
+                            reject(new HttpError(response, body, response.statusCode));
+                        }
+                    }
+                });
+            });
+        });
+    }
     /**
      * 
      * @summary Create an email template
@@ -175,6 +255,80 @@ export class TransactionalEmailsApi {
                         reject(error);
                     } else {
                         body = ObjectSerializer.deserialize(body, "CreateModel");
+                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                            resolve({ response: response, body: body });
+                        } else {
+                            reject(new HttpError(response, body, response.statusCode));
+                        }
+                    }
+                });
+            });
+        });
+    }
+    /**
+     * Unblocks an existing domain from the list of blocked domains
+     * @summary Unblock an existing domain from the list of blocked domains
+     * @param domain The name of the domain to be deleted
+     */
+    public async deleteBlockedDomain (domain: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/smtp/blockedDomains/{domain}'
+            .replace('{' + 'domain' + '}', encodeURIComponent(String(domain)));
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
+        const produces = ['application/json'];
+        // give precedence to 'application/json'
+        if (produces.indexOf('application/json') >= 0) {
+            localVarHeaderParams.Accept = 'application/json';
+        } else {
+            localVarHeaderParams.Accept = produces.join(',');
+        }
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'domain' is not null or undefined
+        if (domain === null || domain === undefined) {
+            throw new Error('Required parameter domain was null or undefined when calling deleteBlockedDomain.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'DELETE',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        let authenticationPromise = Promise.resolve();
+        if (this.authentications.apiKey.apiKey) {
+            authenticationPromise = authenticationPromise.then(() => this.authentications.apiKey.applyToRequest(localVarRequestOptions));
+        }
+        if (this.authentications.partnerKey.apiKey) {
+            authenticationPromise = authenticationPromise.then(() => this.authentications.partnerKey.applyToRequest(localVarRequestOptions));
+        }
+        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
+
+        let interceptorPromise = authenticationPromise;
+        for (const interceptor of this.interceptors) {
+            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
+        }
+
+        return interceptorPromise.then(() => {
+            if (Object.keys(localVarFormParams).length) {
+                if (localVarUseFormData) {
+                    (<any>localVarRequestOptions).formData = localVarFormParams;
+                } else {
+                    localVarRequestOptions.form = localVarFormParams;
+                }
+            }
+            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
+                localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    if (error) {
+                        reject(error);
+                    } else {
                         if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                             resolve({ response: response, body: body });
                         } else {
@@ -417,6 +571,74 @@ export class TransactionalEmailsApi {
         });
     }
     /**
+     * Get the list of blocked domains
+     * @summary Get the list of blocked domains
+     */
+    public async getBlockedDomains (options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetBlockedDomains;  }> {
+        const localVarPath = this.basePath + '/smtp/blockedDomains';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
+        const produces = ['application/json'];
+        // give precedence to 'application/json'
+        if (produces.indexOf('application/json') >= 0) {
+            localVarHeaderParams.Accept = 'application/json';
+        } else {
+            localVarHeaderParams.Accept = produces.join(',');
+        }
+        let localVarFormParams: any = {};
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        let authenticationPromise = Promise.resolve();
+        if (this.authentications.apiKey.apiKey) {
+            authenticationPromise = authenticationPromise.then(() => this.authentications.apiKey.applyToRequest(localVarRequestOptions));
+        }
+        if (this.authentications.partnerKey.apiKey) {
+            authenticationPromise = authenticationPromise.then(() => this.authentications.partnerKey.applyToRequest(localVarRequestOptions));
+        }
+        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
+
+        let interceptorPromise = authenticationPromise;
+        for (const interceptor of this.interceptors) {
+            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
+        }
+
+        return interceptorPromise.then(() => {
+            if (Object.keys(localVarFormParams).length) {
+                if (localVarUseFormData) {
+                    (<any>localVarRequestOptions).formData = localVarFormParams;
+                } else {
+                    localVarRequestOptions.form = localVarFormParams;
+                }
+            }
+            return new Promise<{ response: http.IncomingMessage; body: GetBlockedDomains;  }>((resolve, reject) => {
+                localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        body = ObjectSerializer.deserialize(body, "GetBlockedDomains");
+                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                            resolve({ response: response, body: body });
+                        } else {
+                            reject(new HttpError(response, body, response.statusCode));
+                        }
+                    }
+                });
+            });
+        });
+    }
+    /**
      * 
      * @summary Get all your transactional email activity (unaggregated events)
      * @param limit Number limitation for the result returned
@@ -429,8 +651,9 @@ export class TransactionalEmailsApi {
      * @param tags Filter the report for tags (serialized and urlencoded array)
      * @param messageId Filter on a specific message id
      * @param templateId Filter on a specific template id
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getEmailEventReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, email?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'spam' | 'requests' | 'opened' | 'clicks' | 'invalid' | 'deferred' | 'blocked' | 'unsubscribed', tags?: string, messageId?: string, templateId?: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetEmailEventReport;  }> {
+    public async getEmailEventReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, email?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'spam' | 'requests' | 'opened' | 'clicks' | 'invalid' | 'deferred' | 'blocked' | 'unsubscribed' | 'error', tags?: string, messageId?: string, templateId?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetEmailEventReport;  }> {
         const localVarPath = this.basePath + '/smtp/statistics/events';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -468,7 +691,7 @@ export class TransactionalEmailsApi {
         }
 
         if (event !== undefined) {
-            localVarQueryParameters['event'] = ObjectSerializer.serialize(event, "'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'spam' | 'requests' | 'opened' | 'clicks' | 'invalid' | 'deferred' | 'blocked' | 'unsubscribed'");
+            localVarQueryParameters['event'] = ObjectSerializer.serialize(event, "'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'spam' | 'requests' | 'opened' | 'clicks' | 'invalid' | 'deferred' | 'blocked' | 'unsubscribed' | 'error'");
         }
 
         if (tags !== undefined) {
@@ -481,6 +704,10 @@ export class TransactionalEmailsApi {
 
         if (templateId !== undefined) {
             localVarQueryParameters['templateId'] = ObjectSerializer.serialize(templateId, "number");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -543,8 +770,9 @@ export class TransactionalEmailsApi {
      * @param endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD)
      * @param days Number of days in the past including today (positive integer). Not compatible with \&#39;startDate\&#39; and \&#39;endDate\&#39;
      * @param tag Tag of the emails
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getSmtpReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, tag?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetReports;  }> {
+    public async getSmtpReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, tag?: string, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetReports;  }> {
         const localVarPath = this.basePath + '/smtp/statistics/reports';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -579,6 +807,10 @@ export class TransactionalEmailsApi {
 
         if (tag !== undefined) {
             localVarQueryParameters['tag'] = ObjectSerializer.serialize(tag, "string");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -713,8 +945,9 @@ export class TransactionalEmailsApi {
      * @param templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false
      * @param limit Number of documents returned per page
      * @param offset Index of the first document in the page
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getSmtpTemplates (templateStatus?: boolean, limit?: number, offset?: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetSmtpTemplates;  }> {
+    public async getSmtpTemplates (templateStatus?: boolean, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetSmtpTemplates;  }> {
         const localVarPath = this.basePath + '/smtp/templates';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -737,6 +970,10 @@ export class TransactionalEmailsApi {
 
         if (offset !== undefined) {
             localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -798,8 +1035,9 @@ export class TransactionalEmailsApi {
      * @param limit Number of documents returned per page
      * @param offset Index of the first document on the page
      * @param senders Comma separated list of emails of the senders from which contacts are blocked or unsubscribed
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getTransacBlockedContacts (startDate?: string, endDate?: string, limit?: number, offset?: number, senders?: Array<string>, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetTransacBlockedContacts;  }> {
+    public async getTransacBlockedContacts (startDate?: string, endDate?: string, limit?: number, offset?: number, senders?: Array<string>, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetTransacBlockedContacts;  }> {
         const localVarPath = this.basePath + '/smtp/blockedContacts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -830,6 +1068,10 @@ export class TransactionalEmailsApi {
 
         if (senders !== undefined) {
             localVarQueryParameters['senders'] = ObjectSerializer.serialize(senders, "Array<string>");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -966,8 +1208,9 @@ export class TransactionalEmailsApi {
      * @param messageId Mandatory if templateId and email are not passed in query filters. Message ID of the transactional email sent.
      * @param startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month.
      * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month.
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getTransacEmailsList (email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetTransacEmailsList;  }> {
+    public async getTransacEmailsList (email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetTransacEmailsList;  }> {
         const localVarPath = this.basePath + '/smtp/emails';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -998,6 +1241,10 @@ export class TransactionalEmailsApi {
 
         if (endDate !== undefined) {
             localVarQueryParameters['endDate'] = ObjectSerializer.serialize(endDate, "string");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);

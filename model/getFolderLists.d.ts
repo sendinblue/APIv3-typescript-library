@@ -1,7 +1,7 @@
 import { GetList } from './getList';
 export declare class GetFolderLists {
-    'lists': Array<GetList>;
-    'count': number;
+    'lists'?: Array<GetList>;
+    'count'?: number;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

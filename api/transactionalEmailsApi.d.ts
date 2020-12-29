@@ -1,10 +1,12 @@
 /// <reference types="node" />
 import http = require('http');
+import { BlockDomain } from '../model/blockDomain';
 import { CreateModel } from '../model/createModel';
 import { CreateSmtpEmail } from '../model/createSmtpEmail';
 import { CreateSmtpTemplate } from '../model/createSmtpTemplate';
 import { DeleteHardbounces } from '../model/deleteHardbounces';
 import { GetAggregatedReport } from '../model/getAggregatedReport';
+import { GetBlockedDomains } from '../model/getBlockedDomains';
 import { GetEmailEventReport } from '../model/getEmailEventReport';
 import { GetReports } from '../model/getReports';
 import { GetSmtpTemplateOverview } from '../model/getSmtpTemplateOverview';
@@ -40,6 +42,14 @@ export declare class TransactionalEmailsApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: TransactionalEmailsApiApiKeys, value: string): void;
     addInterceptor(interceptor: Interceptor): void;
+    blockNewDomain(blockDomain: BlockDomain, options?: {
+        headers: {
+            [name: string]: string;
+        };
+    }): Promise<{
+        response: http.IncomingMessage;
+        body?: any;
+    }>;
     createSmtpTemplate(smtpTemplate: CreateSmtpTemplate, options?: {
         headers: {
             [name: string]: string;
@@ -47,6 +57,14 @@ export declare class TransactionalEmailsApi {
     }): Promise<{
         response: http.IncomingMessage;
         body: CreateModel;
+    }>;
+    deleteBlockedDomain(domain: string, options?: {
+        headers: {
+            [name: string]: string;
+        };
+    }): Promise<{
+        response: http.IncomingMessage;
+        body?: any;
     }>;
     deleteHardbounces(deleteHardbounces?: DeleteHardbounces, options?: {
         headers: {
@@ -72,7 +90,15 @@ export declare class TransactionalEmailsApi {
         response: http.IncomingMessage;
         body: GetAggregatedReport;
     }>;
-    getEmailEventReport(limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, email?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'spam' | 'requests' | 'opened' | 'clicks' | 'invalid' | 'deferred' | 'blocked' | 'unsubscribed', tags?: string, messageId?: string, templateId?: number, options?: {
+    getBlockedDomains(options?: {
+        headers: {
+            [name: string]: string;
+        };
+    }): Promise<{
+        response: http.IncomingMessage;
+        body: GetBlockedDomains;
+    }>;
+    getEmailEventReport(limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, email?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'spam' | 'requests' | 'opened' | 'clicks' | 'invalid' | 'deferred' | 'blocked' | 'unsubscribed' | 'error', tags?: string, messageId?: string, templateId?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -80,7 +106,7 @@ export declare class TransactionalEmailsApi {
         response: http.IncomingMessage;
         body: GetEmailEventReport;
     }>;
-    getSmtpReport(limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, tag?: string, options?: {
+    getSmtpReport(limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, tag?: string, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -96,7 +122,7 @@ export declare class TransactionalEmailsApi {
         response: http.IncomingMessage;
         body: GetSmtpTemplateOverview;
     }>;
-    getSmtpTemplates(templateStatus?: boolean, limit?: number, offset?: number, options?: {
+    getSmtpTemplates(templateStatus?: boolean, limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -104,7 +130,7 @@ export declare class TransactionalEmailsApi {
         response: http.IncomingMessage;
         body: GetSmtpTemplates;
     }>;
-    getTransacBlockedContacts(startDate?: string, endDate?: string, limit?: number, offset?: number, senders?: Array<string>, options?: {
+    getTransacBlockedContacts(startDate?: string, endDate?: string, limit?: number, offset?: number, senders?: Array<string>, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -120,7 +146,7 @@ export declare class TransactionalEmailsApi {
         response: http.IncomingMessage;
         body: GetTransacEmailContent;
     }>;
-    getTransacEmailsList(email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string, options?: {
+    getTransacEmailsList(email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };

@@ -3,7 +3,7 @@ export declare class GetSmsCampaignOverview {
     'name': string;
     'status': GetSmsCampaignOverview.StatusEnum;
     'content': string;
-    'scheduledAt': Date;
+    'scheduledAt'?: Date;
     'sender': string;
     'createdAt': Date;
     'modifiedAt': Date;

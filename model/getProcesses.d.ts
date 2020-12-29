@@ -1,7 +1,7 @@
 import { GetProcess } from './getProcess';
 export declare class GetProcesses {
     'processes'?: Array<GetProcess>;
-    'count': number;
+    'count'?: number;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

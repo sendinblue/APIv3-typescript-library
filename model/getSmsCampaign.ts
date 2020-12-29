@@ -36,7 +36,7 @@ export class GetSmsCampaign {
     /**
     * UTC date-time on which SMS campaign is scheduled. Should be in YYYY-MM-DDTHH:mm:ss.SSSZ format
     */
-    'scheduledAt': Date;
+    'scheduledAt'?: Date;
     /**
     * Sender of the SMS Campaign
     */

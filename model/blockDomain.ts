@@ -12,15 +12,11 @@
 
 import { RequestFile } from '../api';
 
-export class GetChildDomain {
+export class BlockDomain {
     /**
-    * Sender domain
+    * name of the domain to be blocked
     */
-    'domain'?: string;
-    /**
-    * indicates whether a domain is verified or not
-    */
-    'active'?: boolean;
+    'domain': string;
 
     static discriminator: string | undefined = undefined;
 
@@ -29,15 +25,10 @@ export class GetChildDomain {
             "name": "domain",
             "baseName": "domain",
             "type": "string"
-        },
-        {
-            "name": "active",
-            "baseName": "active",
-            "type": "boolean"
         }    ];
 
     static getAttributeTypeMap() {
-        return GetChildDomain.attributeTypeMap;
+        return BlockDomain.attributeTypeMap;
     }
 }
 

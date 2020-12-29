@@ -17,11 +17,11 @@ export class GetLists {
     /**
     * Listing of all the lists available in your account
     */
-    'lists': Array<GetList & object>;
+    'lists'?: Array<GetList & object>;
     /**
     * Number of lists in your account
     */
-    'count': number;
+    'count'?: number;
 
     static discriminator: string | undefined = undefined;
 

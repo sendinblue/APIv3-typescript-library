@@ -40,7 +40,7 @@ export enum TransactionalSMSApiApiKeys {
 export class TransactionalSMSApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.1.0/ts-node'
     };
     protected _useQuerystring : boolean = false;
 
@@ -74,7 +74,11 @@ export class TransactionalSMSApi {
     }
 
     set defaultHeaders(defaultHeaders: any) {
-        this._defaultHeaders = defaultHeaders;
+        if (defaultHeaders['user-agent'] && defaultHeaders['user-agent'].substr(0,11).toLowerCase() !== 'sendinblue_') {
+            this._defaultHeaders = this._defaultHeaders;
+        } else {
+            this._defaultHeaders = defaultHeaders;
+        }
     }
 
     get defaultHeaders() {
@@ -108,8 +112,9 @@ export class TransactionalSMSApi {
      * @param phoneNumber Filter the report for a specific phone number
      * @param event Filter the report for specific events
      * @param tags Filter the report for specific tags passed as a serialized urlencoded array
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getSmsEvents (limit?: number, startDate?: string, endDate?: string, offset?: number, days?: number, phoneNumber?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'sent' | 'accepted' | 'unsubscription' | 'replies' | 'blocked', tags?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetSmsEventReport;  }> {
+    public async getSmsEvents (limit?: number, startDate?: string, endDate?: string, offset?: number, days?: number, phoneNumber?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'sent' | 'accepted' | 'unsubscription' | 'replies' | 'blocked', tags?: string, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetSmsEventReport;  }> {
         const localVarPath = this.basePath + '/transactionalSMS/statistics/events';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -152,6 +157,10 @@ export class TransactionalSMSApi {
 
         if (tags !== undefined) {
             localVarQueryParameters['tags'] = ObjectSerializer.serialize(tags, "string");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -300,8 +309,9 @@ export class TransactionalSMSApi {
      * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report
      * @param days Number of days in the past including today (positive integer). Not compatible with \&#39;startDate\&#39; and \&#39;endDate\&#39;
      * @param tag Filter on a tag
+     * @param sort Sort the results in the ascending/descending order of record creation
      */
-    public async getTransacSmsReport (startDate?: string, endDate?: string, days?: number, tag?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetTransacSmsReport;  }> {
+    public async getTransacSmsReport (startDate?: string, endDate?: string, days?: number, tag?: string, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetTransacSmsReport;  }> {
         const localVarPath = this.basePath + '/transactionalSMS/statistics/reports';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -328,6 +338,10 @@ export class TransactionalSMSApi {
 
         if (tag !== undefined) {
             localVarQueryParameters['tag'] = ObjectSerializer.serialize(tag, "string");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);

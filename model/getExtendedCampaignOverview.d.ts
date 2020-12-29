@@ -18,10 +18,10 @@ export declare class GetExtendedCampaignOverview {
     'footer': string;
     'sender': GetExtendedCampaignOverviewAllOfSender;
     'replyTo': string;
-    'toField': string;
+    'toField'?: string;
     'htmlContent': string;
     'shareLink'?: string;
-    'tag': string;
+    'tag'?: string;
     'createdAt': Date;
     'modifiedAt': Date;
     'inlineImageActivation'?: boolean;

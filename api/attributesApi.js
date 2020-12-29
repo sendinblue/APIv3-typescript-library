@@ -22,7 +22,7 @@ class AttributesApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
         this._defaultHeaders = {
-            'user-agent': 'sendinblue_clientAPI/v2.0.2/ts-node'
+            'user-agent': 'sendinblue_clientAPI/v2.1.0/ts-node'
         };
         this._useQuerystring = false;
         this.authentications = {
@@ -49,7 +49,12 @@ class AttributesApi {
         this._basePath = basePath;
     }
     set defaultHeaders(defaultHeaders) {
-        this._defaultHeaders = defaultHeaders;
+        if (defaultHeaders['user-agent'] && defaultHeaders['user-agent'].substr(0, 11).toLowerCase() !== 'sendinblue_') {
+            this._defaultHeaders = this._defaultHeaders;
+        }
+        else {
+            this._defaultHeaders = defaultHeaders;
+        }
     }
     get defaultHeaders() {
         return this._defaultHeaders;

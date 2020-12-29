@@ -1,6 +1,6 @@
 export declare class GetChildDomain {
-    'domain': string;
-    'active': boolean;
+    'domain'?: string;
+    'active'?: boolean;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

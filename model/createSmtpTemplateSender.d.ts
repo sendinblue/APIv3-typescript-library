@@ -1,6 +1,6 @@
 export declare class CreateSmtpTemplateSender {
     'name'?: string;
-    'email': string;
+    'email'?: string;
     'id'?: number;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{

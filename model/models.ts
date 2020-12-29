@@ -5,6 +5,7 @@ export * from './abTestVersionStats';
 export * from './addChildDomain';
 export * from './addContactToList';
 export * from './addCredits';
+export * from './blockDomain';
 export * from './createAttribute';
 export * from './createAttributeEnumeration';
 export * from './createChild';
@@ -41,6 +42,7 @@ export * from './getAggregatedReport';
 export * from './getAttributes';
 export * from './getAttributesAttributes';
 export * from './getAttributesEnumeration';
+export * from './getBlockedDomains';
 export * from './getCampaignOverview';
 export * from './getCampaignRecipients';
 export * from './getCampaignStats';
@@ -187,6 +189,7 @@ import { AbTestVersionStats } from './abTestVersionStats';
 import { AddChildDomain } from './addChildDomain';
 import { AddContactToList } from './addContactToList';
 import { AddCredits } from './addCredits';
+import { BlockDomain } from './blockDomain';
 import { CreateAttribute } from './createAttribute';
 import { CreateAttributeEnumeration } from './createAttributeEnumeration';
 import { CreateChild } from './createChild';
@@ -223,6 +226,7 @@ import { GetAggregatedReport } from './getAggregatedReport';
 import { GetAttributes } from './getAttributes';
 import { GetAttributesAttributes } from './getAttributesAttributes';
 import { GetAttributesEnumeration } from './getAttributesEnumeration';
+import { GetBlockedDomains } from './getBlockedDomains';
 import { GetCampaignOverview } from './getCampaignOverview';
 import { GetCampaignRecipients } from './getCampaignRecipients';
 import { GetCampaignStats } from './getCampaignStats';
@@ -418,6 +422,7 @@ let typeMap: {[index: string]: any} = {
     "AddChildDomain": AddChildDomain,
     "AddContactToList": AddContactToList,
     "AddCredits": AddCredits,
+    "BlockDomain": BlockDomain,
     "CreateAttribute": CreateAttribute,
     "CreateAttributeEnumeration": CreateAttributeEnumeration,
     "CreateChild": CreateChild,
@@ -454,6 +459,7 @@ let typeMap: {[index: string]: any} = {
     "GetAttributes": GetAttributes,
     "GetAttributesAttributes": GetAttributesAttributes,
     "GetAttributesEnumeration": GetAttributesEnumeration,
+    "GetBlockedDomains": GetBlockedDomains,
     "GetCampaignOverview": GetCampaignOverview,
     "GetCampaignRecipients": GetCampaignRecipients,
     "GetCampaignStats": GetCampaignStats,

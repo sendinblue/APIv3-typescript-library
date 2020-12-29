@@ -18,7 +18,7 @@ export class GetSmsCampaigns {
     /**
     * Number of SMS campaigns retrieved
     */
-    'count': number;
+    'count'?: number;
 
     static discriminator: string | undefined = undefined;
 

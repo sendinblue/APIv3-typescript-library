@@ -9,6 +9,7 @@ export declare class GetEmailEventReportEvents {
     'ip'?: string;
     'link'?: string;
     'from'?: string;
+    'templateId'?: number;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -34,6 +35,7 @@ export declare namespace GetEmailEventReportEvents {
         Invalid,
         Deferred,
         Blocked,
-        Unsubscribed
+        Unsubscribed,
+        Error
     }
 }

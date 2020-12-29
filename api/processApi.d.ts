@@ -33,7 +33,7 @@ export declare class ProcessApi {
         response: http.IncomingMessage;
         body: GetProcess;
     }>;
-    getProcesses(limit?: number, offset?: number, options?: {
+    getProcesses(limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
