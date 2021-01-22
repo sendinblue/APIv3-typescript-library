@@ -155,9 +155,12 @@ export * from './sendSmtpEmail';
 export * from './sendSmtpEmailAttachment';
 export * from './sendSmtpEmailBcc';
 export * from './sendSmtpEmailCc';
+export * from './sendSmtpEmailMessageVersions';
 export * from './sendSmtpEmailReplyTo';
+export * from './sendSmtpEmailReplyTo1';
 export * from './sendSmtpEmailSender';
 export * from './sendSmtpEmailTo';
+export * from './sendSmtpEmailTo1';
 export * from './sendTemplateEmail';
 export * from './sendTestEmail';
 export * from './sendTestSms';
@@ -339,9 +342,12 @@ import { SendSmtpEmail } from './sendSmtpEmail';
 import { SendSmtpEmailAttachment } from './sendSmtpEmailAttachment';
 import { SendSmtpEmailBcc } from './sendSmtpEmailBcc';
 import { SendSmtpEmailCc } from './sendSmtpEmailCc';
+import { SendSmtpEmailMessageVersions } from './sendSmtpEmailMessageVersions';
 import { SendSmtpEmailReplyTo } from './sendSmtpEmailReplyTo';
+import { SendSmtpEmailReplyTo1 } from './sendSmtpEmailReplyTo1';
 import { SendSmtpEmailSender } from './sendSmtpEmailSender';
 import { SendSmtpEmailTo } from './sendSmtpEmailTo';
+import { SendSmtpEmailTo1 } from './sendSmtpEmailTo1';
 import { SendTemplateEmail } from './sendTemplateEmail';
 import { SendTestEmail } from './sendTestEmail';
 import { SendTestSms } from './sendTestSms';
@@ -572,9 +578,12 @@ let typeMap: {[index: string]: any} = {
     "SendSmtpEmailAttachment": SendSmtpEmailAttachment,
     "SendSmtpEmailBcc": SendSmtpEmailBcc,
     "SendSmtpEmailCc": SendSmtpEmailCc,
+    "SendSmtpEmailMessageVersions": SendSmtpEmailMessageVersions,
     "SendSmtpEmailReplyTo": SendSmtpEmailReplyTo,
+    "SendSmtpEmailReplyTo1": SendSmtpEmailReplyTo1,
     "SendSmtpEmailSender": SendSmtpEmailSender,
     "SendSmtpEmailTo": SendSmtpEmailTo,
+    "SendSmtpEmailTo1": SendSmtpEmailTo1,
     "SendTemplateEmail": SendTemplateEmail,
     "SendTestEmail": SendTestEmail,
     "SendTestSms": SendTestSms,

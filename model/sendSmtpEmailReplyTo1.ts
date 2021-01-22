@@ -12,29 +12,35 @@
 
 import { RequestFile } from '../api';
 
-export class CreateSmtpEmail {
+/**
+* Email (required), along with name (optional), on which transactional mail recipients will be able to reply back. For example, {\"email\":\"ann6533@example.com\", \"name\":\"Ann\"}
+*/
+export class SendSmtpEmailReplyTo1 {
     /**
-    * Message ID of the transactional email sent
+    * Email address in reply to
     */
-    'messageId'?: string;
-    'messageIds'?: Array<string>;
+    'email': string;
+    /**
+    * Name in reply to. Maximum allowed characters are 70.
+    */
+    'name'?: string;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "messageId",
-            "baseName": "messageId",
+            "name": "email",
+            "baseName": "email",
             "type": "string"
         },
         {
-            "name": "messageIds",
-            "baseName": "messageIds",
-            "type": "Array<string>"
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return CreateSmtpEmail.attributeTypeMap;
+        return SendSmtpEmailReplyTo1.attributeTypeMap;
     }
 }
 

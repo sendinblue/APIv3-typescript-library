@@ -49,7 +49,7 @@ export enum EmailCampaignsApiApiKeys {
 export class EmailCampaignsApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.1.0/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
     };
     protected _useQuerystring : boolean = false;
 
@@ -495,7 +495,7 @@ export class EmailCampaignsApi {
      * @param endDate Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either \&#39;status\&#39; not passed and if passed is set to \&#39;sent\&#39; )
      * @param limit Number of documents per page
      * @param offset Index of the first document in the page
-     * @param sort Sort the results in the ascending/descending order of record creation
+     * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
     public async getEmailCampaigns (type?: 'classic' | 'trigger', status?: 'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess', startDate?: Date, endDate?: Date, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetEmailCampaigns;  }> {
         const localVarPath = this.basePath + '/emailCampaigns';

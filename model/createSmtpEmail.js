@@ -11,6 +11,11 @@ CreateSmtpEmail.attributeTypeMap = [
         "name": "messageId",
         "baseName": "messageId",
         "type": "string"
+    },
+    {
+        "name": "messageIds",
+        "baseName": "messageIds",
+        "type": "Array<string>"
     }
 ];
 exports.CreateSmtpEmail = CreateSmtpEmail;

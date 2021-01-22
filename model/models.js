@@ -160,9 +160,12 @@ __export(require("./sendSmtpEmail"));
 __export(require("./sendSmtpEmailAttachment"));
 __export(require("./sendSmtpEmailBcc"));
 __export(require("./sendSmtpEmailCc"));
+__export(require("./sendSmtpEmailMessageVersions"));
 __export(require("./sendSmtpEmailReplyTo"));
+__export(require("./sendSmtpEmailReplyTo1"));
 __export(require("./sendSmtpEmailSender"));
 __export(require("./sendSmtpEmailTo"));
+__export(require("./sendSmtpEmailTo1"));
 __export(require("./sendTemplateEmail"));
 __export(require("./sendTestEmail"));
 __export(require("./sendTestSms"));
@@ -341,9 +344,12 @@ const sendSmtpEmail_1 = require("./sendSmtpEmail");
 const sendSmtpEmailAttachment_1 = require("./sendSmtpEmailAttachment");
 const sendSmtpEmailBcc_1 = require("./sendSmtpEmailBcc");
 const sendSmtpEmailCc_1 = require("./sendSmtpEmailCc");
+const sendSmtpEmailMessageVersions_1 = require("./sendSmtpEmailMessageVersions");
 const sendSmtpEmailReplyTo_1 = require("./sendSmtpEmailReplyTo");
+const sendSmtpEmailReplyTo1_1 = require("./sendSmtpEmailReplyTo1");
 const sendSmtpEmailSender_1 = require("./sendSmtpEmailSender");
 const sendSmtpEmailTo_1 = require("./sendSmtpEmailTo");
+const sendSmtpEmailTo1_1 = require("./sendSmtpEmailTo1");
 const sendTemplateEmail_1 = require("./sendTemplateEmail");
 const sendTestEmail_1 = require("./sendTestEmail");
 const sendTestSms_1 = require("./sendTestSms");
@@ -570,9 +576,12 @@ let typeMap = {
     "SendSmtpEmailAttachment": sendSmtpEmailAttachment_1.SendSmtpEmailAttachment,
     "SendSmtpEmailBcc": sendSmtpEmailBcc_1.SendSmtpEmailBcc,
     "SendSmtpEmailCc": sendSmtpEmailCc_1.SendSmtpEmailCc,
+    "SendSmtpEmailMessageVersions": sendSmtpEmailMessageVersions_1.SendSmtpEmailMessageVersions,
     "SendSmtpEmailReplyTo": sendSmtpEmailReplyTo_1.SendSmtpEmailReplyTo,
+    "SendSmtpEmailReplyTo1": sendSmtpEmailReplyTo1_1.SendSmtpEmailReplyTo1,
     "SendSmtpEmailSender": sendSmtpEmailSender_1.SendSmtpEmailSender,
     "SendSmtpEmailTo": sendSmtpEmailTo_1.SendSmtpEmailTo,
+    "SendSmtpEmailTo1": sendSmtpEmailTo1_1.SendSmtpEmailTo1,
     "SendTemplateEmail": sendTemplateEmail_1.SendTemplateEmail,
     "SendTestEmail": sendTestEmail_1.SendTestEmail,
     "SendTestSms": sendTestSms_1.SendTestSms,

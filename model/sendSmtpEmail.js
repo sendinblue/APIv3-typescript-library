@@ -68,6 +68,11 @@ SendSmtpEmail.attributeTypeMap = [
         "type": "object"
     },
     {
+        "name": "messageVersions",
+        "baseName": "messageVersions",
+        "type": "Array<SendSmtpEmailMessageVersions>"
+    },
+    {
         "name": "tags",
         "baseName": "tags",
         "type": "Array<string>"

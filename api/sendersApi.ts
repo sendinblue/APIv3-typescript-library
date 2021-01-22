@@ -41,7 +41,7 @@ export enum SendersApiApiKeys {
 export class SendersApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.1.0/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
     };
     protected _useQuerystring : boolean = false;
 

@@ -1,6 +1,6 @@
-export declare class CreateSmtpEmail {
-    'messageId'?: string;
-    'messageIds'?: Array<string>;
+export declare class SendSmtpEmailReplyTo1 {
+    'email': string;
+    'name'?: string;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

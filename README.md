@@ -30,7 +30,7 @@ const SibApiV3Sdk = require('sib-api-v3-typescript');
 
 let apiInstance = new SibApiV3Sdk.AccountApi()
 
-// Configure API key authorization: api-key
+// Configure API key authorization: apiKey
 
 let apiKey = apiInstance.authentications['apiKey'];
 apiKey.apiKey = "YOUR API KEY"

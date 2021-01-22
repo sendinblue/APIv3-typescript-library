@@ -12,29 +12,32 @@
 
 import { RequestFile } from '../api';
 
-export class CreateSmtpEmail {
+export class SendSmtpEmailTo1 {
     /**
-    * Message ID of the transactional email sent
+    * Email address of the recipient
     */
-    'messageId'?: string;
-    'messageIds'?: Array<string>;
+    'email': string;
+    /**
+    * Name of the recipient. **Maximum allowed characters are 70**.
+    */
+    'name'?: string;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "messageId",
-            "baseName": "messageId",
+            "name": "email",
+            "baseName": "email",
             "type": "string"
         },
         {
-            "name": "messageIds",
-            "baseName": "messageIds",
-            "type": "Array<string>"
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
-        return CreateSmtpEmail.attributeTypeMap;
+        return SendSmtpEmailTo1.attributeTypeMap;
     }
 }
 

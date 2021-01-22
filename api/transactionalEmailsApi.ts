@@ -55,7 +55,7 @@ export enum TransactionalEmailsApiApiKeys {
 export class TransactionalEmailsApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.1.0/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
     };
     protected _useQuerystring : boolean = false;
 
@@ -651,7 +651,7 @@ export class TransactionalEmailsApi {
      * @param tags Filter the report for tags (serialized and urlencoded array)
      * @param messageId Filter on a specific message id
      * @param templateId Filter on a specific template id
-     * @param sort Sort the results in the ascending/descending order of record creation
+     * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
     public async getEmailEventReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, email?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'spam' | 'requests' | 'opened' | 'clicks' | 'invalid' | 'deferred' | 'blocked' | 'unsubscribed' | 'error', tags?: string, messageId?: string, templateId?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetEmailEventReport;  }> {
         const localVarPath = this.basePath + '/smtp/statistics/events';
@@ -770,7 +770,7 @@ export class TransactionalEmailsApi {
      * @param endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD)
      * @param days Number of days in the past including today (positive integer). Not compatible with \&#39;startDate\&#39; and \&#39;endDate\&#39;
      * @param tag Tag of the emails
-     * @param sort Sort the results in the ascending/descending order of record creation
+     * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
     public async getSmtpReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, tag?: string, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetReports;  }> {
         const localVarPath = this.basePath + '/smtp/statistics/reports';
@@ -945,7 +945,7 @@ export class TransactionalEmailsApi {
      * @param templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false
      * @param limit Number of documents returned per page
      * @param offset Index of the first document in the page
-     * @param sort Sort the results in the ascending/descending order of record creation
+     * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
     public async getSmtpTemplates (templateStatus?: boolean, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetSmtpTemplates;  }> {
         const localVarPath = this.basePath + '/smtp/templates';
@@ -1035,7 +1035,7 @@ export class TransactionalEmailsApi {
      * @param limit Number of documents returned per page
      * @param offset Index of the first document on the page
      * @param senders Comma separated list of emails of the senders from which contacts are blocked or unsubscribed
-     * @param sort Sort the results in the ascending/descending order of record creation
+     * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
     public async getTransacBlockedContacts (startDate?: string, endDate?: string, limit?: number, offset?: number, senders?: Array<string>, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetTransacBlockedContacts;  }> {
         const localVarPath = this.basePath + '/smtp/blockedContacts';
@@ -1208,7 +1208,7 @@ export class TransactionalEmailsApi {
      * @param messageId Mandatory if templateId and email are not passed in query filters. Message ID of the transactional email sent.
      * @param startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month.
      * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month.
-     * @param sort Sort the results in the ascending/descending order of record creation
+     * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
     public async getTransacEmailsList (email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetTransacEmailsList;  }> {
         const localVarPath = this.basePath + '/smtp/emails';
