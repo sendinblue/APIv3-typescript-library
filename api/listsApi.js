@@ -22,7 +22,7 @@ class ListsApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
         this._defaultHeaders = {
-            'user-agent': 'sendinblue_clientAPI/v2.1.0/ts-node'
+            'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
         };
         this._useQuerystring = false;
         this.authentications = {

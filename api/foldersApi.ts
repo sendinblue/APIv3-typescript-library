@@ -40,7 +40,7 @@ export enum FoldersApiApiKeys {
 export class FoldersApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.1.0/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
     };
     protected _useQuerystring : boolean = false;
 
@@ -331,7 +331,7 @@ export class FoldersApi {
      * @param folderId Id of the folder
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
-     * @param sort Sort the results in the ascending/descending order of record creation
+     * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
     public async getFolderLists (folderId: number, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}/lists'
@@ -420,7 +420,7 @@ export class FoldersApi {
      * @summary Get all folders
      * @param limit Number of documents per page
      * @param offset Index of the first document of the page
-     * @param sort Sort the results in the ascending/descending order of record creation
+     * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
     public async getFolders (limit: number, offset: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetFolders;  }> {
         const localVarPath = this.basePath + '/contacts/folders';

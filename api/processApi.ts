@@ -37,7 +37,7 @@ export enum ProcessApiApiKeys {
 export class ProcessApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.1.0/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
     };
     protected _useQuerystring : boolean = false;
 
@@ -178,7 +178,7 @@ export class ProcessApi {
      * @summary Return all the processes for your account
      * @param limit Number limitation for the result returned
      * @param offset Beginning point in the list to retrieve from.
-     * @param sort Sort the results in the ascending/descending order of record creation
+     * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
     public async getProcesses (limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetProcesses;  }> {
         const localVarPath = this.basePath + '/processes';

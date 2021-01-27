@@ -14,6 +14,7 @@ import { RequestFile } from '../api';
 import { SendSmtpEmailAttachment } from './sendSmtpEmailAttachment';
 import { SendSmtpEmailBcc } from './sendSmtpEmailBcc';
 import { SendSmtpEmailCc } from './sendSmtpEmailCc';
+import { SendSmtpEmailMessageVersions } from './sendSmtpEmailMessageVersions';
 import { SendSmtpEmailReplyTo } from './sendSmtpEmailReplyTo';
 import { SendSmtpEmailSender } from './sendSmtpEmailSender';
 import { SendSmtpEmailTo } from './sendSmtpEmailTo';
@@ -21,9 +22,9 @@ import { SendSmtpEmailTo } from './sendSmtpEmailTo';
 export class SendSmtpEmail {
     'sender'?: SendSmtpEmailSender;
     /**
-    * List of email addresses and names (optional) of the recipients. For example, [{\"name\":\"Jimmy\", \"email\":\"jimmy98@example.com\"}, {\"name\":\"Joe\", \"email\":\"joe@example.com\"}]
+    * Mandatory if messageVersions are not passed, ignored if messageVersions are passed. List of email addresses and names (optional) of the recipients. For example, [{\"name\":\"Jimmy\", \"email\":\"jimmy98@example.com\"}, {\"name\":\"Joe\", \"email\":\"joe@example.com\"}]
     */
-    'to': Array<SendSmtpEmailTo>;
+    'to'?: Array<SendSmtpEmailTo>;
     /**
     * List of email addresses and names (optional) of the recipients in bcc
     */
@@ -54,13 +55,17 @@ export class SendSmtpEmail {
     */
     'headers'?: object;
     /**
-    * Id of the template
+    * Id of the template. Mandatory if messageVersions are passed
     */
     'templateId'?: number;
     /**
     * Pass the set of attributes to customize the template. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}. It\'s considered only if template is in New Template Language format.
     */
     'params'?: object;
+    /**
+    * You can customize and send out multiple versions of a templateId. Some global parameters such as **to(mandatory), bcc, cc, replyTo, subject** can also be customized specific to each version. The size of individual params in all the messageVersions shall not exceed 100 KB limit and that of cumulative params shall not exceed 1000 KB. This feature is currently in its beta version. You can follow this **step-by-step guide** on how to use **messageVersions** to batch send emails - https://developers.sendinblue.com/docs/batch-send-transactional-emails
+    */
+    'messageVersions'?: Array<SendSmtpEmailMessageVersions>;
     /**
     * Tag your emails to find them more easily
     */
@@ -128,6 +133,11 @@ export class SendSmtpEmail {
             "name": "params",
             "baseName": "params",
             "type": "object"
+        },
+        {
+            "name": "messageVersions",
+            "baseName": "messageVersions",
+            "type": "Array<SendSmtpEmailMessageVersions>"
         },
         {
             "name": "tags",

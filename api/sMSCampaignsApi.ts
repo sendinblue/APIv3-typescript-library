@@ -46,7 +46,7 @@ export enum SMSCampaignsApiApiKeys {
 export class SMSCampaignsApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.1.0/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
     };
     protected _useQuerystring : boolean = false;
 
@@ -339,7 +339,7 @@ export class SMSCampaignsApi {
      * @param endDate Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent sms campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either \&#39;status\&#39; not passed and if passed is set to \&#39;sent\&#39; )
      * @param limit Number limitation for the result returned
      * @param offset Beginning point in the list to retrieve from.
-     * @param sort Sort the results in the ascending/descending order of record creation
+     * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
     public async getSmsCampaigns (status?: 'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess', startDate?: Date, endDate?: Date, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetSmsCampaigns;  }> {
         const localVarPath = this.basePath + '/smsCampaigns';
