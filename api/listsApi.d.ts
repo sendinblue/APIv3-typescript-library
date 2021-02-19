@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import http = require('http');
+import * as http from 'http';
 import { AddContactToList } from '../model/addContactToList';
 import { CreateList } from '../model/createList';
 import { CreateModel } from '../model/createModel';

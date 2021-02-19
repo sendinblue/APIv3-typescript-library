@@ -183,7 +183,7 @@ export * from './updateSmtpTemplateSender';
 export * from './updateWebhook';
 export * from './uploadImageToGallery';
 
-import localVarRequest = require('request');
+import * as localVarRequest from 'request';
 
 import { AbTestCampaignResult } from './abTestCampaignResult';
 import { AbTestCampaignResultClickedLinks } from './abTestCampaignResultClickedLinks';

@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import http = require('http');
+import * as http from 'http';
 import { CreateSender } from '../model/createSender';
 import { CreateSenderModel } from '../model/createSenderModel';
 import { GetIps } from '../model/getIps';

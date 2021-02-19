@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-import localVarRequest = require('request');
-import http = require('http');
+import * as localVarRequest from 'request';
+import * as http from 'http';
 
 /* tslint:disable:no-unused-locals */
 import { AddChildDomain } from '../model/addChildDomain';

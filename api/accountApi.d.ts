@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import http = require('http');
+import * as http from 'http';
 import { GetAccount } from '../model/getAccount';
 import { Authentication, Interceptor } from '../model/models';
 import { ApiKeyAuth } from '../model/models';
