@@ -12,16 +12,13 @@
 
 import localVarRequest = require('request');
 import http = require('http');
-
-/* tslint:disable:no-unused-locals */
-import { ErrorModel } from '../model/errorModel';
 import { GetProcess } from '../model/getProcess';
 import { GetProcesses } from '../model/getProcesses';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import { ApiKeyAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { HttpError } from './apis';
 
 let defaultBasePath = 'https://api.sendinblue.com/v3';
 

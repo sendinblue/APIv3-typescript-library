@@ -10,10 +10,8 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
+
 import { GetCampaignRecipients } from './getCampaignRecipients';
-import { GetEmailCampaignAllOf } from './getEmailCampaignAllOf';
-import { GetExtendedCampaignOverview } from './getExtendedCampaignOverview';
 import { GetExtendedCampaignOverviewAllOfSender } from './getExtendedCampaignOverviewAllOfSender';
 import { GetExtendedCampaignStats } from './getExtendedCampaignStats';
 

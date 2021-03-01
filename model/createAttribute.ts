@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
+
 import { CreateAttributeEnumeration } from './createAttributeEnumeration';
 
 export class CreateAttribute {

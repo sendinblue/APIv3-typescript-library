@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
+
 
 /**
 * To create a new list and import the contacts into it, pass the listName and an optional folderId.

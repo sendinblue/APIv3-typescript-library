@@ -19,7 +19,6 @@ import { CreateModel } from '../model/createModel';
 import { CreateSmtpEmail } from '../model/createSmtpEmail';
 import { CreateSmtpTemplate } from '../model/createSmtpTemplate';
 import { DeleteHardbounces } from '../model/deleteHardbounces';
-import { ErrorModel } from '../model/errorModel';
 import { GetAggregatedReport } from '../model/getAggregatedReport';
 import { GetBlockedDomains } from '../model/getBlockedDomains';
 import { GetEmailEventReport } from '../model/getEmailEventReport';
@@ -29,7 +28,6 @@ import { GetSmtpTemplates } from '../model/getSmtpTemplates';
 import { GetTransacBlockedContacts } from '../model/getTransacBlockedContacts';
 import { GetTransacEmailContent } from '../model/getTransacEmailContent';
 import { GetTransacEmailsList } from '../model/getTransacEmailsList';
-import { PostSendFailed } from '../model/postSendFailed';
 import { SendEmail } from '../model/sendEmail';
 import { SendSmtpEmail } from '../model/sendSmtpEmail';
 import { SendTemplateEmail } from '../model/sendTemplateEmail';
@@ -37,9 +35,9 @@ import { SendTestEmail } from '../model/sendTestEmail';
 import { UpdateSmtpTemplate } from '../model/updateSmtpTemplate';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import { ApiKeyAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { HttpError } from './apis';
 
 let defaultBasePath = 'https://api.sendinblue.com/v3';
 

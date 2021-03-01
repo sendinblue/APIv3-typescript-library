@@ -23,7 +23,6 @@ import { CreateModel } from '../model/createModel';
 import { CreateUpdateContactModel } from '../model/createUpdateContactModel';
 import { CreateUpdateFolder } from '../model/createUpdateFolder';
 import { CreatedProcessId } from '../model/createdProcessId';
-import { ErrorModel } from '../model/errorModel';
 import { GetAttributes } from '../model/getAttributes';
 import { GetContactCampaignStats } from '../model/getContactCampaignStats';
 import { GetContacts } from '../model/getContacts';
@@ -42,9 +41,9 @@ import { UpdateContact } from '../model/updateContact';
 import { UpdateList } from '../model/updateList';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import { ApiKeyAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { HttpError } from './apis';
 
 let defaultBasePath = 'https://api.sendinblue.com/v3';
 

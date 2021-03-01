@@ -18,7 +18,6 @@ import { AddChildDomain } from '../model/addChildDomain';
 import { AddCredits } from '../model/addCredits';
 import { CreateChild } from '../model/createChild';
 import { CreateReseller } from '../model/createReseller';
-import { ErrorModel } from '../model/errorModel';
 import { GetChildAccountCreationStatus } from '../model/getChildAccountCreationStatus';
 import { GetChildDomain } from '../model/getChildDomain';
 import { GetChildInfo } from '../model/getChildInfo';
@@ -32,9 +31,9 @@ import { UpdateChildAccountStatus } from '../model/updateChildAccountStatus';
 import { UpdateChildDomain } from '../model/updateChildDomain';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import { ApiKeyAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { HttpError } from './apis';
 
 let defaultBasePath = 'https://api.sendinblue.com/v3';
 

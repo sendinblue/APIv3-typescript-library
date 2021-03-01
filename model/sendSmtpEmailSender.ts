@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
+
 
 /**
 * Mandatory if `templateId` is not passed. Pass `name` (optional) and `email` OR `id` of sender from which emails will be sent. `name` will be ignored if passed along with sender `id`. For example, {\"name\":\"Mary from MyShop\", \"email\":\"no-reply@myshop.com\"} or {\"id\":2}

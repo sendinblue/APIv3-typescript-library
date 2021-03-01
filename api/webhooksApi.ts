@@ -16,15 +16,14 @@ import http = require('http');
 /* tslint:disable:no-unused-locals */
 import { CreateModel } from '../model/createModel';
 import { CreateWebhook } from '../model/createWebhook';
-import { ErrorModel } from '../model/errorModel';
 import { GetWebhook } from '../model/getWebhook';
 import { GetWebhooks } from '../model/getWebhooks';
 import { UpdateWebhook } from '../model/updateWebhook';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import { ApiKeyAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { HttpError } from './apis';
 
 let defaultBasePath = 'https://api.sendinblue.com/v3';
 

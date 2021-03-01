@@ -12,9 +12,6 @@
 
 import localVarRequest = require('request');
 import http = require('http');
-
-/* tslint:disable:no-unused-locals */
-import { ErrorModel } from '../model/errorModel';
 import { GetSmsEventReport } from '../model/getSmsEventReport';
 import { GetTransacAggregatedSmsReport } from '../model/getTransacAggregatedSmsReport';
 import { GetTransacSmsReport } from '../model/getTransacSmsReport';
@@ -22,9 +19,9 @@ import { SendSms } from '../model/sendSms';
 import { SendTransacSms } from '../model/sendTransacSms';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import { ApiKeyAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { HttpError } from './apis';
 
 let defaultBasePath = 'https://api.sendinblue.com/v3';
 

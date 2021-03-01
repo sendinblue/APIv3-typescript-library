@@ -19,11 +19,9 @@ import { CreateEmailCampaign } from '../model/createEmailCampaign';
 import { CreateModel } from '../model/createModel';
 import { CreatedProcessId } from '../model/createdProcessId';
 import { EmailExportRecipients } from '../model/emailExportRecipients';
-import { ErrorModel } from '../model/errorModel';
 import { GetEmailCampaign } from '../model/getEmailCampaign';
 import { GetEmailCampaigns } from '../model/getEmailCampaigns';
 import { GetSharedTemplateUrl } from '../model/getSharedTemplateUrl';
-import { PostSendFailed } from '../model/postSendFailed';
 import { SendReport } from '../model/sendReport';
 import { SendTestEmail } from '../model/sendTestEmail';
 import { UpdateCampaignStatus } from '../model/updateCampaignStatus';
@@ -31,9 +29,9 @@ import { UpdateEmailCampaign } from '../model/updateEmailCampaign';
 import { UploadImageToGallery } from '../model/uploadImageToGallery';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import { ApiKeyAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { HttpError } from './apis';
 
 let defaultBasePath = 'https://api.sendinblue.com/v3';
 

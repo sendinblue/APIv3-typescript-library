@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
+
 import { GetAccountAllOfMarketingAutomation } from './getAccountAllOfMarketingAutomation';
 import { GetAccountAllOfPlan } from './getAccountAllOfPlan';
 import { GetAccountAllOfRelay } from './getAccountAllOfRelay';

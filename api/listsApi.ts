@@ -17,7 +17,6 @@ import http = require('http');
 import { AddContactToList } from '../model/addContactToList';
 import { CreateList } from '../model/createList';
 import { CreateModel } from '../model/createModel';
-import { ErrorModel } from '../model/errorModel';
 import { GetContacts } from '../model/getContacts';
 import { GetExtendedList } from '../model/getExtendedList';
 import { GetFolderLists } from '../model/getFolderLists';
@@ -27,9 +26,9 @@ import { RemoveContactFromList } from '../model/removeContactFromList';
 import { UpdateList } from '../model/updateList';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import { ApiKeyAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { HttpError } from './apis';
 
 let defaultBasePath = 'https://api.sendinblue.com/v3';
 

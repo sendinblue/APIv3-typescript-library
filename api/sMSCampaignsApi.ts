@@ -17,10 +17,8 @@ import http = require('http');
 import { CreateModel } from '../model/createModel';
 import { CreateSmsCampaign } from '../model/createSmsCampaign';
 import { CreatedProcessId } from '../model/createdProcessId';
-import { ErrorModel } from '../model/errorModel';
 import { GetSmsCampaign } from '../model/getSmsCampaign';
 import { GetSmsCampaigns } from '../model/getSmsCampaigns';
-import { PostSendSmsTestFailed } from '../model/postSendSmsTestFailed';
 import { RequestSmsRecipientExport } from '../model/requestSmsRecipientExport';
 import { SendReport } from '../model/sendReport';
 import { SendTestSms } from '../model/sendTestSms';
@@ -28,9 +26,9 @@ import { UpdateCampaignStatus } from '../model/updateCampaignStatus';
 import { UpdateSmsCampaign } from '../model/updateSmsCampaign';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import { ApiKeyAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { HttpError } from './apis';
 
 let defaultBasePath = 'https://api.sendinblue.com/v3';
 
