@@ -10,9 +10,6 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
-import { GetContactDetails } from './getContactDetails';
-import { GetExtendedContactDetailsAllOf } from './getExtendedContactDetailsAllOf';
 import { GetExtendedContactDetailsAllOfStatistics } from './getExtendedContactDetailsAllOfStatistics';
 
 export class GetExtendedContactDetails {

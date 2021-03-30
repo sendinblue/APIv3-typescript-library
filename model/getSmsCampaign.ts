@@ -10,10 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 import { GetCampaignRecipients } from './getCampaignRecipients';
-import { GetSmsCampaignAllOf } from './getSmsCampaignAllOf';
-import { GetSmsCampaignOverview } from './getSmsCampaignOverview';
 import { GetSmsCampaignStats } from './getSmsCampaignStats';
 
 export class GetSmsCampaign {

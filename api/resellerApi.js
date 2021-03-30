@@ -12,7 +12,7 @@ const localVarRequest = require("request");
 const models_1 = require("../model/models");
 const models_2 = require("../model/models");
 const apis_1 = require("./apis");
-let defaultBasePath = 'https://api.sendinblue.com/v3';
+const defaultBasePath = 'https://api.sendinblue.com/v3';
 var ResellerApiApiKeys;
 (function (ResellerApiApiKeys) {
     ResellerApiApiKeys[ResellerApiApiKeys["apiKey"] = 0] = "apiKey";
@@ -75,8 +75,8 @@ class ResellerApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/credits/add'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -84,7 +84,7 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling addCredits.');
             }
@@ -92,8 +92,8 @@ class ResellerApi {
                 throw new Error('Required parameter addCredits was null or undefined when calling addCredits.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -146,8 +146,8 @@ class ResellerApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/ips/associate'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -155,7 +155,7 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling associateIpToChild.');
             }
@@ -163,8 +163,8 @@ class ResellerApi {
                 throw new Error('Required parameter ip was null or undefined when calling associateIpToChild.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -216,8 +216,8 @@ class ResellerApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -225,7 +225,7 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling createChildDomain.');
             }
@@ -233,8 +233,8 @@ class ResellerApi {
                 throw new Error('Required parameter addChildDomain was null or undefined when calling createChildDomain.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -285,8 +285,8 @@ class ResellerApi {
     createResellerChild(resellerChild, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -294,10 +294,10 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -351,8 +351,8 @@ class ResellerApi {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains/{domainName}'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)))
                 .replace('{' + 'domainName' + '}', encodeURIComponent(String(domainName)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -360,7 +360,7 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling deleteChildDomain.');
             }
@@ -368,8 +368,8 @@ class ResellerApi {
                 throw new Error('Required parameter domainName was null or undefined when calling deleteChildDomain.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -420,8 +420,8 @@ class ResellerApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -429,13 +429,13 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling deleteResellerChild.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -486,8 +486,8 @@ class ResellerApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/ips/dissociate'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -495,7 +495,7 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling dissociateIpFromChild.');
             }
@@ -503,8 +503,8 @@ class ResellerApi {
                 throw new Error('Required parameter ip was null or undefined when calling dissociateIpFromChild.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -556,8 +556,8 @@ class ResellerApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/accountCreationStatus'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -565,13 +565,13 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling getChildAccountCreationStatus.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -623,8 +623,8 @@ class ResellerApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -632,13 +632,13 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling getChildDomains.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -690,8 +690,8 @@ class ResellerApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -699,13 +699,13 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling getChildInfo.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -756,8 +756,8 @@ class ResellerApi {
     getResellerChilds(limit, offset, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -765,7 +765,7 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (limit !== undefined) {
                 localVarQueryParameters['limit'] = models_1.ObjectSerializer.serialize(limit, "number");
             }
@@ -773,8 +773,8 @@ class ResellerApi {
                 localVarQueryParameters['offset'] = models_1.ObjectSerializer.serialize(offset, "number");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -826,8 +826,8 @@ class ResellerApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/auth'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -835,13 +835,13 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling getSsoToken.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -893,8 +893,8 @@ class ResellerApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/credits/remove'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -902,7 +902,7 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling removeCredits.');
             }
@@ -910,8 +910,8 @@ class ResellerApi {
                 throw new Error('Required parameter removeCredits was null or undefined when calling removeCredits.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -964,8 +964,8 @@ class ResellerApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/accountStatus'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -973,7 +973,7 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling updateChildAccountStatus.');
             }
@@ -981,8 +981,8 @@ class ResellerApi {
                 throw new Error('Required parameter updateChildAccountStatus was null or undefined when calling updateChildAccountStatus.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'PUT',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1035,8 +1035,8 @@ class ResellerApi {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains/{domainName}'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)))
                 .replace('{' + 'domainName' + '}', encodeURIComponent(String(domainName)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1044,7 +1044,7 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling updateChildDomain.');
             }
@@ -1055,8 +1055,8 @@ class ResellerApi {
                 throw new Error('Required parameter updateChildDomain was null or undefined when calling updateChildDomain.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'PUT',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1108,8 +1108,8 @@ class ResellerApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/reseller/children/{childIdentifier}'
                 .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1117,7 +1117,7 @@ class ResellerApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (childIdentifier === null || childIdentifier === undefined) {
                 throw new Error('Required parameter childIdentifier was null or undefined when calling updateResellerChild.');
             }
@@ -1125,8 +1125,8 @@ class ResellerApi {
                 throw new Error('Required parameter resellerChild was null or undefined when calling updateResellerChild.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'PUT',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,

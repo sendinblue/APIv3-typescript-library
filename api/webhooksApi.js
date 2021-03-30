@@ -12,7 +12,7 @@ const localVarRequest = require("request");
 const models_1 = require("../model/models");
 const models_2 = require("../model/models");
 const apis_1 = require("./apis");
-let defaultBasePath = 'https://api.sendinblue.com/v3';
+const defaultBasePath = 'https://api.sendinblue.com/v3';
 var WebhooksApiApiKeys;
 (function (WebhooksApiApiKeys) {
     WebhooksApiApiKeys[WebhooksApiApiKeys["apiKey"] = 0] = "apiKey";
@@ -74,8 +74,8 @@ class WebhooksApi {
     createWebhook(createWebhook, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/webhooks';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -83,13 +83,13 @@ class WebhooksApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (createWebhook === null || createWebhook === undefined) {
                 throw new Error('Required parameter createWebhook was null or undefined when calling createWebhook.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -142,8 +142,8 @@ class WebhooksApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/webhooks/{webhookId}'
                 .replace('{' + 'webhookId' + '}', encodeURIComponent(String(webhookId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -151,13 +151,13 @@ class WebhooksApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (webhookId === null || webhookId === undefined) {
                 throw new Error('Required parameter webhookId was null or undefined when calling deleteWebhook.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -208,8 +208,8 @@ class WebhooksApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/webhooks/{webhookId}'
                 .replace('{' + 'webhookId' + '}', encodeURIComponent(String(webhookId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -217,13 +217,13 @@ class WebhooksApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (webhookId === null || webhookId === undefined) {
                 throw new Error('Required parameter webhookId was null or undefined when calling getWebhook.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -274,8 +274,8 @@ class WebhooksApi {
     getWebhooks(type, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/webhooks';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -283,13 +283,13 @@ class WebhooksApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (type !== undefined) {
                 localVarQueryParameters['type'] = models_1.ObjectSerializer.serialize(type, "'marketing' | 'transactional'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -341,8 +341,8 @@ class WebhooksApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/webhooks/{webhookId}'
                 .replace('{' + 'webhookId' + '}', encodeURIComponent(String(webhookId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -350,7 +350,7 @@ class WebhooksApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (webhookId === null || webhookId === undefined) {
                 throw new Error('Required parameter webhookId was null or undefined when calling updateWebhook.');
             }
@@ -358,8 +358,8 @@ class WebhooksApi {
                 throw new Error('Required parameter updateWebhook was null or undefined when calling updateWebhook.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'PUT',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,

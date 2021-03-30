@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 
-/**
-* Credits available for your child
-*/
+
+
+
 export class GetChildInfoAllOfCredits {
     /**
     * Email credits available for your child

@@ -12,7 +12,7 @@ const localVarRequest = require("request");
 const models_1 = require("../model/models");
 const models_2 = require("../model/models");
 const apis_1 = require("./apis");
-let defaultBasePath = 'https://api.sendinblue.com/v3';
+const defaultBasePath = 'https://api.sendinblue.com/v3';
 var ContactsApiApiKeys;
 (function (ContactsApiApiKeys) {
     ContactsApiApiKeys[ContactsApiApiKeys["apiKey"] = 0] = "apiKey";
@@ -75,8 +75,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts/add'
                 .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -84,7 +84,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (listId === null || listId === undefined) {
                 throw new Error('Required parameter listId was null or undefined when calling addContactToList.');
             }
@@ -92,8 +92,8 @@ class ContactsApi {
                 throw new Error('Required parameter contactEmails was null or undefined when calling addContactToList.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -147,8 +147,8 @@ class ContactsApi {
             const localVarPath = this.basePath + '/contacts/attributes/{attributeCategory}/{attributeName}'
                 .replace('{' + 'attributeCategory' + '}', encodeURIComponent(String(attributeCategory)))
                 .replace('{' + 'attributeName' + '}', encodeURIComponent(String(attributeName)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -156,7 +156,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (attributeCategory === null || attributeCategory === undefined) {
                 throw new Error('Required parameter attributeCategory was null or undefined when calling createAttribute.');
             }
@@ -167,8 +167,8 @@ class ContactsApi {
                 throw new Error('Required parameter createAttribute was null or undefined when calling createAttribute.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -219,8 +219,8 @@ class ContactsApi {
     createContact(createContact, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -228,13 +228,13 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (createContact === null || createContact === undefined) {
                 throw new Error('Required parameter createContact was null or undefined when calling createContact.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -286,8 +286,8 @@ class ContactsApi {
     createDoiContact(createDoiContact, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/doubleOptinConfirmation';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -295,13 +295,13 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (createDoiContact === null || createDoiContact === undefined) {
                 throw new Error('Required parameter createDoiContact was null or undefined when calling createDoiContact.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -352,8 +352,8 @@ class ContactsApi {
     createFolder(createFolder, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/folders';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -361,13 +361,13 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (createFolder === null || createFolder === undefined) {
                 throw new Error('Required parameter createFolder was null or undefined when calling createFolder.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -419,8 +419,8 @@ class ContactsApi {
     createList(createList, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/lists';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -428,13 +428,13 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (createList === null || createList === undefined) {
                 throw new Error('Required parameter createList was null or undefined when calling createList.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -488,8 +488,8 @@ class ContactsApi {
             const localVarPath = this.basePath + '/contacts/attributes/{attributeCategory}/{attributeName}'
                 .replace('{' + 'attributeCategory' + '}', encodeURIComponent(String(attributeCategory)))
                 .replace('{' + 'attributeName' + '}', encodeURIComponent(String(attributeName)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -497,7 +497,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (attributeCategory === null || attributeCategory === undefined) {
                 throw new Error('Required parameter attributeCategory was null or undefined when calling deleteAttribute.');
             }
@@ -505,8 +505,8 @@ class ContactsApi {
                 throw new Error('Required parameter attributeName was null or undefined when calling deleteAttribute.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -557,8 +557,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/{identifier}'
                 .replace('{' + 'identifier' + '}', encodeURIComponent(String(identifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -566,13 +566,13 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (identifier === null || identifier === undefined) {
                 throw new Error('Required parameter identifier was null or undefined when calling deleteContact.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -623,8 +623,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/folders/{folderId}'
                 .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -632,13 +632,13 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (folderId === null || folderId === undefined) {
                 throw new Error('Required parameter folderId was null or undefined when calling deleteFolder.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -689,8 +689,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/lists/{listId}'
                 .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -698,13 +698,13 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (listId === null || listId === undefined) {
                 throw new Error('Required parameter listId was null or undefined when calling deleteList.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -754,8 +754,8 @@ class ContactsApi {
     getAttributes(options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/attributes';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -763,10 +763,10 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -818,8 +818,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/{identifier}'
                 .replace('{' + 'identifier' + '}', encodeURIComponent(String(identifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -827,13 +827,13 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (identifier === null || identifier === undefined) {
                 throw new Error('Required parameter identifier was null or undefined when calling getContactInfo.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -885,8 +885,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/{identifier}/campaignStats'
                 .replace('{' + 'identifier' + '}', encodeURIComponent(String(identifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -894,7 +894,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (identifier === null || identifier === undefined) {
                 throw new Error('Required parameter identifier was null or undefined when calling getContactStats.');
             }
@@ -905,8 +905,8 @@ class ContactsApi {
                 localVarQueryParameters['endDate'] = models_1.ObjectSerializer.serialize(endDate, "string");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -957,8 +957,8 @@ class ContactsApi {
     getContacts(limit, offset, modifiedSince, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -966,7 +966,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (limit !== undefined) {
                 localVarQueryParameters['limit'] = models_1.ObjectSerializer.serialize(limit, "number");
             }
@@ -980,8 +980,8 @@ class ContactsApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1033,8 +1033,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts'
                 .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1042,7 +1042,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (listId === null || listId === undefined) {
                 throw new Error('Required parameter listId was null or undefined when calling getContactsFromList.');
             }
@@ -1059,8 +1059,8 @@ class ContactsApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1112,8 +1112,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/folders/{folderId}'
                 .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1121,13 +1121,13 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (folderId === null || folderId === undefined) {
                 throw new Error('Required parameter folderId was null or undefined when calling getFolder.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1179,8 +1179,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/folders/{folderId}/lists'
                 .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1188,7 +1188,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (folderId === null || folderId === undefined) {
                 throw new Error('Required parameter folderId was null or undefined when calling getFolderLists.');
             }
@@ -1202,8 +1202,8 @@ class ContactsApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1254,8 +1254,8 @@ class ContactsApi {
     getFolders(limit, offset, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/folders';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1263,7 +1263,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (limit === null || limit === undefined) {
                 throw new Error('Required parameter limit was null or undefined when calling getFolders.');
             }
@@ -1280,8 +1280,8 @@ class ContactsApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1333,8 +1333,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/lists/{listId}'
                 .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1342,13 +1342,13 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (listId === null || listId === undefined) {
                 throw new Error('Required parameter listId was null or undefined when calling getList.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1399,8 +1399,8 @@ class ContactsApi {
     getLists(limit, offset, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/lists';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1408,7 +1408,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (limit !== undefined) {
                 localVarQueryParameters['limit'] = models_1.ObjectSerializer.serialize(limit, "number");
             }
@@ -1419,8 +1419,8 @@ class ContactsApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1471,8 +1471,8 @@ class ContactsApi {
     importContacts(requestContactImport, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/import';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1480,13 +1480,13 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (requestContactImport === null || requestContactImport === undefined) {
                 throw new Error('Required parameter requestContactImport was null or undefined when calling importContacts.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1539,8 +1539,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts/remove'
                 .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1548,7 +1548,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (listId === null || listId === undefined) {
                 throw new Error('Required parameter listId was null or undefined when calling removeContactFromList.');
             }
@@ -1556,8 +1556,8 @@ class ContactsApi {
                 throw new Error('Required parameter contactEmails was null or undefined when calling removeContactFromList.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1609,8 +1609,8 @@ class ContactsApi {
     requestContactExport(requestContactExport, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/export';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1618,13 +1618,13 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (requestContactExport === null || requestContactExport === undefined) {
                 throw new Error('Required parameter requestContactExport was null or undefined when calling requestContactExport.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1678,8 +1678,8 @@ class ContactsApi {
             const localVarPath = this.basePath + '/contacts/attributes/{attributeCategory}/{attributeName}'
                 .replace('{' + 'attributeCategory' + '}', encodeURIComponent(String(attributeCategory)))
                 .replace('{' + 'attributeName' + '}', encodeURIComponent(String(attributeName)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1687,7 +1687,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (attributeCategory === null || attributeCategory === undefined) {
                 throw new Error('Required parameter attributeCategory was null or undefined when calling updateAttribute.');
             }
@@ -1698,8 +1698,8 @@ class ContactsApi {
                 throw new Error('Required parameter updateAttribute was null or undefined when calling updateAttribute.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'PUT',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1751,8 +1751,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/{identifier}'
                 .replace('{' + 'identifier' + '}', encodeURIComponent(String(identifier)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1760,7 +1760,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (identifier === null || identifier === undefined) {
                 throw new Error('Required parameter identifier was null or undefined when calling updateContact.');
             }
@@ -1768,8 +1768,8 @@ class ContactsApi {
                 throw new Error('Required parameter updateContact was null or undefined when calling updateContact.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'PUT',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1821,8 +1821,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/folders/{folderId}'
                 .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1830,7 +1830,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (folderId === null || folderId === undefined) {
                 throw new Error('Required parameter folderId was null or undefined when calling updateFolder.');
             }
@@ -1838,8 +1838,8 @@ class ContactsApi {
                 throw new Error('Required parameter updateFolder was null or undefined when calling updateFolder.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'PUT',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1891,8 +1891,8 @@ class ContactsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/contacts/lists/{listId}'
                 .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1900,7 +1900,7 @@ class ContactsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (listId === null || listId === undefined) {
                 throw new Error('Required parameter listId was null or undefined when calling updateList.');
             }
@@ -1908,8 +1908,8 @@ class ContactsApi {
                 throw new Error('Required parameter updateList was null or undefined when calling updateList.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'PUT',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,

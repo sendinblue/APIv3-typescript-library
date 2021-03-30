@@ -12,7 +12,7 @@ const localVarRequest = require("request");
 const models_1 = require("../model/models");
 const models_2 = require("../model/models");
 const apis_1 = require("./apis");
-let defaultBasePath = 'https://api.sendinblue.com/v3';
+const defaultBasePath = 'https://api.sendinblue.com/v3';
 var SMSCampaignsApiApiKeys;
 (function (SMSCampaignsApiApiKeys) {
     SMSCampaignsApiApiKeys[SMSCampaignsApiApiKeys["apiKey"] = 0] = "apiKey";
@@ -74,8 +74,8 @@ class SMSCampaignsApi {
     createSmsCampaign(createSmsCampaign, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smsCampaigns';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -83,13 +83,13 @@ class SMSCampaignsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (createSmsCampaign === null || createSmsCampaign === undefined) {
                 throw new Error('Required parameter createSmsCampaign was null or undefined when calling createSmsCampaign.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -142,8 +142,8 @@ class SMSCampaignsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smsCampaigns/{campaignId}'
                 .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -151,13 +151,13 @@ class SMSCampaignsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (campaignId === null || campaignId === undefined) {
                 throw new Error('Required parameter campaignId was null or undefined when calling deleteSmsCampaign.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -208,8 +208,8 @@ class SMSCampaignsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smsCampaigns/{campaignId}'
                 .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -217,13 +217,13 @@ class SMSCampaignsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (campaignId === null || campaignId === undefined) {
                 throw new Error('Required parameter campaignId was null or undefined when calling getSmsCampaign.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -274,8 +274,8 @@ class SMSCampaignsApi {
     getSmsCampaigns(status, startDate, endDate, limit, offset, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smsCampaigns';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -283,7 +283,7 @@ class SMSCampaignsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (status !== undefined) {
                 localVarQueryParameters['status'] = models_1.ObjectSerializer.serialize(status, "'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess'");
             }
@@ -303,8 +303,8 @@ class SMSCampaignsApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -356,8 +356,8 @@ class SMSCampaignsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/exportRecipients'
                 .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -365,13 +365,13 @@ class SMSCampaignsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (campaignId === null || campaignId === undefined) {
                 throw new Error('Required parameter campaignId was null or undefined when calling requestSmsRecipientExport.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -424,8 +424,8 @@ class SMSCampaignsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/sendNow'
                 .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -433,13 +433,13 @@ class SMSCampaignsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (campaignId === null || campaignId === undefined) {
                 throw new Error('Required parameter campaignId was null or undefined when calling sendSmsCampaignNow.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -490,8 +490,8 @@ class SMSCampaignsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/sendReport'
                 .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -499,7 +499,7 @@ class SMSCampaignsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (campaignId === null || campaignId === undefined) {
                 throw new Error('Required parameter campaignId was null or undefined when calling sendSmsReport.');
             }
@@ -507,8 +507,8 @@ class SMSCampaignsApi {
                 throw new Error('Required parameter sendReport was null or undefined when calling sendSmsReport.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -560,8 +560,8 @@ class SMSCampaignsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/sendTest'
                 .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -569,7 +569,7 @@ class SMSCampaignsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (campaignId === null || campaignId === undefined) {
                 throw new Error('Required parameter campaignId was null or undefined when calling sendTestSms.');
             }
@@ -577,8 +577,8 @@ class SMSCampaignsApi {
                 throw new Error('Required parameter phoneNumber was null or undefined when calling sendTestSms.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -630,8 +630,8 @@ class SMSCampaignsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smsCampaigns/{campaignId}'
                 .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -639,7 +639,7 @@ class SMSCampaignsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (campaignId === null || campaignId === undefined) {
                 throw new Error('Required parameter campaignId was null or undefined when calling updateSmsCampaign.');
             }
@@ -647,8 +647,8 @@ class SMSCampaignsApi {
                 throw new Error('Required parameter updateSmsCampaign was null or undefined when calling updateSmsCampaign.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'PUT',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -700,8 +700,8 @@ class SMSCampaignsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/status'
                 .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -709,7 +709,7 @@ class SMSCampaignsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (campaignId === null || campaignId === undefined) {
                 throw new Error('Required parameter campaignId was null or undefined when calling updateSmsCampaignStatus.');
             }
@@ -717,8 +717,8 @@ class SMSCampaignsApi {
                 throw new Error('Required parameter status was null or undefined when calling updateSmsCampaignStatus.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'PUT',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,

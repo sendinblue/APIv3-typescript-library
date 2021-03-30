@@ -10,12 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
-import { GetChildInfoAllOf } from './getChildInfoAllOf';
 import { GetChildInfoAllOfApiKeys } from './getChildInfoAllOfApiKeys';
 import { GetChildInfoAllOfCredits } from './getChildInfoAllOfCredits';
 import { GetChildInfoAllOfStatistics } from './getChildInfoAllOfStatistics';
-import { GetClient } from './getClient';
 
 export class GetChildInfo {
     /**

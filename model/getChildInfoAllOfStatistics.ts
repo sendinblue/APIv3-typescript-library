@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 
-/**
-* Statistics about your child account activity
-*/
+
+
+
 export class GetChildInfoAllOfStatistics {
     /**
     * Overall emails sent for the previous month

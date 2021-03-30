@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 import { GetExtendedContactDetailsAllOfStatisticsClicked } from './getExtendedContactDetailsAllOfStatisticsClicked';
 import { GetExtendedContactDetailsAllOfStatisticsMessagesSent } from './getExtendedContactDetailsAllOfStatisticsMessagesSent';
 import { GetExtendedContactDetailsAllOfStatisticsOpened } from './getExtendedContactDetailsAllOfStatisticsOpened';

@@ -10,12 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
-import { GetAccountAllOf } from './getAccountAllOf';
 import { GetAccountAllOfMarketingAutomation } from './getAccountAllOfMarketingAutomation';
 import { GetAccountAllOfPlan } from './getAccountAllOfPlan';
 import { GetAccountAllOfRelay } from './getAccountAllOfRelay';
-import { GetExtendedClient } from './getExtendedClient';
 import { GetExtendedClientAllOfAddress } from './getExtendedClientAllOfAddress';
 
 export class GetAccount {

@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 
-/**
-* Credits remaining for child account
-*/
+
+
+
 export class RemainingCreditModelChild {
     /**
     * SMS Credits remaining for child account
