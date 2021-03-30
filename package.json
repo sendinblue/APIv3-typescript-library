@@ -1,13 +1,15 @@
 {
     "name": "sib-api-v3-typescript",
-    "version": "2.2.0",
+    "version": "2.2.1",
     "description": "NodeJS client for sib-api-v3-typescript",
     "main": "api.js",
     "types": "api.d.ts",
     "scripts": {
         "clean": "rm -Rf node_modules/ *.js",
         "build": "tsc",
-        "test": "npm run build && node client.js"
+        "test": "npm run build && node client.js",
+        "lint": "eslint . --ext .ts",
+        "lint-and-fix": "eslint . --ext .ts --fix"
     },
     "repository": {
         "type": "git",
@@ -27,8 +29,12 @@
         "rewire": "^3.0.2"
     },
     "devDependencies": {
-        "typescript": "^2.4.2",
-        "@types/node": "8.10.34"
+        "@types/node": "8.10.34",
+        "@typescript-eslint/eslint-plugin": "^4.20.0",
+        "@typescript-eslint/parser": "^4.20.0",
+        "eslint": "^7.23.0",
+        "eslint-plugin-unused-imports": "^1.1.0",
+        "typescript": "^2.4.2"
     },
     "bugs": {
         "url": "https://github.com/sendinblue/APIv3-typescript-library/issues"

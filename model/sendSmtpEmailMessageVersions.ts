@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 import { SendSmtpEmailBcc } from './sendSmtpEmailBcc';
 import { SendSmtpEmailCc } from './sendSmtpEmailCc';
 import { SendSmtpEmailReplyTo1 } from './sendSmtpEmailReplyTo1';

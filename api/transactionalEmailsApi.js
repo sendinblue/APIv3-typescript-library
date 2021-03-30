@@ -12,7 +12,7 @@ const localVarRequest = require("request");
 const models_1 = require("../model/models");
 const models_2 = require("../model/models");
 const apis_1 = require("./apis");
-let defaultBasePath = 'https://api.sendinblue.com/v3';
+const defaultBasePath = 'https://api.sendinblue.com/v3';
 var TransactionalEmailsApiApiKeys;
 (function (TransactionalEmailsApiApiKeys) {
     TransactionalEmailsApiApiKeys[TransactionalEmailsApiApiKeys["apiKey"] = 0] = "apiKey";
@@ -74,8 +74,8 @@ class TransactionalEmailsApi {
     blockNewDomain(blockDomain, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/blockedDomains';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -83,13 +83,13 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (blockDomain === null || blockDomain === undefined) {
                 throw new Error('Required parameter blockDomain was null or undefined when calling blockNewDomain.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -140,8 +140,8 @@ class TransactionalEmailsApi {
     createSmtpTemplate(smtpTemplate, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/templates';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -149,13 +149,13 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (smtpTemplate === null || smtpTemplate === undefined) {
                 throw new Error('Required parameter smtpTemplate was null or undefined when calling createSmtpTemplate.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -208,8 +208,8 @@ class TransactionalEmailsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/blockedDomains/{domain}'
                 .replace('{' + 'domain' + '}', encodeURIComponent(String(domain)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -217,13 +217,13 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (domain === null || domain === undefined) {
                 throw new Error('Required parameter domain was null or undefined when calling deleteBlockedDomain.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -273,8 +273,8 @@ class TransactionalEmailsApi {
     deleteHardbounces(deleteHardbounces, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/deleteHardbounces';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -282,10 +282,10 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -337,8 +337,8 @@ class TransactionalEmailsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/templates/{templateId}'
                 .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -346,13 +346,13 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (templateId === null || templateId === undefined) {
                 throw new Error('Required parameter templateId was null or undefined when calling deleteSmtpTemplate.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -402,8 +402,8 @@ class TransactionalEmailsApi {
     getAggregatedSmtpReport(startDate, endDate, days, tag, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/statistics/aggregatedReport';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -411,7 +411,7 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (startDate !== undefined) {
                 localVarQueryParameters['startDate'] = models_1.ObjectSerializer.serialize(startDate, "string");
             }
@@ -425,8 +425,8 @@ class TransactionalEmailsApi {
                 localVarQueryParameters['tag'] = models_1.ObjectSerializer.serialize(tag, "string");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -477,8 +477,8 @@ class TransactionalEmailsApi {
     getBlockedDomains(options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/blockedDomains';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -486,10 +486,10 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -540,8 +540,8 @@ class TransactionalEmailsApi {
     getEmailEventReport(limit, offset, startDate, endDate, days, email, event, tags, messageId, templateId, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/statistics/events';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -549,7 +549,7 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (limit !== undefined) {
                 localVarQueryParameters['limit'] = models_1.ObjectSerializer.serialize(limit, "number");
             }
@@ -584,8 +584,8 @@ class TransactionalEmailsApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -636,8 +636,8 @@ class TransactionalEmailsApi {
     getSmtpReport(limit, offset, startDate, endDate, days, tag, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/statistics/reports';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -645,7 +645,7 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (limit !== undefined) {
                 localVarQueryParameters['limit'] = models_1.ObjectSerializer.serialize(limit, "number");
             }
@@ -668,8 +668,8 @@ class TransactionalEmailsApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -721,8 +721,8 @@ class TransactionalEmailsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/templates/{templateId}'
                 .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -730,13 +730,13 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (templateId === null || templateId === undefined) {
                 throw new Error('Required parameter templateId was null or undefined when calling getSmtpTemplate.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -787,8 +787,8 @@ class TransactionalEmailsApi {
     getSmtpTemplates(templateStatus, limit, offset, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/templates';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -796,7 +796,7 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (templateStatus !== undefined) {
                 localVarQueryParameters['templateStatus'] = models_1.ObjectSerializer.serialize(templateStatus, "boolean");
             }
@@ -810,8 +810,8 @@ class TransactionalEmailsApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -862,8 +862,8 @@ class TransactionalEmailsApi {
     getTransacBlockedContacts(startDate, endDate, limit, offset, senders, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/blockedContacts';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -871,7 +871,7 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (startDate !== undefined) {
                 localVarQueryParameters['startDate'] = models_1.ObjectSerializer.serialize(startDate, "string");
             }
@@ -891,8 +891,8 @@ class TransactionalEmailsApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -944,8 +944,8 @@ class TransactionalEmailsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/emails/{uuid}'
                 .replace('{' + 'uuid' + '}', encodeURIComponent(String(uuid)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -953,13 +953,13 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (uuid === null || uuid === undefined) {
                 throw new Error('Required parameter uuid was null or undefined when calling getTransacEmailContent.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1010,8 +1010,8 @@ class TransactionalEmailsApi {
     getTransacEmailsList(email, templateId, messageId, startDate, endDate, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/emails';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1019,7 +1019,7 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (email !== undefined) {
                 localVarQueryParameters['email'] = models_1.ObjectSerializer.serialize(email, "string");
             }
@@ -1039,8 +1039,8 @@ class TransactionalEmailsApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1092,8 +1092,8 @@ class TransactionalEmailsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/templates/{templateId}/send'
                 .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1101,7 +1101,7 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (templateId === null || templateId === undefined) {
                 throw new Error('Required parameter templateId was null or undefined when calling sendTemplate.');
             }
@@ -1109,8 +1109,8 @@ class TransactionalEmailsApi {
                 throw new Error('Required parameter sendEmail was null or undefined when calling sendTemplate.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1163,8 +1163,8 @@ class TransactionalEmailsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/templates/{templateId}/sendTest'
                 .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1172,7 +1172,7 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (templateId === null || templateId === undefined) {
                 throw new Error('Required parameter templateId was null or undefined when calling sendTestTemplate.');
             }
@@ -1180,8 +1180,8 @@ class TransactionalEmailsApi {
                 throw new Error('Required parameter sendTestEmail was null or undefined when calling sendTestTemplate.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1232,8 +1232,8 @@ class TransactionalEmailsApi {
     sendTransacEmail(sendSmtpEmail, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/email';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1241,13 +1241,13 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (sendSmtpEmail === null || sendSmtpEmail === undefined) {
                 throw new Error('Required parameter sendSmtpEmail was null or undefined when calling sendTransacEmail.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1300,8 +1300,8 @@ class TransactionalEmailsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/blockedContacts/{email}'
                 .replace('{' + 'email' + '}', encodeURIComponent(String(email)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1309,13 +1309,13 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (email === null || email === undefined) {
                 throw new Error('Required parameter email was null or undefined when calling smtpBlockedContactsEmailDelete.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1366,8 +1366,8 @@ class TransactionalEmailsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/log/{messageId}'
                 .replace('{' + 'messageId' + '}', encodeURIComponent(String(messageId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1375,13 +1375,13 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (messageId === null || messageId === undefined) {
                 throw new Error('Required parameter messageId was null or undefined when calling smtpLogMessageIdDelete.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -1432,8 +1432,8 @@ class TransactionalEmailsApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/templates/{templateId}'
                 .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -1441,7 +1441,7 @@ class TransactionalEmailsApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (templateId === null || templateId === undefined) {
                 throw new Error('Required parameter templateId was null or undefined when calling updateSmtpTemplate.');
             }
@@ -1449,8 +1449,8 @@ class TransactionalEmailsApi {
                 throw new Error('Required parameter smtpTemplate was null or undefined when calling updateSmtpTemplate.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'PUT',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,

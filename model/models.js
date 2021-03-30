@@ -371,7 +371,7 @@ const updateSmtpTemplate_1 = require("./updateSmtpTemplate");
 const updateSmtpTemplateSender_1 = require("./updateSmtpTemplateSender");
 const updateWebhook_1 = require("./updateWebhook");
 const uploadImageToGallery_1 = require("./uploadImageToGallery");
-let primitives = [
+const primitives = [
     "string",
     "boolean",
     "double",
@@ -381,7 +381,7 @@ let primitives = [
     "number",
     "any"
 ];
-let enumsMap = {
+const enumsMap = {
     "AbTestCampaignResult.WinningVersionEnum": abTestCampaignResult_1.AbTestCampaignResult.WinningVersionEnum,
     "AbTestCampaignResult.WinningCriteriaEnum": abTestCampaignResult_1.AbTestCampaignResult.WinningCriteriaEnum,
     "CreateAttribute.TypeEnum": createAttribute_1.CreateAttribute.TypeEnum,
@@ -418,7 +418,7 @@ let enumsMap = {
     "UpdateEmailCampaign.WinnerCriteriaEnum": updateEmailCampaign_1.UpdateEmailCampaign.WinnerCriteriaEnum,
     "UpdateWebhook.EventsEnum": updateWebhook_1.UpdateWebhook.EventsEnum,
 };
-let typeMap = {
+const typeMap = {
     "AbTestCampaignResult": abTestCampaignResult_1.AbTestCampaignResult,
     "AbTestCampaignResultClickedLinks": abTestCampaignResultClickedLinks_1.AbTestCampaignResultClickedLinks,
     "AbTestCampaignResultStatistics": abTestCampaignResultStatistics_1.AbTestCampaignResultStatistics,
@@ -622,13 +622,13 @@ class ObjectSerializer {
             if (!typeMap[expectedType]) {
                 return expectedType;
             }
-            let discriminatorProperty = typeMap[expectedType].discriminator;
+            const discriminatorProperty = typeMap[expectedType].discriminator;
             if (discriminatorProperty == null) {
                 return expectedType;
             }
             else {
                 if (data[discriminatorProperty]) {
-                    var discriminatorType = data[discriminatorProperty];
+                    const discriminatorType = data[discriminatorProperty];
                     if (typeMap[discriminatorType]) {
                         return discriminatorType;
                     }
@@ -652,9 +652,9 @@ class ObjectSerializer {
         else if (type.lastIndexOf("Array<", 0) === 0) {
             let subType = type.replace("Array<", "");
             subType = subType.substring(0, subType.length - 1);
-            let transformedData = [];
-            for (let index in data) {
-                let date = data[index];
+            const transformedData = [];
+            for (const index in data) {
+                const date = data[index];
                 transformedData.push(ObjectSerializer.serialize(date, subType));
             }
             return transformedData;
@@ -670,10 +670,10 @@ class ObjectSerializer {
                 return data;
             }
             type = this.findCorrectType(data, type);
-            let attributeTypes = typeMap[type].getAttributeTypeMap();
-            let instance = {};
-            for (let index in attributeTypes) {
-                let attributeType = attributeTypes[index];
+            const attributeTypes = typeMap[type].getAttributeTypeMap();
+            const instance = {};
+            for (const index in attributeTypes) {
+                const attributeType = attributeTypes[index];
                 instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type);
             }
             return instance;
@@ -690,9 +690,9 @@ class ObjectSerializer {
         else if (type.lastIndexOf("Array<", 0) === 0) {
             let subType = type.replace("Array<", "");
             subType = subType.substring(0, subType.length - 1);
-            let transformedData = [];
-            for (let index in data) {
-                let date = data[index];
+            const transformedData = [];
+            for (const index in data) {
+                const date = data[index];
                 transformedData.push(ObjectSerializer.deserialize(date, subType));
             }
             return transformedData;
@@ -707,10 +707,10 @@ class ObjectSerializer {
             if (!typeMap[type]) {
                 return data;
             }
-            let instance = new typeMap[type]();
-            let attributeTypes = typeMap[type].getAttributeTypeMap();
-            for (let index in attributeTypes) {
-                let attributeType = attributeTypes[index];
+            const instance = new typeMap[type]();
+            const attributeTypes = typeMap[type].getAttributeTypeMap();
+            for (const index in attributeTypes) {
+                const attributeType = attributeTypes[index];
                 instance[attributeType.name] = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type);
             }
             return instance;

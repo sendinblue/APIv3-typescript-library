@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 
-/**
-* Data regarding the transactional email account
-*/
+
+
+
 export class GetAccountAllOfRelayData {
     /**
     * Email to use as login on transactional platform

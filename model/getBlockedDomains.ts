@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 
-/**
-* list of blocked domains
-*/
+
+
+
 export class GetBlockedDomains {
     /**
     * List of all blocked domains

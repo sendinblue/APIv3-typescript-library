@@ -10,10 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
-import { GetExtendedListAllOf } from './getExtendedListAllOf';
 import { GetExtendedListAllOfCampaignStats } from './getExtendedListAllOfCampaignStats';
-import { GetList } from './getList';
 
 export class GetExtendedList {
     /**

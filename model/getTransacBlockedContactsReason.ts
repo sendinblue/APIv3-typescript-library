@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 
-/**
-* Reason for blocking / unsubscribing
-*/
+
+
+
 export class GetTransacBlockedContactsReason {
     /**
     * Reason code for blocking / unsubscribing (This code is safe for comparison)

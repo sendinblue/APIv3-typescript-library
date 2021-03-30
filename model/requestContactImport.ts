@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 import { RequestContactImportNewList } from './requestContactImportNewList';
 
 export class RequestContactImport {

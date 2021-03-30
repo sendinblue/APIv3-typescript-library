@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 import { GetChildInfoAllOfApiKeys } from './getChildInfoAllOfApiKeys';
 import { GetChildInfoAllOfCredits } from './getChildInfoAllOfCredits';
 import { GetChildInfoAllOfStatistics } from './getChildInfoAllOfStatistics';

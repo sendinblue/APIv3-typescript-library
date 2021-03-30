@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 
-/**
-* Status of the campaign
-*/
+
+
+
 export class UpdateCampaignStatus {
     /**
     * Note:- replicateTemplate status will be available only for template type campaigns.

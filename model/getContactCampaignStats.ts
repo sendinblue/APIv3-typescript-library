@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 import { GetContactCampaignStatsClicked } from './getContactCampaignStatsClicked';
 import { GetContactCampaignStatsOpened } from './getContactCampaignStatsOpened';
 import { GetContactCampaignStatsTransacAttributes } from './getContactCampaignStatsTransacAttributes';

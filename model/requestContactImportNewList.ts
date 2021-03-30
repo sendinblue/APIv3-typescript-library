@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 
-/**
-* To create a new list and import the contacts into it, pass the listName and an optional folderId.
-*/
+
+
+
 export class RequestContactImportNewList {
     /**
     * List with listName will be created first and users will be imported in it (Mandatory if listIds is empty).

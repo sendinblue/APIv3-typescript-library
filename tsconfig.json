@@ -3,7 +3,7 @@
         "module": "commonjs",
         "noImplicitAny": false,
         "suppressImplicitAnyIndexErrors": true,
-        "target": "ES6",
+        "target": "ES2016",
         "strict": true,
         "moduleResolution": "node",
         "removeComments": true,

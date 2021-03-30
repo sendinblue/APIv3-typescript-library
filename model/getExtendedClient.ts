@@ -10,9 +10,6 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
-import { GetClient } from './getClient';
-import { GetExtendedClientAllOf } from './getExtendedClientAllOf';
 import { GetExtendedClientAllOfAddress } from './getExtendedClientAllOfAddress';
 
 export class GetExtendedClient {

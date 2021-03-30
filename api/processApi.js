@@ -12,7 +12,7 @@ const localVarRequest = require("request");
 const models_1 = require("../model/models");
 const models_2 = require("../model/models");
 const apis_1 = require("./apis");
-let defaultBasePath = 'https://api.sendinblue.com/v3';
+const defaultBasePath = 'https://api.sendinblue.com/v3';
 var ProcessApiApiKeys;
 (function (ProcessApiApiKeys) {
     ProcessApiApiKeys[ProcessApiApiKeys["apiKey"] = 0] = "apiKey";
@@ -75,8 +75,8 @@ class ProcessApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/processes/{processId}'
                 .replace('{' + 'processId' + '}', encodeURIComponent(String(processId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -84,13 +84,13 @@ class ProcessApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (processId === null || processId === undefined) {
                 throw new Error('Required parameter processId was null or undefined when calling getProcess.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -141,8 +141,8 @@ class ProcessApi {
     getProcesses(limit, offset, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/processes';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -150,7 +150,7 @@ class ProcessApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (limit !== undefined) {
                 localVarQueryParameters['limit'] = models_1.ObjectSerializer.serialize(limit, "number");
             }
@@ -161,8 +161,8 @@ class ProcessApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,

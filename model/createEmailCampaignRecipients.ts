@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 
-/**
-* List ids to include/exclude from campaign
-*/
+
+
+
 export class CreateEmailCampaignRecipients {
     /**
     * List ids to exclude from the campaign

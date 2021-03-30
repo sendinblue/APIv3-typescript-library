@@ -12,7 +12,7 @@ const localVarRequest = require("request");
 const models_1 = require("../model/models");
 const models_2 = require("../model/models");
 const apis_1 = require("./apis");
-let defaultBasePath = 'https://api.sendinblue.com/v3';
+const defaultBasePath = 'https://api.sendinblue.com/v3';
 var AccountApiApiKeys;
 (function (AccountApiApiKeys) {
     AccountApiApiKeys[AccountApiApiKeys["apiKey"] = 0] = "apiKey";
@@ -40,7 +40,6 @@ class AccountApi {
             }
         }
     }
-    ;
     set useQuerystring(value) {
         this._useQuerystring = value;
     }
@@ -73,8 +72,8 @@ class AccountApi {
     getAccount(options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/account';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -82,10 +81,10 @@ class AccountApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,

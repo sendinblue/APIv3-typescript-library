@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 
-/**
-* Percentage of a particular event for both versions
-*/
+
+
+
 export class AbTestVersionStats {
     /**
     * percentage of an event for version A

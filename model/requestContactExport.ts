@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-import { RequestFile } from '../api';
 import { RequestContactExportCustomContactFilter } from './requestContactExportCustomContactFilter';
 
 export class RequestContactExport {

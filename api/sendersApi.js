@@ -12,7 +12,7 @@ const localVarRequest = require("request");
 const models_1 = require("../model/models");
 const models_2 = require("../model/models");
 const apis_1 = require("./apis");
-let defaultBasePath = 'https://api.sendinblue.com/v3';
+const defaultBasePath = 'https://api.sendinblue.com/v3';
 var SendersApiApiKeys;
 (function (SendersApiApiKeys) {
     SendersApiApiKeys[SendersApiApiKeys["apiKey"] = 0] = "apiKey";
@@ -74,8 +74,8 @@ class SendersApi {
     createSender(sender, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/senders';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -83,10 +83,10 @@ class SendersApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -139,8 +139,8 @@ class SendersApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/senders/{senderId}'
                 .replace('{' + 'senderId' + '}', encodeURIComponent(String(senderId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -148,13 +148,13 @@ class SendersApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (senderId === null || senderId === undefined) {
                 throw new Error('Required parameter senderId was null or undefined when calling deleteSender.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'DELETE',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -204,8 +204,8 @@ class SendersApi {
     getIps(options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/senders/ips';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -213,10 +213,10 @@ class SendersApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -268,8 +268,8 @@ class SendersApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/senders/{senderId}/ips'
                 .replace('{' + 'senderId' + '}', encodeURIComponent(String(senderId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -277,13 +277,13 @@ class SendersApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (senderId === null || senderId === undefined) {
                 throw new Error('Required parameter senderId was null or undefined when calling getIpsFromSender.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -334,8 +334,8 @@ class SendersApi {
     getSenders(ip, domain, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/senders';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -343,7 +343,7 @@ class SendersApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (ip !== undefined) {
                 localVarQueryParameters['ip'] = models_1.ObjectSerializer.serialize(ip, "string");
             }
@@ -351,8 +351,8 @@ class SendersApi {
                 localVarQueryParameters['domain'] = models_1.ObjectSerializer.serialize(domain, "string");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -404,8 +404,8 @@ class SendersApi {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/senders/{senderId}'
                 .replace('{' + 'senderId' + '}', encodeURIComponent(String(senderId)));
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -413,13 +413,13 @@ class SendersApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (senderId === null || senderId === undefined) {
                 throw new Error('Required parameter senderId was null or undefined when calling updateSender.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'PUT',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,

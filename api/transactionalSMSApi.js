@@ -12,7 +12,7 @@ const localVarRequest = require("request");
 const models_1 = require("../model/models");
 const models_2 = require("../model/models");
 const apis_1 = require("./apis");
-let defaultBasePath = 'https://api.sendinblue.com/v3';
+const defaultBasePath = 'https://api.sendinblue.com/v3';
 var TransactionalSMSApiApiKeys;
 (function (TransactionalSMSApiApiKeys) {
     TransactionalSMSApiApiKeys[TransactionalSMSApiApiKeys["apiKey"] = 0] = "apiKey";
@@ -74,8 +74,8 @@ class TransactionalSMSApi {
     getSmsEvents(limit, startDate, endDate, offset, days, phoneNumber, event, tags, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/transactionalSMS/statistics/events';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -83,7 +83,7 @@ class TransactionalSMSApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (limit !== undefined) {
                 localVarQueryParameters['limit'] = models_1.ObjectSerializer.serialize(limit, "number");
             }
@@ -112,8 +112,8 @@ class TransactionalSMSApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -164,8 +164,8 @@ class TransactionalSMSApi {
     getTransacAggregatedSmsReport(startDate, endDate, days, tag, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/transactionalSMS/statistics/aggregatedReport';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -173,7 +173,7 @@ class TransactionalSMSApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (startDate !== undefined) {
                 localVarQueryParameters['startDate'] = models_1.ObjectSerializer.serialize(startDate, "string");
             }
@@ -187,8 +187,8 @@ class TransactionalSMSApi {
                 localVarQueryParameters['tag'] = models_1.ObjectSerializer.serialize(tag, "string");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -239,8 +239,8 @@ class TransactionalSMSApi {
     getTransacSmsReport(startDate, endDate, days, tag, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/transactionalSMS/statistics/reports';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -248,7 +248,7 @@ class TransactionalSMSApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (startDate !== undefined) {
                 localVarQueryParameters['startDate'] = models_1.ObjectSerializer.serialize(startDate, "string");
             }
@@ -265,8 +265,8 @@ class TransactionalSMSApi {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'GET',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
@@ -317,8 +317,8 @@ class TransactionalSMSApi {
     sendTransacSms(sendTransacSms, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/transactionalSMS/sms';
-            let localVarQueryParameters = {};
-            let localVarHeaderParams = Object.assign({}, this._defaultHeaders);
+            const localVarQueryParameters = {};
+            const localVarHeaderParams = Object.assign({}, this._defaultHeaders);
             const produces = ['application/json'];
             if (produces.indexOf('application/json') >= 0) {
                 localVarHeaderParams.Accept = 'application/json';
@@ -326,13 +326,13 @@ class TransactionalSMSApi {
             else {
                 localVarHeaderParams.Accept = produces.join(',');
             }
-            let localVarFormParams = {};
+            const localVarFormParams = {};
             if (sendTransacSms === null || sendTransacSms === undefined) {
                 throw new Error('Required parameter sendTransacSms was null or undefined when calling sendTransacSms.');
             }
             Object.assign(localVarHeaderParams, options.headers);
-            let localVarUseFormData = false;
-            let localVarRequestOptions = {
+            const localVarUseFormData = false;
+            const localVarRequestOptions = {
                 method: 'POST',
                 qs: localVarQueryParameters,
                 headers: localVarHeaderParams,
