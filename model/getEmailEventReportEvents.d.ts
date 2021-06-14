@@ -1,6 +1,6 @@
 export declare class GetEmailEventReportEvents {
     'email': string;
-    'date': Date;
+    'date': string;
     'subject'?: string;
     'messageId': string;
     'event': GetEmailEventReportEvents.EventEnum;

@@ -19,7 +19,7 @@ export class GetExtendedContactDetailsAllOfStatisticsLinks {
     /**
     * UTC date-time of the event
     */
-    'eventTime': Date;
+    'eventTime': string;
     /**
     * IP from which the user has clicked on the link
     */
@@ -40,7 +40,7 @@ export class GetExtendedContactDetailsAllOfStatisticsLinks {
         {
             "name": "eventTime",
             "baseName": "eventTime",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "ip",

@@ -35,7 +35,7 @@ export class GetTransacEmailsListTransactionalEmails {
     /**
     * Date on which transactional email was sent
     */
-    'date': Date;
+    'date': string;
     /**
     * Email address of the sender from which the email was sent
     */
@@ -76,7 +76,7 @@ export class GetTransacEmailsListTransactionalEmails {
         {
             "name": "date",
             "baseName": "date",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "from",

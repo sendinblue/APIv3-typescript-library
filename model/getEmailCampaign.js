@@ -35,7 +35,7 @@ GetEmailCampaign.attributeTypeMap = [
     {
         "name": "scheduledAt",
         "baseName": "scheduledAt",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "abTesting",
@@ -120,12 +120,12 @@ GetEmailCampaign.attributeTypeMap = [
     {
         "name": "createdAt",
         "baseName": "createdAt",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "modifiedAt",
         "baseName": "modifiedAt",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "inlineImageActivation",
@@ -145,7 +145,7 @@ GetEmailCampaign.attributeTypeMap = [
     {
         "name": "sentDate",
         "baseName": "sentDate",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "returnBounce",

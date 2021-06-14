@@ -22,7 +22,7 @@ class TransactionalEmailsApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
         this._defaultHeaders = {
-            'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
+            'user-agent': 'sendinblue_clientAPI/v2.2.2/ts-node'
         };
         this._useQuerystring = false;
         this.authentications = {
@@ -1007,7 +1007,7 @@ class TransactionalEmailsApi {
             });
         });
     }
-    getTransacEmailsList(email, templateId, messageId, startDate, endDate, sort, options = { headers: {} }) {
+    getTransacEmailsList(email, templateId, messageId, startDate, endDate, sort, limit, offset, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/smtp/emails';
             const localVarQueryParameters = {};
@@ -1037,6 +1037,12 @@ class TransactionalEmailsApi {
             }
             if (sort !== undefined) {
                 localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
+            }
+            if (limit !== undefined) {
+                localVarQueryParameters['limit'] = models_1.ObjectSerializer.serialize(limit, "number");
+            }
+            if (offset !== undefined) {
+                localVarQueryParameters['offset'] = models_1.ObjectSerializer.serialize(offset, "number");
             }
             Object.assign(localVarHeaderParams, options.headers);
             const localVarUseFormData = false;

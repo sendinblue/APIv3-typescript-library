@@ -152,7 +152,7 @@ export declare class ContactsApi {
         response: http.IncomingMessage;
         body: GetContactCampaignStats;
     }>;
-    getContacts(limit?: number, offset?: number, modifiedSince?: Date, sort?: 'asc' | 'desc', options?: {
+    getContacts(limit?: number, offset?: number, modifiedSince?: string, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };
@@ -160,7 +160,7 @@ export declare class ContactsApi {
         response: http.IncomingMessage;
         body: GetContacts;
     }>;
-    getContactsFromList(listId: number, modifiedSince?: Date, limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
+    getContactsFromList(listId: number, modifiedSince?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };

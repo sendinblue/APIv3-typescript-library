@@ -45,7 +45,7 @@ export class GetTransacBlockedContactsReason {
 
 export namespace GetTransacBlockedContactsReason {
     export enum CodeEnum {
-        UnsubscribedViaMA = <any> 'unsubscribedViaMA',
+        UnsubscribedViaMa = <any> 'unsubscribedViaMA',
         UnsubscribedViaEmail = <any> 'unsubscribedViaEmail',
         AdminBlocked = <any> 'adminBlocked',
         UnsubscribedViaApi = <any> 'unsubscribedViaApi',

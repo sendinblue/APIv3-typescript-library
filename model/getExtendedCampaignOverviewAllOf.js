@@ -55,12 +55,12 @@ GetExtendedCampaignOverviewAllOf.attributeTypeMap = [
     {
         "name": "createdAt",
         "baseName": "createdAt",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "modifiedAt",
         "baseName": "modifiedAt",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "inlineImageActivation",
@@ -80,7 +80,7 @@ GetExtendedCampaignOverviewAllOf.attributeTypeMap = [
     {
         "name": "sentDate",
         "baseName": "sentDate",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "returnBounce",

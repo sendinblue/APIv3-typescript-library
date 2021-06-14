@@ -3,7 +3,7 @@ export declare class GetTransacEmailContent {
     'email': string;
     'subject': string;
     'templateId'?: number;
-    'date': Date;
+    'date': string;
     'events': Array<GetTransacEmailContentEvents>;
     'body': string;
     'attachmentCount': number;

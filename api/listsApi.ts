@@ -44,7 +44,7 @@ export enum ListsApiApiKeys {
 export class ListsApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.2.2/ts-node'
     };
     protected _useQuerystring  = false;
 
@@ -345,7 +345,7 @@ export class ListsApi {
      * @param offset Index of the first document of the page
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
-    public async getContactsFromList (listId: number, modifiedSince?: Date, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
+    public async getContactsFromList (listId: number, modifiedSince?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         const localVarQueryParameters: any = {};
@@ -365,7 +365,7 @@ export class ListsApi {
         }
 
         if (modifiedSince !== undefined) {
-            localVarQueryParameters['modifiedSince'] = ObjectSerializer.serialize(modifiedSince, "Date");
+            localVarQueryParameters['modifiedSince'] = ObjectSerializer.serialize(modifiedSince, "string");
         }
 
         if (limit !== undefined) {

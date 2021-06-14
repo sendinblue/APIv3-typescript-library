@@ -652,9 +652,9 @@ export class ObjectSerializer {
             let subType: string = type.replace("Array<", ""); // Array<Type> => Type>
             subType = subType.substring(0, subType.length - 1); // Type> => Type
             const transformedData: any[] = [];
-            for (const index in data) {
-                const date = data[index];
-                transformedData.push(ObjectSerializer.serialize(date, subType));
+            for (let index = 0; index < data.length; index++) {
+                const datum = data[index];
+                transformedData.push(ObjectSerializer.serialize(datum, subType));
             }
             return transformedData;
         } else if (type === "Date") {
@@ -673,7 +673,7 @@ export class ObjectSerializer {
             // get the map for the correct type.
             const attributeTypes = typeMap[type].getAttributeTypeMap();
             const instance: {[index: string]: any} = {};
-            for (const index in attributeTypes) {
+            for (let index = 0; index < attributeTypes.length; index++) {
                 const attributeType = attributeTypes[index];
                 instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type);
             }
@@ -692,9 +692,9 @@ export class ObjectSerializer {
             let subType: string = type.replace("Array<", ""); // Array<Type> => Type>
             subType = subType.substring(0, subType.length - 1); // Type> => Type
             const transformedData: any[] = [];
-            for (const index in data) {
-                const date = data[index];
-                transformedData.push(ObjectSerializer.deserialize(date, subType));
+            for (let index = 0; index < data.length; index++) {
+                const datum = data[index];
+                transformedData.push(ObjectSerializer.deserialize(datum, subType));
             }
             return transformedData;
         } else if (type === "Date") {
@@ -709,7 +709,7 @@ export class ObjectSerializer {
             }
             const instance = new typeMap[type]();
             const attributeTypes = typeMap[type].getAttributeTypeMap();
-            for (const index in attributeTypes) {
+            for (let index = 0; index < attributeTypes.length; index++) {
                 const attributeType = attributeTypes[index];
                 instance[attributeType.name] = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type);
             }

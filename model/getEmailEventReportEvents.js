@@ -15,7 +15,7 @@ GetEmailEventReportEvents.attributeTypeMap = [
     {
         "name": "date",
         "baseName": "date",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "subject",

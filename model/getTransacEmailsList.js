@@ -8,6 +8,11 @@ class GetTransacEmailsList {
 GetTransacEmailsList.discriminator = undefined;
 GetTransacEmailsList.attributeTypeMap = [
     {
+        "name": "count",
+        "baseName": "count",
+        "type": "number"
+    },
+    {
         "name": "transactionalEmails",
         "baseName": "transactionalEmails",
         "type": "Array<GetTransacEmailsListTransactionalEmails>"

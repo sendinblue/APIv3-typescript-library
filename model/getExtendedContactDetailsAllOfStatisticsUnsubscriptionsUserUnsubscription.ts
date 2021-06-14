@@ -19,7 +19,7 @@ export class GetExtendedContactDetailsAllOfStatisticsUnsubscriptionsUserUnsubscr
     /**
     * UTC date-time of the event
     */
-    'eventTime': Date;
+    'eventTime': string;
     /**
     * IP from which the user has unsubscribed
     */
@@ -36,7 +36,7 @@ export class GetExtendedContactDetailsAllOfStatisticsUnsubscriptionsUserUnsubscr
         {
             "name": "eventTime",
             "baseName": "eventTime",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "ip",

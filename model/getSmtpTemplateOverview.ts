@@ -53,11 +53,11 @@ export class GetSmtpTemplateOverview {
     /**
     * Creation UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'createdAt': Date;
+    'createdAt': string;
     /**
     * Last modification UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'modifiedAt': Date;
+    'modifiedAt': string;
     /**
     * It is true if template is a valid Double opt-in (DOI) template, otherwise it is false. This field will be available only in case of single template detail call.
     */
@@ -119,12 +119,12 @@ export class GetSmtpTemplateOverview {
         {
             "name": "createdAt",
             "baseName": "createdAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "modifiedAt",
             "baseName": "modifiedAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "doiTemplate",

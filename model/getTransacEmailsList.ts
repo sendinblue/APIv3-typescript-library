@@ -13,11 +13,20 @@
 import { GetTransacEmailsListTransactionalEmails } from './getTransacEmailsListTransactionalEmails';
 
 export class GetTransacEmailsList {
+    /**
+    * Total number of transactional emails available on your account according to the passed filter
+    */
+    'count'?: number;
     'transactionalEmails'?: Array<GetTransacEmailsListTransactionalEmails>;
 
     static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "count",
+            "baseName": "count",
+            "type": "number"
+        },
         {
             "name": "transactionalEmails",
             "baseName": "transactionalEmails",

@@ -29,7 +29,7 @@ export class UpdateSmsCampaign {
     /**
     * UTC date-time on which the campaign has to run (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result.
     */
-    'scheduledAt'?: Date;
+    'scheduledAt'?: string;
 
     static discriminator: string | undefined = undefined;
 
@@ -57,7 +57,7 @@ export class UpdateSmsCampaign {
         {
             "name": "scheduledAt",
             "baseName": "scheduledAt",
-            "type": "Date"
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {

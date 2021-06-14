@@ -30,7 +30,7 @@ GetSmsCampaignOverview.attributeTypeMap = [
     {
         "name": "scheduledAt",
         "baseName": "scheduledAt",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "sender",
@@ -40,12 +40,12 @@ GetSmsCampaignOverview.attributeTypeMap = [
     {
         "name": "createdAt",
         "baseName": "createdAt",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "modifiedAt",
         "baseName": "modifiedAt",
-        "type": "Date"
+        "type": "string"
     }
 ];
 exports.GetSmsCampaignOverview = GetSmsCampaignOverview;

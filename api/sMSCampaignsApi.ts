@@ -44,7 +44,7 @@ export enum SMSCampaignsApiApiKeys {
 export class SMSCampaignsApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.2.2/ts-node'
     };
     protected _useQuerystring  = false;
 
@@ -339,7 +339,7 @@ export class SMSCampaignsApi {
      * @param offset Beginning point in the list to retrieve from.
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
-    public async getSmsCampaigns (status?: 'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess', startDate?: Date, endDate?: Date, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetSmsCampaigns;  }> {
+    public async getSmsCampaigns (status?: 'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess', startDate?: string, endDate?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetSmsCampaigns;  }> {
         const localVarPath = this.basePath + '/smsCampaigns';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -357,11 +357,11 @@ export class SMSCampaignsApi {
         }
 
         if (startDate !== undefined) {
-            localVarQueryParameters['startDate'] = ObjectSerializer.serialize(startDate, "Date");
+            localVarQueryParameters['startDate'] = ObjectSerializer.serialize(startDate, "string");
         }
 
         if (endDate !== undefined) {
-            localVarQueryParameters['endDate'] = ObjectSerializer.serialize(endDate, "Date");
+            localVarQueryParameters['endDate'] = ObjectSerializer.serialize(endDate, "string");
         }
 
         if (limit !== undefined) {

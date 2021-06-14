@@ -19,7 +19,7 @@ export class GetTransacEmailContentEvents {
     /**
     * Time at which the event occurred
     */
-    'time': Date;
+    'time': string;
 
     static discriminator: string | undefined = undefined;
 
@@ -32,7 +32,7 @@ export class GetTransacEmailContentEvents {
         {
             "name": "time",
             "baseName": "time",
-            "type": "Date"
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {

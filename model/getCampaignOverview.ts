@@ -35,7 +35,7 @@ export class GetCampaignOverview {
     /**
     * UTC date-time on which campaign is scheduled (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'scheduledAt'?: Date;
+    'scheduledAt'?: string;
     /**
     * Status of A/B Test for the campaign. abTesting = false means it is disabled, & abTesting = true means it is enabled.
     */
@@ -96,7 +96,7 @@ export class GetCampaignOverview {
         {
             "name": "scheduledAt",
             "baseName": "scheduledAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "abTesting",

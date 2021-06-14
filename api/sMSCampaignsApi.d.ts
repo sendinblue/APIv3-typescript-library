@@ -57,7 +57,7 @@ export declare class SMSCampaignsApi {
         response: http.IncomingMessage;
         body: GetSmsCampaign;
     }>;
-    getSmsCampaigns(status?: 'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess', startDate?: Date, endDate?: Date, limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
+    getSmsCampaigns(status?: 'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess', startDate?: string, endDate?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };

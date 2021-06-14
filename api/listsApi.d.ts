@@ -57,7 +57,7 @@ export declare class ListsApi {
         response: http.IncomingMessage;
         body?: any;
     }>;
-    getContactsFromList(listId: number, modifiedSince?: Date, limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
+    getContactsFromList(listId: number, modifiedSince?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };

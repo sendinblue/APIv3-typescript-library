@@ -21,7 +21,7 @@ var AccountApiApiKeys;
 class AccountApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this._defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node' };
+        this._defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.2/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new models_1.VoidAuth(),

@@ -31,11 +31,11 @@ export class GetContactDetails {
     /**
     * Creation UTC date-time of the contact (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'createdAt': Date;
+    'createdAt': string;
     /**
     * Last modification UTC date-time of the contact (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'modifiedAt': Date;
+    'modifiedAt': string;
     'listIds': Array<number>;
     'listUnsubscribed'?: Array<number>;
     /**
@@ -69,12 +69,12 @@ export class GetContactDetails {
         {
             "name": "createdAt",
             "baseName": "createdAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "modifiedAt",
             "baseName": "modifiedAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "listIds",

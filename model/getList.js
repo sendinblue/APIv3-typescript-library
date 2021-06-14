@@ -26,6 +26,11 @@ GetList.attributeTypeMap = [
         "name": "totalSubscribers",
         "baseName": "totalSubscribers",
         "type": "number"
+    },
+    {
+        "name": "uniqueSubscribers",
+        "baseName": "uniqueSubscribers",
+        "type": "number"
     }
 ];
 exports.GetList = GetList;

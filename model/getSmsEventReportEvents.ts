@@ -19,7 +19,7 @@ export class GetSmsEventReportEvents {
     /**
     * UTC date-time on which the event has been generated
     */
-    'date'?: Date;
+    'date'?: string;
     /**
     * Message ID which generated the event
     */
@@ -49,7 +49,7 @@ export class GetSmsEventReportEvents {
         {
             "name": "date",
             "baseName": "date",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "messageId",

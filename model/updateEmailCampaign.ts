@@ -34,7 +34,7 @@ export class UpdateEmailCampaign {
     /**
     * UTC date-time on which the campaign has to run (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. If sendAtBestTime is set to true, your campaign will be sent according to the date passed (ignoring the time part).
     */
-    'scheduledAt'?: Date;
+    'scheduledAt'?: string;
     /**
     * Subject of the campaign
     */
@@ -152,7 +152,7 @@ export class UpdateEmailCampaign {
         {
             "name": "scheduledAt",
             "baseName": "scheduledAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "subject",

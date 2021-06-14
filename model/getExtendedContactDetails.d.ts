@@ -4,8 +4,8 @@ export declare class GetExtendedContactDetails {
     'id': number;
     'emailBlacklisted': boolean;
     'smsBlacklisted': boolean;
-    'createdAt': Date;
-    'modifiedAt': Date;
+    'createdAt': string;
+    'modifiedAt': string;
     'listIds': Array<number>;
     'listUnsubscribed'?: Array<number>;
     'attributes': object;

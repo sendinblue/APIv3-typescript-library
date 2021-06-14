@@ -59,7 +59,7 @@ export enum ContactsApiApiKeys {
 export class ContactsApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.2.2/ts-node'
     };
     protected _useQuerystring  = false;
 
@@ -1128,7 +1128,7 @@ export class ContactsApi {
      * @param modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result.
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
-    public async getContacts (limit?: number, offset?: number, modifiedSince?: Date, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
+    public async getContacts (limit?: number, offset?: number, modifiedSince?: string, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
         const localVarPath = this.basePath + '/contacts';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -1150,7 +1150,7 @@ export class ContactsApi {
         }
 
         if (modifiedSince !== undefined) {
-            localVarQueryParameters['modifiedSince'] = ObjectSerializer.serialize(modifiedSince, "Date");
+            localVarQueryParameters['modifiedSince'] = ObjectSerializer.serialize(modifiedSince, "string");
         }
 
         if (sort !== undefined) {
@@ -1217,7 +1217,7 @@ export class ContactsApi {
      * @param offset Index of the first document of the page
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      */
-    public async getContactsFromList (listId: number, modifiedSince?: Date, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
+    public async getContactsFromList (listId: number, modifiedSince?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         const localVarQueryParameters: any = {};
@@ -1237,7 +1237,7 @@ export class ContactsApi {
         }
 
         if (modifiedSince !== undefined) {
-            localVarQueryParameters['modifiedSince'] = ObjectSerializer.serialize(modifiedSince, "Date");
+            localVarQueryParameters['modifiedSince'] = ObjectSerializer.serialize(modifiedSince, "string");
         }
 
         if (limit !== undefined) {

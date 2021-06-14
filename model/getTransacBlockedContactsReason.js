@@ -22,7 +22,7 @@ exports.GetTransacBlockedContactsReason = GetTransacBlockedContactsReason;
 (function (GetTransacBlockedContactsReason) {
     let CodeEnum;
     (function (CodeEnum) {
-        CodeEnum[CodeEnum["UnsubscribedViaMA"] = 'unsubscribedViaMA'] = "UnsubscribedViaMA";
+        CodeEnum[CodeEnum["UnsubscribedViaMa"] = 'unsubscribedViaMA'] = "UnsubscribedViaMa";
         CodeEnum[CodeEnum["UnsubscribedViaEmail"] = 'unsubscribedViaEmail'] = "UnsubscribedViaEmail";
         CodeEnum[CodeEnum["AdminBlocked"] = 'adminBlocked'] = "AdminBlocked";
         CodeEnum[CodeEnum["UnsubscribedViaApi"] = 'unsubscribedViaApi'] = "UnsubscribedViaApi";

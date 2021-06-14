@@ -32,11 +32,11 @@ export class GetWebhook {
     /**
     * Creation UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'createdAt': Date;
+    'createdAt': string;
     /**
     * Last modification UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'modifiedAt': Date;
+    'modifiedAt': string;
 
     static discriminator: string | undefined = undefined;
 
@@ -69,12 +69,12 @@ export class GetWebhook {
         {
             "name": "createdAt",
             "baseName": "createdAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "modifiedAt",
             "baseName": "modifiedAt",
-            "type": "Date"
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {

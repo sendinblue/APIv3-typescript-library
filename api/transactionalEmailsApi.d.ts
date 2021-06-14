@@ -146,7 +146,7 @@ export declare class TransactionalEmailsApi {
         response: http.IncomingMessage;
         body: GetTransacEmailContent;
     }>;
-    getTransacEmailsList(email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string, sort?: 'asc' | 'desc', options?: {
+    getTransacEmailsList(email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string, sort?: 'asc' | 'desc', limit?: number, offset?: number, options?: {
         headers: {
             [name: string]: string;
         };

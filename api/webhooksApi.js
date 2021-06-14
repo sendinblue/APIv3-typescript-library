@@ -22,7 +22,7 @@ class WebhooksApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
         this._defaultHeaders = {
-            'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
+            'user-agent': 'sendinblue_clientAPI/v2.2.2/ts-node'
         };
         this._useQuerystring = false;
         this.authentications = {
@@ -271,7 +271,7 @@ class WebhooksApi {
             });
         });
     }
-    getWebhooks(type, options = { headers: {} }) {
+    getWebhooks(type, sort, options = { headers: {} }) {
         return __awaiter(this, void 0, void 0, function* () {
             const localVarPath = this.basePath + '/webhooks';
             const localVarQueryParameters = {};
@@ -286,6 +286,9 @@ class WebhooksApi {
             const localVarFormParams = {};
             if (type !== undefined) {
                 localVarQueryParameters['type'] = models_1.ObjectSerializer.serialize(type, "'marketing' | 'transactional'");
+            }
+            if (sort !== undefined) {
+                localVarQueryParameters['sort'] = models_1.ObjectSerializer.serialize(sort, "'asc' | 'desc'");
             }
             Object.assign(localVarHeaderParams, options.headers);
             const localVarUseFormData = false;
