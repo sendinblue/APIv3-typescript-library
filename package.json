@@ -7,6 +7,8 @@
   "scripts": {
     "clean": "rm -Rf node_modules/ dist/",
     "build": "tsc",
+    "prepublishOnly": "rm -rf dist/",
+    "prepack": "tsc",
     "test": "npm run build && node client.js",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix"
