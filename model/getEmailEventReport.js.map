@@ -1,1 +1,0 @@
-{"version":3,"file":"getEmailEventReport.js","sourceRoot":"","sources":["getEmailEventReport.ts"],"names":[],"mappings":";;AAcA;IAYI,MAAM,CAAC,mBAAmB;QACtB,OAAO,mBAAmB,CAAC,gBAAgB,CAAC;IAChD,CAAC;;AAXM,iCAAa,GAAuB,SAAS,CAAC;AAE9C,oCAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,QAAQ;QAChB,UAAU,EAAE,QAAQ;QACpB,MAAM,EAAE,kCAAkC;KAC7C;CAAK,CAAC;AAVf,kDAeC"}

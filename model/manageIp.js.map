@@ -1,1 +1,0 @@
-{"version":3,"file":"manageIp.js","sourceRoot":"","sources":["manageIp.ts"],"names":[],"mappings":";;AAaA;IAeI,MAAM,CAAC,mBAAmB;QACtB,OAAO,QAAQ,CAAC,gBAAgB,CAAC;IACrC,CAAC;;AAXM,sBAAa,GAAuB,SAAS,CAAC;AAE9C,yBAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,IAAI;QACZ,UAAU,EAAE,IAAI;QAChB,MAAM,EAAE,QAAQ;KACnB;CAAK,CAAC;AAbf,4BAkBC"}

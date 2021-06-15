@@ -1,1 +1,0 @@
-{"version":3,"file":"updateChildDomain.js","sourceRoot":"","sources":["updateChildDomain.ts"],"names":[],"mappings":";;AAaA;IAeI,MAAM,CAAC,mBAAmB;QACtB,OAAO,iBAAiB,CAAC,gBAAgB,CAAC;IAC9C,CAAC;;AAXM,+BAAa,GAAuB,SAAS,CAAC;AAE9C,kCAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,QAAQ;QAChB,UAAU,EAAE,QAAQ;QACpB,MAAM,EAAE,QAAQ;KACnB;CAAK,CAAC;AAbf,8CAkBC"}

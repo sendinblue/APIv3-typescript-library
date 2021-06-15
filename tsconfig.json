@@ -1,22 +1,17 @@
 {
-    "compilerOptions": {
-        "module": "CommonJS",
-        "noImplicitAny": false,
-        "suppressImplicitAnyIndexErrors": true,
-        "target": "ES2015",
-        "strict": true,
-        "moduleResolution": "node",
-        "removeComments": true,
-        "sourceMap": true,
-        "noLib": false,
-        "declaration": true,
-        "lib": ["dom", "es6", "es5", "dom.iterable", "scripthost"],
-        "typeRoots": [
-            "node_modules/@types"
-        ]
-    },
-    "exclude": [
-        "dist",
-        "node_modules"
-    ]
+  "compilerOptions": {
+    "outDir": "dist/",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "ES2015",
+    "strict": true,
+    "moduleResolution": "node",
+    "removeComments": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "types": []
+  },
+  "include": ["api/", "model/"]
 }

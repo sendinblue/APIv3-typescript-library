@@ -1,1 +1,0 @@
-{"version":3,"file":"getChildAccountCreationStatus.js","sourceRoot":"","sources":["getChildAccountCreationStatus.ts"],"names":[],"mappings":";;AAaA;IAeI,MAAM,CAAC,mBAAmB;QACtB,OAAO,6BAA6B,CAAC,gBAAgB,CAAC;IAC1D,CAAC;;AAXM,2CAAa,GAAuB,SAAS,CAAC;AAE9C,8CAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,qBAAqB;QAC7B,UAAU,EAAE,qBAAqB;QACjC,MAAM,EAAE,SAAS;KACpB;CAAK,CAAC;AAbf,sEAkBC"}
