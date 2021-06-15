@@ -30,12 +30,12 @@ GetContactDetails.attributeTypeMap = [
     {
         "name": "createdAt",
         "baseName": "createdAt",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "modifiedAt",
         "baseName": "modifiedAt",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "listIds",

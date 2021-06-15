@@ -1,7 +1,7 @@
 import { GetExtendedListAllOfCampaignStats } from './getExtendedListAllOfCampaignStats';
 export declare class GetExtendedListAllOf {
     'folderId': number;
-    'createdAt': Date;
+    'createdAt': string;
     'campaignStats'?: Array<GetExtendedListAllOfCampaignStats>;
     'dynamicList'?: boolean;
     static discriminator: string | undefined;

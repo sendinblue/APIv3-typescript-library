@@ -4,7 +4,7 @@ export declare class GetTransacEmailsListTransactionalEmails {
     'templateId'?: number;
     'messageId': string;
     'uuid': string;
-    'date': Date;
+    'date': string;
     'from'?: string;
     'tags'?: Array<string>;
     static discriminator: string | undefined;

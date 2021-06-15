@@ -19,7 +19,7 @@ export class GetEmailEventReportEvents {
     /**
     * UTC date-time on which the event has been generated
     */
-    'date': Date;
+    'date': string;
     /**
     * Subject of the event
     */
@@ -68,7 +68,7 @@ export class GetEmailEventReportEvents {
         {
             "name": "date",
             "baseName": "date",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "subject",

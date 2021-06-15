@@ -28,6 +28,11 @@ GetExtendedList.attributeTypeMap = [
         "type": "number"
     },
     {
+        "name": "uniqueSubscribers",
+        "baseName": "uniqueSubscribers",
+        "type": "number"
+    },
+    {
         "name": "folderId",
         "baseName": "folderId",
         "type": "number"
@@ -35,7 +40,7 @@ GetExtendedList.attributeTypeMap = [
     {
         "name": "createdAt",
         "baseName": "createdAt",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "campaignStats",

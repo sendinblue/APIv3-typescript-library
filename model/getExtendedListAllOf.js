@@ -15,7 +15,7 @@ GetExtendedListAllOf.attributeTypeMap = [
     {
         "name": "createdAt",
         "baseName": "createdAt",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "campaignStats",

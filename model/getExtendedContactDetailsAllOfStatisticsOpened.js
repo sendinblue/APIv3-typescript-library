@@ -20,7 +20,7 @@ GetExtendedContactDetailsAllOfStatisticsOpened.attributeTypeMap = [
     {
         "name": "eventTime",
         "baseName": "eventTime",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "ip",

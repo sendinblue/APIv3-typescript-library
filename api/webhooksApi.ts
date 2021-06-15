@@ -39,7 +39,7 @@ export enum WebhooksApiApiKeys {
 export class WebhooksApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.2.2/ts-node'
     };
     protected _useQuerystring  = false;
 
@@ -328,8 +328,9 @@ export class WebhooksApi {
      * 
      * @summary Get all webhooks
      * @param type Filter on webhook type
+     * @param sort Sort the results in the ascending/descending order of webhook creation
      */
-    public async getWebhooks (type?: 'marketing' | 'transactional', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetWebhooks;  }> {
+    public async getWebhooks (type?: 'marketing' | 'transactional', sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetWebhooks;  }> {
         const localVarPath = this.basePath + '/webhooks';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -344,6 +345,10 @@ export class WebhooksApi {
 
         if (type !== undefined) {
             localVarQueryParameters['type'] = ObjectSerializer.serialize(type, "'marketing' | 'transactional'");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);

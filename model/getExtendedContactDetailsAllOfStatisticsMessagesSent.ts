@@ -19,7 +19,7 @@ export class GetExtendedContactDetailsAllOfStatisticsMessagesSent {
     /**
     * UTC date-time of the event
     */
-    'eventTime': Date;
+    'eventTime': string;
 
     static discriminator: string | undefined = undefined;
 
@@ -32,7 +32,7 @@ export class GetExtendedContactDetailsAllOfStatisticsMessagesSent {
         {
             "name": "eventTime",
             "baseName": "eventTime",
-            "type": "Date"
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {

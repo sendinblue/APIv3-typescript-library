@@ -22,7 +22,7 @@ class EmailCampaignsApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
         this._defaultHeaders = {
-            'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
+            'user-agent': 'sendinblue_clientAPI/v2.2.2/ts-node'
         };
         this._useQuerystring = false;
         this.authentications = {
@@ -426,10 +426,10 @@ class EmailCampaignsApi {
                 localVarQueryParameters['status'] = models_1.ObjectSerializer.serialize(status, "'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess'");
             }
             if (startDate !== undefined) {
-                localVarQueryParameters['startDate'] = models_1.ObjectSerializer.serialize(startDate, "Date");
+                localVarQueryParameters['startDate'] = models_1.ObjectSerializer.serialize(startDate, "string");
             }
             if (endDate !== undefined) {
-                localVarQueryParameters['endDate'] = models_1.ObjectSerializer.serialize(endDate, "Date");
+                localVarQueryParameters['endDate'] = models_1.ObjectSerializer.serialize(endDate, "string");
             }
             if (limit !== undefined) {
                 localVarQueryParameters['limit'] = models_1.ObjectSerializer.serialize(limit, "number");

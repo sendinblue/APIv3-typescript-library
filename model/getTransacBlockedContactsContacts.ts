@@ -25,7 +25,7 @@ export class GetTransacBlockedContactsContacts {
     /**
     * Date when the contact was blocked or unsubscribed on
     */
-    'blockedAt': Date;
+    'blockedAt': string;
 
     static discriminator: string | undefined = undefined;
 
@@ -48,7 +48,7 @@ export class GetTransacBlockedContactsContacts {
         {
             "name": "blockedAt",
             "baseName": "blockedAt",
-            "type": "Date"
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {

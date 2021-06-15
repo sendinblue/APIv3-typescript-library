@@ -4,7 +4,7 @@ export declare class CreateSmsCampaign {
     'sender': string;
     'content': string;
     'recipients'?: CreateSmsCampaignRecipients;
-    'scheduledAt'?: Date;
+    'scheduledAt'?: string;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

@@ -4,8 +4,8 @@ export declare class GetWebhook {
     'description': string;
     'events': Array<string>;
     'type': GetWebhook.TypeEnum;
-    'createdAt': Date;
-    'modifiedAt': Date;
+    'createdAt': string;
+    'modifiedAt': string;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

@@ -4,8 +4,9 @@ export declare class GetExtendedList {
     'name': string;
     'totalBlacklisted': number;
     'totalSubscribers': number;
+    'uniqueSubscribers': number;
     'folderId': number;
-    'createdAt': Date;
+    'createdAt': string;
     'campaignStats'?: Array<GetExtendedListAllOfCampaignStats>;
     'dynamicList'?: boolean;
     static discriminator: string | undefined;

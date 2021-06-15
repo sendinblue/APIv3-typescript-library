@@ -15,7 +15,7 @@ GetExtendedContactDetailsAllOfStatisticsMessagesSent.attributeTypeMap = [
     {
         "name": "eventTime",
         "baseName": "eventTime",
-        "type": "Date"
+        "type": "string"
     }
 ];
 exports.GetExtendedContactDetailsAllOfStatisticsMessagesSent = GetExtendedContactDetailsAllOfStatisticsMessagesSent;

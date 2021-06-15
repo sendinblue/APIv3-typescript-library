@@ -10,8 +10,8 @@ export declare class GetSmtpTemplateOverview {
     'toField': string;
     'tag': string;
     'htmlContent': string;
-    'createdAt': Date;
-    'modifiedAt': Date;
+    'createdAt': string;
+    'modifiedAt': string;
     'doiTemplate'?: boolean;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{

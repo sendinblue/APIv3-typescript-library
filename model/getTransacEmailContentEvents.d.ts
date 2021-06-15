@@ -1,6 +1,6 @@
 export declare class GetTransacEmailContentEvents {
     'name': string;
-    'time': Date;
+    'time': string;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

@@ -7,7 +7,7 @@ export declare class GetEmailCampaign {
     'subject'?: string;
     'type': GetEmailCampaign.TypeEnum;
     'status': GetEmailCampaign.StatusEnum;
-    'scheduledAt'?: Date;
+    'scheduledAt'?: string;
     'abTesting'?: boolean;
     'subjectA'?: string;
     'subjectB'?: string;
@@ -24,12 +24,12 @@ export declare class GetEmailCampaign {
     'htmlContent': string;
     'shareLink'?: string;
     'tag'?: string;
-    'createdAt': Date;
-    'modifiedAt': Date;
+    'createdAt': string;
+    'modifiedAt': string;
     'inlineImageActivation'?: boolean;
     'mirrorActive'?: boolean;
     'recurring'?: boolean;
-    'sentDate'?: Date;
+    'sentDate'?: string;
     'returnBounce'?: number;
     'recipients': GetCampaignRecipients;
     'statistics': GetExtendedCampaignStats;

@@ -40,7 +40,7 @@ CreateEmailCampaign.attributeTypeMap = [
     {
         "name": "scheduledAt",
         "baseName": "scheduledAt",
-        "type": "Date"
+        "type": "string"
     },
     {
         "name": "subject",

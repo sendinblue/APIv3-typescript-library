@@ -9,12 +9,12 @@ export declare class GetExtendedCampaignOverviewAllOf {
     'htmlContent': string;
     'shareLink'?: string;
     'tag'?: string;
-    'createdAt': Date;
-    'modifiedAt': Date;
+    'createdAt': string;
+    'modifiedAt': string;
     'inlineImageActivation'?: boolean;
     'mirrorActive'?: boolean;
     'recurring'?: boolean;
-    'sentDate'?: Date;
+    'sentDate'?: string;
     'returnBounce'?: number;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{

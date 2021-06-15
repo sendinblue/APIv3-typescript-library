@@ -20,7 +20,7 @@ export class GetExtendedListAllOf {
     /**
     * Creation UTC date-time of the list (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'createdAt': Date;
+    'createdAt': string;
     'campaignStats'?: Array<GetExtendedListAllOfCampaignStats>;
     /**
     * Status telling if the list is dynamic or not (true=dynamic, false=not dynamic)
@@ -38,7 +38,7 @@ export class GetExtendedListAllOf {
         {
             "name": "createdAt",
             "baseName": "createdAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "campaignStats",

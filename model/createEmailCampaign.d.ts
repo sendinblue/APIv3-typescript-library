@@ -7,7 +7,7 @@ export declare class CreateEmailCampaign {
     'htmlContent'?: string;
     'htmlUrl'?: string;
     'templateId'?: number;
-    'scheduledAt'?: Date;
+    'scheduledAt'?: string;
     'subject'?: string;
     'replyTo'?: string;
     'toField'?: string;

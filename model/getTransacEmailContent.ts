@@ -28,7 +28,7 @@ export class GetTransacEmailContent {
     /**
     * Date on which transactional email was sent
     */
-    'date': Date;
+    'date': string;
     /**
     * Series of events which occurred on the transactional email
     */
@@ -63,7 +63,7 @@ export class GetTransacEmailContent {
         {
             "name": "date",
             "baseName": "date",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "events",

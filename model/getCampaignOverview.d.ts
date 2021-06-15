@@ -4,7 +4,7 @@ export declare class GetCampaignOverview {
     'subject'?: string;
     'type': GetCampaignOverview.TypeEnum;
     'status': GetCampaignOverview.StatusEnum;
-    'scheduledAt'?: Date;
+    'scheduledAt'?: string;
     'abTesting'?: boolean;
     'subjectA'?: string;
     'subjectB'?: string;

@@ -3,7 +3,7 @@ export declare class GetTransacBlockedContactsContacts {
     'email': string;
     'senderEmail': string;
     'reason': GetTransacBlockedContactsReason;
-    'blockedAt': Date;
+    'blockedAt': string;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

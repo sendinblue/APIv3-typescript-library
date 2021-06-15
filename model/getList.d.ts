@@ -3,6 +3,7 @@ export declare class GetList {
     'name': string;
     'totalBlacklisted': number;
     'totalSubscribers': number;
+    'uniqueSubscribers': number;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;

@@ -25,7 +25,7 @@ GetTransacBlockedContactsContacts.attributeTypeMap = [
     {
         "name": "blockedAt",
         "baseName": "blockedAt",
-        "type": "Date"
+        "type": "string"
     }
 ];
 exports.GetTransacBlockedContactsContacts = GetTransacBlockedContactsContacts;

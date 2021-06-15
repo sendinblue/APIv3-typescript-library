@@ -15,7 +15,7 @@ export declare class GetTransacBlockedContactsReason {
 }
 export declare namespace GetTransacBlockedContactsReason {
     enum CodeEnum {
-        UnsubscribedViaMA,
+        UnsubscribedViaMa,
         UnsubscribedViaEmail,
         AdminBlocked,
         UnsubscribedViaApi,

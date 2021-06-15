@@ -52,7 +52,7 @@ export declare class WebhooksApi {
         response: http.IncomingMessage;
         body: GetWebhook;
     }>;
-    getWebhooks(type?: 'marketing' | 'transactional', options?: {
+    getWebhooks(type?: 'marketing' | 'transactional', sort?: 'asc' | 'desc', options?: {
         headers: {
             [name: string]: string;
         };

@@ -5,10 +5,10 @@ export declare class GetSmsCampaign {
     'name': string;
     'status': GetSmsCampaign.StatusEnum;
     'content': string;
-    'scheduledAt'?: Date;
+    'scheduledAt'?: string;
     'sender': string;
-    'createdAt': Date;
-    'modifiedAt': Date;
+    'createdAt': string;
+    'modifiedAt': string;
     'recipients': GetCampaignRecipients;
     'statistics': GetSmsCampaignStats;
     static discriminator: string | undefined;

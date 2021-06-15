@@ -23,7 +23,7 @@ export class GetContactCampaignStatsOpened {
     /**
     * UTC date-time of the event
     */
-    'eventTime': Date;
+    'eventTime': string;
     /**
     * IP from which the user has opened the campaign
     */
@@ -45,7 +45,7 @@ export class GetContactCampaignStatsOpened {
         {
             "name": "eventTime",
             "baseName": "eventTime",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "ip",

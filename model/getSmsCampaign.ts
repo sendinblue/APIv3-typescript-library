@@ -33,7 +33,7 @@ export class GetSmsCampaign {
     /**
     * UTC date-time on which SMS campaign is scheduled. Should be in YYYY-MM-DDTHH:mm:ss.SSSZ format
     */
-    'scheduledAt'?: Date;
+    'scheduledAt'?: string;
     /**
     * Sender of the SMS Campaign
     */
@@ -41,11 +41,11 @@ export class GetSmsCampaign {
     /**
     * Creation UTC date-time of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'createdAt': Date;
+    'createdAt': string;
     /**
     * UTC date-time of last modification of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'modifiedAt': Date;
+    'modifiedAt': string;
     'recipients': GetCampaignRecipients;
     'statistics': GetSmsCampaignStats;
 
@@ -75,7 +75,7 @@ export class GetSmsCampaign {
         {
             "name": "scheduledAt",
             "baseName": "scheduledAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "sender",
@@ -85,12 +85,12 @@ export class GetSmsCampaign {
         {
             "name": "createdAt",
             "baseName": "createdAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "modifiedAt",
             "baseName": "modifiedAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "recipients",

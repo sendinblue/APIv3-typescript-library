@@ -30,7 +30,7 @@ CreateSmsCampaign.attributeTypeMap = [
     {
         "name": "scheduledAt",
         "baseName": "scheduledAt",
-        "type": "Date"
+        "type": "string"
     }
 ];
 exports.CreateSmsCampaign = CreateSmsCampaign;

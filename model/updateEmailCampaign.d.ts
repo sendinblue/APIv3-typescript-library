@@ -6,7 +6,7 @@ export declare class UpdateEmailCampaign {
     'name'?: string;
     'htmlContent'?: string;
     'htmlUrl'?: string;
-    'scheduledAt'?: Date;
+    'scheduledAt'?: string;
     'subject'?: string;
     'replyTo'?: string;
     'toField'?: string;

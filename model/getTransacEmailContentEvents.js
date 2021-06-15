@@ -15,7 +15,7 @@ GetTransacEmailContentEvents.attributeTypeMap = [
     {
         "name": "time",
         "baseName": "time",
-        "type": "Date"
+        "type": "string"
     }
 ];
 exports.GetTransacEmailContentEvents = GetTransacEmailContentEvents;

@@ -49,11 +49,11 @@ export class GetExtendedCampaignOverviewAllOf {
     /**
     * Creation UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'createdAt': Date;
+    'createdAt': string;
     /**
     * UTC date-time of last modification of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'modifiedAt': Date;
+    'modifiedAt': string;
     /**
     * Status of inline image. inlineImageActivation = false means image can’t be embedded, & inlineImageActivation = true means image can be embedded, in the email.
     */
@@ -69,7 +69,7 @@ export class GetExtendedCampaignOverviewAllOf {
     /**
     * Sent UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ). Only available if \'status\' of the campaign is \'sent\'
     */
-    'sentDate'?: Date;
+    'sentDate'?: string;
     /**
     * Total number of non-delivered campaigns for a particular campaign id.
     */
@@ -126,12 +126,12 @@ export class GetExtendedCampaignOverviewAllOf {
         {
             "name": "createdAt",
             "baseName": "createdAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "modifiedAt",
             "baseName": "modifiedAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "inlineImageActivation",
@@ -151,7 +151,7 @@ export class GetExtendedCampaignOverviewAllOf {
         {
             "name": "sentDate",
             "baseName": "sentDate",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "returnBounce",

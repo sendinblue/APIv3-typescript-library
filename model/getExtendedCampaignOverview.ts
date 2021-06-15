@@ -36,7 +36,7 @@ export class GetExtendedCampaignOverview {
     /**
     * UTC date-time on which campaign is scheduled (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'scheduledAt'?: Date;
+    'scheduledAt'?: string;
     /**
     * Status of A/B Test for the campaign. abTesting = false means it is disabled, & abTesting = true means it is enabled.
     */
@@ -101,11 +101,11 @@ export class GetExtendedCampaignOverview {
     /**
     * Creation UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'createdAt': Date;
+    'createdAt': string;
     /**
     * UTC date-time of last modification of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'modifiedAt': Date;
+    'modifiedAt': string;
     /**
     * Status of inline image. inlineImageActivation = false means image can’t be embedded, & inlineImageActivation = true means image can be embedded, in the email.
     */
@@ -121,7 +121,7 @@ export class GetExtendedCampaignOverview {
     /**
     * Sent UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ). Only available if \'status\' of the campaign is \'sent\'
     */
-    'sentDate'?: Date;
+    'sentDate'?: string;
     /**
     * Total number of non-delivered campaigns for a particular campaign id.
     */
@@ -158,7 +158,7 @@ export class GetExtendedCampaignOverview {
         {
             "name": "scheduledAt",
             "baseName": "scheduledAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "abTesting",
@@ -243,12 +243,12 @@ export class GetExtendedCampaignOverview {
         {
             "name": "createdAt",
             "baseName": "createdAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "modifiedAt",
             "baseName": "modifiedAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "inlineImageActivation",
@@ -268,7 +268,7 @@ export class GetExtendedCampaignOverview {
         {
             "name": "sentDate",
             "baseName": "sentDate",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "returnBounce",

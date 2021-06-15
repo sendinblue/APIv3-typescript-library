@@ -1,6 +1,6 @@
 export declare class GetExtendedContactDetailsAllOfStatisticsLinks {
     'count': number;
-    'eventTime': Date;
+    'eventTime': string;
     'ip': string;
     'url': string;
     static discriminator: string | undefined;

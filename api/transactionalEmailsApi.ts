@@ -53,7 +53,7 @@ export enum TransactionalEmailsApiApiKeys {
 export class TransactionalEmailsApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.2.2/ts-node'
     };
     protected _useQuerystring  = false;
 
@@ -1207,8 +1207,10 @@ export class TransactionalEmailsApi {
      * @param startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month.
      * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month.
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
+     * @param limit Number of documents returned per page
+     * @param offset Index of the first document in the page
      */
-    public async getTransacEmailsList (email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string, sort?: 'asc' | 'desc', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetTransacEmailsList;  }> {
+    public async getTransacEmailsList (email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string, sort?: 'asc' | 'desc', limit?: number, offset?: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetTransacEmailsList;  }> {
         const localVarPath = this.basePath + '/smtp/emails';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -1243,6 +1245,14 @@ export class TransactionalEmailsApi {
 
         if (sort !== undefined) {
             localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
+        }
+
+        if (limit !== undefined) {
+            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
+        }
+
+        if (offset !== undefined) {
+            localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);

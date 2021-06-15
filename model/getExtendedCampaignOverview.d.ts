@@ -5,7 +5,7 @@ export declare class GetExtendedCampaignOverview {
     'subject'?: string;
     'type': GetExtendedCampaignOverview.TypeEnum;
     'status': GetExtendedCampaignOverview.StatusEnum;
-    'scheduledAt'?: Date;
+    'scheduledAt'?: string;
     'abTesting'?: boolean;
     'subjectA'?: string;
     'subjectB'?: string;
@@ -22,12 +22,12 @@ export declare class GetExtendedCampaignOverview {
     'htmlContent': string;
     'shareLink'?: string;
     'tag'?: string;
-    'createdAt': Date;
-    'modifiedAt': Date;
+    'createdAt': string;
+    'modifiedAt': string;
     'inlineImageActivation'?: boolean;
     'mirrorActive'?: boolean;
     'recurring'?: boolean;
-    'sentDate'?: Date;
+    'sentDate'?: string;
     'returnBounce'?: number;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{

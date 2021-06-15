@@ -30,13 +30,17 @@ export class GetExtendedList {
     */
     'totalSubscribers': number;
     /**
+    * Number of unique contacts in the list
+    */
+    'uniqueSubscribers': number;
+    /**
     * ID of the folder
     */
     'folderId': number;
     /**
     * Creation UTC date-time of the list (YYYY-MM-DDTHH:mm:ss.SSSZ)
     */
-    'createdAt': Date;
+    'createdAt': string;
     'campaignStats'?: Array<GetExtendedListAllOfCampaignStats>;
     /**
     * Status telling if the list is dynamic or not (true=dynamic, false=not dynamic)
@@ -67,6 +71,11 @@ export class GetExtendedList {
             "type": "number"
         },
         {
+            "name": "uniqueSubscribers",
+            "baseName": "uniqueSubscribers",
+            "type": "number"
+        },
+        {
             "name": "folderId",
             "baseName": "folderId",
             "type": "number"
@@ -74,7 +83,7 @@ export class GetExtendedList {
         {
             "name": "createdAt",
             "baseName": "createdAt",
-            "type": "Date"
+            "type": "string"
         },
         {
             "name": "campaignStats",

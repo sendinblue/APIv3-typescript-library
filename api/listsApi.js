@@ -22,7 +22,7 @@ class ListsApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
         this._defaultHeaders = {
-            'user-agent': 'sendinblue_clientAPI/v2.2.0/ts-node'
+            'user-agent': 'sendinblue_clientAPI/v2.2.2/ts-node'
         };
         this._useQuerystring = false;
         this.authentications = {
@@ -293,7 +293,7 @@ class ListsApi {
                 throw new Error('Required parameter listId was null or undefined when calling getContactsFromList.');
             }
             if (modifiedSince !== undefined) {
-                localVarQueryParameters['modifiedSince'] = models_1.ObjectSerializer.serialize(modifiedSince, "Date");
+                localVarQueryParameters['modifiedSince'] = models_1.ObjectSerializer.serialize(modifiedSince, "string");
             }
             if (limit !== undefined) {
                 localVarQueryParameters['limit'] = models_1.ObjectSerializer.serialize(limit, "number");

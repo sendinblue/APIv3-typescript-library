@@ -653,9 +653,9 @@ class ObjectSerializer {
             let subType = type.replace("Array<", "");
             subType = subType.substring(0, subType.length - 1);
             const transformedData = [];
-            for (const index in data) {
-                const date = data[index];
-                transformedData.push(ObjectSerializer.serialize(date, subType));
+            for (let index = 0; index < data.length; index++) {
+                const datum = data[index];
+                transformedData.push(ObjectSerializer.serialize(datum, subType));
             }
             return transformedData;
         }
@@ -672,7 +672,7 @@ class ObjectSerializer {
             type = this.findCorrectType(data, type);
             const attributeTypes = typeMap[type].getAttributeTypeMap();
             const instance = {};
-            for (const index in attributeTypes) {
+            for (let index = 0; index < attributeTypes.length; index++) {
                 const attributeType = attributeTypes[index];
                 instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type);
             }
@@ -691,9 +691,9 @@ class ObjectSerializer {
             let subType = type.replace("Array<", "");
             subType = subType.substring(0, subType.length - 1);
             const transformedData = [];
-            for (const index in data) {
-                const date = data[index];
-                transformedData.push(ObjectSerializer.deserialize(date, subType));
+            for (let index = 0; index < data.length; index++) {
+                const datum = data[index];
+                transformedData.push(ObjectSerializer.deserialize(datum, subType));
             }
             return transformedData;
         }
@@ -709,7 +709,7 @@ class ObjectSerializer {
             }
             const instance = new typeMap[type]();
             const attributeTypes = typeMap[type].getAttributeTypeMap();
-            for (const index in attributeTypes) {
+            for (let index = 0; index < attributeTypes.length; index++) {
                 const attributeType = attributeTypes[index];
                 instance[attributeType.name] = ObjectSerializer.deserialize(data[attributeType.baseName], attributeType.type);
             }

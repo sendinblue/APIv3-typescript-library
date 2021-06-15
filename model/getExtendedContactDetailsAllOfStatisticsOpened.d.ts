@@ -1,7 +1,7 @@
 export declare class GetExtendedContactDetailsAllOfStatisticsOpened {
     'campaignId': number;
     'count': number;
-    'eventTime': Date;
+    'eventTime': string;
     'ip': string;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{

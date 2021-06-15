@@ -28,6 +28,10 @@ export class GetList {
     * Number of contacts in the list
     */
     'totalSubscribers': number;
+    /**
+    * Number of unique contacts in the list
+    */
+    'uniqueSubscribers': number;
 
     static discriminator: string | undefined = undefined;
 
@@ -50,6 +54,11 @@ export class GetList {
         {
             "name": "totalSubscribers",
             "baseName": "totalSubscribers",
+            "type": "number"
+        },
+        {
+            "name": "uniqueSubscribers",
+            "baseName": "uniqueSubscribers",
             "type": "number"
         }    ];
 
