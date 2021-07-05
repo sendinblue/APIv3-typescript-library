@@ -24,7 +24,8 @@
     "dependencies": {
         "bluebird": "^3.5.0",
         "request": "^2.81.0",
-        "rewire": "^3.0.2"
+        "rewire": "^3.0.2",
+        "lodash": "^4.17.21"
     },
     "devDependencies": {
         "@types/node": "8.10.34",
