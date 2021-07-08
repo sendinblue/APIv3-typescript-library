@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import http = require('http');
+import * as http from 'http';
 import { CreateModel } from '../model/createModel';
 import { CreateWebhook } from '../model/createWebhook';
 import { GetWebhook } from '../model/getWebhook';

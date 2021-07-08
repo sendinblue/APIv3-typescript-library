@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import http = require('http');
+import * as http from 'http';
 import { GetSmsEventReport } from '../model/getSmsEventReport';
 import { GetTransacAggregatedSmsReport } from '../model/getTransacAggregatedSmsReport';
 import { GetTransacSmsReport } from '../model/getTransacSmsReport';

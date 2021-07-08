@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import http = require('http');
+import * as http from 'http';
 import { AddChildDomain } from '../model/addChildDomain';
 import { AddCredits } from '../model/addCredits';
 import { CreateChild } from '../model/createChild';

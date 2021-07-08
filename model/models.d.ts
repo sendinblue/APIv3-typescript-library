@@ -182,7 +182,7 @@ export * from './updateSmtpTemplate';
 export * from './updateSmtpTemplateSender';
 export * from './updateWebhook';
 export * from './uploadImageToGallery';
-import localVarRequest = require('request');
+import * as localVarRequest from 'request';
 export declare class ObjectSerializer {
     static findCorrectType(data: any, expectedType: string): any;
     static serialize(data: any, type: string): any;

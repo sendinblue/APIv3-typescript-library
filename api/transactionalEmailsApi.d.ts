@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import http = require('http');
+import * as http from 'http';
 import { BlockDomain } from '../model/blockDomain';
 import { CreateModel } from '../model/createModel';
 import { CreateSmtpEmail } from '../model/createSmtpEmail';
