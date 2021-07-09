@@ -1,3 +1,5 @@
+import localVarRequest from 'request';
+
 export * from './abTestCampaignResult';
 export * from './abTestCampaignResultClickedLinks';
 export * from './abTestCampaignResultStatistics';
@@ -183,7 +185,18 @@ export * from './updateSmtpTemplateSender';
 export * from './updateWebhook';
 export * from './uploadImageToGallery';
 
-import localVarRequest = require('request');
+import * as fs from 'fs';
+
+export interface RequestDetailedFile {
+    value: Buffer;
+    options?: {
+        filename?: string;
+        contentType?: string;
+    }
+}
+
+export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
+
 
 import { AbTestCampaignResult } from './abTestCampaignResult';
 import { AbTestCampaignResultClickedLinks } from './abTestCampaignResultClickedLinks';

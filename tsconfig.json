@@ -2,6 +2,7 @@
     "compilerOptions": {
         "module": "CommonJS",
         "noImplicitAny": false,
+        "esModuleInterop": true,
         "suppressImplicitAnyIndexErrors": true,
         "target": "ES2015",
         "strict": true,
