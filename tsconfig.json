@@ -2,9 +2,10 @@
     "compilerOptions": {
         "module": "CommonJS",
         "noImplicitAny": false,
+        "target": "ES6",
+        "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "suppressImplicitAnyIndexErrors": true,
-        "target": "ES2015",
         "strict": true,
         "moduleResolution": "node",
         "removeComments": true,

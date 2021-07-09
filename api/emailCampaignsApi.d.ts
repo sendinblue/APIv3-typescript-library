@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import http = require('http');
+import http from 'http';
 import { AbTestCampaignResult } from '../model/abTestCampaignResult';
 import { CreateEmailCampaign } from '../model/createEmailCampaign';
 import { CreateModel } from '../model/createModel';

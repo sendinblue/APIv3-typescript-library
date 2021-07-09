@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import http = require('http');
+import http from 'http';
 import { GetProcess } from '../model/getProcess';
 import { GetProcesses } from '../model/getProcesses';
 import { Authentication, Interceptor } from '../model/models';

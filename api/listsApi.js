@@ -7,8 +7,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const localVarRequest = require("request");
+const request_1 = __importDefault(require("request"));
 const models_1 = require("../model/models");
 const models_2 = require("../model/models");
 const apis_1 = require("./apis");
@@ -22,7 +25,7 @@ class ListsApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
         this._defaultHeaders = {
-            'user-agent': 'sendinblue_clientAPI/v2.2.2/ts-node'
+            'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node'
         };
         this._useQuerystring = false;
         this.authentications = {
@@ -124,7 +127,7 @@ class ListsApi {
                     }
                 }
                 return new Promise((resolve, reject) => {
-                    localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    request_1.default(localVarRequestOptions, (error, response, body) => {
                         if (error) {
                             reject(error);
                         }
@@ -191,7 +194,7 @@ class ListsApi {
                     }
                 }
                 return new Promise((resolve, reject) => {
-                    localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    request_1.default(localVarRequestOptions, (error, response, body) => {
                         if (error) {
                             reject(error);
                         }
@@ -258,7 +261,7 @@ class ListsApi {
                     }
                 }
                 return new Promise((resolve, reject) => {
-                    localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    request_1.default(localVarRequestOptions, (error, response, body) => {
                         if (error) {
                             reject(error);
                         }
@@ -336,7 +339,7 @@ class ListsApi {
                     }
                 }
                 return new Promise((resolve, reject) => {
-                    localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    request_1.default(localVarRequestOptions, (error, response, body) => {
                         if (error) {
                             reject(error);
                         }
@@ -412,7 +415,7 @@ class ListsApi {
                     }
                 }
                 return new Promise((resolve, reject) => {
-                    localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    request_1.default(localVarRequestOptions, (error, response, body) => {
                         if (error) {
                             reject(error);
                         }
@@ -479,7 +482,7 @@ class ListsApi {
                     }
                 }
                 return new Promise((resolve, reject) => {
-                    localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    request_1.default(localVarRequestOptions, (error, response, body) => {
                         if (error) {
                             reject(error);
                         }
@@ -551,7 +554,7 @@ class ListsApi {
                     }
                 }
                 return new Promise((resolve, reject) => {
-                    localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    request_1.default(localVarRequestOptions, (error, response, body) => {
                         if (error) {
                             reject(error);
                         }
@@ -622,7 +625,7 @@ class ListsApi {
                     }
                 }
                 return new Promise((resolve, reject) => {
-                    localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    request_1.default(localVarRequestOptions, (error, response, body) => {
                         if (error) {
                             reject(error);
                         }
@@ -693,7 +696,7 @@ class ListsApi {
                     }
                 }
                 return new Promise((resolve, reject) => {
-                    localVarRequest(localVarRequestOptions, (error, response, body) => {
+                    request_1.default(localVarRequestOptions, (error, response, body) => {
                         if (error) {
                             reject(error);
                         }

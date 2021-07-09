@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import http = require('http');
+import http from 'http';
 import { CreateModel } from '../model/createModel';
 import { CreateUpdateFolder } from '../model/createUpdateFolder';
 import { GetFolder } from '../model/getFolder';

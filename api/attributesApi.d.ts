@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import http = require('http');
+import http from 'http';
 import { CreateAttribute } from '../model/createAttribute';
 import { GetAttributes } from '../model/getAttributes';
 import { UpdateAttribute } from '../model/updateAttribute';

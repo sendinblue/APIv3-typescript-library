@@ -1,3 +1,5 @@
+/// <reference types="node" />
+import localVarRequest from 'request';
 export * from './abTestCampaignResult';
 export * from './abTestCampaignResultClickedLinks';
 export * from './abTestCampaignResultStatistics';
@@ -182,7 +184,15 @@ export * from './updateSmtpTemplate';
 export * from './updateSmtpTemplateSender';
 export * from './updateWebhook';
 export * from './uploadImageToGallery';
-import localVarRequest = require('request');
+import * as fs from 'fs';
+export interface RequestDetailedFile {
+    value: Buffer;
+    options?: {
+        filename?: string;
+        contentType?: string;
+    };
+}
+export declare type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
 export declare class ObjectSerializer {
     static findCorrectType(data: any, expectedType: string): any;
     static serialize(data: any, type: string): any;

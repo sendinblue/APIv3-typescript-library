@@ -45,7 +45,7 @@ export enum ListsApiApiKeys {
 export class ListsApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {
-        'user-agent': 'sendinblue_clientAPI/v2.2.2/ts-node'
+        'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node'
     };
     protected _useQuerystring  = false;
 
