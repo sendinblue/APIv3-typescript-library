@@ -24,21 +24,16 @@
     "dependencies": {
         "bluebird": "^3.5.0",
         "request": "^2.81.0",
-        "rewire": "^3.0.2",
         "lodash": "^4.17.21"
     },
     "devDependencies": {
-        "@types/node": "8.10.34",
-        "@typescript-eslint/eslint-plugin": "^4.20.0",
-        "@typescript-eslint/parser": "^4.20.0",
+        "typescript": "^3.5.1",
+        "minimist": "^1.2.5",
         "@types/bluebird": "*",
         "@types/request": "*",
+        "@typescript-eslint/eslint-plugin": "^4.20.0",
+        "@typescript-eslint/parser": "^4.20.0",
         "eslint": "^7.23.0",
-        "eslint-plugin-unused-imports": "^1.1.0",
-        "typescript": "^2.4.2"
-    },
-    "bugs": {
-        "url": "https://github.com/sendinblue/APIv3-typescript-library/issues"
-    },
-    "homepage": "https://github.com/sendinblue/APIv3-typescript-library#readme"
+        "eslint-plugin-unused-imports": "^1.1.0"
+    }
 }

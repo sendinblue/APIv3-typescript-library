@@ -1,24 +1,19 @@
 {
     "compilerOptions": {
-        "module": "CommonJS",
+        "module": "commonjs",
         "noImplicitAny": false,
-        "target": "ES6",
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
         "suppressImplicitAnyIndexErrors": true,
+        "target": "ES6",
         "strict": true,
         "moduleResolution": "node",
         "removeComments": true,
         "sourceMap": true,
         "noLib": false,
         "declaration": true,
-        "lib": ["dom", "es6", "es5", "dom.iterable", "scripthost"],
-        "typeRoots": [
-            "node_modules/@types"
-        ]
+        "isolatedModules": true,
+        "lib": ["dom", "es6", "es5", "dom.iterable", "scripthost"]
     },
     "exclude": [
-        "dist",
         "node_modules"
     ]
 }

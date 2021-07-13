@@ -1,1 +1,0 @@
-{"version":3,"file":"createUpdateFolder.js","sourceRoot":"","sources":["createUpdateFolder.ts"],"names":[],"mappings":";;AAaA;IAeI,MAAM,CAAC,mBAAmB;QACtB,OAAO,kBAAkB,CAAC,gBAAgB,CAAC;IAC/C,CAAC;;AAXM,gCAAa,GAAuB,SAAS,CAAC;AAE9C,mCAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,MAAM;QACd,UAAU,EAAE,MAAM;QAClB,MAAM,EAAE,QAAQ;KACnB;CAAK,CAAC;AAbf,gDAkBC"}

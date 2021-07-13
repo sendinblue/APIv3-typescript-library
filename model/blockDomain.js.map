@@ -1,1 +1,0 @@
-{"version":3,"file":"blockDomain.js","sourceRoot":"","sources":["blockDomain.ts"],"names":[],"mappings":";;AAaA;IAeI,MAAM,CAAC,mBAAmB;QACtB,OAAO,WAAW,CAAC,gBAAgB,CAAC;IACxC,CAAC;;AAXM,yBAAa,GAAuB,SAAS,CAAC;AAE9C,4BAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,QAAQ;QAChB,UAAU,EAAE,QAAQ;QACpB,MAAM,EAAE,QAAQ;KACnB;CAAK,CAAC;AAbf,kCAkBC"}

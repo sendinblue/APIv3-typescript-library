@@ -1,1 +1,0 @@
-{"version":3,"file":"getIps.js","sourceRoot":"","sources":["getIps.ts"],"names":[],"mappings":";;AAcA;IAeI,MAAM,CAAC,mBAAmB;QACtB,OAAO,MAAM,CAAC,gBAAgB,CAAC;IACnC,CAAC;;AAXM,oBAAa,GAAuB,SAAS,CAAC;AAE9C,uBAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,KAAK;QACb,UAAU,EAAE,KAAK;QACjB,MAAM,EAAE,cAAc;KACzB;CAAK,CAAC;AAbf,wBAkBC"}

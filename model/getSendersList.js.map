@@ -1,1 +1,0 @@
-{"version":3,"file":"getSendersList.js","sourceRoot":"","sources":["getSendersList.ts"],"names":[],"mappings":";;AAcA;IAeI,MAAM,CAAC,mBAAmB;QACtB,OAAO,cAAc,CAAC,gBAAgB,CAAC;IAC3C,CAAC;;AAXM,4BAAa,GAAuB,SAAS,CAAC;AAE9C,+BAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,SAAS;QACjB,UAAU,EAAE,SAAS;QACrB,MAAM,EAAE,8BAA8B;KACzC;CAAK,CAAC;AAbf,wCAkBC"}
