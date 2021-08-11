@@ -1,6 +1,6 @@
 {
   "name": "@sendinblue/client",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "NodeJS client for Sendinblue V3 api",
   "main": "dist/api.js",
   "types": "dist/api.d.ts",
