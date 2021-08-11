@@ -1,3 +1,2 @@
-wwwroot/*.js
+dist/
 node_modules
-typings

@@ -1,4 +1,5 @@
 # APIv3-typescript-library
+
 SendinBlue's API v3 TypeScript-Node Library
 
 SendinBlue's API exposes the entire SendinBlue features via a standardized programmatic interface. Please refer to the full [documentation](https://developers.sendinblue.com) to learn more.
@@ -18,7 +19,9 @@ The following recommended installation requires [npm](https://npmjs.org/). If yo
 Then install it via:
 
 ```shell
-npm install sib-api-v3-typescript --save
+npm install @sendinblue/client --save
+# or
+yarn add @sendinblue/client
 ```
 
 ## Getting Started
@@ -26,44 +29,52 @@ npm install sib-api-v3-typescript --save
 Once you have [installed](#installation) the node module in your project, you can execute the following sample code JS code :
 
 ```javascript
-const SibApiV3Sdk = require('sib-api-v3-typescript');
+const SibApiV3Sdk = require('@sendinblue/client')
 
 let apiInstance = new SibApiV3Sdk.AccountApi()
 
 // Configure API key authorization: apiKey
 
-apiInstance.setApiKey(SibApiV3Sdk.AccountApiApiKeys.apiKey, 'YOUR API KEY');
+apiInstance.setApiKey(SibApiV3Sdk.AccountApiApiKeys.apiKey, 'YOUR API KEY')
 
-apiInstance.getAccount().then(function(data) {
-  console.log('API called successfully. Returned data: ' + data);
-}, function(error) {
-  console.error(error);
-});
+apiInstance.getAccount().then(
+  function (data) {
+    console.log('API called successfully. Returned data: ' + data)
+  },
+  function (error) {
+    console.error(error)
+  }
+)
 ```
 
 ```javascript
-const SibApiV3Sdk = require('sib-api-v3-typescript');
+const SibApiV3Sdk = require('@sendinblue/client')
 
 let apiInstance = new SibApiV3Sdk.ContactsApi()
 
 // Configure API key authorization: apiKey
 
-apiInstance.setApiKey(SibApiV3Sdk.AccountApiApiKeys.apiKey, 'YOUR API KEY');
+apiInstance.setApiKey(SibApiV3Sdk.AccountApiApiKeys.apiKey, 'YOUR API KEY')
 
-let limit = 10; // Number | Number of documents per page
-let offset = 0; // Number | Index of the first document of the page
+let limit = 10 // Number | Number of documents per page
+let offset = 0 // Number | Index of the first document of the page
 
-apiInstance.getLists(limit, offset).then(function(data) {
-  console.log('API called successfully. Returned data: ' + data);
-  apiInstance.getAttributes().then(function(data) {
-    console.log('API called successfully. Returned data: ' + data);
-  }, function(error) {
-    console.error(error);
-  });
-
-}, function(error) {
-  console.error(error);
-});
+apiInstance.getLists(limit, offset).then(
+  function (data) {
+    console.log('API called successfully. Returned data: ' + data)
+    apiInstance.getAttributes().then(
+      function (data) {
+        console.log('API called successfully. Returned data: ' + data)
+      },
+      function (error) {
+        console.error(error)
+      }
+    )
+  },
+  function (error) {
+    console.error(error)
+  }
+)
 ```
 
 For more examples, refer the [Endpoints Guide](https://developers.sendinblue.com/reference)
