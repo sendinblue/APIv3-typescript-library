@@ -1,1 +1,0 @@
-{"version":3,"file":"getIpsFromSender.js","sourceRoot":"","sources":["getIpsFromSender.ts"],"names":[],"mappings":";;AAcA;IAeI,MAAM,CAAC,mBAAmB;QACtB,OAAO,gBAAgB,CAAC,gBAAgB,CAAC;IAC7C,CAAC;;AAXM,8BAAa,GAAuB,SAAS,CAAC;AAE9C,iCAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,KAAK;QACb,UAAU,EAAE,KAAK;QACjB,MAAM,EAAE,wBAAwB;KACnC;CAAK,CAAC;AAbf,4CAkBC"}

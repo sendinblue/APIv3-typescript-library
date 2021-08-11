@@ -1,44 +1,40 @@
 {
-    "name": "sib-api-v3-typescript",
-    "version": "2.2.2",
-    "description": "NodeJS client for sib-api-v3-typescript",
-    "main": "api.js",
-    "types": "api.d.ts",
-    "scripts": {
-        "clean": "rm -Rf node_modules/ *.js",
-        "build": "tsc",
-        "test": "npm run build && node client.js",
-        "lint": "eslint . --ext .ts",
-        "lint-and-fix": "eslint . --ext .ts --fix"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/sendinblue/APIv3-typescript-library.git"
-    },
-    "author": {
-        "name": "SendinBlue",
-        "email": "developers@sendinblue.com",
-        "url": "https://www.sendinblue.com/"
-    },
-    "license": "MIT",
-    "dependencies": {
-        "bluebird": "^3.5.0",
-        "request": "^2.81.0",
-        "rewire": "^3.0.2",
-        "lodash": "^4.17.21"
-    },
-    "devDependencies": {
-        "@types/node": "8.10.34",
-        "@typescript-eslint/eslint-plugin": "^4.20.0",
-        "@typescript-eslint/parser": "^4.20.0",
-        "@types/bluebird": "*",
-        "@types/request": "*",
-        "eslint": "^7.23.0",
-        "eslint-plugin-unused-imports": "^1.1.0",
-        "typescript": "^2.4.2"
-    },
-    "bugs": {
-        "url": "https://github.com/sendinblue/APIv3-typescript-library/issues"
-    },
-    "homepage": "https://github.com/sendinblue/APIv3-typescript-library#readme"
+  "name": "@sendinblue/client",
+  "version": "3.0.0",
+  "description": "NodeJS client for Sendinblue V3 api",
+  "main": "dist/api.js",
+  "types": "dist/api.d.ts",
+  "scripts": {
+    "clean": "rimraf -rf dist/",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "lint-and-fix": "eslint . --ext .ts --fix",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sendinblue/APIv3-typescript-library.git"
+  },
+  "author": {
+    "name": "SendinBlue",
+    "email": "developers@sendinblue.com",
+    "url": "https://www.sendinblue.com/"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "lodash": "^4.17.21",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "@types/bluebird": "*",
+    "@types/request": "*",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
+    "eslint": "^7.23.0",
+    "eslint-plugin-unused-imports": "^1.1.0",
+    "minimist": "^1.2.5",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.5.1"
+  }
 }

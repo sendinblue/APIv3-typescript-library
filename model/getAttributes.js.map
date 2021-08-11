@@ -1,1 +1,0 @@
-{"version":3,"file":"getAttributes.js","sourceRoot":"","sources":["getAttributes.ts"],"names":[],"mappings":";;AAcA;IAeI,MAAM,CAAC,mBAAmB;QACtB,OAAO,aAAa,CAAC,gBAAgB,CAAC;IAC1C,CAAC;;AAXM,2BAAa,GAAuB,SAAS,CAAC;AAE9C,8BAAgB,GAA0D;IAC7E;QACI,MAAM,EAAE,YAAY;QACpB,UAAU,EAAE,YAAY;QACxB,MAAM,EAAE,gCAAgC;KAC3C;CAAK,CAAC;AAbf,sCAkBC"}
