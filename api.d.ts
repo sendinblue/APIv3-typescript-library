@@ -560,7 +560,6 @@ export declare class CreateWebhook {
     'description'?: string;
     'events': Array<CreateWebhook.EventsEnum>;
     'type'?: CreateWebhook.TypeEnum;
-    'domain'?: string;
     static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
@@ -590,13 +589,11 @@ export declare namespace CreateWebhook {
         Unsubscribed,
         ListAddition,
         ContactUpdated,
-        ContactDeleted,
-        InboundEmailProcessed
+        ContactDeleted
     }
     enum TypeEnum {
         Transactional,
-        Marketing,
-        Inbound
+        Marketing
     }
 }
 export declare class CreatedProcessId {

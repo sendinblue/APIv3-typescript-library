@@ -1588,17 +1588,13 @@ export class CreateWebhook {
     */
     'description'?: string;
     /**
-    * - Events triggering the webhook. Possible values for **Transactional** type webhook: #### `sent` OR `request`, `delivered`, `hardBounce`, `softBounce`, `blocked`, `spam`, `invalid`, `deferred`, `click`, `opened`, `uniqueOpened` and `unsubscribed` - Possible values for **Marketing** type webhook: #### `spam`, `opened`, `click`, `hardBounce`, `softBounce`, `unsubscribed`, `listAddition` & `delivered` - Possible values for **Inbound** type webhook: #### `inbound_email_processed` 
+    * - Events triggering the webhook. Possible values for **Transactional** type webhook: #### `sent` OR `request`, `delivered`, `hardBounce`, `softBounce`, `blocked`, `spam`, `invalid`, `deferred`, `click`, `opened`, `uniqueOpened` and `unsubscribed` - Possible values for **Marketing** type webhook: #### `spam`, `opened`, `click`, `hardBounce`, `softBounce`, `unsubscribed`, `listAddition` & `delivered` 
     */
     'events': Array<CreateWebhook.EventsEnum>;
     /**
     * Type of the webhook
     */
     'type'?: CreateWebhook.TypeEnum;
-    /**
-    * Inbound domain of webhook, required in case of event type `inbound`
-    */
-    'domain'?: string;
 
     static discriminator: string | undefined = undefined;
 
@@ -1622,11 +1618,6 @@ export class CreateWebhook {
             "name": "type",
             "baseName": "type",
             "type": "CreateWebhook.TypeEnum"
-        },
-        {
-            "name": "domain",
-            "baseName": "domain",
-            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
@@ -1651,13 +1642,11 @@ export namespace CreateWebhook {
         Unsubscribed = <any> 'unsubscribed',
         ListAddition = <any> 'listAddition',
         ContactUpdated = <any> 'contactUpdated',
-        ContactDeleted = <any> 'contactDeleted',
-        InboundEmailProcessed = <any> 'inbound_email_processed'
+        ContactDeleted = <any> 'contactDeleted'
     }
     export enum TypeEnum {
         Transactional = <any> 'transactional',
-        Marketing = <any> 'marketing',
-        Inbound = <any> 'inbound'
+        Marketing = <any> 'marketing'
     }
 }
 export class CreatedProcessId {
@@ -8712,7 +8701,7 @@ export enum AccountApiApiKeys {
 
 export class AccountApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -8813,7 +8802,7 @@ export enum AttributesApiApiKeys {
 
 export class AttributesApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -9123,7 +9112,7 @@ export enum ContactsApiApiKeys {
 
 export class ContactsApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -9829,7 +9818,7 @@ export class ContactsApi {
         });
     }
     /**
-     * 
+     * Along with the contact details, this endpoint will show the statistics of contact for the recent 90 days by default. To fetch the earlier statistics, please use Get contact campaign stats (https://developers.sendinblue.com/reference/contacts-7#getcontactstats) endpoint with the appropriate date ranges.
      * @summary Get a contact's details
      * @param identifier Email (urlencoded) OR ID of the contact OR its SMS attribute value
      * @param {*} [options] Override http request options.
@@ -9892,7 +9881,7 @@ export class ContactsApi {
      * @summary Get email campaigns' statistics for a contact
      * @param identifier Email (urlencoded) OR ID of the contact
      * @param startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be lower than equal to endDate
-     * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be greater than equal to startDate
+     * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be greater than equal to startDate. Maximum difference between startDate and endDate should not be greater than 90 days
      * @param {*} [options] Override http request options.
      */
     public getContactStats (identifier: string, startDate?: string, endDate?: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetContactCampaignStats;  }> {
@@ -10902,7 +10891,7 @@ export enum EmailCampaignsApiApiKeys {
 
 export class EmailCampaignsApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -11769,7 +11758,7 @@ export enum FoldersApiApiKeys {
 
 export class FoldersApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -12210,7 +12199,7 @@ export enum ListsApiApiKeys {
 
 export class ListsApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -12852,7 +12841,7 @@ export enum ProcessApiApiKeys {
 
 export class ProcessApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -13027,7 +13016,7 @@ export enum ResellerApiApiKeys {
 
 export class ResellerApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -14080,7 +14069,7 @@ export enum SMSCampaignsApiApiKeys {
 
 export class SMSCampaignsApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -14766,7 +14755,7 @@ export enum SendersApiApiKeys {
 
 export class SendersApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -15160,7 +15149,7 @@ export enum TransactionalEmailsApiApiKeys {
 
 export class TransactionalEmailsApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -15488,7 +15477,7 @@ export class TransactionalEmailsApi {
         });
     }
     /**
-     * 
+     * This endpoint will show the aggregated stats for past 90 days by default if `startDate` and `endDate` OR `days` is not passed. The date range can not exceed 90 days
      * @summary Get your transactional email activity aggregated over a period of time
      * @param startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate
      * @param endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate
@@ -15612,7 +15601,7 @@ export class TransactionalEmailsApi {
         });
     }
     /**
-     * 
+     * This endpoint will show the aggregated stats for past 30 days by default if `startDate` and `endDate` OR `days` is not passed. The date range can not exceed 90 days
      * @summary Get all your transactional email activity (unaggregated events)
      * @param limit Number limitation for the result returned
      * @param offset Beginning point in the list to retrieve from.
@@ -16482,7 +16471,7 @@ export enum TransactionalSMSApiApiKeys {
 
 export class TransactionalSMSApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -16836,7 +16825,7 @@ export enum WebhooksApiApiKeys {
 
 export class WebhooksApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
     protected _useQuerystring  = false;
 
     protected authentications = {

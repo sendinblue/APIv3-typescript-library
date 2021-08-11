@@ -1074,11 +1074,6 @@ CreateWebhook.attributeTypeMap = [
         "name": "type",
         "baseName": "type",
         "type": "CreateWebhook.TypeEnum"
-    },
-    {
-        "name": "domain",
-        "baseName": "domain",
-        "type": "string"
     }
 ];
 (function (CreateWebhook) {
@@ -1100,13 +1095,11 @@ CreateWebhook.attributeTypeMap = [
         EventsEnum[EventsEnum["ListAddition"] = 'listAddition'] = "ListAddition";
         EventsEnum[EventsEnum["ContactUpdated"] = 'contactUpdated'] = "ContactUpdated";
         EventsEnum[EventsEnum["ContactDeleted"] = 'contactDeleted'] = "ContactDeleted";
-        EventsEnum[EventsEnum["InboundEmailProcessed"] = 'inbound_email_processed'] = "InboundEmailProcessed";
     })(EventsEnum = CreateWebhook.EventsEnum || (CreateWebhook.EventsEnum = {}));
     let TypeEnum;
     (function (TypeEnum) {
         TypeEnum[TypeEnum["Transactional"] = 'transactional'] = "Transactional";
         TypeEnum[TypeEnum["Marketing"] = 'marketing'] = "Marketing";
-        TypeEnum[TypeEnum["Inbound"] = 'inbound'] = "Inbound";
     })(TypeEnum = CreateWebhook.TypeEnum || (CreateWebhook.TypeEnum = {}));
 })(CreateWebhook = exports.CreateWebhook || (exports.CreateWebhook = {}));
 class CreatedProcessId {
@@ -5761,7 +5754,7 @@ var AccountApiApiKeys;
 class AccountApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
@@ -5847,7 +5840,7 @@ var AttributesApiApiKeys;
 class AttributesApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
@@ -6091,7 +6084,7 @@ var ContactsApiApiKeys;
 class ContactsApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
@@ -7480,7 +7473,7 @@ var EmailCampaignsApiApiKeys;
 class EmailCampaignsApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
@@ -8161,7 +8154,7 @@ var FoldersApiApiKeys;
 class FoldersApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
@@ -8508,7 +8501,7 @@ var ListsApiApiKeys;
 class ListsApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
@@ -9010,7 +9003,7 @@ var ProcessApiApiKeys;
 class ProcessApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
@@ -9152,7 +9145,7 @@ var ResellerApiApiKeys;
 class ResellerApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
@@ -9978,7 +9971,7 @@ var SMSCampaignsApiApiKeys;
 class SMSCampaignsApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
@@ -10516,7 +10509,7 @@ var SendersApiApiKeys;
 class SendersApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
@@ -10835,7 +10828,7 @@ var TransactionalEmailsApiApiKeys;
 class TransactionalEmailsApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
@@ -11860,7 +11853,7 @@ var TransactionalSMSApiApiKeys;
 class TransactionalSMSApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
@@ -12133,7 +12126,7 @@ var WebhooksApiApiKeys;
 class WebhooksApi {
     constructor(basePathOrUsername, password, basePath) {
         this._basePath = defaultBasePath;
-        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3-beta.1/ts-node' };
+        this.defaultHeaders = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
         this._useQuerystring = false;
         this.authentications = {
             'default': new VoidAuth(),
