@@ -29,52 +29,52 @@ yarn add @sendinblue/client
 Once you have [installed](#installation) the node module in your project, you can execute the following sample code JS code :
 
 ```javascript
-const SibApiV3Sdk = require('@sendinblue/client')
+const SibApiV3Sdk = require("@sendinblue/client");
 
-const apiInstance = new SibApiV3Sdk.AccountApi()
+const apiInstance = new SibApiV3Sdk.AccountApi();
 
 // Configure API key authorization: apiKey
 
-apiInstance.setApiKey(SibApiV3Sdk.AccountApiApiKeys.apiKey, 'YOUR API KEY')
+apiInstance.setApiKey(SibApiV3Sdk.AccountApiApiKeys.apiKey, "YOUR API KEY");
 
 apiInstance.getAccount().then(
   function (data) {
-    console.log('API called successfully. Returned data: ', data.body)
+    console.log("API called successfully. Returned data: ", data.body);
   },
   function (error) {
-    console.error(error)
+    console.error(error);
   }
-)
+);
 ```
 
 ```javascript
-const SibApiV3Sdk = require('@sendinblue/client')
+const SibApiV3Sdk = require("@sendinblue/client");
 
-const apiInstance = new SibApiV3Sdk.ContactsApi()
+const apiInstance = new SibApiV3Sdk.ContactsApi();
 
 // Configure API key authorization: apiKey
 
-apiInstance.setApiKey(SibApiV3Sdk.AccountApiApiKeys.apiKey, 'YOUR API KEY')
+apiInstance.setApiKey(SibApiV3Sdk.ContactsApiApiKeys.apiKey, "YOUR API KEY");
 
-const limit = 10 // Number | Number of documents per page
-const offset = 0 // Number | Index of the first document of the page
+const limit = 10; // Number | Number of documents per page
+const offset = 0; // Number | Index of the first document of the page
 
 apiInstance.getLists(limit, offset).then(
   function (data) {
-    console.log('API called successfully. Returned data: ', data.body)
+    console.log("API called successfully. Returned data: ", data.body);
     apiInstance.getAttributes().then(
       function (data) {
-        console.log('API called successfully. Returned data: ', data.body)
+        console.log("API called successfully. Returned data: ", data.body);
       },
       function (error) {
-        console.error(error)
+        console.error(error);
       }
-    )
+    );
   },
   function (error) {
-    console.error(error)
+    console.error(error);
   }
-)
+);
 ```
 
 For more examples, refer the [Endpoints Guide](https://developers.sendinblue.com/reference)
