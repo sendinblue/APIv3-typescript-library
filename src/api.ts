@@ -21,15 +21,15 @@ const defaultBasePath = 'https://api.sendinblue.com/v3';
 
 /* tslint:disable:no-unused-variable */
 const primitives = [
-                    "string",
-                    "boolean",
-                    "double",
-                    "integer",
-                    "long",
-                    "float",
-                    "number",
-                    "any"
-                 ];
+    "string",
+    "boolean",
+    "double",
+    "integer",
+    "long",
+    "float",
+    "number",
+    "any"
+];
 
 class ObjectSerializer {
 
@@ -137,28 +137,28 @@ class ObjectSerializer {
 
 export class AbTestCampaignResult {
     /**
-    * Winning Campaign Info. pending = Campaign has been picked for sending and winning version is yet to be decided, tie = A tie happened between both the versions, notAvailable = Campaign has not yet been picked for sending.
-    */
+ * Winning Campaign Info. pending = Campaign has been picked for sending and winning version is yet to be decided, tie = A tie happened between both the versions, notAvailable = Campaign has not yet been picked for sending.
+ */
     'winningVersion'?: AbTestCampaignResult.WinningVersionEnum;
     /**
-    * Criteria choosen for winning version (Open/Click)
-    */
+ * Criteria choosen for winning version (Open/Click)
+ */
     'winningCriteria'?: AbTestCampaignResult.WinningCriteriaEnum;
     /**
-    * Subject Line of current winning version
-    */
+ * Subject Line of current winning version
+ */
     'winningSubjectLine'?: string;
     /**
-    * Open rate for current winning version
-    */
+ * Open rate for current winning version
+ */
     'openRate'?: string;
     /**
-    * Click rate for current winning version
-    */
+ * Click rate for current winning version
+ */
     'clickRate'?: string;
     /**
-    * Open/Click rate for the winner version
-    */
+ * Open/Click rate for the winner version
+ */
     'winningVersionRate'?: string;
     'statistics'?: AbTestCampaignResultStatistics;
     'clickedLinks'?: AbTestCampaignResultClickedLinks;
@@ -296,8 +296,8 @@ export class AbTestCampaignResultStatistics {
 }
 
 /**
-* Information on clicked links for a particular version
-*/
+ * Information on clicked links for a particular version
+ */
 export class AbTestVersionClicks extends Array<AbTestVersionClicksInner> {
 
     static discriminator: string | undefined = undefined;
@@ -306,16 +306,16 @@ export class AbTestVersionClicks extends Array<AbTestVersionClicksInner> {
 
 export class AbTestVersionClicksInner {
     /**
-    * URL of the link
-    */
+ * URL of the link
+ */
     'link': string;
     /**
-    * Number of times a link is clicked
-    */
+ * Number of times a link is clicked
+ */
     'clicksCount': number;
     /**
-    * Percentage of clicks of link with respect to total clicks
-    */
+ * Percentage of clicks of link with respect to total clicks
+ */
     'clickRate': string;
 
     static discriminator: string | undefined = undefined;
@@ -343,16 +343,16 @@ export class AbTestVersionClicksInner {
 }
 
 /**
-* Percentage of a particular event for both versions
-*/
+ * Percentage of a particular event for both versions
+ */
 export class AbTestVersionStats {
     /**
-    * percentage of an event for version A
-    */
+ * percentage of an event for version A
+ */
     'versionA': string;
     /**
-    * percentage of an event for version B
-    */
+ * percentage of an event for version B
+ */
     'versionB': string;
 
     static discriminator: string | undefined = undefined;
@@ -376,8 +376,8 @@ export class AbTestVersionStats {
 
 export class AddChildDomain {
     /**
-    * Sender domain to add for a specific child account
-    */
+ * Sender domain to add for a specific child account
+ */
     'domain'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -396,12 +396,12 @@ export class AddChildDomain {
 
 export class AddContactToList {
     /**
-    * Mandatory if IDs are not passed, ignored otherwise. Emails to add to a list. You can pass a maximum of 150 emails for addition in one request. If you need to add the emails in bulk, please prefer /contacts/import api.
-    */
+ * Mandatory if IDs are not passed, ignored otherwise. Emails to add to a list. You can pass a maximum of 150 emails for addition in one request. If you need to add the emails in bulk, please prefer /contacts/import api.
+ */
     'emails'?: Array<string>;
     /**
-    * Mandatory if Emails are not passed, ignored otherwise. Emails to add to a list. You can pass a maximum of 150 emails for addition in one request. If you need to add the emails in bulk, please prefer /contacts/import api.
-    */
+ * Mandatory if Emails are not passed, ignored otherwise. Emails to add to a list. You can pass a maximum of 150 emails for addition in one request. If you need to add the emails in bulk, please prefer /contacts/import api.
+ */
     'ids'?: Array<number>;
 
     static discriminator: string | undefined = undefined;
@@ -425,12 +425,12 @@ export class AddContactToList {
 
 export class AddCredits {
     /**
-    * Required if email credits are empty. SMS credits to be added to the child account
-    */
+ * Required if email credits are empty. SMS credits to be added to the child account
+ */
     'sms'?: number;
     /**
-    * Required if sms credits are empty. Email credits to be added to the child account
-    */
+ * Required if sms credits are empty. Email credits to be added to the child account
+ */
     'email'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -454,8 +454,8 @@ export class AddCredits {
 
 export class BlockDomain {
     /**
-    * name of the domain to be blocked
-    */
+ * name of the domain to be blocked
+ */
     'domain': string;
 
     static discriminator: string | undefined = undefined;
@@ -472,18 +472,318 @@ export class BlockDomain {
     }
 }
 
+export class Body {
+    /**
+ * Name of task
+ */
+    'name': string;
+    /**
+ * Duration of task
+ */
+    'duration'?: number;
+    /**
+ * Id for type of task e.g Call / Email / Meeting etc.
+ */
+    'taskTypeId': string;
+    /**
+ * Task date/time
+ */
+    'date': Date;
+    /**
+ * Notes added to a task
+ */
+    'notes'?: string;
+    /**
+ * Task marked as done
+ */
+    'done'?: boolean;
+    /**
+ * User id to whom task is assigned
+ */
+    'assignToId'?: string;
+    /**
+ * Contact ids for contacts linked to this task
+ */
+    'contactsIds'?: Array<number>;
+    /**
+ * Deal ids for deals a task is linked to
+ */
+    'dealsIds'?: Array<string>;
+    /**
+ * Companies ids for companies a task is linked to
+ */
+    'companiesIds'?: Array<string>;
+    'reminder'?: TaskReminder;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "duration",
+            "baseName": "duration",
+            "type": "number"
+        },
+        {
+            "name": "taskTypeId",
+            "baseName": "taskTypeId",
+            "type": "string"
+        },
+        {
+            "name": "date",
+            "baseName": "date",
+            "type": "Date"
+        },
+        {
+            "name": "notes",
+            "baseName": "notes",
+            "type": "string"
+        },
+        {
+            "name": "done",
+            "baseName": "done",
+            "type": "boolean"
+        },
+        {
+            "name": "assignToId",
+            "baseName": "assignToId",
+            "type": "string"
+        },
+        {
+            "name": "contactsIds",
+            "baseName": "contactsIds",
+            "type": "Array<number>"
+        },
+        {
+            "name": "dealsIds",
+            "baseName": "dealsIds",
+            "type": "Array<string>"
+        },
+        {
+            "name": "companiesIds",
+            "baseName": "companiesIds",
+            "type": "Array<string>"
+        },
+        {
+            "name": "reminder",
+            "baseName": "reminder",
+            "type": "TaskReminder"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Body.attributeTypeMap;
+    }
+}
+
+export class Body1 {
+    /**
+ * Name of task
+ */
+    'name': string;
+    /**
+ * Duration of task
+ */
+    'duration'?: number;
+    /**
+ * Id for type of task e.g Call / Email / Meeting etc.
+ */
+    'taskTypeId': string;
+    /**
+ * Task date/time
+ */
+    'date': Date;
+    /**
+ * Notes added to a task
+ */
+    'notes'?: string;
+    /**
+ * Task marked as done
+ */
+    'done'?: boolean;
+    /**
+ * User id to whom task is assigned
+ */
+    'assignToId'?: string;
+    /**
+ * Contact ids for contacts linked to this task
+ */
+    'contactsIds'?: Array<number>;
+    /**
+ * Deal ids for deals a task is linked to
+ */
+    'dealsIds'?: Array<string>;
+    /**
+ * Companies ids for companies a task is linked to
+ */
+    'companiesIds'?: Array<string>;
+    'reminder'?: TaskReminder;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "duration",
+            "baseName": "duration",
+            "type": "number"
+        },
+        {
+            "name": "taskTypeId",
+            "baseName": "taskTypeId",
+            "type": "string"
+        },
+        {
+            "name": "date",
+            "baseName": "date",
+            "type": "Date"
+        },
+        {
+            "name": "notes",
+            "baseName": "notes",
+            "type": "string"
+        },
+        {
+            "name": "done",
+            "baseName": "done",
+            "type": "boolean"
+        },
+        {
+            "name": "assignToId",
+            "baseName": "assignToId",
+            "type": "string"
+        },
+        {
+            "name": "contactsIds",
+            "baseName": "contactsIds",
+            "type": "Array<number>"
+        },
+        {
+            "name": "dealsIds",
+            "baseName": "dealsIds",
+            "type": "Array<string>"
+        },
+        {
+            "name": "companiesIds",
+            "baseName": "companiesIds",
+            "type": "Array<string>"
+        },
+        {
+            "name": "reminder",
+            "baseName": "reminder",
+            "type": "TaskReminder"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Body1.attributeTypeMap;
+    }
+}
+
+/**
+ * Contact Details
+ */
+export class Contact {
+    /**
+ * Next incomplete task of contact
+ */
+    'virtualNextTask'?: any;
+    /**
+ * Contact email
+ */
+    'email': string;
+    /**
+ * User id to whom contact is assigned
+ */
+    'assignToId'?: string;
+    /**
+ * Contact id
+ */
+    'contactsId'?: number;
+    /**
+ * CRM lists in which contact is added
+ */
+    'crmLists': any;
+    /**
+ * Contact attributes e.g firstname / lastname / SMS etc.
+ */
+    'attributes'?: any;
+    /**
+ * Contact created date/time
+ */
+    'createdAt'?: Date;
+    /**
+ * Contact updated date/time
+ */
+    'updatedAt'?: Date;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "virtualNextTask",
+            "baseName": "virtualNextTask",
+            "type": "any"
+        },
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string"
+        },
+        {
+            "name": "assignToId",
+            "baseName": "assignToId",
+            "type": "string"
+        },
+        {
+            "name": "contactsId",
+            "baseName": "contactsId",
+            "type": "number"
+        },
+        {
+            "name": "crmLists",
+            "baseName": "crmLists",
+            "type": "any"
+        },
+        {
+            "name": "attributes",
+            "baseName": "attributes",
+            "type": "any"
+        },
+        {
+            "name": "createdAt",
+            "baseName": "createdAt",
+            "type": "Date"
+        },
+        {
+            "name": "updatedAt",
+            "baseName": "updatedAt",
+            "type": "Date"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Contact.attributeTypeMap;
+    }
+}
+
 export class CreateAttribute {
     /**
-    * Value of the attribute. Use only if the attribute's category is 'calculated' or 'global'
-    */
+ * Value of the attribute. Use only if the attribute's category is 'calculated' or 'global'
+ */
     'value'?: string;
     /**
-    * List of values and labels that the attribute can take. Use only if the attribute's category is \"category\". For example, [{\"value\":1, \"label\":\"male\"}, {\"value\":2, \"label\":\"female\"}]
-    */
+ * List of values and labels that the attribute can take. Use only if the attribute's category is \"category\". For example, [{\"value\":1, \"label\":\"male\"}, {\"value\":2, \"label\":\"female\"}]
+ */
     'enumeration'?: Array<CreateAttributeEnumeration>;
     /**
-    * Type of the attribute. Use only if the attribute's category is 'normal', 'category' or 'transactional' ( type 'boolean' is only available if the category is 'normal' attribute, type 'id' is only available if the category is 'transactional' attribute & type 'category' is only available if the category is 'category' attribute )
-    */
+ * Type of the attribute. Use only if the attribute's category is 'normal', 'category' or 'transactional' ( type 'boolean' is only available if the category is 'normal' attribute, type 'id' is only available if the category is 'transactional' attribute & type 'category' is only available if the category is 'category' attribute )
+ */
     'type'?: CreateAttribute.TypeEnum;
 
     static discriminator: string | undefined = undefined;
@@ -522,12 +822,12 @@ export namespace CreateAttribute {
 }
 export class CreateAttributeEnumeration {
     /**
-    * Id of the value
-    */
+ * Id of the value
+ */
     'value': number;
     /**
-    * Label of the value
-    */
+ * Label of the value
+ */
     'label': string;
 
     static discriminator: string | undefined = undefined;
@@ -551,28 +851,28 @@ export class CreateAttributeEnumeration {
 
 export class CreateChild {
     /**
-    * Email address to create the child account
-    */
+ * Email address to create the child account
+ */
     'email': string;
     /**
-    * First name to use to create the child account
-    */
+ * First name to use to create the child account
+ */
     'firstName': string;
     /**
-    * Last name to use to create the child account
-    */
+ * Last name to use to create the child account
+ */
     'lastName': string;
     /**
-    * Company name to use to create the child account
-    */
+ * Company name to use to create the child account
+ */
     'companyName': string;
     /**
-    * Password for the child account to login
-    */
+ * Password for the child account to login
+ */
     'password': string;
     /**
-    * Language of the child account
-    */
+ * Language of the child account
+ */
     'language'?: CreateChild.LanguageEnum;
 
     static discriminator: string | undefined = undefined;
@@ -626,32 +926,32 @@ export namespace CreateChild {
 }
 export class CreateContact {
     /**
-    * Email address of the user. Mandatory if \"SMS\" field is not passed in \"attributes\" parameter. Mobile Number in \"SMS\" field should be passed with proper country code. For example {\"SMS\":\"+91xxxxxxxxxx\"} or {\"SMS\":\"0091xxxxxxxxxx\"}
-    */
+ * Email address of the user. Mandatory if \"SMS\" field is not passed in \"attributes\" parameter. Mobile Number in \"SMS\" field should be passed with proper country code. For example {\"SMS\":\"+91xxxxxxxxxx\"} or {\"SMS\":\"0091xxxxxxxxxx\"}
+ */
     'email'?: string;
     /**
-    * Pass the set of attributes and their values. These attributes must be present in your SendinBlue account. For eg. {\"FNAME\":\"Elly\", \"LNAME\":\"Roger\"}
-    */
+ * Pass the set of attributes and their values. These attributes must be present in your SendinBlue account. For eg. {\"FNAME\":\"Elly\", \"LNAME\":\"Roger\"}
+ */
     'attributes'?: any;
     /**
-    * Set this field to blacklist the contact for emails (emailBlacklisted = true)
-    */
+ * Set this field to blacklist the contact for emails (emailBlacklisted = true)
+ */
     'emailBlacklisted'?: boolean;
     /**
-    * Set this field to blacklist the contact for SMS (smsBlacklisted = true)
-    */
+ * Set this field to blacklist the contact for SMS (smsBlacklisted = true)
+ */
     'smsBlacklisted'?: boolean;
     /**
-    * Ids of the lists to add the contact to
-    */
+ * Ids of the lists to add the contact to
+ */
     'listIds'?: Array<number>;
     /**
-    * Facilitate to update the existing contact in the same request (updateEnabled = true)
-    */
+ * Facilitate to update the existing contact in the same request (updateEnabled = true)
+ */
     'updateEnabled'?: boolean;
     /**
-    * transactional email forbidden sender for contact. Use only for email Contact ( only available if updateEnabled = true )
-    */
+ * transactional email forbidden sender for contact. Use only for email Contact ( only available if updateEnabled = true )
+ */
     'smtpBlacklistSender'?: Array<string>;
 
     static discriminator: string | undefined = undefined;
@@ -700,28 +1000,28 @@ export class CreateContact {
 
 export class CreateDoiContact {
     /**
-    * Email address where the confirmation email will be sent. This email address will be the identifier for all other contact attributes.
-    */
+ * Email address where the confirmation email will be sent. This email address will be the identifier for all other contact attributes.
+ */
     'email': string;
     /**
-    * Pass the set of attributes and their values. These attributes must be present in your SendinBlue account. For eg. {'FNAME':'Elly', 'LNAME':'Roger'}
-    */
+ * Pass the set of attributes and their values. These attributes must be present in your SendinBlue account. For eg. {'FNAME':'Elly', 'LNAME':'Roger'}
+ */
     'attributes'?: any;
     /**
-    * Lists under user account where contact should be added
-    */
+ * Lists under user account where contact should be added
+ */
     'includeListIds': Array<number>;
     /**
-    * Lists under user account where contact should not be added
-    */
+ * Lists under user account where contact should not be added
+ */
     'excludeListIds'?: Array<number>;
     /**
-    * Id of the Double opt-in (DOI) template
-    */
+ * Id of the Double opt-in (DOI) template
+ */
     'templateId': number;
     /**
-    * URL of the web page that user will be redirected to after clicking on the double opt in URL. When editing your DOI template you can reference this URL by using the tag {{ params.DOIurl }}.
-    */
+ * URL of the web page that user will be redirected to after clicking on the double opt in URL. When editing your DOI template you can reference this URL by using the tag {{ params.DOIurl }}.
+ */
     'redirectionUrl': string;
 
     static discriminator: string | undefined = undefined;
@@ -765,110 +1065,110 @@ export class CreateDoiContact {
 
 export class CreateEmailCampaign {
     /**
-    * Tag of the campaign
-    */
+ * Tag of the campaign
+ */
     'tag'?: string;
     'sender': CreateEmailCampaignSender;
     /**
-    * Name of the campaign
-    */
+ * Name of the campaign
+ */
     'name': string;
     /**
-    * Mandatory if htmlUrl and templateId are empty. Body of the message (HTML)
-    */
+ * Mandatory if htmlUrl and templateId are empty. Body of the message (HTML)
+ */
     'htmlContent'?: string;
     /**
-    * Mandatory if htmlContent and templateId are empty. Url to the message (HTML)
-    */
+ * Mandatory if htmlContent and templateId are empty. Url to the message (HTML)
+ */
     'htmlUrl'?: string;
     /**
-    * Mandatory if htmlContent and htmlUrl are empty. Id of the transactional email template with status 'active'. Used to copy only its content fetched from htmlContent/htmlUrl to an email campaign for RSS feature.
-    */
+ * Mandatory if htmlContent and htmlUrl are empty. Id of the transactional email template with status 'active'. Used to copy only its content fetched from htmlContent/htmlUrl to an email campaign for RSS feature.
+ */
     'templateId'?: number;
     /**
-    * Sending UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. If sendAtBestTime is set to true, your campaign will be sent according to the date passed (ignoring the time part).
-    */
+ * Sending UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. If sendAtBestTime is set to true, your campaign will be sent according to the date passed (ignoring the time part).
+ */
     'scheduledAt'?: string;
     /**
-    * Subject of the campaign. Mandatory if abTesting is false. Ignored if abTesting is true.
-    */
+ * Subject of the campaign. Mandatory if abTesting is false. Ignored if abTesting is true.
+ */
     'subject'?: string;
     /**
-    * Email on which the campaign recipients will be able to reply to
-    */
+ * Email on which the campaign recipients will be able to reply to
+ */
     'replyTo'?: string;
     /**
-    * To personalize the «To» Field. If you want to include the first name and last name of your recipient, add {FNAME} {LNAME}. These contact attributes must already exist in your SendinBlue account. If input parameter 'params' used please use {{contact.FNAME}} {{contact.LNAME}} for personalization
-    */
+ * To personalize the «To» Field. If you want to include the first name and last name of your recipient, add {FNAME} {LNAME}. These contact attributes must already exist in your SendinBlue account. If input parameter 'params' used please use {{contact.FNAME}} {{contact.LNAME}} for personalization
+ */
     'toField'?: string;
     'recipients'?: CreateEmailCampaignRecipients;
     /**
-    * Absolute url of the attachment (no local file). Extension allowed: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub and eps
-    */
+ * Absolute url of the attachment (no local file). Extension allowed: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub and eps
+ */
     'attachmentUrl'?: string;
     /**
-    * Use true to embedded the images in your email. Final size of the email should be less than 4MB. Campaigns with embedded images can not be sent to more than 5000 contacts
-    */
+ * Use true to embedded the images in your email. Final size of the email should be less than 4MB. Campaigns with embedded images can not be sent to more than 5000 contacts
+ */
     'inlineImageActivation'?: boolean;
     /**
-    * Use true to enable the mirror link
-    */
+ * Use true to enable the mirror link
+ */
     'mirrorActive'?: boolean;
     /**
-    * Footer of the email campaign
-    */
+ * Footer of the email campaign
+ */
     'footer'?: string;
     /**
-    * Header of the email campaign
-    */
+ * Header of the email campaign
+ */
     'header'?: string;
     /**
-    * Customize the utm_campaign value. If this field is empty, the campaign name will be used. Only alphanumeric characters and spaces are allowed
-    */
+ * Customize the utm_campaign value. If this field is empty, the campaign name will be used. Only alphanumeric characters and spaces are allowed
+ */
     'utmCampaign'?: string;
     /**
-    * Pass the set of attributes to customize the type classic campaign. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}. Only available if 'type' is 'classic'. It's considered only if campaign is in New Template Language format. The New Template Language is dependent on the values of 'subject', 'htmlContent/htmlUrl', 'sender.name' & 'toField'
-    */
+ * Pass the set of attributes to customize the type classic campaign. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}. Only available if 'type' is 'classic'. It's considered only if campaign is in New Template Language format. The New Template Language is dependent on the values of 'subject', 'htmlContent/htmlUrl', 'sender.name' & 'toField'
+ */
     'params'?: any;
     /**
-    * Set this to true if you want to send your campaign at best time.
-    */
+ * Set this to true if you want to send your campaign at best time.
+ */
     'sendAtBestTime'?: boolean;
     /**
-    * Status of A/B Test. abTesting = false means it is disabled, & abTesting = true means it is enabled. 'subjectA', 'subjectB', 'splitRule', 'winnerCriteria' & 'winnerDelay' will be considered when abTesting is set to true. 'subjectA' & 'subjectB' are mandatory together & 'subject' if passed is ignored. Can be set to true only if 'sendAtBestTime' is 'false'. You will be able to set up two subject lines for your campaign and send them to a random sample of your total recipients. Half of the test group will receive version A, and the other half will receive version B
-    */
+ * Status of A/B Test. abTesting = false means it is disabled, & abTesting = true means it is enabled. 'subjectA', 'subjectB', 'splitRule', 'winnerCriteria' & 'winnerDelay' will be considered when abTesting is set to true. 'subjectA' & 'subjectB' are mandatory together & 'subject' if passed is ignored. Can be set to true only if 'sendAtBestTime' is 'false'. You will be able to set up two subject lines for your campaign and send them to a random sample of your total recipients. Half of the test group will receive version A, and the other half will receive version B
+ */
     'abTesting'?: boolean;
     /**
-    * Subject A of the campaign. Mandatory if abTesting = true. subjectA & subjectB should have unique value
-    */
+ * Subject A of the campaign. Mandatory if abTesting = true. subjectA & subjectB should have unique value
+ */
     'subjectA'?: string;
     /**
-    * Subject B of the campaign. Mandatory if abTesting = true. subjectA & subjectB should have unique value
-    */
+ * Subject B of the campaign. Mandatory if abTesting = true. subjectA & subjectB should have unique value
+ */
     'subjectB'?: string;
     /**
-    * Add the size of your test groups. Mandatory if abTesting = true & 'recipients' is passed. We'll send version A and B to a random sample of recipients, and then the winning version to everyone else
-    */
+ * Add the size of your test groups. Mandatory if abTesting = true & 'recipients' is passed. We'll send version A and B to a random sample of recipients, and then the winning version to everyone else
+ */
     'splitRule'?: number;
     /**
-    * Choose the metrics that will determinate the winning version. Mandatory if 'splitRule' >= 1 and < 50. If splitRule = 50, 'winnerCriteria' is ignored if passed
-    */
+ * Choose the metrics that will determinate the winning version. Mandatory if 'splitRule' >= 1 and < 50. If splitRule = 50, 'winnerCriteria' is ignored if passed
+ */
     'winnerCriteria'?: CreateEmailCampaign.WinnerCriteriaEnum;
     /**
-    * Choose the duration of the test in hours. Maximum is 7 days, pass 24*7 = 168 hours. The winning version will be sent at the end of the test. Mandatory if 'splitRule' >= 1 and < 50. If splitRule = 50, 'winnerDelay' is ignored if passed
-    */
+ * Choose the duration of the test in hours. Maximum is 7 days, pass 24*7 = 168 hours. The winning version will be sent at the end of the test. Mandatory if 'splitRule' >= 1 and < 50. If splitRule = 50, 'winnerDelay' is ignored if passed
+ */
     'winnerDelay'?: number;
     /**
-    * Available for dedicated ip clients. Set this to true if you wish to warm up your ip.
-    */
+ * Available for dedicated ip clients. Set this to true if you wish to warm up your ip.
+ */
     'ipWarmupEnable'?: boolean;
     /**
-    * Mandatory if ipWarmupEnable is set to true. Set an initial quota greater than 1 for warming up your ip. We recommend you set a value of 3000.
-    */
+ * Mandatory if ipWarmupEnable is set to true. Set an initial quota greater than 1 for warming up your ip. We recommend you set a value of 3000.
+ */
     'initialQuota'?: number;
     /**
-    * Mandatory if ipWarmupEnable is set to true. Set a percentage increase rate for warming up your ip. We recommend you set the increase rate to 30% per day. If you want to send the same number of emails every day, set the daily increase value to 0%.
-    */
+ * Mandatory if ipWarmupEnable is set to true. Set a percentage increase rate for warming up your ip. We recommend you set the increase rate to 30% per day. If you want to send the same number of emails every day, set the daily increase value to 0%.
+ */
     'increaseRate'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -1027,16 +1327,16 @@ export namespace CreateEmailCampaign {
     }
 }
 /**
-* List ids to include/exclude from campaign
-*/
+ * List ids to include/exclude from campaign
+ */
 export class CreateEmailCampaignRecipients {
     /**
-    * List ids to exclude from the campaign
-    */
+ * List ids to exclude from the campaign
+ */
     'exclusionListIds'?: Array<number>;
     /**
-    * Mandatory if scheduledAt is not empty. List Ids to send the campaign to
-    */
+ * Mandatory if scheduledAt is not empty. List Ids to send the campaign to
+ */
     'listIds'?: Array<number>;
 
     static discriminator: string | undefined = undefined;
@@ -1059,20 +1359,20 @@ export class CreateEmailCampaignRecipients {
 }
 
 /**
-* Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example `{\"name\":\"xyz\", \"email\":\"example@abc.com\"}` , `{\"name\":\"xyz\", \"id\":123}`
-*/
+ * Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example `{\"name\":\"xyz\", \"email\":\"example@abc.com\"}` , `{\"name\":\"xyz\", \"id\":123}`
+ */
 export class CreateEmailCampaignSender {
     /**
-    * Sender Name
-    */
+ * Sender Name
+ */
     'name'?: string;
     /**
-    * Sender email
-    */
+ * Sender email
+ */
     'email': string;
     /**
-    * Select the sender for the campaign on the basis of sender id. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email).
-    */
+ * Select the sender for the campaign on the basis of sender id. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email).
+ */
     'id'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -1101,12 +1401,12 @@ export class CreateEmailCampaignSender {
 
 export class CreateList {
     /**
-    * Name of the list
-    */
+ * Name of the list
+ */
     'name': string;
     /**
-    * Id of the parent folder in which this list is to be created
-    */
+ * Id of the parent folder in which this list is to be created
+ */
     'folderId': number;
 
     static discriminator: string | undefined = undefined;
@@ -1130,8 +1430,8 @@ export class CreateList {
 
 export class CreateModel {
     /**
-    * ID of the object created
-    */
+ * ID of the object created
+ */
     'id': number;
 
     static discriminator: string | undefined = undefined;
@@ -1150,12 +1450,12 @@ export class CreateModel {
 
 export class CreateReseller {
     /**
-    * AuthKey of Reseller child created
-    */
+ * AuthKey of Reseller child created
+ */
     'authKey': string;
     /**
-    * Id of Reseller child created
-    */
+ * Id of Reseller child created
+ */
     'id'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -1179,16 +1479,16 @@ export class CreateReseller {
 
 export class CreateSender {
     /**
-    * From Name to use for the sender
-    */
+ * From Name to use for the sender
+ */
     'name': string;
     /**
-    * From email to use for the sender. A verification email will be sent to this address.
-    */
+ * From email to use for the sender. A verification email will be sent to this address.
+ */
     'email': string;
     /**
-    * Mandatory in case of dedicated IP, IPs to associate to the sender
-    */
+ * Mandatory in case of dedicated IP, IPs to associate to the sender
+ */
     'ips'?: Array<CreateSenderIps>;
 
     static discriminator: string | undefined = undefined;
@@ -1217,16 +1517,16 @@ export class CreateSender {
 
 export class CreateSenderIps {
     /**
-    * Dedicated IP available in your account
-    */
+ * Dedicated IP available in your account
+ */
     'ip': string;
     /**
-    * Domain of the IP
-    */
+ * Domain of the IP
+ */
     'domain': string;
     /**
-    * Weight to apply to the IP. Sum of all IP weights must be 100. Should be passed for either ALL or NONE of the IPs. If it's not passed, the sending will be equally balanced on all IPs.
-    */
+ * Weight to apply to the IP. Sum of all IP weights must be 100. Should be passed for either ALL or NONE of the IPs. If it's not passed, the sending will be equally balanced on all IPs.
+ */
     'weight'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -1255,16 +1555,16 @@ export class CreateSenderIps {
 
 export class CreateSenderModel {
     /**
-    * ID of the Sender created
-    */
+ * ID of the Sender created
+ */
     'id': number;
     /**
-    * Status of SPF configuration for the sender (true = SPF not well configured, false = SPF well configured)
-    */
+ * Status of SPF configuration for the sender (true = SPF not well configured, false = SPF well configured)
+ */
     'spfError'?: boolean;
     /**
-    * Status of DKIM configuration for the sender (true = DKIM not well configured, false = DKIM well configured)
-    */
+ * Status of DKIM configuration for the sender (true = DKIM not well configured, false = DKIM well configured)
+ */
     'dkimError'?: boolean;
 
     static discriminator: string | undefined = undefined;
@@ -1293,22 +1593,26 @@ export class CreateSenderModel {
 
 export class CreateSmsCampaign {
     /**
-    * Name of the campaign
-    */
+ * Name of the campaign
+ */
     'name': string;
     /**
-    * Name of the sender. **The number of characters is limited to 11 for alphanumeric characters and 15 for numeric characters**
-    */
+ * Name of the sender. **The number of characters is limited to 11 for alphanumeric characters and 15 for numeric characters**
+ */
     'sender': string;
     /**
-    * Content of the message. The maximum characters used per SMS is 160, if used more than that, it will be counted as more than one SMS
-    */
+ * Content of the message. The maximum characters used per SMS is 160, if used more than that, it will be counted as more than one SMS
+ */
     'content': string;
     'recipients'?: CreateSmsCampaignRecipients;
     /**
-    * UTC date-time on which the campaign has to run (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result.
-    */
+ * UTC date-time on which the campaign has to run (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result.
+ */
     'scheduledAt'?: string;
+    /**
+ * Format of the message. It indicates whether the content should be treated as unicode or not.
+ */
+    'unicodeEnabled'?: boolean;
 
     static discriminator: string | undefined = undefined;
 
@@ -1337,6 +1641,11 @@ export class CreateSmsCampaign {
             "name": "scheduledAt",
             "baseName": "scheduledAt",
             "type": "string"
+        },
+        {
+            "name": "unicodeEnabled",
+            "baseName": "unicodeEnabled",
+            "type": "boolean"
         }    ];
 
     static getAttributeTypeMap() {
@@ -1346,12 +1655,12 @@ export class CreateSmsCampaign {
 
 export class CreateSmsCampaignRecipients {
     /**
-    * Lists Ids to send the campaign to. REQUIRED if scheduledAt is not empty
-    */
+ * Lists Ids to send the campaign to. REQUIRED if scheduledAt is not empty
+ */
     'listIds': Array<number>;
     /**
-    * List ids which have to be excluded from a campaign
-    */
+ * List ids which have to be excluded from a campaign
+ */
     'exclusionListIds'?: Array<number>;
 
     static discriminator: string | undefined = undefined;
@@ -1375,8 +1684,8 @@ export class CreateSmsCampaignRecipients {
 
 export class CreateSmtpEmail {
     /**
-    * Message ID of the transactional email sent
-    */
+ * Message ID of the transactional email sent
+ */
     'messageId'?: string;
     'messageIds'?: Array<string>;
 
@@ -1401,41 +1710,41 @@ export class CreateSmtpEmail {
 
 export class CreateSmtpTemplate {
     /**
-    * Tag of the template
-    */
+ * Tag of the template
+ */
     'tag'?: string;
     'sender': CreateSmtpTemplateSender;
     /**
-    * Name of the template
-    */
+ * Name of the template
+ */
     'templateName': string;
     /**
-    * Body of the message (HTML version). The field must have more than 10 characters. REQUIRED if htmlUrl is empty
-    */
+ * Body of the message (HTML version). The field must have more than 10 characters. REQUIRED if htmlUrl is empty
+ */
     'htmlContent'?: string;
     /**
-    * Url which contents the body of the email message. REQUIRED if htmlContent is empty
-    */
+ * Url which contents the body of the email message. REQUIRED if htmlContent is empty
+ */
     'htmlUrl'?: string;
     /**
-    * Subject of the template
-    */
+ * Subject of the template
+ */
     'subject': string;
     /**
-    * Email on which campaign recipients will be able to reply to
-    */
+ * Email on which campaign recipients will be able to reply to
+ */
     'replyTo'?: string;
     /**
-    * To personalize the «To» Field. If you want to include the first name and last name of your recipient, add {FNAME} {LNAME}. These contact attributes must already exist in your SendinBlue account. If input parameter 'params' used please use {{contact.FNAME}} {{contact.LNAME}} for personalization
-    */
+ * To personalize the «To» Field. If you want to include the first name and last name of your recipient, add {FNAME} {LNAME}. These contact attributes must already exist in your SendinBlue account. If input parameter 'params' used please use {{contact.FNAME}} {{contact.LNAME}} for personalization
+ */
     'toField'?: string;
     /**
-    * Absolute url of the attachment (no local file). Extension allowed: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub and eps
-    */
+ * Absolute url of the attachment (no local file). Extension allowed: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub and eps
+ */
     'attachmentUrl'?: string;
     /**
-    * Status of template. isActive = true means template is active and isActive = false means template is inactive
-    */
+ * Status of template. isActive = true means template is active and isActive = false means template is inactive
+ */
     'isActive'?: boolean;
 
     static discriminator: string | undefined = undefined;
@@ -1498,20 +1807,20 @@ export class CreateSmtpTemplate {
 }
 
 /**
-* Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example `{\"name\":\"xyz\", \"email\":\"example@abc.com\"}` , `{\"name\":\"xyz\", \"id\":123}`
-*/
+ * Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example `{\"name\":\"xyz\", \"email\":\"example@abc.com\"}` , `{\"name\":\"xyz\", \"id\":123}`
+ */
 export class CreateSmtpTemplateSender {
     /**
-    * Name of the sender. If not passed, will be set to default
-    */
+ * Name of the sender. If not passed, will be set to default
+ */
     'name'?: string;
     /**
-    * Email of the sender
-    */
+ * Email of the sender
+ */
     'email'?: string;
     /**
-    * Select the sender for the template on the basis of sender id. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email).
-    */
+ * Select the sender for the template on the basis of sender id. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email).
+ */
     'id'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -1538,10 +1847,58 @@ export class CreateSmtpTemplateSender {
     }
 }
 
+export class CreateSubAccount {
+    /**
+ * Name of the organization
+ */
+    'companyName': string;
+    /**
+ * Language for identifying localization information
+ */
+    'language'?: CreateSubAccount.LanguageEnum;
+    /**
+ * Request timezone of the client
+ */
+    'timezone'?: string;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "companyName",
+            "baseName": "companyName",
+            "type": "string"
+        },
+        {
+            "name": "language",
+            "baseName": "language",
+            "type": "CreateSubAccount.LanguageEnum"
+        },
+        {
+            "name": "timezone",
+            "baseName": "timezone",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return CreateSubAccount.attributeTypeMap;
+    }
+}
+
+export namespace CreateSubAccount {
+    export enum LanguageEnum {
+        En = <any> 'en',
+        Fr = <any> 'fr',
+        It = <any> 'it',
+        Es = <any> 'es',
+        Pt = <any> 'pt',
+        De = <any> 'de'
+    }
+}
 export class CreateUpdateContactModel {
     /**
-    * ID of the contact when a new contact is created
-    */
+ * ID of the contact when a new contact is created
+ */
     'id'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -1560,8 +1917,8 @@ export class CreateUpdateContactModel {
 
 export class CreateUpdateFolder {
     /**
-    * Name of the folder
-    */
+ * Name of the folder
+ */
     'name'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -1580,21 +1937,25 @@ export class CreateUpdateFolder {
 
 export class CreateWebhook {
     /**
-    * URL of the webhook
-    */
+ * URL of the webhook
+ */
     'url': string;
     /**
-    * Description of the webhook
-    */
+ * Description of the webhook
+ */
     'description'?: string;
     /**
-    * - Events triggering the webhook. Possible values for **Transactional** type webhook: #### `sent` OR `request`, `delivered`, `hardBounce`, `softBounce`, `blocked`, `spam`, `invalid`, `deferred`, `click`, `opened`, `uniqueOpened` and `unsubscribed` - Possible values for **Marketing** type webhook: #### `spam`, `opened`, `click`, `hardBounce`, `softBounce`, `unsubscribed`, `listAddition` & `delivered` 
-    */
+ * - Events triggering the webhook. Possible values for **Transactional** type webhook: #### `sent` OR `request`, `delivered`, `hardBounce`, `softBounce`, `blocked`, `spam`, `invalid`, `deferred`, `click`, `opened`, `uniqueOpened` and `unsubscribed` - Possible values for **Marketing** type webhook: #### `spam`, `opened`, `click`, `hardBounce`, `softBounce`, `unsubscribed`, `listAddition` & `delivered` - Possible values for **Inbound** type webhook: #### `inboundEmailProcessed` 
+ */
     'events': Array<CreateWebhook.EventsEnum>;
     /**
-    * Type of the webhook
-    */
+ * Type of the webhook
+ */
     'type'?: CreateWebhook.TypeEnum;
+    /**
+ * Inbound domain of webhook, required in case of event type `inbound`
+ */
+    'domain'?: string;
 
     static discriminator: string | undefined = undefined;
 
@@ -1618,6 +1979,11 @@ export class CreateWebhook {
             "name": "type",
             "baseName": "type",
             "type": "CreateWebhook.TypeEnum"
+        },
+        {
+            "name": "domain",
+            "baseName": "domain",
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
@@ -1642,17 +2008,19 @@ export namespace CreateWebhook {
         Unsubscribed = <any> 'unsubscribed',
         ListAddition = <any> 'listAddition',
         ContactUpdated = <any> 'contactUpdated',
-        ContactDeleted = <any> 'contactDeleted'
+        ContactDeleted = <any> 'contactDeleted',
+        InboundEmailProcessed = <any> 'inboundEmailProcessed'
     }
     export enum TypeEnum {
         Transactional = <any> 'transactional',
-        Marketing = <any> 'marketing'
+        Marketing = <any> 'marketing',
+        Inbound = <any> 'inbound'
     }
 }
 export class CreatedProcessId {
     /**
-    * Id of the process created
-    */
+ * Id of the process created
+ */
     'processId': number;
 
     static discriminator: string | undefined = undefined;
@@ -1671,16 +2039,16 @@ export class CreatedProcessId {
 
 export class DeleteHardbounces {
     /**
-    * Starting date (YYYY-MM-DD) of the time period for deletion. The hardbounces occurred after this date will be deleted. Must be less than or equal to the endDate
-    */
+ * Starting date (YYYY-MM-DD) of the time period for deletion. The hardbounces occurred after this date will be deleted. Must be less than or equal to the endDate
+ */
     'startDate'?: string;
     /**
-    * Ending date (YYYY-MM-DD) of the time period for deletion. The hardbounces until this date will be deleted. Must be greater than or equal to the startDate
-    */
+ * Ending date (YYYY-MM-DD) of the time period for deletion. The hardbounces until this date will be deleted. Must be greater than or equal to the startDate
+ */
     'endDate'?: string;
     /**
-    * Target a specific email address
-    */
+ * Target a specific email address
+ */
     'contactEmail'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -1709,12 +2077,12 @@ export class DeleteHardbounces {
 
 export class EmailExportRecipients {
     /**
-    * Webhook called once the export process is finished. For reference, https://help.sendinblue.com/hc/en-us/articles/360007666479
-    */
+ * Webhook called once the export process is finished. For reference, https://help.sendinblue.com/hc/en-us/articles/360007666479
+ */
     'notifyURL'?: string;
     /**
-    * Type of recipients to export for a campaign
-    */
+ * Type of recipients to export for a campaign
+ */
     'recipientsType': EmailExportRecipients.RecipientsTypeEnum;
 
     static discriminator: string | undefined = undefined;
@@ -1750,12 +2118,12 @@ export namespace EmailExportRecipients {
 }
 export class ErrorModel {
     /**
-    * Error code displayed in case of a failure
-    */
+ * Error code displayed in case of a failure
+ */
     'code': ErrorModel.CodeEnum;
     /**
-    * Readable message associated to the failure
-    */
+ * Readable message associated to the failure
+ */
     'message': string;
 
     static discriminator: string | undefined = undefined;
@@ -1796,15 +2164,117 @@ export namespace ErrorModel {
         NotAcceptable = <any> 'not_acceptable'
     }
 }
+/**
+ * File data that is uploaded
+ */
+export class FileData {
+    /**
+ * Url of uploaded file
+ */
+    'url'?: string;
+    /**
+ * Id of uploaded file
+ */
+    'id'?: string;
+    /**
+ * Name of uploaded file
+ */
+    'name'?: string;
+    /**
+ * Account id of user which created the file
+ */
+    'authorId'?: string;
+    /**
+ * Account details of user which created the file
+ */
+    'author'?: any;
+    /**
+ * Contact id of contact on which file is uploaded
+ */
+    'contactId'?: number;
+    /**
+ * Deal ids linked to a file
+ */
+    'dealIds'?: Array<string>;
+    /**
+ * Size of file uploaded
+ */
+    'size'?: number;
+    /**
+ * File created date/time
+ */
+    'createdAt'?: Date;
+    /**
+ * File updated date/time
+ */
+    'updatedAt'?: Date;
 
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "url",
+            "baseName": "url",
+            "type": "string"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "authorId",
+            "baseName": "authorId",
+            "type": "string"
+        },
+        {
+            "name": "author",
+            "baseName": "author",
+            "type": "any"
+        },
+        {
+            "name": "contactId",
+            "baseName": "contactId",
+            "type": "number"
+        },
+        {
+            "name": "dealIds",
+            "baseName": "dealIds",
+            "type": "Array<string>"
+        },
+        {
+            "name": "size",
+            "baseName": "size",
+            "type": "number"
+        },
+        {
+            "name": "createdAt",
+            "baseName": "createdAt",
+            "type": "Date"
+        },
+        {
+            "name": "updatedAt",
+            "baseName": "updatedAt",
+            "type": "Date"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return FileData.attributeTypeMap;
+    }
+}
 export class GetAccountMarketingAutomation {
     /**
-    * Marketing Automation Tracker ID
-    */
+ * Marketing Automation Tracker ID
+ */
     'key'?: string;
     /**
-    * Status of Marketing Automation Plateform activation for your account (true=enabled, false=disabled)
-    */
+ * Status of Marketing Automation Plateform activation for your account (true=enabled, false=disabled)
+ */
     'enabled': boolean;
 
     static discriminator: string | undefined = undefined;
@@ -1828,28 +2298,28 @@ export class GetAccountMarketingAutomation {
 
 export class GetAccountPlan {
     /**
-    * Displays the plan type of the user
-    */
+ * Displays the plan type of the user
+ */
     'type': GetAccountPlan.TypeEnum;
     /**
-    * This is the type of the credit, \"Send Limit\" is one of the possible types of credit of a user. \"Send Limit\" implies the total number of emails you can send to the subscribers in your account.
-    */
+ * This is the type of the credit, \"Send Limit\" is one of the possible types of credit of a user. \"Send Limit\" implies the total number of emails you can send to the subscribers in your account.
+ */
     'creditsType': GetAccountPlan.CreditsTypeEnum;
     /**
-    * Remaining credits of the user
-    */
+ * Remaining credits of the user
+ */
     'credits': number;
     /**
-    * Date of the period from which the plan will start (only available for \"subscription\" and \"reseller\" plan type)
-    */
+ * Date of the period from which the plan will start (only available for \"subscription\" and \"reseller\" plan type)
+ */
     'startDate'?: string;
     /**
-    * Date of the period from which the plan will end (only available for \"subscription\" and \"reseller\" plan type)
-    */
+ * Date of the period from which the plan will end (only available for \"subscription\" and \"reseller\" plan type)
+ */
     'endDate'?: string;
     /**
-    * Only in case of reseller account. It implies the total number of child accounts you can add to your account.
-    */
+ * Only in case of reseller account. It implies the total number of child accounts you can add to your account.
+ */
     'userLimit'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -1904,12 +2374,12 @@ export namespace GetAccountPlan {
     }
 }
 /**
-* Information about your transactional email account
-*/
+ * Information about your transactional email account
+ */
 export class GetAccountRelay {
     /**
-    * Status of your transactional email Account (true=Enabled, false=Disabled)
-    */
+ * Status of your transactional email Account (true=Enabled, false=Disabled)
+ */
     'enabled': boolean;
     'data': GetAccountRelayData;
 
@@ -1933,20 +2403,20 @@ export class GetAccountRelay {
 }
 
 /**
-* Data regarding the transactional email account
-*/
+ * Data regarding the transactional email account
+ */
 export class GetAccountRelayData {
     /**
-    * Email to use as login on transactional platform
-    */
+ * Email to use as login on transactional platform
+ */
     'userName': string;
     /**
-    * URL of the SMTP Relay
-    */
+ * URL of the SMTP Relay
+ */
     'relay': string;
     /**
-    * Port used for SMTP Relay
-    */
+ * Port used for SMTP Relay
+ */
     'port': number;
 
     static discriminator: string | undefined = undefined;
@@ -1975,56 +2445,56 @@ export class GetAccountRelayData {
 
 export class GetAggregatedReport {
     /**
-    * Time frame of the report
-    */
+ * Time frame of the report
+ */
     'range'?: string;
     /**
-    * Number of requests for the timeframe
-    */
+ * Number of requests for the timeframe
+ */
     'requests'?: number;
     /**
-    * Number of delivered emails for the timeframe
-    */
+ * Number of delivered emails for the timeframe
+ */
     'delivered'?: number;
     /**
-    * Number of hardbounces for the timeframe
-    */
+ * Number of hardbounces for the timeframe
+ */
     'hardBounces'?: number;
     /**
-    * Number of softbounces for the timeframe
-    */
+ * Number of softbounces for the timeframe
+ */
     'softBounces'?: number;
     /**
-    * Number of clicks for the timeframe
-    */
+ * Number of clicks for the timeframe
+ */
     'clicks'?: number;
     /**
-    * Number of unique clicks for the timeframe
-    */
+ * Number of unique clicks for the timeframe
+ */
     'uniqueClicks'?: number;
     /**
-    * Number of openings for the timeframe
-    */
+ * Number of openings for the timeframe
+ */
     'opens'?: number;
     /**
-    * Number of unique openings for the timeframe
-    */
+ * Number of unique openings for the timeframe
+ */
     'uniqueOpens'?: number;
     /**
-    * Number of complaint (spam report) for the timeframe
-    */
+ * Number of complaint (spam report) for the timeframe
+ */
     'spamReports'?: number;
     /**
-    * Number of blocked contact emails for the timeframe
-    */
+ * Number of blocked contact emails for the timeframe
+ */
     'blocked'?: number;
     /**
-    * Number of invalid emails for the timeframe
-    */
+ * Number of invalid emails for the timeframe
+ */
     'invalid'?: number;
     /**
-    * Number of unsubscribed emails for the timeframe
-    */
+ * Number of unsubscribed emails for the timeframe
+ */
     'unsubscribed'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -2103,8 +2573,8 @@ export class GetAggregatedReport {
 
 export class GetAttributes {
     /**
-    * Listing of available contact attributes in your account
-    */
+ * Listing of available contact attributes in your account
+ */
     'attributes': Array<GetAttributesAttributes>;
 
     static discriminator: string | undefined = undefined;
@@ -2123,24 +2593,24 @@ export class GetAttributes {
 
 export class GetAttributesAttributes {
     /**
-    * Name of the attribute
-    */
+ * Name of the attribute
+ */
     'name': string;
     /**
-    * Category of the attribute
-    */
+ * Category of the attribute
+ */
     'category': GetAttributesAttributes.CategoryEnum;
     /**
-    * Type of the attribute
-    */
+ * Type of the attribute
+ */
     'type'?: GetAttributesAttributes.TypeEnum;
     /**
-    * Parameter only available for \"category\" type attributes.
-    */
+ * Parameter only available for \"category\" type attributes.
+ */
     'enumeration'?: Array<GetAttributesEnumeration>;
     /**
-    * Calculated value formula
-    */
+ * Calculated value formula
+ */
     'calculatedValue'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -2195,12 +2665,12 @@ export namespace GetAttributesAttributes {
 }
 export class GetAttributesEnumeration {
     /**
-    * ID of Value of the \"category\" type attribute
-    */
+ * ID of Value of the \"category\" type attribute
+ */
     'value': number;
     /**
-    * Label of the \"category\" type attribute
-    */
+ * Label of the \"category\" type attribute
+ */
     'label': string;
 
     static discriminator: string | undefined = undefined;
@@ -2223,12 +2693,12 @@ export class GetAttributesEnumeration {
 }
 
 /**
-* list of blocked domains
-*/
+ * list of blocked domains
+ */
 export class GetBlockedDomains {
     /**
-    * List of all blocked domains
-    */
+ * List of all blocked domains
+ */
     'domains': Array<string>;
 
     static discriminator: string | undefined = undefined;
@@ -2247,56 +2717,56 @@ export class GetBlockedDomains {
 
 export class GetCampaignOverview {
     /**
-    * ID of the campaign
-    */
+ * ID of the campaign
+ */
     'id': number;
     /**
-    * Name of the campaign
-    */
+ * Name of the campaign
+ */
     'name': string;
     /**
-    * Subject of the campaign. Only available if `abTesting` flag of the campaign is `false`
-    */
+ * Subject of the campaign. Only available if `abTesting` flag of the campaign is `false`
+ */
     'subject'?: string;
     /**
-    * Type of campaign
-    */
+ * Type of campaign
+ */
     'type': GetCampaignOverview.TypeEnum;
     /**
-    * Status of the campaign
-    */
+ * Status of the campaign
+ */
     'status': GetCampaignOverview.StatusEnum;
     /**
-    * UTC date-time on which campaign is scheduled (YYYY-MM-DDTHH:mm:ss.SSSZ)
-    */
+ * UTC date-time on which campaign is scheduled (YYYY-MM-DDTHH:mm:ss.SSSZ)
+ */
     'scheduledAt'?: string;
     /**
-    * Status of A/B Test for the campaign. abTesting = false means it is disabled, & abTesting = true means it is enabled.
-    */
+ * Status of A/B Test for the campaign. abTesting = false means it is disabled, & abTesting = true means it is enabled.
+ */
     'abTesting'?: boolean;
     /**
-    * Subject A of the ab-test campaign. Only available if `abTesting` flag of the campaign is `true`
-    */
+ * Subject A of the ab-test campaign. Only available if `abTesting` flag of the campaign is `true`
+ */
     'subjectA'?: string;
     /**
-    * Subject B of the ab-test campaign. Only available if `abTesting` flag of the campaign is `true`
-    */
+ * Subject B of the ab-test campaign. Only available if `abTesting` flag of the campaign is `true`
+ */
     'subjectB'?: string;
     /**
-    * The size of your ab-test groups. Only available if `abTesting` flag of the campaign is `true`
-    */
+ * The size of your ab-test groups. Only available if `abTesting` flag of the campaign is `true`
+ */
     'splitRule'?: number;
     /**
-    * Criteria for the winning version. Only available if `abTesting` flag of the campaign is `true`
-    */
+ * Criteria for the winning version. Only available if `abTesting` flag of the campaign is `true`
+ */
     'winnerCriteria'?: string;
     /**
-    * The duration of the test in hours at the end of which the winning version will be sent. Only available if `abTesting` flag of the campaign is `true`
-    */
+ * The duration of the test in hours at the end of which the winning version will be sent. Only available if `abTesting` flag of the campaign is `true`
+ */
     'winnerDelay'?: number;
     /**
-    * It is true if you have chosen to send your campaign at best time, otherwise it is false
-    */
+ * It is true if you have chosen to send your campaign at best time, otherwise it is false
+ */
     'sendAtBestTime'?: boolean;
 
     static discriminator: string | undefined = undefined;
@@ -2412,56 +2882,60 @@ export class GetCampaignRecipients {
 
 export class GetCampaignStats {
     /**
-    * List Id of email campaign (only in case of get email campaign(s)(not for global stats))
-    */
+ * List Id of email campaign (only in case of get email campaign(s)(not for global stats))
+ */
     'listId'?: number;
     /**
-    * Number of unique clicks for the campaign
-    */
+ * Number of unique clicks for the campaign
+ */
     'uniqueClicks': number;
     /**
-    * Number of total clicks for the campaign
-    */
+ * Number of total clicks for the campaign
+ */
     'clickers': number;
     /**
-    * Number of complaints (Spam reports) for the campaign
-    */
+ * Number of complaints (Spam reports) for the campaign
+ */
     'complaints': number;
     /**
-    * Number of delivered emails for the campaign
-    */
+ * Number of delivered emails for the campaign
+ */
     'delivered': number;
     /**
-    * Number of sent emails for the campaign
-    */
+ * Number of sent emails for the campaign
+ */
     'sent': number;
     /**
-    * Number of softbounce for the campaign
-    */
+ * Number of softbounce for the campaign
+ */
     'softBounces': number;
     /**
-    * Number of harbounce for the campaign
-    */
+ * Number of harbounce for the campaign
+ */
     'hardBounces': number;
     /**
-    * Number of unique openings for the campaign
-    */
+ * Number of unique openings for the campaign
+ */
     'uniqueViews': number;
     /**
-    * Number of unsubscription for the campaign
-    */
+ * Recipients without any privacy protection option enabled in their email client
+ */
+    'trackableViews': number;
+    /**
+ * Number of unsubscription for the campaign
+ */
     'unsubscriptions': number;
     /**
-    * Number of openings for the campaign
-    */
+ * Number of openings for the campaign
+ */
     'viewed': number;
     /**
-    * Number of deferred emails for the campaign
-    */
+ * Number of deferred emails for the campaign
+ */
     'deferred'?: number;
     /**
-    * Total number of non-delivered campaigns for a particular campaign id.
-    */
+ * Total number of non-delivered campaigns for a particular campaign id.
+ */
     'returnBounce'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -2513,6 +2987,11 @@ export class GetCampaignStats {
             "type": "number"
         },
         {
+            "name": "trackableViews",
+            "baseName": "trackableViews",
+            "type": "number"
+        },
+        {
             "name": "unsubscriptions",
             "baseName": "unsubscriptions",
             "type": "number"
@@ -2540,8 +3019,8 @@ export class GetCampaignStats {
 
 export class GetChildAccountCreationStatus {
     /**
-    * Status of child account creation whether it is successfully created (exists) or not.
-    */
+ * Status of child account creation whether it is successfully created (exists) or not.
+ */
     'childAccountCreated': boolean;
 
     static discriminator: string | undefined = undefined;
@@ -2560,12 +3039,12 @@ export class GetChildAccountCreationStatus {
 
 export class GetChildDomain {
     /**
-    * Sender domain
-    */
+ * Sender domain
+ */
     'domain'?: string;
     /**
-    * indicates whether a domain is verified or not
-    */
+ * indicates whether a domain is verified or not
+ */
     'active'?: boolean;
 
     static discriminator: string | undefined = undefined;
@@ -2593,11 +3072,9 @@ export class GetChildDomains extends Array<any> {
 
 }
 
-
-
 /**
-* API Keys associated to child account
-*/
+ * API Keys associated to child account
+ */
 export class GetChildInfoApiKeys {
     'v2': Array<GetChildInfoApiKeysV2>;
     'v3'?: Array<GetChildInfoApiKeysV3>;
@@ -2623,12 +3100,12 @@ export class GetChildInfoApiKeys {
 
 export class GetChildInfoApiKeysV2 {
     /**
-    * Name of the key for version 2
-    */
+ * Name of the key for version 2
+ */
     'name': string;
     /**
-    * API Key for version 2
-    */
+ * API Key for version 2
+ */
     'key': string;
 
     static discriminator: string | undefined = undefined;
@@ -2652,12 +3129,12 @@ export class GetChildInfoApiKeysV2 {
 
 export class GetChildInfoApiKeysV3 {
     /**
-    * Name of the key for version 3
-    */
+ * Name of the key for version 3
+ */
     'name': string;
     /**
-    * API Key for version 3
-    */
+ * API Key for version 3
+ */
     'key': string;
 
     static discriminator: string | undefined = undefined;
@@ -2680,16 +3157,16 @@ export class GetChildInfoApiKeysV3 {
 }
 
 /**
-* Credits available for your child
-*/
+ * Credits available for your child
+ */
 export class GetChildInfoCredits {
     /**
-    * Email credits available for your child
-    */
+ * Email credits available for your child
+ */
     'emailCredits'?: number;
     /**
-    * SMS credits available for your child
-    */
+ * SMS credits available for your child
+ */
     'smsCredits'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -2712,20 +3189,20 @@ export class GetChildInfoCredits {
 }
 
 /**
-* Statistics about your child account activity
-*/
+ * Statistics about your child account activity
+ */
 export class GetChildInfoStatistics {
     /**
-    * Overall emails sent for the previous month
-    */
+ * Overall emails sent for the previous month
+ */
     'previousMonthTotalSent'?: number;
     /**
-    * Overall emails sent for current month
-    */
+ * Overall emails sent for current month
+ */
     'currentMonthTotalSent'?: number;
     /**
-    * Overall emails sent for since the account exists
-    */
+ * Overall emails sent for since the account exists
+ */
     'totalSent'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -2754,12 +3231,12 @@ export class GetChildInfoStatistics {
 
 export class GetChildrenList {
     /**
-    * Your children's account information
-    */
+ * Your children's account information
+ */
     'children'?: Array<any>;
     /**
-    * Number of child accounts
-    */
+ * Number of child accounts
+ */
     'count'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -2783,20 +3260,20 @@ export class GetChildrenList {
 
 export class GetClient {
     /**
-    * Login Email
-    */
+ * Login Email
+ */
     'email': string;
     /**
-    * First Name
-    */
+ * First Name
+ */
     'firstName': string;
     /**
-    * Last Name
-    */
+ * Last Name
+ */
     'lastName': string;
     /**
-    * Name of the company
-    */
+ * Name of the company
+ */
     'companyName': string;
 
     static discriminator: string | undefined = undefined;
@@ -2832,12 +3309,12 @@ export class GetChildInfo extends GetClient {
     'credits'?: GetChildInfoCredits;
     'statistics'?: GetChildInfoStatistics;
     /**
-    * The encrypted password of child account
-    */
+ * The encrypted password of child account
+ */
     'password': string;
     /**
-    * IP(s) associated to a child account user
-    */
+ * IP(s) associated to a child account user
+ */
     'ips'?: Array<string>;
     'apiKeys'?: GetChildInfoApiKeys;
 
@@ -2875,8 +3352,8 @@ export class GetChildInfo extends GetClient {
     }
 }
 /**
-* Campaign Statistics for the contact
-*/
+ * Campaign Statistics for the contact
+ */
 export class GetContactCampaignStats {
     'messagesSent'?: Array<GetExtendedContactDetailsStatisticsMessagesSent>;
     'hardBounces'?: Array<GetExtendedContactDetailsStatisticsMessagesSent>;
@@ -2886,6 +3363,7 @@ export class GetContactCampaignStats {
     'opened'?: Array<GetContactCampaignStatsOpened>;
     'clicked'?: Array<GetContactCampaignStatsClicked>;
     'transacAttributes'?: Array<GetContactCampaignStatsTransacAttributes>;
+    'delivered'?: Array<GetExtendedContactDetailsStatisticsMessagesSent>;
 
     static discriminator: string | undefined = undefined;
 
@@ -2929,6 +3407,11 @@ export class GetContactCampaignStats {
             "name": "transacAttributes",
             "baseName": "transacAttributes",
             "type": "Array<GetContactCampaignStatsTransacAttributes>"
+        },
+        {
+            "name": "delivered",
+            "baseName": "delivered",
+            "type": "Array<GetExtendedContactDetailsStatisticsMessagesSent>"
         }    ];
 
     static getAttributeTypeMap() {
@@ -2938,8 +3421,8 @@ export class GetContactCampaignStats {
 
 export class GetContactCampaignStatsClicked {
     /**
-    * ID of the campaign which generated the event
-    */
+ * ID of the campaign which generated the event
+ */
     'campaignId': number;
     'links': Array<GetExtendedContactDetailsStatisticsLinks>;
 
@@ -2964,20 +3447,20 @@ export class GetContactCampaignStatsClicked {
 
 export class GetContactCampaignStatsOpened {
     /**
-    * ID of the campaign which generated the event
-    */
+ * ID of the campaign which generated the event
+ */
     'campaignId': number;
     /**
-    * Number of openings of the campaign
-    */
+ * Number of openings of the campaign
+ */
     'count': number;
     /**
-    * UTC date-time of the event
-    */
+ * UTC date-time of the event
+ */
     'eventTime': string;
     /**
-    * IP from which the user has opened the campaign
-    */
+ * IP from which the user has opened the campaign
+ */
     'ip': string;
 
     static discriminator: string | undefined = undefined;
@@ -3011,16 +3494,16 @@ export class GetContactCampaignStatsOpened {
 
 export class GetContactCampaignStatsTransacAttributes {
     /**
-    * Date of the order
-    */
+ * Date of the order
+ */
     'orderDate': string;
     /**
-    * Price of the order
-    */
+ * Price of the order
+ */
     'orderPrice': number;
     /**
-    * ID of the order
-    */
+ * ID of the order
+ */
     'orderId': number;
 
     static discriminator: string | undefined = undefined;
@@ -3049,12 +3532,12 @@ export class GetContactCampaignStatsTransacAttributes {
 
 export class GetContactCampaignStatsUnsubscriptions {
     /**
-    * Contact has unsubscribed via the unsubscription link in the email
-    */
+ * Contact has unsubscribed via the unsubscription link in the email
+ */
     'userUnsubscription': Array<GetExtendedContactDetailsStatisticsUnsubscriptionsUserUnsubscription>;
     /**
-    * Contact has been unsubscribed from the administrator
-    */
+ * Contact has been unsubscribed from the administrator
+ */
     'adminUnsubscription': Array<GetExtendedContactDetailsStatisticsUnsubscriptionsAdminUnsubscription>;
 
     static discriminator: string | undefined = undefined;
@@ -3078,34 +3561,34 @@ export class GetContactCampaignStatsUnsubscriptions {
 
 export class GetContactDetails {
     /**
-    * Email address of the contact for which you requested the details
-    */
+ * Email address of the contact for which you requested the details
+ */
     'email': string;
     /**
-    * ID of the contact for which you requested the details
-    */
+ * ID of the contact for which you requested the details
+ */
     'id': number;
     /**
-    * Blacklist status for email campaigns (true=blacklisted, false=not blacklisted)
-    */
+ * Blacklist status for email campaigns (true=blacklisted, false=not blacklisted)
+ */
     'emailBlacklisted': boolean;
     /**
-    * Blacklist status for SMS campaigns (true=blacklisted, false=not blacklisted)
-    */
+ * Blacklist status for SMS campaigns (true=blacklisted, false=not blacklisted)
+ */
     'smsBlacklisted': boolean;
     /**
-    * Creation UTC date-time of the contact (YYYY-MM-DDTHH:mm:ss.SSSZ)
-    */
+ * Creation UTC date-time of the contact (YYYY-MM-DDTHH:mm:ss.SSSZ)
+ */
     'createdAt': string;
     /**
-    * Last modification UTC date-time of the contact (YYYY-MM-DDTHH:mm:ss.SSSZ)
-    */
+ * Last modification UTC date-time of the contact (YYYY-MM-DDTHH:mm:ss.SSSZ)
+ */
     'modifiedAt': string;
     'listIds': Array<number>;
     'listUnsubscribed'?: Array<number>;
     /**
-    * Set of attributes of the contact
-    */
+ * Set of attributes of the contact
+ */
     'attributes': any;
 
     static discriminator: string | undefined = undefined;
@@ -3165,8 +3648,8 @@ export class GetContactDetails {
 export class GetContacts {
     'contacts': Array<any>;
     /**
-    * Number of contacts
-    */
+ * Number of contacts
+ */
     'count': number;
 
     static discriminator: string | undefined = undefined;
@@ -3190,20 +3673,20 @@ export class GetContacts {
 
 export class GetDeviceBrowserStats {
     /**
-    * Number of total clicks for the campaign using the particular browser
-    */
+ * Number of total clicks for the campaign using the particular browser
+ */
     'clickers': number;
     /**
-    * Number of unique clicks for the campaign using the particular browser
-    */
+ * Number of unique clicks for the campaign using the particular browser
+ */
     'uniqueClicks': number;
     /**
-    * Number of openings for the campaign using the particular browser
-    */
+ * Number of openings for the campaign using the particular browser
+ */
     'viewed': number;
     /**
-    * Number of unique openings for the campaign using the particular browser
-    */
+ * Number of unique openings for the campaign using the particular browser
+ */
     'uniqueViews': number;
 
     static discriminator: string | undefined = undefined;
@@ -3235,15 +3718,13 @@ export class GetDeviceBrowserStats {
     }
 }
 
-
-
 export namespace GetEmailCampaign {
 }
 export class GetEmailCampaigns {
     'campaigns'?: Array<any>;
     /**
-    * Number of Email campaigns retrieved
-    */
+ * Number of Email campaigns retrieved
+ */
     'count'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -3284,48 +3765,48 @@ export class GetEmailEventReport {
 
 export class GetEmailEventReportEvents {
     /**
-    * Email address which generates the event
-    */
+ * Email address which generates the event
+ */
     'email': string;
     /**
-    * UTC date-time on which the event has been generated
-    */
+ * UTC date-time on which the event has been generated
+ */
     'date': string;
     /**
-    * Subject of the event
-    */
+ * Subject of the event
+ */
     'subject'?: string;
     /**
-    * Message ID which generated the event
-    */
+ * Message ID which generated the event
+ */
     'messageId': string;
     /**
-    * Event which occurred
-    */
+ * Event which occurred
+ */
     'event': GetEmailEventReportEvents.EventEnum;
     /**
-    * Reason of bounce (only available if the event is hardbounce or softbounce)
-    */
+ * Reason of bounce (only available if the event is hardbounce or softbounce)
+ */
     'reason'?: string;
     /**
-    * Tag of the email which generated the event
-    */
+ * Tag of the email which generated the event
+ */
     'tag'?: string;
     /**
-    * IP from which the user has opened the email or clicked on the link (only available if the event is opened or clicks)
-    */
+ * IP from which the user has opened the email or clicked on the link (only available if the event is opened or clicks)
+ */
     'ip'?: string;
     /**
-    * The link which is sent to the user (only available if the event is requests or opened or clicks)
-    */
+ * The link which is sent to the user (only available if the event is requests or opened or clicks)
+ */
     'link'?: string;
     /**
-    * Sender email from which the emails are sent
-    */
+ * Sender email from which the emails are sent
+ */
     'from'?: string;
     /**
-    * ID of the template (only available if the email is template based)
-    */
+ * ID of the template (only available if the email is template based)
+ */
     'templateId'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -3411,65 +3892,65 @@ export namespace GetEmailEventReportEvents {
 }
 export class GetExtendedCampaignOverview extends GetCampaignOverview {
     /**
-    * Retrieved the status of test email sending. (true=Test email has been sent  false=Test email has not been sent)
-    */
+ * Retrieved the status of test email sending. (true=Test email has been sent  false=Test email has not been sent)
+ */
     'testSent': boolean;
     /**
-    * Header of the campaign
-    */
+ * Header of the campaign
+ */
     'header': string;
     /**
-    * Footer of the campaign
-    */
+ * Footer of the campaign
+ */
     'footer': string;
     'sender': GetExtendedCampaignOverviewSender;
     /**
-    * Email defined as the \"Reply to\" of the campaign
-    */
+ * Email defined as the \"Reply to\" of the campaign
+ */
     'replyTo': string;
     /**
-    * Customisation of the \"to\" field of the campaign
-    */
+ * Customisation of the \"to\" field of the campaign
+ */
     'toField'?: string;
     /**
-    * HTML content of the campaign
-    */
+ * HTML content of the campaign
+ */
     'htmlContent': string;
     /**
-    * Link to share the campaign on social medias
-    */
+ * Link to share the campaign on social medias
+ */
     'shareLink'?: string;
     /**
-    * Tag of the campaign
-    */
+ * Tag of the campaign
+ */
     'tag'?: string;
     /**
-    * Creation UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
-    */
+ * Creation UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
+ */
     'createdAt': string;
     /**
-    * UTC date-time of last modification of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
-    */
+ * UTC date-time of last modification of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
+ */
     'modifiedAt': string;
     /**
-    * Status of inline image. inlineImageActivation = false means image can’t be embedded, & inlineImageActivation = true means image can be embedded, in the email.
-    */
+ * Status of inline image. inlineImageActivation = false means image can’t be embedded, & inlineImageActivation = true means image can be embedded, in the email.
+ */
     'inlineImageActivation'?: boolean;
     /**
-    * Status of mirror links in campaign. mirrorActive = false means mirror links are deactivated, & mirrorActive = true means mirror links are activated, in the campaign
-    */
+ * Status of mirror links in campaign. mirrorActive = false means mirror links are deactivated, & mirrorActive = true means mirror links are activated, in the campaign
+ */
     'mirrorActive'?: boolean;
     /**
-    * FOR TRIGGER ONLY ! Type of trigger campaign.recurring = false means contact can receive the same Trigger campaign only once, & recurring = true means contact can receive the same Trigger campaign several times
-    */
+ * FOR TRIGGER ONLY ! Type of trigger campaign.recurring = false means contact can receive the same Trigger campaign only once, & recurring = true means contact can receive the same Trigger campaign several times
+ */
     'recurring'?: boolean;
     /**
-    * Sent UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ). Only available if 'status' of the campaign is 'sent'
-    */
+ * Sent UTC date-time of the campaign (YYYY-MM-DDTHH:mm:ss.SSSZ). Only available if 'status' of the campaign is 'sent'
+ */
     'sentDate'?: string;
     /**
-    * Total number of non-delivered campaigns for a particular campaign id.
-    */
+ * Total number of non-delivered campaigns for a particular campaign id.
+ */
     'returnBounce'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -3583,21 +4064,20 @@ export class GetEmailCampaign extends GetExtendedCampaignOverview {
         return super.getAttributeTypeMap().concat(GetEmailCampaign.attributeTypeMap);
     }
 }
-
 export namespace GetExtendedCampaignOverview {
 }
 export class GetExtendedCampaignOverviewSender {
     /**
-    * Sender name of the campaign
-    */
+ * Sender name of the campaign
+ */
     'name'?: string;
     /**
-    * Sender email of the campaign
-    */
+ * Sender email of the campaign
+ */
     'email'?: string;
     /**
-    * Sender id of the campaign
-    */
+ * Sender id of the campaign
+ */
     'id'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -3627,29 +4107,29 @@ export class GetExtendedCampaignOverviewSender {
 export class GetExtendedCampaignStats {
     'globalStats': GetExtendedCampaignStatsGlobalStats;
     /**
-    * List-wise statistics of the campaign.
-    */
+ * List-wise statistics of the campaign.
+ */
     'campaignStats': Array<any>;
     /**
-    * Number of clicks on mirror link
-    */
+ * Number of clicks on mirror link
+ */
     'mirrorClick': number;
     /**
-    * Number of remaning emails to send
-    */
+ * Number of remaning emails to send
+ */
     'remaining': number;
     /**
-    * Statistics about the number of clicks for the links
-    */
+ * Statistics about the number of clicks for the links
+ */
     'linksStats': any;
     'statsByDomain': GetStatsByDomain;
     /**
-    * Statistics about the campaign on the basis of various devices
-    */
+ * Statistics about the campaign on the basis of various devices
+ */
     'statsByDevice': GetStatsByDevice;
     /**
-    * Statistics about the campaign on the basis of various browsers
-    */
+ * Statistics about the campaign on the basis of various browsers
+ */
     'statsByBrowser': GetStatsByBrowser;
 
     static discriminator: string | undefined = undefined;
@@ -3702,8 +4182,8 @@ export class GetExtendedCampaignStats {
 }
 
 /**
-* Overall statistics of the campaign
-*/
+ * Overall statistics of the campaign
+ */
 export class GetExtendedCampaignStatsGlobalStats {
 
     static discriminator: string | undefined = undefined;
@@ -3735,8 +4215,8 @@ export class GetExtendedClient extends GetClient {
 
 export class GetAccount extends GetExtendedClient {
     /**
-    * Information about your plans and credits
-    */
+ * Information about your plans and credits
+ */
     'plan': Array<GetAccountPlan>;
     'relay': GetAccountRelay;
     'marketingAutomation'?: GetAccountMarketingAutomation;
@@ -3766,24 +4246,24 @@ export class GetAccount extends GetExtendedClient {
 }
 
 /**
-* Address informations
-*/
+ * Address informations
+ */
 export class GetExtendedClientAddress {
     /**
-    * Street information
-    */
+ * Street information
+ */
     'street': string;
     /**
-    * City information
-    */
+ * City information
+ */
     'city': string;
     /**
-    * Zip Code information
-    */
+ * Zip Code information
+ */
     'zipCode': string;
     /**
-    * Country information
-    */
+ * Country information
+ */
     'country': string;
 
     static discriminator: string | undefined = undefined;
@@ -3833,38 +4313,42 @@ export class GetExtendedContactDetails extends GetContactDetails {
 }
 
 /**
-* Campaign statistics of the contact
-*/
+ * Campaign statistics of the contact
+ */
 export class GetExtendedContactDetailsStatistics {
     /**
-    * Listing of the sent campaign for the contact
-    */
+ * Listing of the sent campaign for the contact
+ */
     'messagesSent'?: Array<GetExtendedContactDetailsStatisticsMessagesSent>;
     /**
-    * Listing of the hardbounes generated by the contact
-    */
+ * Listing of the hardbounes generated by the contact
+ */
     'hardBounces'?: Array<GetExtendedContactDetailsStatisticsMessagesSent>;
     /**
-    * Listing of the softbounes generated by the contact
-    */
+ * Listing of the softbounes generated by the contact
+ */
     'softBounces'?: Array<GetExtendedContactDetailsStatisticsMessagesSent>;
     /**
-    * Listing of the complaints generated by the contact
-    */
+ * Listing of the complaints generated by the contact
+ */
     'complaints'?: Array<GetExtendedContactDetailsStatisticsMessagesSent>;
     'unsubscriptions'?: GetExtendedContactDetailsStatisticsUnsubscriptions;
     /**
-    * Listing of the openings generated by the contact
-    */
+ * Listing of the openings generated by the contact
+ */
     'opened'?: Array<GetExtendedContactDetailsStatisticsOpened>;
     /**
-    * Listing of the clicks generated by the contact
-    */
+ * Listing of the clicks generated by the contact
+ */
     'clicked'?: Array<GetExtendedContactDetailsStatisticsClicked>;
     /**
-    * Listing of the transactional attributes for the contact
-    */
+ * Listing of the transactional attributes for the contact
+ */
     'transacAttributes'?: Array<any>;
+    /**
+ * Listing of the delivered campaign for the contact
+ */
+    'delivered'?: Array<GetExtendedContactDetailsStatisticsDelivered>;
 
     static discriminator: string | undefined = undefined;
 
@@ -3908,6 +4392,11 @@ export class GetExtendedContactDetailsStatistics {
             "name": "transacAttributes",
             "baseName": "transacAttributes",
             "type": "Array<any>"
+        },
+        {
+            "name": "delivered",
+            "baseName": "delivered",
+            "type": "Array<GetExtendedContactDetailsStatisticsDelivered>"
         }    ];
 
     static getAttributeTypeMap() {
@@ -3917,12 +4406,12 @@ export class GetExtendedContactDetailsStatistics {
 
 export class GetExtendedContactDetailsStatisticsClicked {
     /**
-    * ID of the campaign which generated the event
-    */
+ * ID of the campaign which generated the event
+ */
     'campaignId': number;
     /**
-    * Listing of the clicked links for the campaign
-    */
+ * Listing of the clicked links for the campaign
+ */
     'links': Array<GetExtendedContactDetailsStatisticsLinks>;
 
     static discriminator: string | undefined = undefined;
@@ -3944,22 +4433,51 @@ export class GetExtendedContactDetailsStatisticsClicked {
     }
 }
 
+export class GetExtendedContactDetailsStatisticsDelivered {
+    /**
+ * ID of the campaign which generated the event
+ */
+    'campaignId': number;
+    /**
+ * UTC date-time of the event
+ */
+    'eventTime': string;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "campaignId",
+            "baseName": "campaignId",
+            "type": "number"
+        },
+        {
+            "name": "eventTime",
+            "baseName": "eventTime",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetExtendedContactDetailsStatisticsDelivered.attributeTypeMap;
+    }
+}
+
 export class GetExtendedContactDetailsStatisticsLinks {
     /**
-    * Number of clicks on this link for the campaign
-    */
+ * Number of clicks on this link for the campaign
+ */
     'count': number;
     /**
-    * UTC date-time of the event
-    */
+ * UTC date-time of the event
+ */
     'eventTime': string;
     /**
-    * IP from which the user has clicked on the link
-    */
+ * IP from which the user has clicked on the link
+ */
     'ip': string;
     /**
-    * URL of the clicked link
-    */
+ * URL of the clicked link
+ */
     'url': string;
 
     static discriminator: string | undefined = undefined;
@@ -3993,12 +4511,12 @@ export class GetExtendedContactDetailsStatisticsLinks {
 
 export class GetExtendedContactDetailsStatisticsMessagesSent {
     /**
-    * ID of the campaign which generated the event
-    */
+ * ID of the campaign which generated the event
+ */
     'campaignId': number;
     /**
-    * UTC date-time of the event
-    */
+ * UTC date-time of the event
+ */
     'eventTime': string;
 
     static discriminator: string | undefined = undefined;
@@ -4022,20 +4540,20 @@ export class GetExtendedContactDetailsStatisticsMessagesSent {
 
 export class GetExtendedContactDetailsStatisticsOpened {
     /**
-    * ID of the campaign which generated the event
-    */
+ * ID of the campaign which generated the event
+ */
     'campaignId': number;
     /**
-    * Number of openings for the campaign
-    */
+ * Number of openings for the campaign
+ */
     'count': number;
     /**
-    * UTC date-time of the event
-    */
+ * UTC date-time of the event
+ */
     'eventTime': string;
     /**
-    * IP from which the user has opened the email
-    */
+ * IP from which the user has opened the email
+ */
     'ip': string;
 
     static discriminator: string | undefined = undefined;
@@ -4068,16 +4586,16 @@ export class GetExtendedContactDetailsStatisticsOpened {
 }
 
 /**
-* Listing of the unsubscription for the contact
-*/
+ * Listing of the unsubscription for the contact
+ */
 export class GetExtendedContactDetailsStatisticsUnsubscriptions {
     /**
-    * Contact unsubscribe via unsubscription link in a campaign
-    */
+ * Contact unsubscribe via unsubscription link in a campaign
+ */
     'userUnsubscription': Array<GetExtendedContactDetailsStatisticsUnsubscriptionsUserUnsubscription>;
     /**
-    * Contact has been unsubscribed from the administrator
-    */
+ * Contact has been unsubscribed from the administrator
+ */
     'adminUnsubscription': Array<GetExtendedContactDetailsStatisticsUnsubscriptionsAdminUnsubscription>;
 
     static discriminator: string | undefined = undefined;
@@ -4101,12 +4619,12 @@ export class GetExtendedContactDetailsStatisticsUnsubscriptions {
 
 export class GetExtendedContactDetailsStatisticsUnsubscriptionsAdminUnsubscription {
     /**
-    * UTC date-time of the event
-    */
+ * UTC date-time of the event
+ */
     'eventTime': string;
     /**
-    * IP from which the user has been unsubscribed
-    */
+ * IP from which the user has been unsubscribed
+ */
     'ip'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -4130,16 +4648,16 @@ export class GetExtendedContactDetailsStatisticsUnsubscriptionsAdminUnsubscripti
 
 export class GetExtendedContactDetailsStatisticsUnsubscriptionsUserUnsubscription {
     /**
-    * ID of the campaign which generated the event
-    */
+ * ID of the campaign which generated the event
+ */
     'campaignId': number;
     /**
-    * UTC date-time of the event
-    */
+ * UTC date-time of the event
+ */
     'eventTime': string;
     /**
-    * IP from which the user has unsubscribed
-    */
+ * IP from which the user has unsubscribed
+ */
     'ip'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -4168,8 +4686,8 @@ export class GetExtendedContactDetailsStatisticsUnsubscriptionsUserUnsubscriptio
 
 export class GetExtendedListCampaignStats {
     /**
-    * ID of the campaign
-    */
+ * ID of the campaign
+ */
     'campaignId': number;
     'stats': GetCampaignStats;
 
@@ -4194,24 +4712,24 @@ export class GetExtendedListCampaignStats {
 
 export class GetFolder {
     /**
-    * ID of the folder
-    */
+ * ID of the folder
+ */
     'id': number;
     /**
-    * Name of the folder
-    */
+ * Name of the folder
+ */
     'name': string;
     /**
-    * Number of blacklisted contacts in the folder
-    */
+ * Number of blacklisted contacts in the folder
+ */
     'totalBlacklisted': number;
     /**
-    * Number of contacts in the folder
-    */
+ * Number of contacts in the folder
+ */
     'totalSubscribers': number;
     /**
-    * Number of unique contacts in the folder
-    */
+ * Number of unique contacts in the folder
+ */
     'uniqueSubscribers': number;
 
     static discriminator: string | undefined = undefined;
@@ -4251,8 +4769,8 @@ export class GetFolder {
 export class GetFolderLists {
     'lists'?: Array<any>;
     /**
-    * Number of lists in the folder
-    */
+ * Number of lists in the folder
+ */
     'count'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -4277,8 +4795,8 @@ export class GetFolderLists {
 export class GetFolders {
     'folders'?: Array<any>;
     /**
-    * Number of folders available in your account
-    */
+ * Number of folders available in your account
+ */
     'count'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -4300,22 +4818,253 @@ export class GetFolders {
     }
 }
 
+export class GetInboundEmailEvents {
+    'events'?: Array<GetInboundEmailEventsEvents>;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "events",
+            "baseName": "events",
+            "type": "Array<GetInboundEmailEventsEvents>"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetInboundEmailEvents.attributeTypeMap;
+    }
+}
+
+export class GetInboundEmailEventsByUuid {
+    /**
+ * Date when email was received on SMTP relay
+ */
+    'receivedAt'?: Date;
+    /**
+ * Date when email was delivered successfully to client’s webhook
+ */
+    'deliveredAt'?: Date;
+    /**
+ * Recipient’s email address
+ */
+    'recipient'?: string;
+    /**
+ * Sender’s email address
+ */
+    'sender'?: string;
+    /**
+ * Value of the Message-ID header. This will be present only after the processing is done.
+ */
+    'messageId'?: string;
+    /**
+ * Value of the Subject header. This will be present only after the processing is done. 
+ */
+    'subject'?: string;
+    /**
+ * List of attachments of the email. This will be present only after the processing is done.
+ */
+    'attachments'?: Array<GetInboundEmailEventsByUuidAttachments>;
+    /**
+ * List of events/logs that describe the lifecycle of the email on SIB platform
+ */
+    'logs'?: Array<GetInboundEmailEventsByUuidLogs>;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "receivedAt",
+            "baseName": "receivedAt",
+            "type": "Date"
+        },
+        {
+            "name": "deliveredAt",
+            "baseName": "deliveredAt",
+            "type": "Date"
+        },
+        {
+            "name": "recipient",
+            "baseName": "recipient",
+            "type": "string"
+        },
+        {
+            "name": "sender",
+            "baseName": "sender",
+            "type": "string"
+        },
+        {
+            "name": "messageId",
+            "baseName": "messageId",
+            "type": "string"
+        },
+        {
+            "name": "subject",
+            "baseName": "subject",
+            "type": "string"
+        },
+        {
+            "name": "attachments",
+            "baseName": "attachments",
+            "type": "Array<GetInboundEmailEventsByUuidAttachments>"
+        },
+        {
+            "name": "logs",
+            "baseName": "logs",
+            "type": "Array<GetInboundEmailEventsByUuidLogs>"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetInboundEmailEventsByUuid.attributeTypeMap;
+    }
+}
+
+export class GetInboundEmailEventsByUuidAttachments {
+    /**
+ * filename specified in the Content-Disposition header of the attachment
+ */
+    'name'?: string;
+    /**
+ * value of the Content-Type header of the attachment
+ */
+    'contentType'?: string;
+    /**
+ * value of the Content-ID header of the attachment.
+ */
+    'contentId'?: string;
+    /**
+ * size of the attachment in bytes
+ */
+    'contentLength'?: number;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "contentType",
+            "baseName": "contentType",
+            "type": "string"
+        },
+        {
+            "name": "contentId",
+            "baseName": "contentId",
+            "type": "string"
+        },
+        {
+            "name": "contentLength",
+            "baseName": "contentLength",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetInboundEmailEventsByUuidAttachments.attributeTypeMap;
+    }
+}
+
+export class GetInboundEmailEventsByUuidLogs {
+    /**
+ * Date of the event
+ */
+    'date'?: Date;
+    /**
+ * Type of the event
+ */
+    'type'?: GetInboundEmailEventsByUuidLogs.TypeEnum;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "date",
+            "baseName": "date",
+            "type": "Date"
+        },
+        {
+            "name": "type",
+            "baseName": "type",
+            "type": "GetInboundEmailEventsByUuidLogs.TypeEnum"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetInboundEmailEventsByUuidLogs.attributeTypeMap;
+    }
+}
+
+export namespace GetInboundEmailEventsByUuidLogs {
+    export enum TypeEnum {
+        Received = <any> 'received',
+        Processed = <any> 'processed',
+        WebhookFailed = <any> 'webhookFailed',
+        WebhookDelivered = <any> 'webhookDelivered'
+    }
+}
+export class GetInboundEmailEventsEvents {
+    /**
+ * UUID that can be used to fetch additional data
+ */
+    'uuid': string;
+    /**
+ * Date when email was received on SMTP relay
+ */
+    'date': Date;
+    /**
+ * Sender’s email address
+ */
+    'sender': string;
+    /**
+ * Recipient’s email address
+ */
+    'recipient': string;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "uuid",
+            "baseName": "uuid",
+            "type": "string"
+        },
+        {
+            "name": "date",
+            "baseName": "date",
+            "type": "Date"
+        },
+        {
+            "name": "sender",
+            "baseName": "sender",
+            "type": "string"
+        },
+        {
+            "name": "recipient",
+            "baseName": "recipient",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return GetInboundEmailEventsEvents.attributeTypeMap;
+    }
+}
+
 export class GetIp {
     /**
-    * ID of the dedicated IP
-    */
+ * ID of the dedicated IP
+ */
     'id': number;
     /**
-    * Dedicated IP
-    */
+ * Dedicated IP
+ */
     'ip': string;
     /**
-    * Status of the IP (true=active, false=inactive)
-    */
+ * Status of the IP (true=active, false=inactive)
+ */
     'active': boolean;
     /**
-    * Domain associated to the IP
-    */
+ * Domain associated to the IP
+ */
     'domain': string;
 
     static discriminator: string | undefined = undefined;
@@ -4349,20 +5098,20 @@ export class GetIp {
 
 export class GetIpFromSender {
     /**
-    * ID of the dedicated IP
-    */
+ * ID of the dedicated IP
+ */
     'id': number;
     /**
-    * Dedicated IP
-    */
+ * Dedicated IP
+ */
     'ip': string;
     /**
-    * Domain associated to the IP
-    */
+ * Domain associated to the IP
+ */
     'domain': string;
     /**
-    * Weight of the IP
-    */
+ * Weight of the IP
+ */
     'weight': number;
 
     static discriminator: string | undefined = undefined;
@@ -4396,8 +5145,8 @@ export class GetIpFromSender {
 
 export class GetIps {
     /**
-    * Dedicated IP(s) available on your account
-    */
+ * Dedicated IP(s) available on your account
+ */
     'ips': Array<GetIp>;
 
     static discriminator: string | undefined = undefined;
@@ -4416,8 +5165,8 @@ export class GetIps {
 
 export class GetIpsFromSender {
     /**
-    * Dedicated IP(s) linked to a sender
-    */
+ * Dedicated IP(s) linked to a sender
+ */
     'ips': Array<GetIpFromSender>;
 
     static discriminator: string | undefined = undefined;
@@ -4436,24 +5185,24 @@ export class GetIpsFromSender {
 
 export class GetList {
     /**
-    * ID of the list
-    */
+ * ID of the list
+ */
     'id': number;
     /**
-    * Name of the list
-    */
+ * Name of the list
+ */
     'name': string;
     /**
-    * Number of blacklisted contacts in the list
-    */
+ * Number of blacklisted contacts in the list
+ */
     'totalBlacklisted': number;
     /**
-    * Number of contacts in the list
-    */
+ * Number of contacts in the list
+ */
     'totalSubscribers': number;
     /**
-    * Number of unique contacts in the list
-    */
+ * Number of unique contacts in the list
+ */
     'uniqueSubscribers': number;
 
     static discriminator: string | undefined = undefined;
@@ -4492,17 +5241,17 @@ export class GetList {
 
 export class GetExtendedList extends GetList {
     /**
-    * ID of the folder
-    */
+ * ID of the folder
+ */
     'folderId': number;
     /**
-    * Creation UTC date-time of the list (YYYY-MM-DDTHH:mm:ss.SSSZ)
-    */
+ * Creation UTC date-time of the list (YYYY-MM-DDTHH:mm:ss.SSSZ)
+ */
     'createdAt': string;
     'campaignStats'?: Array<GetExtendedListCampaignStats>;
     /**
-    * Status telling if the list is dynamic or not (true=dynamic, false=not dynamic)
-    */
+ * Status telling if the list is dynamic or not (true=dynamic, false=not dynamic)
+ */
     'dynamicList'?: boolean;
 
     static discriminator: string | undefined = undefined;
@@ -4535,12 +5284,12 @@ export class GetExtendedList extends GetList {
 }
 export class GetLists {
     /**
-    * Listing of all the lists available in your account
-    */
+ * Listing of all the lists available in your account
+ */
     'lists'?: Array<any>;
     /**
-    * Number of lists in your account
-    */
+ * Number of lists in your account
+ */
     'count'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -4564,20 +5313,20 @@ export class GetLists {
 
 export class GetProcess {
     /**
-    * Id of the process
-    */
+ * Id of the process
+ */
     'id': number;
     /**
-    * Status of the process
-    */
+ * Status of the process
+ */
     'status': GetProcess.StatusEnum;
     /**
-    * Process name
-    */
+ * Process name
+ */
     'name': string;
     /**
-    * URL on which send export the of contacts once the process is completed
-    */
+ * URL on which send export the of contacts once the process is completed
+ */
     'exportUrl'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -4618,12 +5367,12 @@ export namespace GetProcess {
 }
 export class GetProcesses {
     /**
-    * List of processes available on your account
-    */
+ * List of processes available on your account
+ */
     'processes'?: Array<GetProcess>;
     /**
-    * Number of processes available on your account
-    */
+ * Number of processes available on your account
+ */
     'count'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -4664,56 +5413,56 @@ export class GetReports {
 
 export class GetReportsReports {
     /**
-    * Date of the statistics
-    */
+ * Date of the statistics
+ */
     'date': string;
     /**
-    * Number of requests for the date
-    */
+ * Number of requests for the date
+ */
     'requests': number;
     /**
-    * Number of delivered emails for the date
-    */
+ * Number of delivered emails for the date
+ */
     'delivered': number;
     /**
-    * Number of hardbounces for the date
-    */
+ * Number of hardbounces for the date
+ */
     'hardBounces': number;
     /**
-    * Number of softbounces for the date
-    */
+ * Number of softbounces for the date
+ */
     'softBounces': number;
     /**
-    * Number of clicks for the date
-    */
+ * Number of clicks for the date
+ */
     'clicks': number;
     /**
-    * Number of unique clicks for the date
-    */
+ * Number of unique clicks for the date
+ */
     'uniqueClicks': number;
     /**
-    * Number of openings for the date
-    */
+ * Number of openings for the date
+ */
     'opens': number;
     /**
-    * Number of unique openings for the date
-    */
+ * Number of unique openings for the date
+ */
     'uniqueOpens': number;
     /**
-    * Number of complaints (spam reports) for the date
-    */
+ * Number of complaints (spam reports) for the date
+ */
     'spamReports': number;
     /**
-    * Number of blocked emails for the date
-    */
+ * Number of blocked emails for the date
+ */
     'blocked': number;
     /**
-    * Number of invalid emails for the date
-    */
+ * Number of invalid emails for the date
+ */
     'invalid': number;
     /**
-    * Number of unsubscribed emails for the date
-    */
+ * Number of unsubscribed emails for the date
+ */
     'unsubscribed': number;
 
     static discriminator: string | undefined = undefined;
@@ -4792,8 +5541,8 @@ export class GetReportsReports {
 
 export class GetSendersList {
     /**
-    * List of the senders available in your account
-    */
+ * List of the senders available in your account
+ */
     'senders'?: Array<GetSendersListSenders>;
 
     static discriminator: string | undefined = undefined;
@@ -4812,16 +5561,16 @@ export class GetSendersList {
 
 export class GetSendersListIps {
     /**
-    * Dedicated IP available in your account
-    */
+ * Dedicated IP available in your account
+ */
     'ip': string;
     /**
-    * Domain of the IP
-    */
+ * Domain of the IP
+ */
     'domain': string;
     /**
-    * Weight of the IP for this sender
-    */
+ * Weight of the IP for this sender
+ */
     'weight': number;
 
     static discriminator: string | undefined = undefined;
@@ -4850,24 +5599,24 @@ export class GetSendersListIps {
 
 export class GetSendersListSenders {
     /**
-    * Id of the sender
-    */
+ * Id of the sender
+ */
     'id': number;
     /**
-    * From Name associated to the sender
-    */
+ * From Name associated to the sender
+ */
     'name': string;
     /**
-    * From Email associated to the sender
-    */
+ * From Email associated to the sender
+ */
     'email': string;
     /**
-    * Status of sender (true=activated, false=deactivated)
-    */
+ * Status of sender (true=activated, false=deactivated)
+ */
     'active': boolean;
     /**
-    * List of dedicated IP(s) available in the account. This data is displayed only for dedicated IPs
-    */
+ * List of dedicated IP(s) available in the account. This data is displayed only for dedicated IPs
+ */
     'ips'?: Array<GetSendersListIps>;
 
     static discriminator: string | undefined = undefined;
@@ -4906,8 +5655,8 @@ export class GetSendersListSenders {
 
 export class GetSharedTemplateUrl {
     /**
-    * A unique URL for the email campaign or transactional template. This URL can be shared with other Sendinblue users.
-    */
+ * A unique URL for the email campaign or transactional template. This URL can be shared with other Sendinblue users.
+ */
     'sharedUrl': string;
 
     static discriminator: string | undefined = undefined;
@@ -4928,36 +5677,36 @@ export namespace GetSmsCampaign {
 }
 export class GetSmsCampaignOverview {
     /**
-    * ID of the SMS Campaign
-    */
+ * ID of the SMS Campaign
+ */
     'id': number;
     /**
-    * Name of the SMS Campaign
-    */
+ * Name of the SMS Campaign
+ */
     'name': string;
     /**
-    * Status of the SMS Campaign
-    */
+ * Status of the SMS Campaign
+ */
     'status': GetSmsCampaignOverview.StatusEnum;
     /**
-    * Content of the SMS Campaign
-    */
+ * Content of the SMS Campaign
+ */
     'content': string;
     /**
-    * UTC date-time on which SMS campaign is scheduled. Should be in YYYY-MM-DDTHH:mm:ss.SSSZ format
-    */
+ * UTC date-time on which SMS campaign is scheduled. Should be in YYYY-MM-DDTHH:mm:ss.SSSZ format
+ */
     'scheduledAt'?: string;
     /**
-    * Sender of the SMS Campaign
-    */
+ * Sender of the SMS Campaign
+ */
     'sender': string;
     /**
-    * Creation UTC date-time of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
-    */
+ * Creation UTC date-time of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
+ */
     'createdAt': string;
     /**
-    * UTC date-time of last modification of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
-    */
+ * UTC date-time of last modification of the SMS campaign (YYYY-MM-DDTHH:mm:ss.SSSZ)
+ */
     'modifiedAt': string;
 
     static discriminator: string | undefined = undefined;
@@ -5055,32 +5804,32 @@ export class GetSmsCampaignRecipients {
 
 export class GetSmsCampaignStats {
     /**
-    * Number of delivered SMS
-    */
+ * Number of delivered SMS
+ */
     'delivered': number;
     /**
-    * Number of sent SMS
-    */
+ * Number of sent SMS
+ */
     'sent': number;
     /**
-    * Number of processing SMS
-    */
+ * Number of processing SMS
+ */
     'processing': number;
     /**
-    * Number of softbounced SMS
-    */
+ * Number of softbounced SMS
+ */
     'softBounces': number;
     /**
-    * Number of hardbounced SMS
-    */
+ * Number of hardbounced SMS
+ */
     'hardBounces': number;
     /**
-    * Number of unsubscription SMS
-    */
+ * Number of unsubscription SMS
+ */
     'unsubscriptions': number;
     /**
-    * Number of replies to the SMS
-    */
+ * Number of replies to the SMS
+ */
     'answered': number;
 
     static discriminator: string | undefined = undefined;
@@ -5130,8 +5879,8 @@ export class GetSmsCampaignStats {
 export class GetSmsCampaigns {
     'campaigns'?: Array<any>;
     /**
-    * Number of SMS campaigns retrieved
-    */
+ * Number of SMS campaigns retrieved
+ */
     'count'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -5172,29 +5921,29 @@ export class GetSmsEventReport {
 
 export class GetSmsEventReportEvents {
     /**
-    * Phone number which has generated the event
-    */
+ * Phone number which has generated the event
+ */
     'phoneNumber'?: string;
     /**
-    * UTC date-time on which the event has been generated
-    */
+ * UTC date-time on which the event has been generated
+ */
     'date'?: string;
     /**
-    * Message ID which generated the event
-    */
+ * Message ID which generated the event
+ */
     'messageId'?: string;
     /**
-    * Event which occurred
-    */
+ * Event which occurred
+ */
     'event'?: GetSmsEventReportEvents.EventEnum;
     /**
-    * Reason of bounce (only available if the event is hardbounce or softbounce)
-    */
+ * Reason of bounce (only available if the event is hardbounce or softbounce)
+ */
     'reason'?: string;
     'reply'?: string;
     /**
-    * Tag of the SMS which generated the event
-    */
+ * Tag of the SMS which generated the event
+ */
     'tag'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -5256,53 +6005,53 @@ export namespace GetSmsEventReportEvents {
 }
 export class GetSmtpTemplateOverview {
     /**
-    * ID of the template
-    */
+ * ID of the template
+ */
     'id': number;
     /**
-    * Name of the template
-    */
+ * Name of the template
+ */
     'name': string;
     /**
-    * Subject of the template
-    */
+ * Subject of the template
+ */
     'subject': string;
     /**
-    * Status of template (true=active, false=inactive)
-    */
+ * Status of template (true=active, false=inactive)
+ */
     'isActive': boolean;
     /**
-    * Status of test sending for the template (true=test email has been sent, false=test email has not been sent)
-    */
+ * Status of test sending for the template (true=test email has been sent, false=test email has not been sent)
+ */
     'testSent': boolean;
     'sender': GetSmtpTemplateOverviewSender;
     /**
-    * Email defined as the \"Reply to\" for the template
-    */
+ * Email defined as the \"Reply to\" for the template
+ */
     'replyTo': string;
     /**
-    * Customisation of the \"to\" field for the template
-    */
+ * Customisation of the \"to\" field for the template
+ */
     'toField': string;
     /**
-    * Tag of the template
-    */
+ * Tag of the template
+ */
     'tag': string;
     /**
-    * HTML content of the template
-    */
+ * HTML content of the template
+ */
     'htmlContent': string;
     /**
-    * Creation UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)
-    */
+ * Creation UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)
+ */
     'createdAt': string;
     /**
-    * Last modification UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)
-    */
+ * Last modification UTC date-time of the template (YYYY-MM-DDTHH:mm:ss.SSSZ)
+ */
     'modifiedAt': string;
     /**
-    * It is true if template is a valid Double opt-in (DOI) template, otherwise it is false. This field will be available only in case of single template detail call.
-    */
+ * It is true if template is a valid Double opt-in (DOI) template, otherwise it is false. This field will be available only in case of single template detail call.
+ */
     'doiTemplate'?: boolean;
 
     static discriminator: string | undefined = undefined;
@@ -5381,16 +6130,16 @@ export class GetSmtpTemplateOverview {
 
 export class GetSmtpTemplateOverviewSender {
     /**
-    * From email for the template
-    */
+ * From email for the template
+ */
     'name'?: string;
     /**
-    * From email for the template
-    */
+ * From email for the template
+ */
     'email'?: string;
     /**
-    * Sender id of the template
-    */
+ * Sender id of the template
+ */
     'id'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -5419,8 +6168,8 @@ export class GetSmtpTemplateOverviewSender {
 
 export class GetSmtpTemplates {
     /**
-    * Count of transactional email templates
-    */
+ * Count of transactional email templates
+ */
     'count'?: number;
     'templates'?: Array<GetSmtpTemplateOverview>;
 
@@ -5445,8 +6194,8 @@ export class GetSmtpTemplates {
 
 export class GetSsoToken {
     /**
-    * Session token. It will remain valid for a short period of time only.
-    */
+ * Session token. It will remain valid for a short period of time only.
+ */
     'token': string;
 
     static discriminator: string | undefined = undefined;
@@ -5477,20 +6226,20 @@ export class GetStatsByBrowser extends null<String, GetDeviceBrowserStats> {
 
 export class GetStatsByDevice {
     /**
-    * Statistics of the campaign on the basis of desktop devices
-    */
+ * Statistics of the campaign on the basis of desktop devices
+ */
     'desktop'?: { [key: string]: GetDeviceBrowserStats; };
     /**
-    * Statistics of the campaign on the basis of mobile devices
-    */
+ * Statistics of the campaign on the basis of mobile devices
+ */
     'mobile'?: { [key: string]: GetDeviceBrowserStats; };
     /**
-    * Statistics of the campaign on the basis of tablet devices
-    */
+ * Statistics of the campaign on the basis of tablet devices
+ */
     'tablet'?: { [key: string]: GetDeviceBrowserStats; };
     /**
-    * Statistics of the campaign on the basis of unknown devices
-    */
+ * Statistics of the campaign on the basis of unknown devices
+ */
     'unknown'?: { [key: string]: GetDeviceBrowserStats; };
 
     static discriminator: string | undefined = undefined;
@@ -5536,44 +6285,44 @@ export class GetStatsByDomain extends null<String, GetCampaignStats> {
 
 export class GetTransacAggregatedSmsReport {
     /**
-    * Time frame of the report
-    */
+ * Time frame of the report
+ */
     'range'?: string;
     /**
-    * Number of requests for the timeframe
-    */
+ * Number of requests for the timeframe
+ */
     'requests'?: number;
     /**
-    * Number of delivered SMS for the timeframe
-    */
+ * Number of delivered SMS for the timeframe
+ */
     'delivered'?: number;
     /**
-    * Number of hardbounces for the timeframe
-    */
+ * Number of hardbounces for the timeframe
+ */
     'hardBounces'?: number;
     /**
-    * Number of softbounces for the timeframe
-    */
+ * Number of softbounces for the timeframe
+ */
     'softBounces'?: number;
     /**
-    * Number of blocked contact for the timeframe
-    */
+ * Number of blocked contact for the timeframe
+ */
     'blocked'?: number;
     /**
-    * Number of unsubscription for the timeframe
-    */
+ * Number of unsubscription for the timeframe
+ */
     'unsubscribed'?: number;
     /**
-    * Number of answered SMS for the timeframe
-    */
+ * Number of answered SMS for the timeframe
+ */
     'replied'?: number;
     /**
-    * Number of accepted for the timeframe
-    */
+ * Number of accepted for the timeframe
+ */
     'accepted'?: number;
     /**
-    * Number of rejected for the timeframe
-    */
+ * Number of rejected for the timeframe
+ */
     'rejected'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -5637,8 +6386,8 @@ export class GetTransacAggregatedSmsReport {
 
 export class GetTransacBlockedContacts {
     /**
-    * Count of blocked or unsubscribed contact
-    */
+ * Count of blocked or unsubscribed contact
+ */
     'count'?: number;
     'contacts'?: Array<GetTransacBlockedContactsContacts>;
 
@@ -5663,17 +6412,17 @@ export class GetTransacBlockedContacts {
 
 export class GetTransacBlockedContactsContacts {
     /**
-    * Email address of the blocked or unsubscribed contact
-    */
+ * Email address of the blocked or unsubscribed contact
+ */
     'email': string;
     /**
-    * Sender email address of the blocked or unsubscribed contact
-    */
+ * Sender email address of the blocked or unsubscribed contact
+ */
     'senderEmail': string;
     'reason': GetTransacBlockedContactsReason;
     /**
-    * Date when the contact was blocked or unsubscribed on
-    */
+ * Date when the contact was blocked or unsubscribed on
+ */
     'blockedAt': string;
 
     static discriminator: string | undefined = undefined;
@@ -5706,16 +6455,16 @@ export class GetTransacBlockedContactsContacts {
 }
 
 /**
-* Reason for blocking / unsubscribing
-*/
+ * Reason for blocking / unsubscribing
+ */
 export class GetTransacBlockedContactsReason {
     /**
-    * Reason code for blocking / unsubscribing (This code is safe for comparison)
-    */
+ * Reason code for blocking / unsubscribing (This code is safe for comparison)
+ */
     'code'?: GetTransacBlockedContactsReason.CodeEnum;
     /**
-    * Reason for blocking / unsubscribing (This string is not safe for comparison)
-    */
+ * Reason for blocking / unsubscribing (This string is not safe for comparison)
+ */
     'message'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -5749,32 +6498,32 @@ export namespace GetTransacBlockedContactsReason {
 }
 export class GetTransacEmailContent {
     /**
-    * Email address to which transactional email has been sent
-    */
+ * Email address to which transactional email has been sent
+ */
     'email': string;
     /**
-    * Subject of the sent email
-    */
+ * Subject of the sent email
+ */
     'subject': string;
     /**
-    * Id of the template
-    */
+ * Id of the template
+ */
     'templateId'?: number;
     /**
-    * Date on which transactional email was sent
-    */
+ * Date on which transactional email was sent
+ */
     'date': string;
     /**
-    * Series of events which occurred on the transactional email
-    */
+ * Series of events which occurred on the transactional email
+ */
     'events': Array<GetTransacEmailContentEvents>;
     /**
-    * Actual content of the transactional email that has been sent
-    */
+ * Actual content of the transactional email that has been sent
+ */
     'body': string;
     /**
-    * Count of the attachments that were sent in the email
-    */
+ * Count of the attachments that were sent in the email
+ */
     'attachmentCount': number;
 
     static discriminator: string | undefined = undefined;
@@ -5823,12 +6572,12 @@ export class GetTransacEmailContent {
 
 export class GetTransacEmailContentEvents {
     /**
-    * Name of the event that occurred on the sent email
-    */
+ * Name of the event that occurred on the sent email
+ */
     'name': string;
     /**
-    * Time at which the event occurred
-    */
+ * Time at which the event occurred
+ */
     'time': string;
 
     static discriminator: string | undefined = undefined;
@@ -5852,8 +6601,8 @@ export class GetTransacEmailContentEvents {
 
 export class GetTransacEmailsList {
     /**
-    * Total number of transactional emails available on your account according to the passed filter
-    */
+ * Total number of transactional emails available on your account according to the passed filter
+ */
     'count'?: number;
     'transactionalEmails'?: Array<GetTransacEmailsListTransactionalEmails>;
 
@@ -5878,36 +6627,36 @@ export class GetTransacEmailsList {
 
 export class GetTransacEmailsListTransactionalEmails {
     /**
-    * Email address to which transactional email has been sent
-    */
+ * Email address to which transactional email has been sent
+ */
     'email': string;
     /**
-    * Subject of the sent email
-    */
+ * Subject of the sent email
+ */
     'subject': string;
     /**
-    * Id of the template
-    */
+ * Id of the template
+ */
     'templateId'?: number;
     /**
-    * Message Id of the sent email
-    */
+ * Message Id of the sent email
+ */
     'messageId': string;
     /**
-    * Unique id of the email sent to a particular contact
-    */
+ * Unique id of the email sent to a particular contact
+ */
     'uuid': string;
     /**
-    * Date on which transactional email was sent
-    */
+ * Date on which transactional email was sent
+ */
     'date': string;
     /**
-    * Email address of the sender from which the email was sent
-    */
+ * Email address of the sender from which the email was sent
+ */
     'from'?: string;
     /**
-    * Tags used for your email
-    */
+ * Tags used for your email
+ */
     'tags'?: Array<string>;
 
     static discriminator: string | undefined = undefined;
@@ -5978,44 +6727,44 @@ export class GetTransacSmsReport {
 
 export class GetTransacSmsReportReports {
     /**
-    * Date for which statistics are retrieved
-    */
+ * Date for which statistics are retrieved
+ */
     'date'?: string;
     /**
-    * Number of requests for the date
-    */
+ * Number of requests for the date
+ */
     'requests'?: number;
     /**
-    * Number of delivered SMS for the date
-    */
+ * Number of delivered SMS for the date
+ */
     'delivered'?: number;
     /**
-    * Number of hardbounces for the date
-    */
+ * Number of hardbounces for the date
+ */
     'hardBounces'?: number;
     /**
-    * Number of softbounces for the date
-    */
+ * Number of softbounces for the date
+ */
     'softBounces'?: number;
     /**
-    * Number of blocked contact for the date
-    */
+ * Number of blocked contact for the date
+ */
     'blocked'?: number;
     /**
-    * Number of unsubscription for the date
-    */
+ * Number of unsubscription for the date
+ */
     'unsubscribed'?: number;
     /**
-    * Number of answered SMS for the date
-    */
+ * Number of answered SMS for the date
+ */
     'replied'?: number;
     /**
-    * Number of accepted for the date
-    */
+ * Number of accepted for the date
+ */
     'accepted'?: number;
     /**
-    * Number of rejected for the date
-    */
+ * Number of rejected for the date
+ */
     'rejected'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -6079,29 +6828,29 @@ export class GetTransacSmsReportReports {
 
 export class GetWebhook {
     /**
-    * URL of the webhook
-    */
+ * URL of the webhook
+ */
     'url': string;
     /**
-    * ID of the webhook
-    */
+ * ID of the webhook
+ */
     'id': number;
     /**
-    * Description of the webhook
-    */
+ * Description of the webhook
+ */
     'description': string;
     'events': Array<string>;
     /**
-    * Type of webhook (marketing or transac)
-    */
+ * Type of webhook (marketing or transac)
+ */
     'type': GetWebhook.TypeEnum;
     /**
-    * Creation UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)
-    */
+ * Creation UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)
+ */
     'createdAt': string;
     /**
-    * Last modification UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)
-    */
+ * Last modification UTC date-time of the webhook (YYYY-MM-DDTHH:mm:ss.SSSZ)
+ */
     'modifiedAt': string;
 
     static discriminator: string | undefined = undefined;
@@ -6173,8 +6922,8 @@ export class GetWebhooks {
 
 export class ManageIp {
     /**
-    * Dedicated ID
-    */
+ * Dedicated ID
+ */
     'ip'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -6188,6 +6937,457 @@ export class ManageIp {
 
     static getAttributeTypeMap() {
         return ManageIp.attributeTypeMap;
+    }
+}
+
+export class MasterDetailsResponse {
+    /**
+ * Email id of master account
+ */
+    'email'?: string;
+    /**
+ * Company name of master account organization
+ */
+    'companyName'?: string;
+    /**
+ * Unique identifier of the master account organization
+ */
+    'id'?: number;
+    /**
+ * Currency code of the master account organization
+ */
+    'currencyCode'?: string;
+    /**
+ * Timezone of the master account organization
+ */
+    'timezone'?: string;
+    'billingInfo'?: MasterDetailsResponseBillingInfo;
+    'planInfo'?: MasterDetailsResponsePlanInfo;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string"
+        },
+        {
+            "name": "companyName",
+            "baseName": "companyName",
+            "type": "string"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "currencyCode",
+            "baseName": "currencyCode",
+            "type": "string"
+        },
+        {
+            "name": "timezone",
+            "baseName": "timezone",
+            "type": "string"
+        },
+        {
+            "name": "billingInfo",
+            "baseName": "billingInfo",
+            "type": "MasterDetailsResponseBillingInfo"
+        },
+        {
+            "name": "planInfo",
+            "baseName": "planInfo",
+            "type": "MasterDetailsResponsePlanInfo"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return MasterDetailsResponse.attributeTypeMap;
+    }
+}
+
+/**
+ * Billing details of the master account organization
+ */
+export class MasterDetailsResponseBillingInfo {
+    /**
+ * Billing email id of master account
+ */
+    'email'?: string;
+    /**
+ * Company name of master account
+ */
+    'companyName'?: string;
+    'name'?: MasterDetailsResponseBillingInfoName;
+    'address'?: MasterDetailsResponseBillingInfoAddress;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string"
+        },
+        {
+            "name": "companyName",
+            "baseName": "companyName",
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "MasterDetailsResponseBillingInfoName"
+        },
+        {
+            "name": "address",
+            "baseName": "address",
+            "type": "MasterDetailsResponseBillingInfoAddress"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return MasterDetailsResponseBillingInfo.attributeTypeMap;
+    }
+}
+
+/**
+ * Billing address of master account
+ */
+export class MasterDetailsResponseBillingInfoAddress {
+    /**
+ * Street address
+ */
+    'streetAddress'?: string;
+    /**
+ * Locality
+ */
+    'locality'?: string;
+    /**
+ * Postal code
+ */
+    'postalCode'?: string;
+    /**
+ * State code
+ */
+    'stateCode'?: string;
+    /**
+ * Country code
+ */
+    'countryCode'?: string;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "streetAddress",
+            "baseName": "streetAddress",
+            "type": "string"
+        },
+        {
+            "name": "locality",
+            "baseName": "locality",
+            "type": "string"
+        },
+        {
+            "name": "postalCode",
+            "baseName": "postalCode",
+            "type": "string"
+        },
+        {
+            "name": "stateCode",
+            "baseName": "stateCode",
+            "type": "string"
+        },
+        {
+            "name": "countryCode",
+            "baseName": "countryCode",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return MasterDetailsResponseBillingInfoAddress.attributeTypeMap;
+    }
+}
+
+/**
+ * Billing name of master account holder
+ */
+export class MasterDetailsResponseBillingInfoName {
+    /**
+ * First name for billing
+ */
+    'givenName'?: string;
+    /**
+ * Last name for billing
+ */
+    'familyName'?: string;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "givenName",
+            "baseName": "givenName",
+            "type": "string"
+        },
+        {
+            "name": "familyName",
+            "baseName": "familyName",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return MasterDetailsResponseBillingInfoName.attributeTypeMap;
+    }
+}
+
+/**
+ * Plan details
+ */
+export class MasterDetailsResponsePlanInfo {
+    /**
+ * Plan currency
+ */
+    'currencyCode'?: string;
+    /**
+ * Timestamp of next billing date
+ */
+    'nextBillingAt'?: number;
+    /**
+ * Plan amount
+ */
+    'price'?: number;
+    /**
+ * Plan period type
+ */
+    'planPeriod'?: MasterDetailsResponsePlanInfo.PlanPeriodEnum;
+    /**
+ * Number of sub-accounts
+ */
+    'subAccounts'?: number;
+    /**
+ * List of provided features in the plan
+ */
+    'features'?: Array<MasterDetailsResponsePlanInfoFeatures>;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "currencyCode",
+            "baseName": "currencyCode",
+            "type": "string"
+        },
+        {
+            "name": "nextBillingAt",
+            "baseName": "nextBillingAt",
+            "type": "number"
+        },
+        {
+            "name": "price",
+            "baseName": "price",
+            "type": "number"
+        },
+        {
+            "name": "planPeriod",
+            "baseName": "planPeriod",
+            "type": "MasterDetailsResponsePlanInfo.PlanPeriodEnum"
+        },
+        {
+            "name": "subAccounts",
+            "baseName": "subAccounts",
+            "type": "number"
+        },
+        {
+            "name": "features",
+            "baseName": "features",
+            "type": "Array<MasterDetailsResponsePlanInfoFeatures>"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return MasterDetailsResponsePlanInfo.attributeTypeMap;
+    }
+}
+
+export namespace MasterDetailsResponsePlanInfo {
+    export enum PlanPeriodEnum {
+        Month = <any> 'month',
+        Year = <any> 'year'
+    }
+}
+export class MasterDetailsResponsePlanInfoFeatures {
+    /**
+ * Name of the feature
+ */
+    'name'?: string;
+    /**
+ * Unit value of the feature
+ */
+    'unitValue'?: string;
+    /**
+ * Quantity provided in the plan
+ */
+    'quantity'?: number;
+    /**
+ * Quantity consumed by master
+ */
+    'used'?: number;
+    /**
+ * Quantity remaining in the plan
+ */
+    'remaining'?: number;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "unitValue",
+            "baseName": "unitValue",
+            "type": "string"
+        },
+        {
+            "name": "quantity",
+            "baseName": "quantity",
+            "type": "number"
+        },
+        {
+            "name": "used",
+            "baseName": "used",
+            "type": "number"
+        },
+        {
+            "name": "remaining",
+            "baseName": "remaining",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return MasterDetailsResponsePlanInfoFeatures.attributeTypeMap;
+    }
+}
+
+/**
+ * Note Details
+ */
+export class Note {
+    /**
+ * Unique note Id
+ */
+    'id'?: string;
+    /**
+ * Text content of a note
+ */
+    'text': string;
+    /**
+ * Contact ids linked to a note
+ */
+    'contactIds'?: Array<number>;
+    /**
+ * Deal ids linked to a note
+ */
+    'dealIds'?: Array<string>;
+    /**
+ * Account details of user which created the note
+ */
+    'authorId'?: any;
+    /**
+ * Note created date/time
+ */
+    'createdAt'?: Date;
+    /**
+ * Note updated date/time
+ */
+    'updatedAt'?: Date;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "string"
+        },
+        {
+            "name": "text",
+            "baseName": "text",
+            "type": "string"
+        },
+        {
+            "name": "contactIds",
+            "baseName": "contactIds",
+            "type": "Array<number>"
+        },
+        {
+            "name": "dealIds",
+            "baseName": "dealIds",
+            "type": "Array<string>"
+        },
+        {
+            "name": "authorId",
+            "baseName": "authorId",
+            "type": "any"
+        },
+        {
+            "name": "createdAt",
+            "baseName": "createdAt",
+            "type": "Date"
+        },
+        {
+            "name": "updatedAt",
+            "baseName": "updatedAt",
+            "type": "Date"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Note.attributeTypeMap;
+    }
+}
+
+/**
+ * Note data to be saved
+ */
+export class NoteData {
+    /**
+ * Text content of a note
+ */
+    'text': string;
+    /**
+ * Contact Ids linked to a note
+ */
+    'contactIds'?: Array<number>;
+    /**
+ * Deal Ids linked to a note
+ */
+    'dealIds'?: Array<string>;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "text",
+            "baseName": "text",
+            "type": "string"
+        },
+        {
+            "name": "contactIds",
+            "baseName": "contactIds",
+            "type": "Array<number>"
+        },
+        {
+            "name": "dealIds",
+            "baseName": "dealIds",
+            "type": "Array<string>"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return NoteData.attributeTypeMap;
     }
 }
 
@@ -6212,12 +7412,12 @@ export class PostContactInfoContacts {
     'success'?: Array<string>;
     'failure'?: Array<string>;
     /**
-    * Displays the count of total number of contacts removed from list when user opts for \"all\" option.
-    */
+ * Displays the count of total number of contacts removed from list when user opts for \"all\" option.
+ */
     'total'?: number;
     /**
-    * Id of the process created to remove contacts from list when user opts for \"all\" option.
-    */
+ * Id of the process created to remove contacts from list when user opts for \"all\" option.
+ */
     'processId'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -6251,12 +7451,12 @@ export class PostContactInfoContacts {
 
 export class PostSendFailed {
     /**
-    * Response code
-    */
+ * Response code
+ */
     'code': number;
     /**
-    * Response message
-    */
+ * Response message
+ */
     'message': string;
     'unexistingEmails'?: Array<string>;
     'withoutListEmails'?: Array<string>;
@@ -6298,12 +7498,12 @@ export class PostSendFailed {
 
 export class PostSendSmsTestFailed {
     /**
-    * Response code
-    */
+ * Response code
+ */
     'code': number;
     /**
-    * Response message
-    */
+ * Response message
+ */
     'message': string;
     'unexistingSms'?: Array<string>;
     'withoutListSms'?: Array<string>;
@@ -6361,16 +7561,16 @@ export class RemainingCreditModel {
 }
 
 /**
-* Credits remaining for child account
-*/
+ * Credits remaining for child account
+ */
 export class RemainingCreditModelChild {
     /**
-    * SMS Credits remaining for child account
-    */
+ * SMS Credits remaining for child account
+ */
     'sms': number;
     /**
-    * Email Credits remaining for child account
-    */
+ * Email Credits remaining for child account
+ */
     'email': number;
 
     static discriminator: string | undefined = undefined;
@@ -6394,12 +7594,12 @@ export class RemainingCreditModelChild {
 
 export class RemainingCreditModelReseller {
     /**
-    * SMS Credits remaining for reseller account
-    */
+ * SMS Credits remaining for reseller account
+ */
     'sms': number;
     /**
-    * Email Credits remaining for reseller account
-    */
+ * Email Credits remaining for reseller account
+ */
     'email': number;
 
     static discriminator: string | undefined = undefined;
@@ -6423,16 +7623,16 @@ export class RemainingCreditModelReseller {
 
 export class RemoveContactFromList {
     /**
-    * Required if 'all' is false. Emails to remove from a list. You can pass a maximum of 150 emails for removal in one request.
-    */
+ * Required if 'all' is false. Emails to remove from a list. You can pass a maximum of 150 emails for removal in one request.
+ */
     'emails'?: Array<string>;
     /**
-    * Mandatory if Emails are not passed, ignored otherwise. Emails to add to a list. You can pass a maximum of 150 emails for addition in one request. If you need to add the emails in bulk, please prefer /contacts/import api.
-    */
+ * Mandatory if Emails are not passed, ignored otherwise. Emails to add to a list. You can pass a maximum of 150 emails for addition in one request. If you need to add the emails in bulk, please prefer /contacts/import api.
+ */
     'ids'?: Array<number>;
     /**
-    * Required if none of 'emails' or 'ids' are passed. Remove all existing contacts from a list.  A process will be created in this scenario. You can fetch the process details to know about the progress
-    */
+ * Required if none of 'emails' or 'ids' are passed. Remove all existing contacts from a list.  A process will be created in this scenario. You can fetch the process details to know about the progress
+ */
     'all'?: boolean;
 
     static discriminator: string | undefined = undefined;
@@ -6461,12 +7661,12 @@ export class RemoveContactFromList {
 
 export class RemoveCredits {
     /**
-    * Required if email credits are empty. SMS credits to be removed from the child account
-    */
+ * Required if email credits are empty. SMS credits to be removed from the child account
+ */
     'sms'?: number;
     /**
-    * Required if sms credits are empty. Email credits to be removed from the child account
-    */
+ * Required if sms credits are empty. Email credits to be removed from the child account
+ */
     'email'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -6490,17 +7690,13 @@ export class RemoveCredits {
 
 export class RequestContactExport {
     /**
-    * List of all the attributes that you want to export. These attributes must be present in your contact database. For example, ['fname', 'lname', 'email'].
-    */
+ * List of all the attributes that you want to export. These attributes must be present in your contact database. For example, ['fname', 'lname', 'email'].
+ */
     'exportAttributes'?: Array<string>;
+    'customContactFilter': RequestContactExportCustomContactFilter;
     /**
-    * This attribute has been deprecated and will be removed by January 1st, 2021. Only one of the two filter options (contactFilter or customContactFilter) can be passed in the request. Set the filter for the contacts to be exported. For example, {\"blacklisted\":true} will export all the blacklisted contacts. 
-    */
-    'contactFilter'?: any;
-    'customContactFilter'?: RequestContactExportCustomContactFilter;
-    /**
-    * Webhook that will be called once the export process is finished. For reference, https://help.sendinblue.com/hc/en-us/articles/360007666479
-    */
+ * Webhook that will be called once the export process is finished. For reference, https://help.sendinblue.com/hc/en-us/articles/360007666479
+ */
     'notifyUrl'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -6510,11 +7706,6 @@ export class RequestContactExport {
             "name": "exportAttributes",
             "baseName": "exportAttributes",
             "type": "Array<string>"
-        },
-        {
-            "name": "contactFilter",
-            "baseName": "contactFilter",
-            "type": "any"
         },
         {
             "name": "customContactFilter",
@@ -6533,32 +7724,32 @@ export class RequestContactExport {
 }
 
 /**
-* Only one of the two filter options (contactFilter or customContactFilter) can be passed in the request. Set the filter for the contacts to be exported.
-*/
+ * Set the filter for the contacts to be exported.
+ */
 export class RequestContactExportCustomContactFilter {
     /**
-    * Mandatory if neither actionForEmailCampaigns nor actionForSmsCampaigns is passed. This will export the contacts on the basis of provided action applied on contacts as per the list id. * allContacts - Fetch the list of all contacts for a particular list. * subscribed & unsubscribed - Fetch the list of subscribed / unsubscribed (blacklisted via any means) contacts for a particular list. * unsubscribedPerList - Fetch the list of contacts that are unsubscribed from a particular list only. 
-    */
+ * Mandatory if neither actionForEmailCampaigns nor actionForSmsCampaigns is passed. This will export the contacts on the basis of provided action applied on contacts as per the list id. * allContacts - Fetch the list of all contacts for a particular list. * subscribed & unsubscribed - Fetch the list of subscribed / unsubscribed (blacklisted via any means) contacts for a particular list. * unsubscribedPerList - Fetch the list of contacts that are unsubscribed from a particular list only. 
+ */
     'actionForContacts'?: RequestContactExportCustomContactFilter.ActionForContactsEnum;
     /**
-    * Mandatory if neither actionForContacts nor actionForSmsCampaigns is passed. This will export the contacts on the basis of provided action applied on email campaigns. * openers & nonOpeners - emailCampaignId is mandatory. Fetch the list of readers / non-readers for a particular email campaign. * clickers & nonClickers - emailCampaignId is mandatory. Fetch the list of clickers / non-clickers for a particular email campaign. * unsubscribed - emailCampaignId is mandatory. Fetch the list of all unsubscribed (blacklisted via any means) contacts for a particular email campaign. * hardBounces & softBounces - emailCampaignId is optional. Fetch the list of hard bounces / soft bounces for a particular / all email campaign(s). 
-    */
+ * Mandatory if neither actionForContacts nor actionForSmsCampaigns is passed. This will export the contacts on the basis of provided action applied on email campaigns. * openers & nonOpeners - emailCampaignId is mandatory. Fetch the list of readers / non-readers for a particular email campaign. * clickers & nonClickers - emailCampaignId is mandatory. Fetch the list of clickers / non-clickers for a particular email campaign. * unsubscribed - emailCampaignId is mandatory. Fetch the list of all unsubscribed (blacklisted via any means) contacts for a particular email campaign. * hardBounces & softBounces - emailCampaignId is optional. Fetch the list of hard bounces / soft bounces for a particular / all email campaign(s). 
+ */
     'actionForEmailCampaigns'?: RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum;
     /**
-    * Mandatory if neither actionForContacts nor actionForEmailCampaigns is passed. This will export the contacts on the basis of provided action applied on sms campaigns. * unsubscribed - Fetch the list of all unsubscribed (blacklisted via any means) contacts for all / particular sms campaigns. * hardBounces & softBounces - Fetch the list of hard bounces / soft bounces for all / particular sms campaigns. 
-    */
+ * Mandatory if neither actionForContacts nor actionForEmailCampaigns is passed. This will export the contacts on the basis of provided action applied on sms campaigns. * unsubscribed - Fetch the list of all unsubscribed (blacklisted via any means) contacts for all / particular sms campaigns. * hardBounces & softBounces - Fetch the list of hard bounces / soft bounces for all / particular sms campaigns. 
+ */
     'actionForSmsCampaigns'?: RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum;
     /**
-    * Mandatory if actionForContacts is passed, ignored otherwise. Id of the list for which the corresponding action shall be applied in the filter.
-    */
+ * Mandatory if actionForContacts is passed, ignored otherwise. Id of the list for which the corresponding action shall be applied in the filter.
+ */
     'listId'?: number;
     /**
-    * Considered only if actionForEmailCampaigns is passed, ignored otherwise. Mandatory if action is one of the following - openers, nonOpeners, clickers, nonClickers, unsubscribed. The id of the email campaign for which the corresponding action shall be applied in the filter.
-    */
+ * Considered only if actionForEmailCampaigns is passed, ignored otherwise. Mandatory if action is one of the following - openers, nonOpeners, clickers, nonClickers, unsubscribed. The id of the email campaign for which the corresponding action shall be applied in the filter.
+ */
     'emailCampaignId'?: number;
     /**
-    * Considered only if actionForSmsCampaigns is passed, ignored otherwise. The id of sms campaign for which the corresponding action shall be applied in the filter.
-    */
+ * Considered only if actionForSmsCampaigns is passed, ignored otherwise. The id of sms campaign for which the corresponding action shall be applied in the filter.
+ */
     'smsCampaignId'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -6624,37 +7815,37 @@ export namespace RequestContactExportCustomContactFilter {
 }
 export class RequestContactImport {
     /**
-    * Mandatory if fileBody is not defined. URL of the file to be imported (no local file). Possible file formats: .txt, .csv
-    */
+ * Mandatory if fileBody is not defined. URL of the file to be imported (no local file). Possible file formats: .txt, .csv
+ */
     'fileUrl'?: string;
     /**
-    * Mandatory if fileUrl is not defined. CSV content to be imported. Use semicolon to separate multiple attributes. Maximum allowed file body size is 10MB . However we recommend a safe limit of around 8 MB to avoid the issues caused due to increase of file body size while parsing. Please use fileUrl instead to import bigger files.
-    */
+ * Mandatory if fileUrl is not defined. CSV content to be imported. Use semicolon to separate multiple attributes. Maximum allowed file body size is 10MB . However we recommend a safe limit of around 8 MB to avoid the issues caused due to increase of file body size while parsing. Please use fileUrl instead to import bigger files.
+ */
     'fileBody'?: string;
     /**
-    * Mandatory if newList is not defined. Ids of the lists in which the contacts shall be imported. For example, [2, 4, 7].
-    */
+ * Mandatory if newList is not defined. Ids of the lists in which the contacts shall be imported. For example, [2, 4, 7].
+ */
     'listIds'?: Array<number>;
     /**
-    * URL that will be called once the import process is finished. For reference, https://help.sendinblue.com/hc/en-us/articles/360007666479
-    */
+ * URL that will be called once the import process is finished. For reference, https://help.sendinblue.com/hc/en-us/articles/360007666479
+ */
     'notifyUrl'?: string;
     'newList'?: RequestContactImportNewList;
     /**
-    * To blacklist all the contacts for email
-    */
+ * To blacklist all the contacts for email
+ */
     'emailBlacklist'?: boolean;
     /**
-    * To blacklist all the contacts for sms
-    */
+ * To blacklist all the contacts for sms
+ */
     'smsBlacklist'?: boolean;
     /**
-    * To facilitate the choice to update the existing contacts
-    */
+ * To facilitate the choice to update the existing contacts
+ */
     'updateExistingContacts'?: boolean;
     /**
-    * To facilitate the choice to erase any attribute of the existing contacts with empty value. emptyContactsAttributes = true means the empty fields in your import will erase any attribute that currently contain data in SendinBlue, & emptyContactsAttributes = false means the empty fields will not affect your existing data ( only available if `updateExistingContacts` set to true )
-    */
+ * To facilitate the choice to erase any attribute of the existing contacts with empty value. emptyContactsAttributes = true means the empty fields in your import will erase any attribute that currently contain data in SendinBlue, & emptyContactsAttributes = false means the empty fields will not affect your existing data ( only available if `updateExistingContacts` set to true )
+ */
     'emptyContactsAttributes'?: boolean;
 
     static discriminator: string | undefined = undefined;
@@ -6712,16 +7903,16 @@ export class RequestContactImport {
 }
 
 /**
-* To create a new list and import the contacts into it, pass the listName and an optional folderId.
-*/
+ * To create a new list and import the contacts into it, pass the listName and an optional folderId.
+ */
 export class RequestContactImportNewList {
     /**
-    * List with listName will be created first and users will be imported in it (Mandatory if listIds is empty).
-    */
+ * List with listName will be created first and users will be imported in it (Mandatory if listIds is empty).
+ */
     'listName'?: string;
     /**
-    * Id of the folder where this new list shall be created (Mandatory if listName is not empty).
-    */
+ * Id of the folder where this new list shall be created (Mandatory if listName is not empty).
+ */
     'folderId'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -6745,12 +7936,12 @@ export class RequestContactImportNewList {
 
 export class RequestSmsRecipientExport {
     /**
-    * URL that will be called once the export process is finished. For reference, https://help.sendinblue.com/hc/en-us/articles/360007666479
-    */
+ * URL that will be called once the export process is finished. For reference, https://help.sendinblue.com/hc/en-us/articles/360007666479
+ */
     'notifyURL'?: string;
     /**
-    * Filter the recipients based on how they interacted with the campaign
-    */
+ * Filter the recipients based on how they interacted with the campaign
+ */
     'recipientsType': RequestSmsRecipientExport.RecipientsTypeEnum;
 
     static discriminator: string | undefined = undefined;
@@ -6784,8 +7975,8 @@ export namespace RequestSmsRecipientExport {
 }
 export class SendReport {
     /**
-    * Language of email content for campaign report sending.
-    */
+ * Language of email content for campaign report sending.
+ */
     'language'?: SendReport.LanguageEnum;
     'email': SendReportEmail;
 
@@ -6819,16 +8010,16 @@ export namespace SendReport {
     }
 }
 /**
-* Custom attributes for the report email.
-*/
+ * Custom attributes for the report email.
+ */
 export class SendReportEmail {
     /**
-    * Email addresses of the recipients
-    */
+ * Email addresses of the recipients
+ */
     'to': Array<string>;
     /**
-    * Custom text message to be presented in the report email.
-    */
+ * Custom text message to be presented in the report email.
+ */
     'body': string;
 
     static discriminator: string | undefined = undefined;
@@ -6854,16 +8045,16 @@ export class SendSms {
     'reference': string;
     'messageId': number;
     /**
-    * Count of SMS's to send multiple text messages
-    */
+ * Count of SMS's to send multiple text messages
+ */
     'smsCount'?: number;
     /**
-    * SMS credits used per text message
-    */
+ * SMS credits used per text message
+ */
     'usedCredits'?: number;
     /**
-    * Remaining SMS credits of the user
-    */
+ * Remaining SMS credits of the user
+ */
     'remainingCredits'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -6903,53 +8094,53 @@ export class SendSms {
 export class SendSmtpEmail {
     'sender'?: SendSmtpEmailSender;
     /**
-    * Mandatory if messageVersions are not passed, ignored if messageVersions are passed. List of email addresses and names (optional) of the recipients. For example, [{\"name\":\"Jimmy\", \"email\":\"jimmy98@example.com\"}, {\"name\":\"Joe\", \"email\":\"joe@example.com\"}]
-    */
+ * Mandatory if messageVersions are not passed, ignored if messageVersions are passed. List of email addresses and names (optional) of the recipients. For example, [{\"name\":\"Jimmy\", \"email\":\"jimmy98@example.com\"}, {\"name\":\"Joe\", \"email\":\"joe@example.com\"}]
+ */
     'to'?: Array<SendSmtpEmailTo>;
     /**
-    * List of email addresses and names (optional) of the recipients in bcc
-    */
+ * List of email addresses and names (optional) of the recipients in bcc
+ */
     'bcc'?: Array<SendSmtpEmailBcc>;
     /**
-    * List of email addresses and names (optional) of the recipients in cc
-    */
+ * List of email addresses and names (optional) of the recipients in cc
+ */
     'cc'?: Array<SendSmtpEmailCc>;
     /**
-    * HTML body of the message ( Mandatory if 'templateId' is not passed, ignored if 'templateId' is passed )
-    */
+ * HTML body of the message ( Mandatory if 'templateId' is not passed, ignored if 'templateId' is passed )
+ */
     'htmlContent'?: string;
     /**
-    * Plain Text body of the message ( Ignored if 'templateId' is passed )
-    */
+ * Plain Text body of the message ( Ignored if 'templateId' is passed )
+ */
     'textContent'?: string;
     /**
-    * Subject of the message. Mandatory if 'templateId' is not passed
-    */
+ * Subject of the message. Mandatory if 'templateId' is not passed
+ */
     'subject'?: string;
     'replyTo'?: SendSmtpEmailReplyTo;
     /**
-    * Pass the absolute URL (no local file) or the base64 content of the attachment along with the attachment name (Mandatory if attachment content is passed). For example, `[{\"url\":\"https://attachment.domain.com/myAttachmentFromUrl.jpg\", \"name\":\"myAttachmentFromUrl.jpg\"}, {\"content\":\"base64 example content\", \"name\":\"myAttachmentFromBase64.jpg\"}]`. Allowed extensions for attachment file: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub, eps, odt, mp3, m4a, m4v, wma, ogg, flac, wav, aif, aifc, aiff, mp4, mov, avi, mkv, mpeg, mpg and wmv ( If 'templateId' is passed and is in New Template Language format then both attachment url and content are accepted. If template is in Old template Language format, then 'attachment' is ignored )
-    */
+ * Pass the absolute URL (no local file) or the base64 content of the attachment along with the attachment name (Mandatory if attachment content is passed). For example, `[{\"url\":\"https://attachment.domain.com/myAttachmentFromUrl.jpg\", \"name\":\"myAttachmentFromUrl.jpg\"}, {\"content\":\"base64 example content\", \"name\":\"myAttachmentFromBase64.jpg\"}]`. Allowed extensions for attachment file: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub, eps, odt, mp3, m4a, m4v, wma, ogg, flac, wav, aif, aifc, aiff, mp4, mov, avi, mkv, mpeg, mpg, wmv and pkpass ( If 'templateId' is passed and is in New Template Language format then both attachment url and content are accepted. If template is in Old template Language format, then 'attachment' is ignored )
+ */
     'attachment'?: Array<SendSmtpEmailAttachment>;
     /**
-    * Pass the set of custom headers (not the standard headers) that shall be sent along the mail headers in the original email. 'sender.ip' header can be set (only for dedicated ip users) to mention the IP to be used for sending transactional emails. Headers are allowed in `This-Case-Only` (i.e. words separated by hyphen with first letter of each word in capital letter), they will be converted to such case styling if not in this format in the request payload. For example, `{\"sender.ip\":\"1.2.3.4\", \"X-Mailin-custom\":\"some_custom_header\"}`.
-    */
+ * Pass the set of custom headers (not the standard headers) that shall be sent along the mail headers in the original email. 'sender.ip' header can be set (only for dedicated ip users) to mention the IP to be used for sending transactional emails. Headers are allowed in `This-Case-Only` (i.e. words separated by hyphen with first letter of each word in capital letter), they will be converted to such case styling if not in this format in the request payload. For example, `{\"sender.ip\":\"1.2.3.4\", \"X-Mailin-custom\":\"some_custom_header\", \"idempotencyKey\":\"abc-123\"}`.
+ */
     'headers'?: any;
     /**
-    * Id of the template. Mandatory if messageVersions are passed
-    */
+ * Id of the template. Mandatory if messageVersions are passed
+ */
     'templateId'?: number;
     /**
-    * Pass the set of attributes to customize the template. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}. It's considered only if template is in New Template Language format.
-    */
+ * Pass the set of attributes to customize the template. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}. It's considered only if template is in New Template Language format.
+ */
     'params'?: any;
     /**
-    * You can customize and send out multiple versions of a templateId. Some global parameters such as **to(mandatory), bcc, cc, replyTo, subject** can also be customized specific to each version. The size of individual params in all the messageVersions shall not exceed 100 KB limit and that of cumulative params shall not exceed 1000 KB. This feature is currently in its beta version. You can follow this **step-by-step guide** on how to use **messageVersions** to batch send emails - https://developers.sendinblue.com/docs/batch-send-transactional-emails
-    */
+ * You can customize and send out multiple versions of a templateId. Some global parameters such as **to(mandatory), bcc, cc, replyTo, subject** can also be customized specific to each version. Total number of recipients in one API request must not exceed 2000. However, you can still pass upto 99 recipients maximum in one message version. The size of individual params in all the messageVersions shall not exceed 100 KB limit and that of cumulative params shall not exceed 1000 KB. You can follow this **step-by-step guide** on how to use **messageVersions** to batch send emails - https://developers.sendinblue.com/docs/batch-send-transactional-emails
+ */
     'messageVersions'?: Array<SendSmtpEmailMessageVersions>;
     /**
-    * Tag your emails to find them more easily
-    */
+ * Tag your emails to find them more easily
+ */
     'tags'?: Array<string>;
 
     static discriminator: string | undefined = undefined;
@@ -7033,16 +8224,16 @@ export class SendSmtpEmail {
 
 export class SendSmtpEmailAttachment {
     /**
-    * Absolute url of the attachment (no local file).
-    */
+ * Absolute url of the attachment (no local file).
+ */
     'url'?: string;
     /**
-    * Base64 encoded chunk data of the attachment generated on the fly
-    */
+ * Base64 encoded chunk data of the attachment generated on the fly
+ */
     'content'?: string;
     /**
-    * Required if content is passed. Name of the attachment
-    */
+ * Required if content is passed. Name of the attachment
+ */
     'name'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -7071,12 +8262,12 @@ export class SendSmtpEmailAttachment {
 
 export class SendSmtpEmailBcc {
     /**
-    * Email address of the recipient in bcc
-    */
+ * Email address of the recipient in bcc
+ */
     'email': string;
     /**
-    * Name of the recipient in bcc. Maximum allowed characters are 70.
-    */
+ * Name of the recipient in bcc. Maximum allowed characters are 70.
+ */
     'name'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -7100,12 +8291,12 @@ export class SendSmtpEmailBcc {
 
 export class SendSmtpEmailCc {
     /**
-    * Email address of the recipient in cc
-    */
+ * Email address of the recipient in cc
+ */
     'email': string;
     /**
-    * Name of the recipient in cc. Maximum allowed characters are 70.
-    */
+ * Name of the recipient in cc. Maximum allowed characters are 70.
+ */
     'name'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -7129,25 +8320,25 @@ export class SendSmtpEmailCc {
 
 export class SendSmtpEmailMessageVersions {
     /**
-    * List of email addresses and names (_optional_) of the recipients. For example, [{\"name\":\"Jimmy\", \"email\":\"jimmy98@example.com\"}, {\"name\":\"Joe\", \"email\":\"joe@example.com\"}]
-    */
+ * List of email addresses and names (_optional_) of the recipients. For example, [{\"name\":\"Jimmy\", \"email\":\"jimmy98@example.com\"}, {\"name\":\"Joe\", \"email\":\"joe@example.com\"}]
+ */
     'to': Array<SendSmtpEmailTo1>;
     /**
-    * Pass the set of attributes to customize the template. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}. It's considered only if template is in New Template Language format.
-    */
+ * Pass the set of attributes to customize the template. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}. It's considered only if template is in New Template Language format.
+ */
     'params'?: { [key: string]: any; };
     /**
-    * List of email addresses and names (optional) of the recipients in bcc
-    */
+ * List of email addresses and names (optional) of the recipients in bcc
+ */
     'bcc'?: Array<SendSmtpEmailBcc>;
     /**
-    * List of email addresses and names (optional) of the recipients in cc
-    */
+ * List of email addresses and names (optional) of the recipients in cc
+ */
     'cc'?: Array<SendSmtpEmailCc>;
     'replyTo'?: SendSmtpEmailReplyTo1;
     /**
-    * Custom subject specific to message version 
-    */
+ * Custom subject specific to message version 
+ */
     'subject'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -7190,16 +8381,16 @@ export class SendSmtpEmailMessageVersions {
 }
 
 /**
-* Email (required), along with name (optional), on which transactional mail recipients will be able to reply back. For example, {\"email\":\"ann6533@example.com\", \"name\":\"Ann\"}.
-*/
+ * Email (required), along with name (optional), on which transactional mail recipients will be able to reply back. For example, {\"email\":\"ann6533@example.com\", \"name\":\"Ann\"}.
+ */
 export class SendSmtpEmailReplyTo {
     /**
-    * Email address in reply to
-    */
+ * Email address in reply to
+ */
     'email': string;
     /**
-    * Name in reply to. Maximum allowed characters are 70.
-    */
+ * Name in reply to. Maximum allowed characters are 70.
+ */
     'name'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -7222,16 +8413,16 @@ export class SendSmtpEmailReplyTo {
 }
 
 /**
-* Email (required), along with name (optional), on which transactional mail recipients will be able to reply back. For example, {\"email\":\"ann6533@example.com\", \"name\":\"Ann\"}
-*/
+ * Email (required), along with name (optional), on which transactional mail recipients will be able to reply back. For example, {\"email\":\"ann6533@example.com\", \"name\":\"Ann\"}
+ */
 export class SendSmtpEmailReplyTo1 {
     /**
-    * Email address in reply to
-    */
+ * Email address in reply to
+ */
     'email': string;
     /**
-    * Name in reply to. Maximum allowed characters are 70.
-    */
+ * Name in reply to. Maximum allowed characters are 70.
+ */
     'name'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -7254,20 +8445,20 @@ export class SendSmtpEmailReplyTo1 {
 }
 
 /**
-* Mandatory if `templateId` is not passed. Pass `name` (optional) and `email` OR `id` of sender from which emails will be sent. `name` will be ignored if passed along with sender `id`. For example, {\"name\":\"Mary from MyShop\", \"email\":\"no-reply@myshop.com\"} or {\"id\":2}
-*/
+ * Mandatory if `templateId` is not passed. Pass `name` (optional) and `email` OR `id` of sender from which emails will be sent. `name` will be ignored if passed along with sender `id`. For example, {\"name\":\"Mary from MyShop\", \"email\":\"no-reply@myshop.com\"} or {\"id\":2}
+ */
 export class SendSmtpEmailSender {
     /**
-    * Name of the sender from which the emails will be sent. Maximum allowed characters are 70. Applicable only when email is passed.
-    */
+ * Name of the sender from which the emails will be sent. Maximum allowed characters are 70. Applicable only when email is passed.
+ */
     'name'?: string;
     /**
-    * Email of the sender from which the emails will be sent. Mandatory if sender id is not passed.
-    */
+ * Email of the sender from which the emails will be sent. Mandatory if sender id is not passed.
+ */
     'email'?: string;
     /**
-    * Id of the sender from which the emails will be sent. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email). Mandatory if email is not passed.
-    */
+ * Id of the sender from which the emails will be sent. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email). Mandatory if email is not passed.
+ */
     'id'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -7296,12 +8487,12 @@ export class SendSmtpEmailSender {
 
 export class SendSmtpEmailTo {
     /**
-    * Email address of the recipient
-    */
+ * Email address of the recipient
+ */
     'email': string;
     /**
-    * Name of the recipient. Maximum allowed characters are 70.
-    */
+ * Name of the recipient. Maximum allowed characters are 70.
+ */
     'name'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -7325,12 +8516,12 @@ export class SendSmtpEmailTo {
 
 export class SendSmtpEmailTo1 {
     /**
-    * Email address of the recipient
-    */
+ * Email address of the recipient
+ */
     'email': string;
     /**
-    * Name of the recipient. **Maximum allowed characters are 70**.
-    */
+ * Name of the recipient. **Maximum allowed characters are 70**.
+ */
     'name'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -7354,8 +8545,8 @@ export class SendSmtpEmailTo1 {
 
 export class SendTestEmail {
     /**
-    * List of the email addresses of the recipients whom you wish to send the test mail. If left empty, the test mail will be sent to your entire test list. You can not send more than 50 test emails per day.
-    */
+ * List of the email addresses of the recipients whom you wish to send the test mail. If left empty, the test mail will be sent to your entire test list. You can not send more than 50 test emails per day.
+ */
     'emailTo'?: Array<string>;
 
     static discriminator: string | undefined = undefined;
@@ -7374,8 +8565,8 @@ export class SendTestEmail {
 
 export class SendTestSms {
     /**
-    * Mobile number of the recipient with the country code. This number must belong to one of your contacts in SendinBlue account and must not be blacklisted
-    */
+ * Mobile number of the recipient with the country code. This number must belong to one of your contacts in SendinBlue account and must not be blacklisted
+ */
     'phoneNumber'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -7394,29 +8585,33 @@ export class SendTestSms {
 
 export class SendTransacSms {
     /**
-    * Name of the sender. **The number of characters is limited to 11 for alphanumeric characters and 15 for numeric characters**
-    */
+ * Name of the sender. **The number of characters is limited to 11 for alphanumeric characters and 15 for numeric characters**
+ */
     'sender': string;
     /**
-    * Mobile number to send SMS with the country code
-    */
+ * Mobile number to send SMS with the country code
+ */
     'recipient': string;
     /**
-    * Content of the message. If more than 160 characters long, will be sent as multiple text messages
-    */
+ * Content of the message. If more than 160 characters long, will be sent as multiple text messages
+ */
     'content': string;
     /**
-    * Type of the SMS. Marketing SMS messages are those sent typically with marketing content. Transactional SMS messages are sent to individuals and are triggered in response to some action, such as a sign-up, purchase, etc.
-    */
+ * Type of the SMS. Marketing SMS messages are those sent typically with marketing content. Transactional SMS messages are sent to individuals and are triggered in response to some action, such as a sign-up, purchase, etc.
+ */
     'type'?: SendTransacSms.TypeEnum;
     /**
-    * Tag of the message
-    */
+ * Tag of the message
+ */
     'tag'?: string;
     /**
-    * Webhook to call for each event triggered by the message (delivered etc.)
-    */
+ * Webhook to call for each event triggered by the message (delivered etc.)
+ */
     'webUrl'?: string;
+    /**
+ * Format of the message. It indicates whether the content should be treated as unicode or not.
+ */
+    'unicodeEnabled'?: boolean;
 
     static discriminator: string | undefined = undefined;
 
@@ -7450,6 +8645,11 @@ export class SendTransacSms {
             "name": "webUrl",
             "baseName": "webUrl",
             "type": "string"
+        },
+        {
+            "name": "unicodeEnabled",
+            "baseName": "unicodeEnabled",
+            "type": "boolean"
         }    ];
 
     static getAttributeTypeMap() {
@@ -7463,14 +8663,684 @@ export namespace SendTransacSms {
         Marketing = <any> 'marketing'
     }
 }
+export class SsoTokenRequest {
+    /**
+ * Id of the sub-account organization
+ */
+    'id': number;
+    /**
+ * User email of sub-account organization
+ */
+    'email'?: string;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SsoTokenRequest.attributeTypeMap;
+    }
+}
+
+export class SubAccountDetailsResponse {
+    /**
+ * Name of the sub-account user
+ */
+    'name'?: string;
+    /**
+ * Email id of the sub-account organization
+ */
+    'email'?: string;
+    /**
+ * Sub-account company name
+ */
+    'companyName'?: string;
+    'planInfo'?: SubAccountDetailsResponsePlanInfo;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string"
+        },
+        {
+            "name": "companyName",
+            "baseName": "companyName",
+            "type": "string"
+        },
+        {
+            "name": "planInfo",
+            "baseName": "planInfo",
+            "type": "SubAccountDetailsResponsePlanInfo"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountDetailsResponse.attributeTypeMap;
+    }
+}
+
+/**
+ * Sub-account plan details
+ */
+export class SubAccountDetailsResponsePlanInfo {
+    'credits'?: SubAccountDetailsResponsePlanInfoCredits;
+    'features'?: SubAccountDetailsResponsePlanInfoFeatures;
+    /**
+ * type of the plan
+ */
+    'planType'?: string;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "credits",
+            "baseName": "credits",
+            "type": "SubAccountDetailsResponsePlanInfoCredits"
+        },
+        {
+            "name": "features",
+            "baseName": "features",
+            "type": "SubAccountDetailsResponsePlanInfoFeatures"
+        },
+        {
+            "name": "planType",
+            "baseName": "planType",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountDetailsResponsePlanInfo.attributeTypeMap;
+    }
+}
+
+/**
+ * Sub-account messaging quota details
+ */
+export class SubAccountDetailsResponsePlanInfoCredits {
+    /**
+ * Sms quota of the sub-account
+ */
+    'sms'?: number;
+    'emails'?: SubAccountDetailsResponsePlanInfoCreditsEmails;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "sms",
+            "baseName": "sms",
+            "type": "number"
+        },
+        {
+            "name": "emails",
+            "baseName": "emails",
+            "type": "SubAccountDetailsResponsePlanInfoCreditsEmails"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountDetailsResponsePlanInfoCredits.attributeTypeMap;
+    }
+}
+
+/**
+ * Email quota details of the sub-account
+ */
+export class SubAccountDetailsResponsePlanInfoCreditsEmails {
+    /**
+ * Quantity of email messaging limits provided
+ */
+    'quantity'?: number;
+    /**
+ * Available email messaging limits for use
+ */
+    'remaining'?: number;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "quantity",
+            "baseName": "quantity",
+            "type": "number"
+        },
+        {
+            "name": "remaining",
+            "baseName": "remaining",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountDetailsResponsePlanInfoCreditsEmails.attributeTypeMap;
+    }
+}
+
+/**
+ * Sub-account features and addons quota details
+ */
+export class SubAccountDetailsResponsePlanInfoFeatures {
+    'inbox'?: SubAccountDetailsResponsePlanInfoFeaturesInbox;
+    'landingPage'?: SubAccountDetailsResponsePlanInfoFeaturesLandingPage;
+    'users'?: SubAccountDetailsResponsePlanInfoFeaturesUsers;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "inbox",
+            "baseName": "inbox",
+            "type": "SubAccountDetailsResponsePlanInfoFeaturesInbox"
+        },
+        {
+            "name": "landingPage",
+            "baseName": "landingPage",
+            "type": "SubAccountDetailsResponsePlanInfoFeaturesLandingPage"
+        },
+        {
+            "name": "users",
+            "baseName": "users",
+            "type": "SubAccountDetailsResponsePlanInfoFeaturesUsers"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountDetailsResponsePlanInfoFeatures.attributeTypeMap;
+    }
+}
+
+/**
+ * Inbox details
+ */
+export class SubAccountDetailsResponsePlanInfoFeaturesInbox {
+    /**
+ * Quantity of inbox provided
+ */
+    'quantity'?: number;
+    /**
+ * Available inboxes for use
+ */
+    'remaining'?: number;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "quantity",
+            "baseName": "quantity",
+            "type": "number"
+        },
+        {
+            "name": "remaining",
+            "baseName": "remaining",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountDetailsResponsePlanInfoFeaturesInbox.attributeTypeMap;
+    }
+}
+
+/**
+ * Landing page details
+ */
+export class SubAccountDetailsResponsePlanInfoFeaturesLandingPage {
+    /**
+ * Quantity of landing pages provided
+ */
+    'quantity'?: number;
+    /**
+ * Available landing pages for use
+ */
+    'remaining'?: number;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "quantity",
+            "baseName": "quantity",
+            "type": "number"
+        },
+        {
+            "name": "remaining",
+            "baseName": "remaining",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountDetailsResponsePlanInfoFeaturesLandingPage.attributeTypeMap;
+    }
+}
+
+/**
+ * Multi-account details
+ */
+export class SubAccountDetailsResponsePlanInfoFeaturesUsers {
+    /**
+ * Quantity of multi-account's provided
+ */
+    'quantity'?: number;
+    /**
+ * Available multi-accounts for use
+ */
+    'remaining'?: number;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "quantity",
+            "baseName": "quantity",
+            "type": "number"
+        },
+        {
+            "name": "remaining",
+            "baseName": "remaining",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountDetailsResponsePlanInfoFeaturesUsers.attributeTypeMap;
+    }
+}
+
+/**
+ * Details of the plan to be changed
+ */
+export class SubAccountUpdatePlanRequest {
+    'credits'?: SubAccountUpdatePlanRequestCredits;
+    'features'?: SubAccountUpdatePlanRequestFeatures;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "credits",
+            "baseName": "credits",
+            "type": "SubAccountUpdatePlanRequestCredits"
+        },
+        {
+            "name": "features",
+            "baseName": "features",
+            "type": "SubAccountUpdatePlanRequestFeatures"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountUpdatePlanRequest.attributeTypeMap;
+    }
+}
+
+/**
+ * Credit details to update
+ */
+export class SubAccountUpdatePlanRequestCredits {
+    /**
+ * Number of email credits
+ */
+    'email'?: number;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountUpdatePlanRequestCredits.attributeTypeMap;
+    }
+}
+
+/**
+ * Features details to update
+ */
+export class SubAccountUpdatePlanRequestFeatures {
+    /**
+ * Number of multi-users
+ */
+    'users'?: number;
+    /**
+ * Number of landing pages
+ */
+    'landingPage'?: number;
+    /**
+ * Number of inboxes
+ */
+    'inbox'?: number;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "users",
+            "baseName": "users",
+            "type": "number"
+        },
+        {
+            "name": "landingPage",
+            "baseName": "landingPage",
+            "type": "number"
+        },
+        {
+            "name": "inbox",
+            "baseName": "inbox",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountUpdatePlanRequestFeatures.attributeTypeMap;
+    }
+}
+
+export class SubAccountsResponse {
+    /**
+ * Total number of subaccounts
+ */
+    'count'?: number;
+    'subAccounts'?: Array<SubAccountsResponseSubAccounts>;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "count",
+            "baseName": "count",
+            "type": "number"
+        },
+        {
+            "name": "subAccounts",
+            "baseName": "subAccounts",
+            "type": "Array<SubAccountsResponseSubAccounts>"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountsResponse.attributeTypeMap;
+    }
+}
+
+export class SubAccountsResponseSubAccounts {
+    /**
+ * client id of sub-account organization
+ */
+    'id': number;
+    /**
+ * Name of sub-account organization
+ */
+    'companyName': string;
+    /**
+ * Whether organization is active or not
+ */
+    'active': boolean;
+    /**
+ * timestamp when the organization was created
+ */
+    'createdAt': number;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "companyName",
+            "baseName": "companyName",
+            "type": "string"
+        },
+        {
+            "name": "active",
+            "baseName": "active",
+            "type": "boolean"
+        },
+        {
+            "name": "createdAt",
+            "baseName": "createdAt",
+            "type": "number"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return SubAccountsResponseSubAccounts.attributeTypeMap;
+    }
+}
+
+/**
+ * Task Details
+ */
+export class Task {
+    'firstContact'?: Contact;
+    /**
+ * Unique task id
+ */
+    'id'?: string;
+    /**
+ * Id for type of task e.g Call / Email / Meeting etc.
+ */
+    'taskTypeId': string;
+    /**
+ * Name of task
+ */
+    'name': string;
+    /**
+ * Contact ids for contacts linked to this task
+ */
+    'contactsIds'?: Array<number>;
+    /**
+ * Contact details for contacts linked to this task
+ */
+    'contacts'?: Array<Contact>;
+    /**
+ * Deal ids for deals a task is linked to
+ */
+    'dealsIds'?: Array<string>;
+    /**
+ * Companies ids for companies a task is linked to
+ */
+    'companiesIds'?: Array<string>;
+    /**
+ * User id to whom task is assigned
+ */
+    'assignToId'?: string;
+    /**
+ * Task date/time
+ */
+    'date': Date;
+    /**
+ * Duration of task
+ */
+    'duration'?: number;
+    /**
+ * Notes added to a task
+ */
+    'notes'?: string;
+    /**
+ * Task marked as done
+ */
+    'done'?: boolean;
+    /**
+ * Task reminder date/time for a task
+ */
+    'reminder'?: TaskReminder;
+    /**
+ * Task created date/time
+ */
+    'createdAt'?: Date;
+    /**
+ * Task update date/time
+ */
+    'updatedAt'?: Date;
+    'refs'?: any;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "firstContact",
+            "baseName": "firstContact",
+            "type": "Contact"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "string"
+        },
+        {
+            "name": "taskTypeId",
+            "baseName": "taskTypeId",
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "contactsIds",
+            "baseName": "contactsIds",
+            "type": "Array<number>"
+        },
+        {
+            "name": "contacts",
+            "baseName": "contacts",
+            "type": "Array<Contact>"
+        },
+        {
+            "name": "dealsIds",
+            "baseName": "dealsIds",
+            "type": "Array<string>"
+        },
+        {
+            "name": "companiesIds",
+            "baseName": "companiesIds",
+            "type": "Array<string>"
+        },
+        {
+            "name": "assignToId",
+            "baseName": "assignToId",
+            "type": "string"
+        },
+        {
+            "name": "date",
+            "baseName": "date",
+            "type": "Date"
+        },
+        {
+            "name": "duration",
+            "baseName": "duration",
+            "type": "number"
+        },
+        {
+            "name": "notes",
+            "baseName": "notes",
+            "type": "string"
+        },
+        {
+            "name": "done",
+            "baseName": "done",
+            "type": "boolean"
+        },
+        {
+            "name": "reminder",
+            "baseName": "reminder",
+            "type": "TaskReminder"
+        },
+        {
+            "name": "createdAt",
+            "baseName": "createdAt",
+            "type": "Date"
+        },
+        {
+            "name": "updatedAt",
+            "baseName": "updatedAt",
+            "type": "Date"
+        },
+        {
+            "name": "refs",
+            "baseName": "refs",
+            "type": "any"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Task.attributeTypeMap;
+    }
+}
+
+/**
+ * Task reminder date/time for a task
+ */
+export class TaskReminder {
+    /**
+ * Value of time unit before reminder is to be sent
+ */
+    'value': number;
+    /**
+ * Unit of time before reminder is to be sent
+ */
+    'unit': TaskReminder.UnitEnum;
+    /**
+ * Type of task reminder
+ */
+    'types': Array<string>;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "value",
+            "baseName": "value",
+            "type": "number"
+        },
+        {
+            "name": "unit",
+            "baseName": "unit",
+            "type": "TaskReminder.UnitEnum"
+        },
+        {
+            "name": "types",
+            "baseName": "types",
+            "type": "Array<string>"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return TaskReminder.attributeTypeMap;
+    }
+}
+
+export namespace TaskReminder {
+    export enum UnitEnum {
+        Minutes = <any> 'minutes',
+        Hours = <any> 'hours',
+        Weeks = <any> 'weeks',
+        Days = <any> 'days'
+    }
+}
 export class UpdateAttribute {
     /**
-    * Value of the attribute to update. Use only if the attribute's category is 'calculated' or 'global'
-    */
+ * Value of the attribute to update. Use only if the attribute's category is 'calculated' or 'global'
+ */
     'value'?: string;
     /**
-    * List of the values and labels that the attribute can take. Use only if the attribute's category is \"category\". For example, [{\"value\":1, \"label\":\"male\"}, {\"value\":2, \"label\":\"female\"}]
-    */
+ * List of the values and labels that the attribute can take. Use only if the attribute's category is \"category\". For example, [{\"value\":1, \"label\":\"male\"}, {\"value\":2, \"label\":\"female\"}]
+ */
     'enumeration'?: Array<UpdateAttributeEnumeration>;
 
     static discriminator: string | undefined = undefined;
@@ -7494,12 +9364,12 @@ export class UpdateAttribute {
 
 export class UpdateAttributeEnumeration {
     /**
-    * Id of the value
-    */
+ * Id of the value
+ */
     'value': number;
     /**
-    * Label of the value
-    */
+ * Label of the value
+ */
     'label': string;
 
     static discriminator: string | undefined = undefined;
@@ -7521,13 +9391,148 @@ export class UpdateAttributeEnumeration {
     }
 }
 
+export class UpdateBatchContacts {
+    /**
+ * List of contacts to be updated
+ */
+    'contacts'?: Array<UpdateBatchContactsContacts>;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "contacts",
+            "baseName": "contacts",
+            "type": "Array<UpdateBatchContactsContacts>"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return UpdateBatchContacts.attributeTypeMap;
+    }
+}
+
+export class UpdateBatchContactsContacts {
+    /**
+ * Email address of the user to be updated (For each operation only pass one of the supported contact identifiers. Email, id or sms)
+ */
+    'email'?: string;
+    /**
+ * id of the user to be updated (For each operation only pass one of the supported contact identifiers. Email, id or sms)
+ */
+    'id'?: number;
+    /**
+ * SMS of the user to be updated (For each operation only pass one of the supported contact identifiers. Email, id or sms)
+ */
+    'sms'?: string;
+    /**
+ * Pass the set of attributes to be updated. **These attributes must be present in your account**. To update existing email address of a contact with the new one please pass EMAIL in attribtes. For example, **{ \"EMAIL\":\"newemail@domain.com\", \"FNAME\":\"Ellie\", \"LNAME\":\"Roger\"}**. Keep in mind transactional attributes can be updated the same way as normal attributes. Mobile Number in **SMS** field should be passed with proper country code. For example: **{\"SMS\":\"+91xxxxxxxxxx\"} or {\"SMS\":\"0091xxxxxxxxxx\"}** 
+ */
+    'attributes'?: { [key: string]: any; };
+    /**
+ * Set/unset this field to blacklist/allow the contact for emails (emailBlacklisted = true)
+ */
+    'emailBlacklisted'?: boolean;
+    /**
+ * Set/unset this field to blacklist/allow the contact for SMS (smsBlacklisted = true)
+ */
+    'smsBlacklisted'?: boolean;
+    /**
+ * Ids of the lists to add the contact to
+ */
+    'listIds'?: Array<number>;
+    /**
+ * Ids of the lists to remove the contact from
+ */
+    'unlinkListIds'?: Array<number>;
+    /**
+ * transactional email forbidden sender for contact. Use only for email Contact
+ */
+    'smtpBlacklistSender'?: Array<string>;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number"
+        },
+        {
+            "name": "sms",
+            "baseName": "sms",
+            "type": "string"
+        },
+        {
+            "name": "attributes",
+            "baseName": "attributes",
+            "type": "{ [key: string]: any; }"
+        },
+        {
+            "name": "emailBlacklisted",
+            "baseName": "emailBlacklisted",
+            "type": "boolean"
+        },
+        {
+            "name": "smsBlacklisted",
+            "baseName": "smsBlacklisted",
+            "type": "boolean"
+        },
+        {
+            "name": "listIds",
+            "baseName": "listIds",
+            "type": "Array<number>"
+        },
+        {
+            "name": "unlinkListIds",
+            "baseName": "unlinkListIds",
+            "type": "Array<number>"
+        },
+        {
+            "name": "smtpBlacklistSender",
+            "baseName": "smtpBlacklistSender",
+            "type": "Array<string>"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return UpdateBatchContactsContacts.attributeTypeMap;
+    }
+}
+
+export class UpdateBatchContactsModel {
+    'successIds'?: Array<number>;
+    'failureIds'?: Array<number>;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "successIds",
+            "baseName": "successIds",
+            "type": "Array<number>"
+        },
+        {
+            "name": "failureIds",
+            "baseName": "failureIds",
+            "type": "Array<number>"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return UpdateBatchContactsModel.attributeTypeMap;
+    }
+}
+
 /**
-* Status of the campaign
-*/
+ * Status of the campaign
+ */
 export class UpdateCampaignStatus {
     /**
-    * Note:- replicateTemplate status will be available only for template type campaigns.
-    */
+ * Note:- replicateTemplate status will be available only for template type campaigns.
+ */
     'status'?: UpdateCampaignStatus.StatusEnum;
 
     static discriminator: string | undefined = undefined;
@@ -7558,24 +9563,24 @@ export namespace UpdateCampaignStatus {
 }
 export class UpdateChild {
     /**
-    * New Email address to update the child account
-    */
+ * New Email address to update the child account
+ */
     'email'?: string;
     /**
-    * New First name to use to update the child account
-    */
+ * New First name to use to update the child account
+ */
     'firstName'?: string;
     /**
-    * New Last name to use to update the child account
-    */
+ * New Last name to use to update the child account
+ */
     'lastName'?: string;
     /**
-    * New Company name to use to update the child account
-    */
+ * New Company name to use to update the child account
+ */
     'companyName'?: string;
     /**
-    * New password for the child account to login
-    */
+ * New password for the child account to login
+ */
     'password'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -7614,20 +9619,20 @@ export class UpdateChild {
 
 export class UpdateChildAccountStatus {
     /**
-    * Status of Transactional Email Platform activation for your account (true=enabled, false=disabled)
-    */
+ * Status of Transactional Email Platform activation for your account (true=enabled, false=disabled)
+ */
     'transactionalEmail'?: boolean;
     /**
-    * Status of Transactional SMS Platform activation for your account (true=enabled, false=disabled)
-    */
+ * Status of Transactional SMS Platform activation for your account (true=enabled, false=disabled)
+ */
     'transactionalSms'?: boolean;
     /**
-    * Status of Marketing Automation Platform activation for your account (true=enabled, false=disabled)
-    */
+ * Status of Marketing Automation Platform activation for your account (true=enabled, false=disabled)
+ */
     'marketingAutomation'?: boolean;
     /**
-    * Status of SMS Campaign Platform activation for your account (true=enabled, false=disabled)
-    */
+ * Status of SMS Campaign Platform activation for your account (true=enabled, false=disabled)
+ */
     'smsCampaign'?: boolean;
 
     static discriminator: string | undefined = undefined;
@@ -7661,8 +9666,8 @@ export class UpdateChildAccountStatus {
 
 export class UpdateChildDomain {
     /**
-    * Value for the sender domain that will replace the existing domain
-    */
+ * Value for the sender domain that will replace the existing domain
+ */
     'domain'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -7681,28 +9686,28 @@ export class UpdateChildDomain {
 
 export class UpdateContact {
     /**
-    * Pass the set of attributes to be updated. These attributes must be present in your account. To update existing email address of a contact with the new one please pass EMAIL in attribtes. For example, `{ \"EMAIL\":\"newemail@domain.com\", \"FNAME\":\"Ellie\", \"LNAME\":\"Roger\"}`. Keep in mind transactional attributes can be updated the same way as normal attributes. Mobile Number in \"SMS\" field should be passed with proper country code. For example {\"SMS\":\"+91xxxxxxxxxx\"} or {\"SMS\":\"0091xxxxxxxxxx\"}
-    */
+ * Pass the set of attributes to be updated. These attributes must be present in your account. To update existing email address of a contact with the new one please pass EMAIL in attribtes. For example, `{ \"EMAIL\":\"newemail@domain.com\", \"FNAME\":\"Ellie\", \"LNAME\":\"Roger\"}`. Keep in mind transactional attributes can be updated the same way as normal attributes. Mobile Number in \"SMS\" field should be passed with proper country code. For example {\"SMS\":\"+91xxxxxxxxxx\"} or {\"SMS\":\"0091xxxxxxxxxx\"}
+ */
     'attributes'?: any;
     /**
-    * Set/unset this field to blacklist/allow the contact for emails (emailBlacklisted = true)
-    */
+ * Set/unset this field to blacklist/allow the contact for emails (emailBlacklisted = true)
+ */
     'emailBlacklisted'?: boolean;
     /**
-    * Set/unset this field to blacklist/allow the contact for SMS (smsBlacklisted = true)
-    */
+ * Set/unset this field to blacklist/allow the contact for SMS (smsBlacklisted = true)
+ */
     'smsBlacklisted'?: boolean;
     /**
-    * Ids of the lists to add the contact to
-    */
+ * Ids of the lists to add the contact to
+ */
     'listIds'?: Array<number>;
     /**
-    * Ids of the lists to remove the contact from
-    */
+ * Ids of the lists to remove the contact from
+ */
     'unlinkListIds'?: Array<number>;
     /**
-    * transactional email forbidden sender for contact. Use only for email Contact
-    */
+ * transactional email forbidden sender for contact. Use only for email Contact
+ */
     'smtpBlacklistSender'?: Array<string>;
 
     static discriminator: string | undefined = undefined;
@@ -7746,110 +9751,110 @@ export class UpdateContact {
 
 export class UpdateEmailCampaign {
     /**
-    * Tag of the campaign
-    */
+ * Tag of the campaign
+ */
     'tag'?: string;
     'sender'?: UpdateEmailCampaignSender;
     /**
-    * Name of the campaign
-    */
+ * Name of the campaign
+ */
     'name'?: string;
     /**
-    * Body of the message (HTML version). REQUIRED if htmlUrl is empty
-    */
+ * Body of the message (HTML version). REQUIRED if htmlUrl is empty
+ */
     'htmlContent'?: string;
     /**
-    * Url which contents the body of the email message. REQUIRED if htmlContent is empty
-    */
+ * Url which contents the body of the email message. REQUIRED if htmlContent is empty
+ */
     'htmlUrl'?: string;
     /**
-    * UTC date-time on which the campaign has to run (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. If sendAtBestTime is set to true, your campaign will be sent according to the date passed (ignoring the time part).
-    */
+ * UTC date-time on which the campaign has to run (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. If sendAtBestTime is set to true, your campaign will be sent according to the date passed (ignoring the time part).
+ */
     'scheduledAt'?: string;
     /**
-    * Subject of the campaign
-    */
+ * Subject of the campaign
+ */
     'subject'?: string;
     /**
-    * Email on which campaign recipients will be able to reply to
-    */
+ * Email on which campaign recipients will be able to reply to
+ */
     'replyTo'?: string;
     /**
-    * To personalize the «To» Field. If you want to include the first name and last name of your recipient, add {FNAME} {LNAME}. These contact attributes must already exist in your SendinBlue account. If input parameter 'params' used please use {{contact.FNAME}} {{contact.LNAME}} for personalization
-    */
+ * To personalize the «To» Field. If you want to include the first name and last name of your recipient, add {FNAME} {LNAME}. These contact attributes must already exist in your SendinBlue account. If input parameter 'params' used please use {{contact.FNAME}} {{contact.LNAME}} for personalization
+ */
     'toField'?: string;
     'recipients'?: UpdateEmailCampaignRecipients;
     /**
-    * Absolute url of the attachment (no local file). Extension allowed: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub and eps
-    */
+ * Absolute url of the attachment (no local file). Extension allowed: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub and eps
+ */
     'attachmentUrl'?: string;
     /**
-    * Status of inline image. inlineImageActivation = false means image can’t be embedded, & inlineImageActivation = true means image can be embedded, in the email. You cannot send a campaign of more than 4MB with images embedded in the email. Campaigns with the images embedded in the email must be sent to less than 5000 contacts.
-    */
+ * Status of inline image. inlineImageActivation = false means image can’t be embedded, & inlineImageActivation = true means image can be embedded, in the email. You cannot send a campaign of more than 4MB with images embedded in the email. Campaigns with the images embedded in the email must be sent to less than 5000 contacts.
+ */
     'inlineImageActivation'?: boolean;
     /**
-    * Status of mirror links in campaign. mirrorActive = false means mirror links are deactivated, & mirrorActive = true means mirror links are activated, in the campaign
-    */
+ * Status of mirror links in campaign. mirrorActive = false means mirror links are deactivated, & mirrorActive = true means mirror links are activated, in the campaign
+ */
     'mirrorActive'?: boolean;
     /**
-    * FOR TRIGGER ONLY ! Type of trigger campaign.recurring = false means contact can receive the same Trigger campaign only once, & recurring = true means contact can receive the same Trigger campaign several times
-    */
+ * FOR TRIGGER ONLY ! Type of trigger campaign.recurring = false means contact can receive the same Trigger campaign only once, & recurring = true means contact can receive the same Trigger campaign several times
+ */
     'recurring'?: boolean;
     /**
-    * Footer of the email campaign
-    */
+ * Footer of the email campaign
+ */
     'footer'?: string;
     /**
-    * Header of the email campaign
-    */
+ * Header of the email campaign
+ */
     'header'?: string;
     /**
-    * Customize the utm_campaign value. If this field is empty, the campaign name will be used. Only alphanumeric characters and spaces are allowed
-    */
+ * Customize the utm_campaign value. If this field is empty, the campaign name will be used. Only alphanumeric characters and spaces are allowed
+ */
     'utmCampaign'?: string;
     /**
-    * Pass the set of attributes to customize the type 'classic' campaign. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}. The 'params' field will get updated, only if the campaign is in New Template Language, else ignored. The New Template Language is dependent on the values of 'subject', 'htmlContent/htmlUrl', 'sender.name' & 'toField'
-    */
+ * Pass the set of attributes to customize the type 'classic' campaign. For example, {\"FNAME\":\"Joe\", \"LNAME\":\"Doe\"}. The 'params' field will get updated, only if the campaign is in New Template Language, else ignored. The New Template Language is dependent on the values of 'subject', 'htmlContent/htmlUrl', 'sender.name' & 'toField'
+ */
     'params'?: any;
     /**
-    * Set this to true if you want to send your campaign at best time. Note:- if true, warmup ip will be disabled.
-    */
+ * Set this to true if you want to send your campaign at best time. Note:- if true, warmup ip will be disabled.
+ */
     'sendAtBestTime'?: boolean;
     /**
-    * Status of A/B Test. abTesting = false means it is disabled, & abTesting = true means it is enabled. 'subjectA', 'subjectB', 'splitRule', 'winnerCriteria' & 'winnerDelay' will be considered if abTesting is set to true. 'subject' if passed is ignored.  Can be set to true only if 'sendAtBestTime' is 'false'. You will be able to set up two subject lines for your campaign and send them to a random sample of your total recipients. Half of the test group will receive version A, and the other half will receive version B
-    */
+ * Status of A/B Test. abTesting = false means it is disabled, & abTesting = true means it is enabled. 'subjectA', 'subjectB', 'splitRule', 'winnerCriteria' & 'winnerDelay' will be considered if abTesting is set to true. 'subject' if passed is ignored.  Can be set to true only if 'sendAtBestTime' is 'false'. You will be able to set up two subject lines for your campaign and send them to a random sample of your total recipients. Half of the test group will receive version A, and the other half will receive version B
+ */
     'abTesting'?: boolean;
     /**
-    * Subject A of the campaign. Considered if abTesting = true. subjectA & subjectB should have unique value
-    */
+ * Subject A of the campaign. Considered if abTesting = true. subjectA & subjectB should have unique value
+ */
     'subjectA'?: string;
     /**
-    * Subject B of the campaign. Considered if abTesting = true. subjectA & subjectB should have unique value
-    */
+ * Subject B of the campaign. Considered if abTesting = true. subjectA & subjectB should have unique value
+ */
     'subjectB'?: string;
     /**
-    * Add the size of your test groups. Considered if abTesting = true. We'll send version A and B to a random sample of recipients, and then the winning version to everyone else
-    */
+ * Add the size of your test groups. Considered if abTesting = true. We'll send version A and B to a random sample of recipients, and then the winning version to everyone else
+ */
     'splitRule'?: number;
     /**
-    * Choose the metrics that will determinate the winning version. Considered if 'splitRule' >= 1 and < 50. If splitRule = 50, 'winnerCriteria' is ignored if passed or alreday exist in record
-    */
+ * Choose the metrics that will determinate the winning version. Considered if 'splitRule' >= 1 and < 50. If splitRule = 50, 'winnerCriteria' is ignored if passed or alreday exist in record
+ */
     'winnerCriteria'?: UpdateEmailCampaign.WinnerCriteriaEnum;
     /**
-    * Choose the duration of the test in hours. Maximum is 7 days, pass 24*7 = 168 hours. The winning version will be sent at the end of the test. Considered if 'splitRule' >= 1 and < 50. If splitRule = 50, 'winnerDelay' is ignored if passed or alreday exist in record
-    */
+ * Choose the duration of the test in hours. Maximum is 7 days, pass 24*7 = 168 hours. The winning version will be sent at the end of the test. Considered if 'splitRule' >= 1 and < 50. If splitRule = 50, 'winnerDelay' is ignored if passed or alreday exist in record
+ */
     'winnerDelay'?: number;
     /**
-    * Available for dedicated ip clients. Set this to true if you wish to warm up your ip.
-    */
+ * Available for dedicated ip clients. Set this to true if you wish to warm up your ip.
+ */
     'ipWarmupEnable'?: boolean;
     /**
-    * Set an initial quota greater than 1 for warming up your ip. We recommend you set a value of 3000.
-    */
+ * Set an initial quota greater than 1 for warming up your ip. We recommend you set a value of 3000.
+ */
     'initialQuota'?: number;
     /**
-    * Set a percentage increase rate for warming up your ip. We recommend you set the increase rate to 30% per day. If you want to send the same number of emails every day, set the daily increase value to 0%.
-    */
+ * Set a percentage increase rate for warming up your ip. We recommend you set the increase rate to 30% per day. If you want to send the same number of emails every day, set the daily increase value to 0%.
+ */
     'increaseRate'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -8008,16 +10013,16 @@ export namespace UpdateEmailCampaign {
     }
 }
 /**
-* List ids to include/exclude from campaign
-*/
+ * List ids to include/exclude from campaign
+ */
 export class UpdateEmailCampaignRecipients {
     /**
-    * List ids which have to be excluded from a campaign
-    */
+ * List ids which have to be excluded from a campaign
+ */
     'exclusionListIds'?: Array<number>;
     /**
-    * Lists Ids to send the campaign to. REQUIRED if already not present in campaign and scheduledAt is not empty
-    */
+ * Lists Ids to send the campaign to. REQUIRED if already not present in campaign and scheduledAt is not empty
+ */
     'listIds'?: Array<number>;
 
     static discriminator: string | undefined = undefined;
@@ -8040,20 +10045,20 @@ export class UpdateEmailCampaignRecipients {
 }
 
 /**
-* Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example `{\"name\":\"xyz\", \"email\":\"example@abc.com\"}` , `{\"name\":\"xyz\", \"id\":123}`
-*/
+ * Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example `{\"name\":\"xyz\", \"email\":\"example@abc.com\"}` , `{\"name\":\"xyz\", \"id\":123}`
+ */
 export class UpdateEmailCampaignSender {
     /**
-    * Sender Name from which the campaign emails are sent
-    */
+ * Sender Name from which the campaign emails are sent
+ */
     'name'?: string;
     /**
-    * Sender email from which the campaign emails are sent
-    */
+ * Sender email from which the campaign emails are sent
+ */
     'email'?: string;
     /**
-    * Select the sender for the campaign on the basis of sender id. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email).
-    */
+ * Select the sender for the campaign on the basis of sender id. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email).
+ */
     'id'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -8082,12 +10087,12 @@ export class UpdateEmailCampaignSender {
 
 export class UpdateList {
     /**
-    * Name of the list. Either of the two parameters (name, folderId) can be updated at a time.
-    */
+ * Name of the list. Either of the two parameters (name, folderId) can be updated at a time.
+ */
     'name'?: string;
     /**
-    * Id of the folder in which the list is to be moved. Either of the two parameters (name, folderId) can be updated at a time.
-    */
+ * Id of the folder in which the list is to be moved. Either of the two parameters (name, folderId) can be updated at a time.
+ */
     'folderId'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -8111,16 +10116,16 @@ export class UpdateList {
 
 export class UpdateSender {
     /**
-    * From Name to update the sender
-    */
+ * From Name to update the sender
+ */
     'name'?: string;
     /**
-    * From Email to update the sender
-    */
+ * From Email to update the sender
+ */
     'email'?: string;
     /**
-    * Only in case of dedicated IP, IPs to associate to the sender. If passed, will replace all the existing IPs.
-    */
+ * Only in case of dedicated IP, IPs to associate to the sender. If passed, will replace all the existing IPs.
+ */
     'ips'?: Array<CreateSenderIps>;
 
     static discriminator: string | undefined = undefined;
@@ -8149,22 +10154,26 @@ export class UpdateSender {
 
 export class UpdateSmsCampaign {
     /**
-    * Name of the campaign
-    */
+ * Name of the campaign
+ */
     'name'?: string;
     /**
-    * Name of the sender. **The number of characters is limited to 11 for alphanumeric characters and 15 for numeric characters**
-    */
+ * Name of the sender. **The number of characters is limited to 11 for alphanumeric characters and 15 for numeric characters**
+ */
     'sender'?: string;
     /**
-    * Content of the message. The maximum characters used per SMS is 160, if used more than that, it will be counted as more than one SMS
-    */
+ * Content of the message. The maximum characters used per SMS is 160, if used more than that, it will be counted as more than one SMS
+ */
     'content'?: string;
     'recipients'?: CreateSmsCampaignRecipients;
     /**
-    * UTC date-time on which the campaign has to run (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result.
-    */
+ * UTC date-time on which the campaign has to run (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result.
+ */
     'scheduledAt'?: string;
+    /**
+ * Format of the message. It indicates whether the content should be treated as unicode or not.
+ */
+    'unicodeEnabled'?: boolean;
 
     static discriminator: string | undefined = undefined;
 
@@ -8193,6 +10202,11 @@ export class UpdateSmsCampaign {
             "name": "scheduledAt",
             "baseName": "scheduledAt",
             "type": "string"
+        },
+        {
+            "name": "unicodeEnabled",
+            "baseName": "unicodeEnabled",
+            "type": "boolean"
         }    ];
 
     static getAttributeTypeMap() {
@@ -8202,41 +10216,41 @@ export class UpdateSmsCampaign {
 
 export class UpdateSmtpTemplate {
     /**
-    * Tag of the template
-    */
+ * Tag of the template
+ */
     'tag'?: string;
     'sender'?: UpdateSmtpTemplateSender;
     /**
-    * Name of the template
-    */
+ * Name of the template
+ */
     'templateName'?: string;
     /**
-    * Required if htmlUrl is empty. Body of the message (HTML must have more than 10 characters)
-    */
+ * Required if htmlUrl is empty. Body of the message (HTML must have more than 10 characters)
+ */
     'htmlContent'?: string;
     /**
-    * Required if htmlContent is empty. URL to the body of the email (HTML)
-    */
+ * Required if htmlContent is empty. URL to the body of the email (HTML)
+ */
     'htmlUrl'?: string;
     /**
-    * Subject of the email
-    */
+ * Subject of the email
+ */
     'subject'?: string;
     /**
-    * Email on which campaign recipients will be able to reply to
-    */
+ * Email on which campaign recipients will be able to reply to
+ */
     'replyTo'?: string;
     /**
-    * To personalize the «To» Field. If you want to include the first name and last name of your recipient, add {FNAME} {LNAME}. These contact attributes must already exist in your SendinBlue account. If input parameter 'params' used please use {{contact.FNAME}} {{contact.LNAME}} for personalization
-    */
+ * To personalize the «To» Field. If you want to include the first name and last name of your recipient, add {FNAME} {LNAME}. These contact attributes must already exist in your SendinBlue account. If input parameter 'params' used please use {{contact.FNAME}} {{contact.LNAME}} for personalization
+ */
     'toField'?: string;
     /**
-    * Absolute url of the attachment (no local file). Extension allowed: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub and eps
-    */
+ * Absolute url of the attachment (no local file). Extension allowed: xlsx, xls, ods, docx, docm, doc, csv, pdf, txt, gif, jpg, jpeg, png, tif, tiff, rtf, bmp, cgm, css, shtml, html, htm, zip, xml, ppt, pptx, tar, ez, ics, mobi, msg, pub and eps
+ */
     'attachmentUrl'?: string;
     /**
-    * Status of the template. isActive = false means template is inactive, isActive = true means template is active
-    */
+ * Status of the template. isActive = false means template is inactive, isActive = true means template is active
+ */
     'isActive'?: boolean;
 
     static discriminator: string | undefined = undefined;
@@ -8299,20 +10313,20 @@ export class UpdateSmtpTemplate {
 }
 
 /**
-* Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example `{\"name\":\"xyz\", \"email\":\"example@abc.com\"}` , `{\"name\":\"xyz\", \"id\":123}`
-*/
+ * Sender details including id or email and name (optional). Only one of either Sender's email or Sender's ID shall be passed in one request at a time. For example `{\"name\":\"xyz\", \"email\":\"example@abc.com\"}` , `{\"name\":\"xyz\", \"id\":123}`
+ */
 export class UpdateSmtpTemplateSender {
     /**
-    * Name of the sender
-    */
+ * Name of the sender
+ */
     'name'?: string;
     /**
-    * Email of the sender
-    */
+ * Email of the sender
+ */
     'email'?: string;
     /**
-    * Select the sender for the template on the basis of sender id. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email).
-    */
+ * Select the sender for the template on the basis of sender id. In order to select a sender with specific pool of IP’s, dedicated ip users shall pass id (instead of email).
+ */
     'id'?: number;
 
     static discriminator: string | undefined = undefined;
@@ -8341,17 +10355,21 @@ export class UpdateSmtpTemplateSender {
 
 export class UpdateWebhook {
     /**
-    * URL of the webhook
-    */
+ * URL of the webhook
+ */
     'url'?: string;
     /**
-    * Description of the webhook
-    */
+ * Description of the webhook
+ */
     'description'?: string;
     /**
-    * Events triggering the webhook. Possible values for Transactional type webhook – `sent` OR `request`, `delivered`, `hardBounce`, `softBounce`, `blocked`, `spam`, `invalid`, `deferred`, `click`, `opened`, `uniqueOpened` and `unsubscribed` and possible values for Marketing type webhook – `spam`, `opened`, `click`, `hardBounce`, `softBounce`, `unsubscribed`, `listAddition` and `delivered`
-    */
+ * - Events triggering the webhook. Possible values for **Transactional** type webhook: #### `sent` OR `request`, `delivered`, `hardBounce`, `softBounce`, `blocked`, `spam`, `invalid`, `deferred`, `click`, `opened`, `uniqueOpened` and `unsubscribed` - Possible values for **Marketing** type webhook: #### `spam`, `opened`, `click`, `hardBounce`, `softBounce`, `unsubscribed`, `listAddition` & `delivered` - Possible values for **Inbound** type webhook: #### `inboundEmailProcessed` 
+ */
     'events'?: Array<UpdateWebhook.EventsEnum>;
+    /**
+ * Inbound domain of webhook, used in case of event type `inbound`
+ */
+    'domain'?: string;
 
     static discriminator: string | undefined = undefined;
 
@@ -8370,6 +10388,11 @@ export class UpdateWebhook {
             "name": "events",
             "baseName": "events",
             "type": "Array<UpdateWebhook.EventsEnum>"
+        },
+        {
+            "name": "domain",
+            "baseName": "domain",
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
@@ -8379,6 +10402,7 @@ export class UpdateWebhook {
 
 export namespace UpdateWebhook {
     export enum EventsEnum {
+        Sent = <any> 'sent',
         HardBounce = <any> 'hardBounce',
         SoftBounce = <any> 'softBounce',
         Blocked = <any> 'blocked',
@@ -8393,17 +10417,18 @@ export namespace UpdateWebhook {
         Unsubscribed = <any> 'unsubscribed',
         ListAddition = <any> 'listAddition',
         ContactUpdated = <any> 'contactUpdated',
-        ContactDeleted = <any> 'contactDeleted'
+        ContactDeleted = <any> 'contactDeleted',
+        InboundEmailProcessed = <any> 'inboundEmailProcessed'
     }
 }
 export class UploadImageToGallery {
     /**
-    * The absolute url of the image (no local file). Maximum allowed size for image is 2MB. Allowed extensions for images are - jpeg, jpg, png, bmp, gif.
-    */
+ * The absolute url of the image (no local file). Maximum allowed size for image is 2MB. Allowed extensions for images are - jpeg, jpg, png, bmp, gif.
+ */
     'imageUrl': string;
     /**
-    * Name of the image.
-    */
+ * Name of the image.
+ */
     'name'?: string;
 
     static discriminator: string | undefined = undefined;
@@ -8427,36 +10452,40 @@ export class UploadImageToGallery {
 
 
 const enumsMap: {[index: string]: any} = {
-        "AbTestCampaignResult.WinningVersionEnum": AbTestCampaignResult.WinningVersionEnum,
-        "AbTestCampaignResult.WinningCriteriaEnum": AbTestCampaignResult.WinningCriteriaEnum,
-        "CreateAttribute.TypeEnum": CreateAttribute.TypeEnum,
-        "CreateChild.LanguageEnum": CreateChild.LanguageEnum,
-        "CreateEmailCampaign.WinnerCriteriaEnum": CreateEmailCampaign.WinnerCriteriaEnum,
-        "CreateWebhook.EventsEnum": CreateWebhook.EventsEnum,
-        "CreateWebhook.TypeEnum": CreateWebhook.TypeEnum,
-        "EmailExportRecipients.RecipientsTypeEnum": EmailExportRecipients.RecipientsTypeEnum,
-        "ErrorModel.CodeEnum": ErrorModel.CodeEnum,
-        "GetAccountPlan.TypeEnum": GetAccountPlan.TypeEnum,
-        "GetAccountPlan.CreditsTypeEnum": GetAccountPlan.CreditsTypeEnum,
-        "GetAttributesAttributes.CategoryEnum": GetAttributesAttributes.CategoryEnum,
-        "GetAttributesAttributes.TypeEnum": GetAttributesAttributes.TypeEnum,
-        "GetCampaignOverview.TypeEnum": GetCampaignOverview.TypeEnum,
-        "GetCampaignOverview.StatusEnum": GetCampaignOverview.StatusEnum,
-        "GetEmailEventReportEvents.EventEnum": GetEmailEventReportEvents.EventEnum,
-        "GetProcess.StatusEnum": GetProcess.StatusEnum,
-        "GetSmsCampaignOverview.StatusEnum": GetSmsCampaignOverview.StatusEnum,
-        "GetSmsEventReportEvents.EventEnum": GetSmsEventReportEvents.EventEnum,
-        "GetTransacBlockedContactsReason.CodeEnum": GetTransacBlockedContactsReason.CodeEnum,
-        "GetWebhook.TypeEnum": GetWebhook.TypeEnum,
-        "RequestContactExportCustomContactFilter.ActionForContactsEnum": RequestContactExportCustomContactFilter.ActionForContactsEnum,
-        "RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum": RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum,
-        "RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum": RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum,
-        "RequestSmsRecipientExport.RecipientsTypeEnum": RequestSmsRecipientExport.RecipientsTypeEnum,
-        "SendReport.LanguageEnum": SendReport.LanguageEnum,
-        "SendTransacSms.TypeEnum": SendTransacSms.TypeEnum,
-        "UpdateCampaignStatus.StatusEnum": UpdateCampaignStatus.StatusEnum,
-        "UpdateEmailCampaign.WinnerCriteriaEnum": UpdateEmailCampaign.WinnerCriteriaEnum,
-        "UpdateWebhook.EventsEnum": UpdateWebhook.EventsEnum,
+    "AbTestCampaignResult.WinningVersionEnum": AbTestCampaignResult.WinningVersionEnum,
+    "AbTestCampaignResult.WinningCriteriaEnum": AbTestCampaignResult.WinningCriteriaEnum,
+    "CreateAttribute.TypeEnum": CreateAttribute.TypeEnum,
+    "CreateChild.LanguageEnum": CreateChild.LanguageEnum,
+    "CreateEmailCampaign.WinnerCriteriaEnum": CreateEmailCampaign.WinnerCriteriaEnum,
+    "CreateSubAccount.LanguageEnum": CreateSubAccount.LanguageEnum,
+    "CreateWebhook.EventsEnum": CreateWebhook.EventsEnum,
+    "CreateWebhook.TypeEnum": CreateWebhook.TypeEnum,
+    "EmailExportRecipients.RecipientsTypeEnum": EmailExportRecipients.RecipientsTypeEnum,
+    "ErrorModel.CodeEnum": ErrorModel.CodeEnum,
+    "GetAccountPlan.TypeEnum": GetAccountPlan.TypeEnum,
+    "GetAccountPlan.CreditsTypeEnum": GetAccountPlan.CreditsTypeEnum,
+    "GetAttributesAttributes.CategoryEnum": GetAttributesAttributes.CategoryEnum,
+    "GetAttributesAttributes.TypeEnum": GetAttributesAttributes.TypeEnum,
+    "GetCampaignOverview.TypeEnum": GetCampaignOverview.TypeEnum,
+    "GetCampaignOverview.StatusEnum": GetCampaignOverview.StatusEnum,
+    "GetEmailEventReportEvents.EventEnum": GetEmailEventReportEvents.EventEnum,
+    "GetInboundEmailEventsByUuidLogs.TypeEnum": GetInboundEmailEventsByUuidLogs.TypeEnum,
+    "GetProcess.StatusEnum": GetProcess.StatusEnum,
+    "GetSmsCampaignOverview.StatusEnum": GetSmsCampaignOverview.StatusEnum,
+    "GetSmsEventReportEvents.EventEnum": GetSmsEventReportEvents.EventEnum,
+    "GetTransacBlockedContactsReason.CodeEnum": GetTransacBlockedContactsReason.CodeEnum,
+    "GetWebhook.TypeEnum": GetWebhook.TypeEnum,
+    "MasterDetailsResponsePlanInfo.PlanPeriodEnum": MasterDetailsResponsePlanInfo.PlanPeriodEnum,
+    "RequestContactExportCustomContactFilter.ActionForContactsEnum": RequestContactExportCustomContactFilter.ActionForContactsEnum,
+    "RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum": RequestContactExportCustomContactFilter.ActionForEmailCampaignsEnum,
+    "RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum": RequestContactExportCustomContactFilter.ActionForSmsCampaignsEnum,
+    "RequestSmsRecipientExport.RecipientsTypeEnum": RequestSmsRecipientExport.RecipientsTypeEnum,
+    "SendReport.LanguageEnum": SendReport.LanguageEnum,
+    "SendTransacSms.TypeEnum": SendTransacSms.TypeEnum,
+    "TaskReminder.UnitEnum": TaskReminder.UnitEnum,
+    "UpdateCampaignStatus.StatusEnum": UpdateCampaignStatus.StatusEnum,
+    "UpdateEmailCampaign.WinnerCriteriaEnum": UpdateEmailCampaign.WinnerCriteriaEnum,
+    "UpdateWebhook.EventsEnum": UpdateWebhook.EventsEnum,
 }
 
 const typeMap: {[index: string]: any} = {
@@ -8470,6 +10499,9 @@ const typeMap: {[index: string]: any} = {
     "AddContactToList": AddContactToList,
     "AddCredits": AddCredits,
     "BlockDomain": BlockDomain,
+    "Body": Body,
+    "Body1": Body1,
+    "Contact": Contact,
     "CreateAttribute": CreateAttribute,
     "CreateAttributeEnumeration": CreateAttributeEnumeration,
     "CreateChild": CreateChild,
@@ -8489,6 +10521,7 @@ const typeMap: {[index: string]: any} = {
     "CreateSmtpEmail": CreateSmtpEmail,
     "CreateSmtpTemplate": CreateSmtpTemplate,
     "CreateSmtpTemplateSender": CreateSmtpTemplateSender,
+    "CreateSubAccount": CreateSubAccount,
     "CreateUpdateContactModel": CreateUpdateContactModel,
     "CreateUpdateFolder": CreateUpdateFolder,
     "CreateWebhook": CreateWebhook,
@@ -8496,6 +10529,7 @@ const typeMap: {[index: string]: any} = {
     "DeleteHardbounces": DeleteHardbounces,
     "EmailExportRecipients": EmailExportRecipients,
     "ErrorModel": ErrorModel,
+    "FileData": FileData,
     "GetAccount": GetAccount,
     "GetAccountMarketingAutomation": GetAccountMarketingAutomation,
     "GetAccountPlan": GetAccountPlan,
@@ -8541,6 +10575,7 @@ const typeMap: {[index: string]: any} = {
     "GetExtendedContactDetails": GetExtendedContactDetails,
     "GetExtendedContactDetailsStatistics": GetExtendedContactDetailsStatistics,
     "GetExtendedContactDetailsStatisticsClicked": GetExtendedContactDetailsStatisticsClicked,
+    "GetExtendedContactDetailsStatisticsDelivered": GetExtendedContactDetailsStatisticsDelivered,
     "GetExtendedContactDetailsStatisticsLinks": GetExtendedContactDetailsStatisticsLinks,
     "GetExtendedContactDetailsStatisticsMessagesSent": GetExtendedContactDetailsStatisticsMessagesSent,
     "GetExtendedContactDetailsStatisticsOpened": GetExtendedContactDetailsStatisticsOpened,
@@ -8552,6 +10587,11 @@ const typeMap: {[index: string]: any} = {
     "GetFolder": GetFolder,
     "GetFolderLists": GetFolderLists,
     "GetFolders": GetFolders,
+    "GetInboundEmailEvents": GetInboundEmailEvents,
+    "GetInboundEmailEventsByUuid": GetInboundEmailEventsByUuid,
+    "GetInboundEmailEventsByUuidAttachments": GetInboundEmailEventsByUuidAttachments,
+    "GetInboundEmailEventsByUuidLogs": GetInboundEmailEventsByUuidLogs,
+    "GetInboundEmailEventsEvents": GetInboundEmailEventsEvents,
     "GetIp": GetIp,
     "GetIpFromSender": GetIpFromSender,
     "GetIps": GetIps,
@@ -8593,6 +10633,14 @@ const typeMap: {[index: string]: any} = {
     "GetWebhook": GetWebhook,
     "GetWebhooks": GetWebhooks,
     "ManageIp": ManageIp,
+    "MasterDetailsResponse": MasterDetailsResponse,
+    "MasterDetailsResponseBillingInfo": MasterDetailsResponseBillingInfo,
+    "MasterDetailsResponseBillingInfoAddress": MasterDetailsResponseBillingInfoAddress,
+    "MasterDetailsResponseBillingInfoName": MasterDetailsResponseBillingInfoName,
+    "MasterDetailsResponsePlanInfo": MasterDetailsResponsePlanInfo,
+    "MasterDetailsResponsePlanInfoFeatures": MasterDetailsResponsePlanInfoFeatures,
+    "Note": Note,
+    "NoteData": NoteData,
     "PostContactInfo": PostContactInfo,
     "PostContactInfoContacts": PostContactInfoContacts,
     "PostSendFailed": PostSendFailed,
@@ -8623,8 +10671,27 @@ const typeMap: {[index: string]: any} = {
     "SendTestEmail": SendTestEmail,
     "SendTestSms": SendTestSms,
     "SendTransacSms": SendTransacSms,
+    "SsoTokenRequest": SsoTokenRequest,
+    "SubAccountDetailsResponse": SubAccountDetailsResponse,
+    "SubAccountDetailsResponsePlanInfo": SubAccountDetailsResponsePlanInfo,
+    "SubAccountDetailsResponsePlanInfoCredits": SubAccountDetailsResponsePlanInfoCredits,
+    "SubAccountDetailsResponsePlanInfoCreditsEmails": SubAccountDetailsResponsePlanInfoCreditsEmails,
+    "SubAccountDetailsResponsePlanInfoFeatures": SubAccountDetailsResponsePlanInfoFeatures,
+    "SubAccountDetailsResponsePlanInfoFeaturesInbox": SubAccountDetailsResponsePlanInfoFeaturesInbox,
+    "SubAccountDetailsResponsePlanInfoFeaturesLandingPage": SubAccountDetailsResponsePlanInfoFeaturesLandingPage,
+    "SubAccountDetailsResponsePlanInfoFeaturesUsers": SubAccountDetailsResponsePlanInfoFeaturesUsers,
+    "SubAccountUpdatePlanRequest": SubAccountUpdatePlanRequest,
+    "SubAccountUpdatePlanRequestCredits": SubAccountUpdatePlanRequestCredits,
+    "SubAccountUpdatePlanRequestFeatures": SubAccountUpdatePlanRequestFeatures,
+    "SubAccountsResponse": SubAccountsResponse,
+    "SubAccountsResponseSubAccounts": SubAccountsResponseSubAccounts,
+    "Task": Task,
+    "TaskReminder": TaskReminder,
     "UpdateAttribute": UpdateAttribute,
     "UpdateAttributeEnumeration": UpdateAttributeEnumeration,
+    "UpdateBatchContacts": UpdateBatchContacts,
+    "UpdateBatchContactsContacts": UpdateBatchContactsContacts,
+    "UpdateBatchContactsModel": UpdateBatchContactsModel,
     "UpdateCampaignStatus": UpdateCampaignStatus,
     "UpdateChild": UpdateChild,
     "UpdateChildAccountStatus": UpdateChildAccountStatus,
@@ -8644,8 +10711,8 @@ const typeMap: {[index: string]: any} = {
 
 export interface Authentication {
     /**
-    * Apply authentication settings to header and query params.
-    */
+ * Apply authentication settings to header and query params.
+ */
     applyToRequest(requestOptions: localVarRequest.Options): void;
 }
 
@@ -8701,7 +10768,7 @@ export enum AccountApiApiKeys {
 
 export class AccountApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -8736,7 +10803,7 @@ export class AccountApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: AccountApiApiKeys, value: string) {
@@ -8802,7 +10869,7 @@ export enum AttributesApiApiKeys {
 
 export class AttributesApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -8837,7 +10904,7 @@ export class AttributesApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: AttributesApiApiKeys, value: string) {
@@ -9105,14 +11172,14 @@ export class AttributesApi {
         });
     }
 }
-export enum ContactsApiApiKeys {
+export enum CRMApiApiKeys {
     apiKey,
     partnerKey,
 }
 
-export class ContactsApi {
+export class CRMApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -9147,7 +11214,783 @@ export class ContactsApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
+    }
+
+    public setApiKey(key: CRMApiApiKeys, value: string) {
+        (this.authentications as any)[CRMApiApiKeys[key]].apiKey = value;
+    }
+    /**
+     * 
+     * @summary Get file data by id.
+     * @param id File id to get file data.
+     * @param {*} [options] Override http request options.
+     */
+    public crmFilesIdDataGet (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: FileData;  }> {
+        const localVarPath = this.basePath + '/crm/files/{id}/data'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling crmFilesIdDataGet.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: FileData;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "FileData");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Delete file.
+     * @param id File id to delete.
+     * @param {*} [options] Override http request options.
+     */
+    public crmFilesIdDelete (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/crm/files/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling crmFilesIdDelete.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'DELETE',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Download file by id.
+     * @param id File id to download.
+     * @param {*} [options] Override http request options.
+     */
+    public crmFilesIdGet (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/crm/files/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling crmFilesIdGet.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Upload and create file.
+     * @param file File data to create a file.
+     * @param dealsIds Deal ids linked to a file
+     * @param {*} [options] Override http request options.
+     */
+    public crmFilesPost (file: Buffer, dealsIds?: Array<string>, options: any = {}) : Promise<{ response: http.IncomingMessage; body: FileData;  }> {
+        const localVarPath = this.basePath + '/crm/files';
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'file' is not null or undefined
+        if (file === null || file === undefined) {
+            throw new Error('Required parameter file was null or undefined when calling crmFilesPost.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        let localVarUseFormData = false;
+
+        if (file !== undefined) {
+            localVarFormParams['file'] = file;
+        }
+        localVarUseFormData = true;
+
+        if (dealsIds !== undefined) {
+            localVarFormParams['dealsIds'] = ObjectSerializer.serialize(dealsIds, "Array<string>");
+        }
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: FileData;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "FileData");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Delete Note by ID
+     * @param id Note ID to delete
+     * @param {*} [options] Override http request options.
+     */
+    public crmNotesIdDelete (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/crm/notes/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling crmNotesIdDelete.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'DELETE',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Get one Note by ID
+     * @param id Note ID to get
+     * @param {*} [options] Override http request options.
+     */
+    public crmNotesIdGet (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: Note;  }> {
+        const localVarPath = this.basePath + '/crm/notes/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling crmNotesIdGet.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Note;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Note");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Update a note
+     * @param id Note ID to update
+     * @param body Note data to update a note
+     * @param {*} [options] Override http request options.
+     */
+    public crmNotesIdPatch (id: string, body: NoteData, options: any = {}) : Promise<{ response: http.IncomingMessage; body: Note;  }> {
+        const localVarPath = this.basePath + '/crm/notes/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling crmNotesIdPatch.');
+        }
+
+        // verify required parameter 'body' is not null or undefined
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling crmNotesIdPatch.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'PATCH',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(body, "NoteData")
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Note;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Note");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Create a new Note
+     * @param body Note data to create a note.
+     * @param {*} [options] Override http request options.
+     */
+    public crmNotesPost (body: NoteData, options: any = {}) : Promise<{ response: http.IncomingMessage; body: Note;  }> {
+        const localVarPath = this.basePath + '/crm/notes';
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'body' is not null or undefined
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling crmNotesPost.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(body, "NoteData")
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Note;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Note");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Delete Task by id
+     * @param id 
+     * @param {*} [options] Override http request options.
+     */
+    public crmTasksIdDelete (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/crm/tasks/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling crmTasksIdDelete.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'DELETE',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Get one Task by ID
+     * @param id 
+     * @param {*} [options] Override http request options.
+     */
+    public crmTasksIdGet (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: Task;  }> {
+        const localVarPath = this.basePath + '/crm/tasks/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling crmTasksIdGet.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Task;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Task");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Update partial existing task
+     * @param id 
+     * @param body Updated task details.
+     * @param {*} [options] Override http request options.
+     */
+    public crmTasksIdPatch (id: string, body: Body1, options: any = {}) : Promise<{ response: http.IncomingMessage; body: Task;  }> {
+        const localVarPath = this.basePath + '/crm/tasks/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling crmTasksIdPatch.');
+        }
+
+        // verify required parameter 'body' is not null or undefined
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling crmTasksIdPatch.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'PATCH',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(body, "Body1")
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Task;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Task");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Create a new Task
+     * @param body Task name.
+     * @param {*} [options] Override http request options.
+     */
+    public crmTasksPost (body: Body, options: any = {}) : Promise<{ response: http.IncomingMessage; body: Task;  }> {
+        const localVarPath = this.basePath + '/crm/tasks';
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'body' is not null or undefined
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling crmTasksPost.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(body, "Body")
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Task;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Task");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
+export enum ContactsApiApiKeys {
+    apiKey,
+    partnerKey,
+}
+
+export class ContactsApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring  = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
+    }
+
+    constructor(basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: ContactsApiApiKeys, value: string) {
@@ -10690,6 +13533,64 @@ export class ContactsApi {
     }
     /**
      * 
+     * @summary Update multiple contacts
+     * @param updateBatchContacts Values to update multiple contacts
+     * @param {*} [options] Override http request options.
+     */
+    public updateBatchContacts (updateBatchContacts: UpdateBatchContacts, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/contacts/batch';
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'updateBatchContacts' is not null or undefined
+        if (updateBatchContacts === null || updateBatchContacts === undefined) {
+            throw new Error('Required parameter updateBatchContacts was null or undefined when calling updateBatchContacts.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(updateBatchContacts, "UpdateBatchContacts")
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
      * @summary Update a contact
      * @param identifier Email (urlencoded) OR ID of the contact
      * @param updateContact Values to update a contact
@@ -10891,7 +13792,7 @@ export enum EmailCampaignsApiApiKeys {
 
 export class EmailCampaignsApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -10926,7 +13827,7 @@ export class EmailCampaignsApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: EmailCampaignsApiApiKeys, value: string) {
@@ -11758,7 +14659,7 @@ export enum FoldersApiApiKeys {
 
 export class FoldersApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -11793,7 +14694,7 @@ export class FoldersApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: FoldersApiApiKeys, value: string) {
@@ -12192,14 +15093,14 @@ export class FoldersApi {
         });
     }
 }
-export enum ListsApiApiKeys {
+export enum InboundParsingApiApiKeys {
     apiKey,
     partnerKey,
 }
 
-export class ListsApi {
+export class InboundParsingApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -12234,7 +15135,197 @@ export class ListsApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
+    }
+
+    public setApiKey(key: InboundParsingApiApiKeys, value: string) {
+        (this.authentications as any)[InboundParsingApiApiKeys[key]].apiKey = value;
+    }
+    /**
+     * This endpoint will show the list of all the events for the received emails.
+     * @summary Get the list of all the events for the received emails.
+     * @param sender Email address of the sender.
+     * @param startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month.
+     * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month.
+     * @param limit Number of documents returned per page
+     * @param offset Index of the first document on the page
+     * @param sort Sort the results in the ascending/descending order of record creation
+     * @param {*} [options] Override http request options.
+     */
+    public getInboundEmailEvents (sender?: string, startDate?: string, endDate?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetInboundEmailEvents;  }> {
+        const localVarPath = this.basePath + '/inbound/events';
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        if (sender !== undefined) {
+            localVarQueryParameters['sender'] = ObjectSerializer.serialize(sender, "string");
+        }
+
+        if (startDate !== undefined) {
+            localVarQueryParameters['startDate'] = ObjectSerializer.serialize(startDate, "string");
+        }
+
+        if (endDate !== undefined) {
+            localVarQueryParameters['endDate'] = ObjectSerializer.serialize(endDate, "string");
+        }
+
+        if (limit !== undefined) {
+            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
+        }
+
+        if (offset !== undefined) {
+            localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
+
+        if (sort !== undefined) {
+            localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "'asc' | 'desc'");
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: GetInboundEmailEvents;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "GetInboundEmailEvents");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * This endpoint will show the list of all events history for one particular received email.
+     * @summary Fetch all events history for one particular received email.
+     * @param uuid UUID to fetch events specific to recieved email
+     * @param {*} [options] Override http request options.
+     */
+    public getInboundEmailEventsByUuid (uuid: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetInboundEmailEventsByUuid;  }> {
+        const localVarPath = this.basePath + '/inbound/events/{uuid}'
+            .replace('{' + 'uuid' + '}', encodeURIComponent(String(uuid)));
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'uuid' is not null or undefined
+        if (uuid === null || uuid === undefined) {
+            throw new Error('Required parameter uuid was null or undefined when calling getInboundEmailEventsByUuid.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: GetInboundEmailEventsByUuid;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "GetInboundEmailEventsByUuid");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
+export enum ListsApiApiKeys {
+    apiKey,
+    partnerKey,
+}
+
+export class ListsApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring  = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
+    }
+
+    constructor(basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: ListsApiApiKeys, value: string) {
@@ -12834,14 +15925,14 @@ export class ListsApi {
         });
     }
 }
-export enum ProcessApiApiKeys {
+export enum MasterAccountApiApiKeys {
     apiKey,
     partnerKey,
 }
 
-export class ProcessApi {
+export class MasterAccountApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -12876,7 +15967,422 @@ export class ProcessApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
+    }
+
+    public setApiKey(key: MasterAccountApiApiKeys, value: string) {
+        (this.authentications as any)[MasterAccountApiApiKeys[key]].apiKey = value;
+    }
+    /**
+     * This endpoint will provide the details of the master account.
+     * @summary Get the details of requested master account
+     * @param {*} [options] Override http request options.
+     */
+    public corporateMasterAccountGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: MasterDetailsResponse;  }> {
+        const localVarPath = this.basePath + '/corporate/masterAccount';
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: MasterDetailsResponse;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "MasterDetailsResponse");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * This endpoint will provide the list all the sub-accounts of the master account.
+     * @summary Get the list of all the sub-accounts of the master account.
+     * @param offset Page number of sub-accounts listing
+     * @param limit Number of sub-accounts to be displayed on each page
+     * @param {*} [options] Override http request options.
+     */
+    public corporateSubAccountGet (offset: number, limit: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: SubAccountsResponse;  }> {
+        const localVarPath = this.basePath + '/corporate/subAccount';
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'offset' is not null or undefined
+        if (offset === null || offset === undefined) {
+            throw new Error('Required parameter offset was null or undefined when calling corporateSubAccountGet.');
+        }
+
+        // verify required parameter 'limit' is not null or undefined
+        if (limit === null || limit === undefined) {
+            throw new Error('Required parameter limit was null or undefined when calling corporateSubAccountGet.');
+        }
+
+        if (offset !== undefined) {
+            localVarQueryParameters['offset'] = ObjectSerializer.serialize(offset, "number");
+        }
+
+        if (limit !== undefined) {
+            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: SubAccountsResponse;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "SubAccountsResponse");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * This endpoint will provide the details of specified sub-account organization
+     * @summary Get sub-account details
+     * @param id Id of the sub-account organization
+     * @param {*} [options] Override http request options.
+     */
+    public corporateSubAccountIdGet (id: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: SubAccountDetailsResponse;  }> {
+        const localVarPath = this.basePath + '/corporate/subAccount/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling corporateSubAccountIdGet.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: SubAccountDetailsResponse;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "SubAccountDetailsResponse");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * This endpoint will update the sub-account plan
+     * @summary Update sub-account plan
+     * @param id Id of the sub-account organization
+     * @param updatePlanDetails Values to update a sub-account plan
+     * @param {*} [options] Override http request options.
+     */
+    public corporateSubAccountIdPlanPut (id: number, updatePlanDetails: SubAccountUpdatePlanRequest, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/corporate/subAccount/{id}/plan'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling corporateSubAccountIdPlanPut.');
+        }
+
+        // verify required parameter 'updatePlanDetails' is not null or undefined
+        if (updatePlanDetails === null || updatePlanDetails === undefined) {
+            throw new Error('Required parameter updatePlanDetails was null or undefined when calling corporateSubAccountIdPlanPut.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'PUT',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(updatePlanDetails, "SubAccountUpdatePlanRequest")
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * This endpoint will create a new sub-account under a master account
+     * @summary Create a new sub-account under a master account.
+     * @param subAccountCreate values to create new sub-account
+     * @param {*} [options] Override http request options.
+     */
+    public corporateSubAccountPost (subAccountCreate: CreateSubAccount, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
+        const localVarPath = this.basePath + '/corporate/subAccount';
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'subAccountCreate' is not null or undefined
+        if (subAccountCreate === null || subAccountCreate === undefined) {
+            throw new Error('Required parameter subAccountCreate was null or undefined when calling corporateSubAccountPost.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(subAccountCreate, "CreateSubAccount")
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "CreateModel");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * This endpoint generates an sso token to authenticate and access a sub-account of the master using the account endpoint https://app.sendinblue.com/account/login/sub-account/sso/[token], where [token] will be replaced with actual token.
+     * @summary Generate SSO token to access Sendinblue
+     * @param ssoTokenRequest Values to generate SSO token for sub-account
+     * @param {*} [options] Override http request options.
+     */
+    public corporateSubAccountSsoTokenPost (ssoTokenRequest: SsoTokenRequest, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetSsoToken;  }> {
+        const localVarPath = this.basePath + '/corporate/subAccount/ssoToken';
+        const localVarQueryParameters: any = {};
+        const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        const localVarFormParams: any = {};
+
+        // verify required parameter 'ssoTokenRequest' is not null or undefined
+        if (ssoTokenRequest === null || ssoTokenRequest === undefined) {
+            throw new Error('Required parameter ssoTokenRequest was null or undefined when calling corporateSubAccountSsoTokenPost.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        const localVarUseFormData = false;
+
+        const localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(ssoTokenRequest, "SsoTokenRequest")
+        };
+
+        this.authentications.apiKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.partnerKey.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: GetSsoToken;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "GetSsoToken");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
+export enum ProcessApiApiKeys {
+    apiKey,
+    partnerKey,
+}
+
+export class ProcessApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring  = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+        'apiKey': new ApiKeyAuth('header', 'api-key'),
+        'partnerKey': new ApiKeyAuth('header', 'partner-key'),
+    }
+
+    constructor(basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: ProcessApiApiKeys, value: string) {
@@ -13016,7 +16522,7 @@ export enum ResellerApiApiKeys {
 
 export class ResellerApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -13051,7 +16557,7 @@ export class ResellerApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: ResellerApiApiKeys, value: string) {
@@ -14069,7 +17575,7 @@ export enum SMSCampaignsApiApiKeys {
 
 export class SMSCampaignsApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -14104,7 +17610,7 @@ export class SMSCampaignsApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: SMSCampaignsApiApiKeys, value: string) {
@@ -14755,7 +18261,7 @@ export enum SendersApiApiKeys {
 
 export class SendersApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -14790,7 +18296,7 @@ export class SendersApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: SendersApiApiKeys, value: string) {
@@ -15149,7 +18655,7 @@ export enum TransactionalEmailsApiApiKeys {
 
 export class TransactionalEmailsApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -15184,7 +18690,7 @@ export class TransactionalEmailsApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: TransactionalEmailsApiApiKeys, value: string) {
@@ -16471,7 +19977,7 @@ export enum TransactionalSMSApiApiKeys {
 
 export class TransactionalSMSApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -16506,7 +20012,7 @@ export class TransactionalSMSApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: TransactionalSMSApiApiKeys, value: string) {
@@ -16825,7 +20331,7 @@ export enum WebhooksApiApiKeys {
 
 export class WebhooksApi {
     protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = { 'user-agent': 'sendinblue_clientAPI/v2.2.3/ts-node' };
+    protected defaultHeaders : any = {};
     protected _useQuerystring  = false;
 
     protected authentications = {
@@ -16860,7 +20366,7 @@ export class WebhooksApi {
     }
 
     public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
+        this.authentications.default = auth;
     }
 
     public setApiKey(key: WebhooksApiApiKeys, value: string) {
@@ -17049,14 +20555,14 @@ export class WebhooksApi {
      * @param sort Sort the results in the ascending/descending order of webhook creation
      * @param {*} [options] Override http request options.
      */
-    public getWebhooks (type?: 'marketing' | 'transactional', sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetWebhooks;  }> {
+    public getWebhooks (type?: 'marketing' | 'transactional' | 'inbound', sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetWebhooks;  }> {
         const localVarPath = this.basePath + '/webhooks';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         const localVarFormParams: any = {};
 
         if (type !== undefined) {
-            localVarQueryParameters['type'] = ObjectSerializer.serialize(type, "'marketing' | 'transactional'");
+            localVarQueryParameters['type'] = ObjectSerializer.serialize(type, "'marketing' | 'transactional' | 'inbound'");
         }
 
         if (sort !== undefined) {
