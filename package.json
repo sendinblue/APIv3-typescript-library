@@ -1,6 +1,6 @@
 {
   "name": "@sendinblue/client",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "NodeJS client for Sendinblue V3 api",
   "main": "dist/api.js",
   "types": "dist/api.d.ts",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/bluebird": "*",
     "@types/request": "*",
+    "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
     "eslint": "^7.23.0",
