@@ -54,7 +54,7 @@ const apiInstance = new SibApiV3Sdk.ContactsApi()
 
 // Configure API key authorization: apiKey
 
-apiInstance.setApiKey(SibApiV3Sdk.AccountApiApiKeys.apiKey, 'YOUR API KEY')
+apiInstance.setApiKey(SibApiV3Sdk.ContactsApiApiKeys.apiKey, 'YOUR API KEY')
 
 const limit = 10 // Number | Number of documents per page
 const offset = 0 // Number | Index of the first document of the page
