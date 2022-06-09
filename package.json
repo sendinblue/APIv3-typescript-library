@@ -11,6 +11,11 @@
         "lint-and-fix": "eslint . --ext .ts --fix",
         "prepublishOnly": "npm run clean && npm run build"
     },
+    "files": [
+      "dist/*",
+      "package.json",
+      "README"
+    ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/sendinblue/APIv3-typescript-library.git"
