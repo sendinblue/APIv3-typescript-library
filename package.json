@@ -12,7 +12,9 @@
         "prepublishOnly": "npm run clean && npm run build"
     },
     "files": [
-      "dist/*"
+      "dist/*",
+      "package.json",
+      "README"
     ],
     "repository": {
         "type": "git",
