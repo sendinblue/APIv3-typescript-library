@@ -1,6 +1,6 @@
 {
     "name": "@sendinblue/client",
-    "version": "3.2.2",
+    "version": "3.3.0",
     "description": "NodeJS client for Sendinblue V3 api",
     "main": "dist/api.js",
     "types": "dist/api.d.ts",
@@ -12,26 +12,28 @@
         "prepublishOnly": "npm run clean && npm run build"
     },
     "files": [
-      "dist/*",
-      "package.json",
-      "README"
+    "dist/*",
+    "package.json",
+    "README"
     ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/sendinblue/APIv3-typescript-library.git"
-      },
-      "author": {
+    },
+    "author": {
         "name": "SendinBlue",
         "email": "developers@sendinblue.com",
         "url": "https://www.sendinblue.com/"
-      },
-      "license": "MIT",
-      "dependencies": {
+    },
+    "license": "MIT",
+    "dependencies": {
         "bluebird": "^3.5.0",
         "lodash": "^4.17.21",
-        "request": "^2.81.0"
-      },
-      "devDependencies": {
+        "request": "^2.81.0",
+        "@types/bluebird": "*",
+        "@types/request": "*"
+    },
+    "devDependencies": {
         "@types/bluebird": "*",
         "@types/request": "*",
         "@types/node": "*",
@@ -42,4 +44,5 @@
         "minimist": "^1.2.5",
         "rimraf": "^3.0.2",
         "typescript": "^3.5.1"
-      }}
+    }
+}
