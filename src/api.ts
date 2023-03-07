@@ -5566,8 +5566,8 @@ export class GetExtendedCampaignOverview extends GetCampaignOverview {
 }
 
 export class GetEmailCampaign extends GetExtendedCampaignOverview {
-    'recipients': GetSmsCampaignRecipients;
-    'statistics': GetSmsCampaignRecipients;
+    'recipients': GetCampaignRecipients;
+    'statistics': GetExtendedCampaignStats;
 
     static discriminator: string | undefined = undefined;
 
@@ -5575,12 +5575,12 @@ export class GetEmailCampaign extends GetExtendedCampaignOverview {
         {
             "name": "recipients",
             "baseName": "recipients",
-            "type": "GetSmsCampaignRecipients"
+            "type": "GetCampaignRecipients"
         },
         {
             "name": "statistics",
             "baseName": "statistics",
-            "type": "GetSmsCampaignRecipients"
+            "type": "GetExtendedCampaignStats"
         }    ];
 
     static getAttributeTypeMap() {
@@ -5628,7 +5628,7 @@ export class GetExtendedCampaignOverviewSender {
 }
 
 export class GetExtendedCampaignStats {
-    'globalStats': GetExtendedCampaignStatsGlobalStats;
+    'globalStats': any;
     /**
     * List-wise statistics of the campaign.
     */
@@ -5645,15 +5645,15 @@ export class GetExtendedCampaignStats {
     * Statistics about the number of clicks for the links
     */
     'linksStats': any;
-    'statsByDomain': GetStatsByDomain;
+    'statsByDomain': any;
     /**
     * Statistics about the campaign on the basis of various devices
     */
-    'statsByDevice': GetStatsByDevice;
+    'statsByDevice': any;
     /**
     * Statistics about the campaign on the basis of various browsers
     */
-    'statsByBrowser': GetStatsByBrowser;
+    'statsByBrowser': any;
 
     static discriminator: string | undefined = undefined;
 
@@ -5661,7 +5661,7 @@ export class GetExtendedCampaignStats {
         {
             "name": "globalStats",
             "baseName": "globalStats",
-            "type": "GetExtendedCampaignStatsGlobalStats"
+            "type": "any"
         },
         {
             "name": "campaignStats",
@@ -5686,17 +5686,17 @@ export class GetExtendedCampaignStats {
         {
             "name": "statsByDomain",
             "baseName": "statsByDomain",
-            "type": "GetStatsByDomain"
+            "type": "any"
         },
         {
             "name": "statsByDevice",
             "baseName": "statsByDevice",
-            "type": "GetStatsByDevice"
+            "type": "any"
         },
         {
             "name": "statsByBrowser",
             "baseName": "statsByBrowser",
-            "type": "GetStatsByBrowser"
+            "type": "any"
         }    ];
 
     static getAttributeTypeMap() {
