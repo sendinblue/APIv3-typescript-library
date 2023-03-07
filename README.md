@@ -29,7 +29,7 @@ yarn add @sendinblue/client
 Once you have [installed](#installation) the node module in your project, you can execute the following sample code JS code :
 
 ```javascript
-const SibApiV3Sdk = require('@sendinblue/client')
+import * as SibApiV3Sdk from '@sendinblue/client'
 
 const apiInstance = new SibApiV3Sdk.AccountApi()
 
@@ -48,7 +48,7 @@ apiInstance.getAccount().then(
 ```
 
 ```javascript
-const SibApiV3Sdk = require('@sendinblue/client')
+import * as SibApiV3Sdk from '@sendinblue/client'
 
 const apiInstance = new SibApiV3Sdk.ContactsApi()
 
