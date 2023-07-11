@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import * as localVarRequest from 'request';
+import * as localVarRequest from 'axios';
 import * as http from 'http';
 
 const defaultBasePath = 'https://api.sendinblue.com/v3';
@@ -13350,14 +13350,14 @@ export interface Authentication {
     /**
     * Apply authentication settings to header and query params.
     */
-    applyToRequest(requestOptions: localVarRequest.Options): void;
+    applyToRequest(requestOptions: localVarRequest.AxiosRequestConfig): void;
 }
 
 export class HttpBasicAuth implements Authentication {
     public username = '';
     public password = '';
 
-    applyToRequest(requestOptions: localVarRequest.Options): void {
+    applyToRequest(requestOptions: localVarRequest.AxiosRequestConfig): void {
         requestOptions.auth = {
             username: this.username, password: this.password
         }
@@ -13370,9 +13370,9 @@ export class ApiKeyAuth implements Authentication {
     constructor(private location: string, private paramName: string) {
     }
 
-    applyToRequest(requestOptions: localVarRequest.Options): void {
+    applyToRequest(requestOptions: localVarRequest.AxiosRequestConfig): void {
         if (this.location == "query") {
-            (<any>requestOptions.qs)[this.paramName] = this.apiKey;
+            (<any>requestOptions.params)[this.paramName] = this.apiKey;
         } else if (this.location == "header" && requestOptions && requestOptions.headers) {
             requestOptions.headers[this.paramName] = this.apiKey;
         }
@@ -13382,7 +13382,7 @@ export class ApiKeyAuth implements Authentication {
 export class OAuth implements Authentication {
     public accessToken = '';
 
-    applyToRequest(requestOptions: localVarRequest.Options): void {
+    applyToRequest(requestOptions: localVarRequest.AxiosRequestConfig): void {
         if (requestOptions && requestOptions.headers) {
             requestOptions.headers["Authorization"] = "Bearer " + this.accessToken;
         }
@@ -13393,7 +13393,7 @@ export class VoidAuth implements Authentication {
     public username = '';
     public password = '';
 
-    applyToRequest(_: localVarRequest.Options): void {
+    applyToRequest(_: localVarRequest.AxiosRequestConfig): void {
         // Do nothing
     }
 }
@@ -13453,7 +13453,7 @@ export class AccountApi {
      * @summary Get your account information, plan and credits details
      * @param {*} [options] Override http request options.
      */
-    public getAccount (options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetAccount;  }> {
+    public getAccount (options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetAccount;  }> {
         const localVarPath = this.basePath + '/account';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13463,13 +13463,11 @@ export class AccountApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
+            url: localVarPath,
         };
 
         this.authentications.apiKey.applyToRequest(localVarRequestOptions);
@@ -13479,25 +13477,28 @@ export class AccountApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetAccount;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "GetAccount");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetAccount;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions).then((response) => {
+				let {data} = response;
+				data = ObjectSerializer.deserialize(data, "GetAccount");
+				if (response.status && response.status >= 200 && response.status <= 299) {
+					resolve({ response: response, body: data });
+				} else {
+					reject({ response: response, body: data });
+				}
+            }).catch(error => reject(error));
         });
     }
 }
@@ -13556,7 +13557,7 @@ export class CompaniesApi {
      * @summary Get company attributes
      * @param {*} [options] Override http request options.
      */
-    public companiesAttributesGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: CompanyAttributes;  }> {
+    public companiesAttributesGet (options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CompanyAttributes;  }> {
         const localVarPath = this.basePath + '/companies/attributes';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13566,13 +13567,11 @@ export class CompaniesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
+            url: localVarPath,
         };
 
         this.authentications.apiKey.applyToRequest(localVarRequestOptions);
@@ -13582,25 +13581,28 @@ export class CompaniesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CompanyAttributes;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "CompanyAttributes");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CompanyAttributes;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions).then((response) => {
+				let {data} = response;
+				data = ObjectSerializer.deserialize(data, "CompanyAttributes");
+				if (response.status && response.status >= 200 && response.status <= 299) {
+					resolve({ response: response, body: data });
+				} else {
+					reject({ response: response, body: data });
+				}
+            }).catch(error => reject(error));
         });
     }
     /**
@@ -13615,7 +13617,7 @@ export class CompaniesApi {
      * @param sortBy The field used to sort field names.
      * @param {*} [options] Override http request options.
      */
-    public companiesGet (filters?: string, linkedContactsIds?: number, linkedDealsIds?: string, page?: number, limit?: number, sort?: 'asc' | 'desc', sortBy?: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CompaniesList;  }> {
+    public companiesGet (filters?: string, linkedContactsIds?: number, linkedDealsIds?: string, page?: number, limit?: number, sort?: 'asc' | 'desc', sortBy?: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CompaniesList;  }> {
         const localVarPath = this.basePath + '/companies';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13653,13 +13655,11 @@ export class CompaniesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
+            url: localVarPath,
         };
 
         this.authentications.apiKey.applyToRequest(localVarRequestOptions);
@@ -13669,25 +13669,28 @@ export class CompaniesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CompaniesList;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "CompaniesList");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CompaniesList;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions).then((response) => {
+				let {data} = response;
+				data = ObjectSerializer.deserialize(data, "CompaniesList");
+				if (response.status && response.status >= 200 && response.status <= 299) {
+					resolve({ response: response, body: data });
+				} else {
+					reject({ response: response, body: data });
+				}
+            }).catch(error => reject(error));
         });
     }
     /**
@@ -13696,7 +13699,7 @@ export class CompaniesApi {
      * @param id 
      * @param {*} [options] Override http request options.
      */
-    public companiesIdDelete (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public companiesIdDelete (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/companies/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -13712,13 +13715,11 @@ export class CompaniesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
+            url: localVarPath,
         };
 
         this.authentications.apiKey.applyToRequest(localVarRequestOptions);
@@ -13728,24 +13729,27 @@ export class CompaniesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions).then((response) => {
+				const {data} = response
+                if (response.status && response.status >= 200 && response.status <= 299) {
+					resolve({ response: response, body: data });
+				} else {
+					reject({ response: response, body: data });
+				}
+            }).catch(error => reject(error));
         });
     }
     /**
@@ -13754,7 +13758,7 @@ export class CompaniesApi {
      * @param id 
      * @param {*} [options] Override http request options.
      */
-    public companiesIdGet (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: Company;  }> {
+    public companiesIdGet (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: Company;  }> {
         const localVarPath = this.basePath + '/companies/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -13770,13 +13774,11 @@ export class CompaniesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
+            url: localVarPath,
         };
 
         this.authentications.apiKey.applyToRequest(localVarRequestOptions);
@@ -13786,25 +13788,28 @@ export class CompaniesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: Company;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "Company");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: Company;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions).then((response) => {
+				let {data} = response;
+				data = ObjectSerializer.deserialize(data, "Company");
+				if (response.status && response.status >= 200 && response.status <= 299) {
+					resolve({ response: response, body: data });
+				} else {
+					reject({ response: response, body: data });
+				}
+            }).catch(error => reject(error));
         });
     }
     /**
@@ -13814,7 +13819,7 @@ export class CompaniesApi {
      * @param body Updated company details.
      * @param {*} [options] Override http request options.
      */
-    public companiesIdPatch (id: string, body: Body1, options: any = {}) : Promise<{ response: http.IncomingMessage; body: Company;  }> {
+    public companiesIdPatch (id: string, body: Body1, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: Company;  }> {
         const localVarPath = this.basePath + '/companies/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -13835,14 +13840,12 @@ export class CompaniesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PATCH',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(body, "Body1")
+            url: localVarPath,
+            data: ObjectSerializer.serialize(body, "Body1")
         };
 
         this.authentications.apiKey.applyToRequest(localVarRequestOptions);
@@ -13852,24 +13855,27 @@ export class CompaniesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: Company;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "Company");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: Company;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions).then((response) => {
+				let {data} = response;
+				data = ObjectSerializer.deserialize(data, "Company");
+				if (response.status && response.status >= 200 && response.status <= 299) {
+					resolve({ response: response, body: data });
+				} else {
+					reject({ response: response, body: data });
+				}
             });
         });
     }
@@ -13880,7 +13886,7 @@ export class CompaniesApi {
      * @param body Linked / Unlinked contacts and deals ids.
      * @param {*} [options] Override http request options.
      */
-    public companiesLinkUnlinkIdPatch (id: string, body: Body2, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public companiesLinkUnlinkIdPatch (id: string, body: Body2, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/companies/link-unlink/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -13901,12 +13907,12 @@ export class CompaniesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PATCH',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "Body2")
         };
@@ -13918,14 +13924,20 @@ export class CompaniesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -13944,7 +13956,7 @@ export class CompaniesApi {
      * @param body Company create data.
      * @param {*} [options] Override http request options.
      */
-    public companiesPost (body: Body, options: any = {}) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+    public companiesPost (body: Body, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: InlineResponse200;  }> {
         const localVarPath = this.basePath + '/companies';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13959,12 +13971,12 @@ export class CompaniesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "Body")
         };
@@ -13976,14 +13988,20 @@ export class CompaniesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: InlineResponse200;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14055,7 +14073,7 @@ export class ContactsApi {
      * @param contactEmails Emails addresses OR IDs of the contacts
      * @param {*} [options] Override http request options.
      */
-    public addContactToList (listId: number, contactEmails: AddContactToList, options: any = {}) : Promise<{ response: http.IncomingMessage; body: PostContactInfo;  }> {
+    public addContactToList (listId: number, contactEmails: AddContactToList, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: PostContactInfo;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts/add'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         const localVarQueryParameters: any = {};
@@ -14076,12 +14094,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(contactEmails, "AddContactToList")
         };
@@ -14093,14 +14111,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: PostContactInfo;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: PostContactInfo;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14122,7 +14146,7 @@ export class ContactsApi {
      * @param createAttribute Values to create an attribute
      * @param {*} [options] Override http request options.
      */
-    public createAttribute (attributeCategory: 'normal' | 'transactional' | 'category' | 'calculated' | 'global', attributeName: string, createAttribute: CreateAttribute, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public createAttribute (attributeCategory: 'normal' | 'transactional' | 'category' | 'calculated' | 'global', attributeName: string, createAttribute: CreateAttribute, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/attributes/{attributeCategory}/{attributeName}'
             .replace('{' + 'attributeCategory' + '}', encodeURIComponent(String(attributeCategory)))
             .replace('{' + 'attributeName' + '}', encodeURIComponent(String(attributeName)));
@@ -14149,12 +14173,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(createAttribute, "CreateAttribute")
         };
@@ -14166,14 +14190,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14192,7 +14222,7 @@ export class ContactsApi {
      * @param createContact Values to create a contact
      * @param {*} [options] Override http request options.
      */
-    public createContact (createContact: CreateContact, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateUpdateContactModel;  }> {
+    public createContact (createContact: CreateContact, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateUpdateContactModel;  }> {
         const localVarPath = this.basePath + '/contacts';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14207,12 +14237,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(createContact, "CreateContact")
         };
@@ -14224,14 +14254,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateUpdateContactModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateUpdateContactModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14251,7 +14287,7 @@ export class ContactsApi {
      * @param createDoiContact Values to create the Double opt-in (DOI) contact
      * @param {*} [options] Override http request options.
      */
-    public createDoiContact (createDoiContact: CreateDoiContact, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public createDoiContact (createDoiContact: CreateDoiContact, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/doubleOptinConfirmation';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14266,12 +14302,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(createDoiContact, "CreateDoiContact")
         };
@@ -14283,14 +14319,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14309,7 +14351,7 @@ export class ContactsApi {
      * @param createFolder Name of the folder
      * @param {*} [options] Override http request options.
      */
-    public createFolder (createFolder: CreateUpdateFolder, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
+    public createFolder (createFolder: CreateUpdateFolder, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/contacts/folders';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14324,12 +14366,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(createFolder, "CreateUpdateFolder")
         };
@@ -14341,14 +14383,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14368,7 +14416,7 @@ export class ContactsApi {
      * @param createList Values to create a list
      * @param {*} [options] Override http request options.
      */
-    public createList (createList: CreateList, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
+    public createList (createList: CreateList, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/contacts/lists';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14383,12 +14431,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(createList, "CreateList")
         };
@@ -14400,14 +14448,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14428,7 +14482,7 @@ export class ContactsApi {
      * @param attributeName Name of the existing attribute
      * @param {*} [options] Override http request options.
      */
-    public deleteAttribute (attributeCategory: 'normal' | 'transactional' | 'category' | 'calculated' | 'global', attributeName: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteAttribute (attributeCategory: 'normal' | 'transactional' | 'category' | 'calculated' | 'global', attributeName: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/attributes/{attributeCategory}/{attributeName}'
             .replace('{' + 'attributeCategory' + '}', encodeURIComponent(String(attributeCategory)))
             .replace('{' + 'attributeName' + '}', encodeURIComponent(String(attributeName)));
@@ -14450,12 +14504,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -14466,14 +14520,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14492,7 +14552,7 @@ export class ContactsApi {
      * @param identifier Email (urlencoded) OR ID of the contact
      * @param {*} [options] Override http request options.
      */
-    public deleteContact (identifier: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteContact (identifier: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/{identifier}'
             .replace('{' + 'identifier' + '}', encodeURIComponent(String(identifier)));
         const localVarQueryParameters: any = {};
@@ -14508,12 +14568,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -14524,14 +14584,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14550,7 +14616,7 @@ export class ContactsApi {
      * @param folderId Id of the folder
      * @param {*} [options] Override http request options.
      */
-    public deleteFolder (folderId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteFolder (folderId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         const localVarQueryParameters: any = {};
@@ -14566,12 +14632,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -14582,14 +14648,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14608,7 +14680,7 @@ export class ContactsApi {
      * @param listId Id of the list
      * @param {*} [options] Override http request options.
      */
-    public deleteList (listId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteList (listId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         const localVarQueryParameters: any = {};
@@ -14624,12 +14696,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -14640,14 +14712,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14665,7 +14743,7 @@ export class ContactsApi {
      * @summary List all attributes
      * @param {*} [options] Override http request options.
      */
-    public getAttributes (options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetAttributes;  }> {
+    public getAttributes (options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetAttributes;  }> {
         const localVarPath = this.basePath + '/contacts/attributes';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14675,12 +14753,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -14691,14 +14769,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetAttributes;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetAttributes;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14720,7 +14804,7 @@ export class ContactsApi {
      * @param endDate **Mandatory if startDate is used.** Ending date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be greater than equal to startDate. 
      * @param {*} [options] Override http request options.
      */
-    public getContactInfo (identifier: string, startDate?: any, endDate?: any, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetExtendedContactDetails;  }> {
+    public getContactInfo (identifier: string, startDate?: any, endDate?: any, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetExtendedContactDetails;  }> {
         const localVarPath = this.basePath + '/contacts/{identifier}'
             .replace('{' + 'identifier' + '}', encodeURIComponent(String(identifier)));
         const localVarQueryParameters: any = {};
@@ -14744,12 +14828,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -14760,14 +14844,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetExtendedContactDetails;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetExtendedContactDetails;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14789,7 +14879,7 @@ export class ContactsApi {
      * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the statistic events specific to campaigns. Must be greater than equal to startDate. Maximum difference between startDate and endDate should not be greater than 90 days
      * @param {*} [options] Override http request options.
      */
-    public getContactStats (identifier: string, startDate?: string, endDate?: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetContactCampaignStats;  }> {
+    public getContactStats (identifier: string, startDate?: string, endDate?: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetContactCampaignStats;  }> {
         const localVarPath = this.basePath + '/contacts/{identifier}/campaignStats'
             .replace('{' + 'identifier' + '}', encodeURIComponent(String(identifier)));
         const localVarQueryParameters: any = {};
@@ -14813,12 +14903,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -14829,14 +14919,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetContactCampaignStats;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetContactCampaignStats;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14859,7 +14955,7 @@ export class ContactsApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getContacts (limit?: number, offset?: number, modifiedSince?: string, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
+    public getContacts (limit?: number, offset?: number, modifiedSince?: string, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetContacts;  }> {
         const localVarPath = this.basePath + '/contacts';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14885,12 +14981,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -14901,14 +14997,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetContacts;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetContacts;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -14932,7 +15034,7 @@ export class ContactsApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getContactsFromList (listId: number, modifiedSince?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetContacts;  }> {
+    public getContactsFromList (listId: number, modifiedSince?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetContacts;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         const localVarQueryParameters: any = {};
@@ -14964,12 +15066,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -14980,14 +15082,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetContacts;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetContacts;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15007,7 +15115,7 @@ export class ContactsApi {
      * @param folderId id of the folder
      * @param {*} [options] Override http request options.
      */
-    public getFolder (folderId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetFolder;  }> {
+    public getFolder (folderId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetFolder;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         const localVarQueryParameters: any = {};
@@ -15023,12 +15131,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -15039,14 +15147,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetFolder;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetFolder;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15069,7 +15183,7 @@ export class ContactsApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getFolderLists (folderId: number, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }> {
+    public getFolderLists (folderId: number, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetFolderLists;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}/lists'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         const localVarQueryParameters: any = {};
@@ -15097,12 +15211,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -15113,14 +15227,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetFolderLists;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetFolderLists;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15142,7 +15262,7 @@ export class ContactsApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getFolders (limit: number, offset: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetFolders;  }> {
+    public getFolders (limit: number, offset: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetFolders;  }> {
         const localVarPath = this.basePath + '/contacts/folders';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15174,12 +15294,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -15190,14 +15310,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetFolders;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetFolders;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15217,7 +15343,7 @@ export class ContactsApi {
      * @param listId Id of the list
      * @param {*} [options] Override http request options.
      */
-    public getList (listId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetExtendedList;  }> {
+    public getList (listId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetExtendedList;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         const localVarQueryParameters: any = {};
@@ -15233,12 +15359,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -15249,14 +15375,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetExtendedList;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetExtendedList;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15278,7 +15410,7 @@ export class ContactsApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getLists (limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetLists;  }> {
+    public getLists (limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetLists;  }> {
         const localVarPath = this.basePath + '/contacts/lists';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15300,12 +15432,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -15316,14 +15448,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetLists;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetLists;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15343,7 +15481,7 @@ export class ContactsApi {
      * @param requestContactImport Values to import contacts in Sendinblue. To know more about the expected format, please have a look at &#x60;&#x60;https://help.sendinblue.com/hc/en-us/articles/209499265-Build-contacts-lists-for-your-email-marketing-campaigns&#x60;&#x60;
      * @param {*} [options] Override http request options.
      */
-    public importContacts (requestContactImport: RequestContactImport, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }> {
+    public importContacts (requestContactImport: RequestContactImport, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreatedProcessId;  }> {
         const localVarPath = this.basePath + '/contacts/import';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15358,12 +15496,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(requestContactImport, "RequestContactImport")
         };
@@ -15375,14 +15513,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreatedProcessId;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15403,7 +15547,7 @@ export class ContactsApi {
      * @param contactEmails Emails addresses OR IDs of the contacts
      * @param {*} [options] Override http request options.
      */
-    public removeContactFromList (listId: number, contactEmails: RemoveContactFromList, options: any = {}) : Promise<{ response: http.IncomingMessage; body: PostContactInfo;  }> {
+    public removeContactFromList (listId: number, contactEmails: RemoveContactFromList, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: PostContactInfo;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}/contacts/remove'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         const localVarQueryParameters: any = {};
@@ -15424,12 +15568,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(contactEmails, "RemoveContactFromList")
         };
@@ -15441,14 +15585,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: PostContactInfo;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: PostContactInfo;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15468,7 +15618,7 @@ export class ContactsApi {
      * @param requestContactExport Values to request a contact export
      * @param {*} [options] Override http request options.
      */
-    public requestContactExport (requestContactExport: RequestContactExport, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }> {
+    public requestContactExport (requestContactExport: RequestContactExport, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreatedProcessId;  }> {
         const localVarPath = this.basePath + '/contacts/export';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15483,12 +15633,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(requestContactExport, "RequestContactExport")
         };
@@ -15500,14 +15650,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreatedProcessId;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15529,7 +15685,7 @@ export class ContactsApi {
      * @param updateAttribute Values to update an attribute
      * @param {*} [options] Override http request options.
      */
-    public updateAttribute (attributeCategory: 'category' | 'calculated' | 'global', attributeName: string, updateAttribute: UpdateAttribute, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateAttribute (attributeCategory: 'category' | 'calculated' | 'global', attributeName: string, updateAttribute: UpdateAttribute, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/attributes/{attributeCategory}/{attributeName}'
             .replace('{' + 'attributeCategory' + '}', encodeURIComponent(String(attributeCategory)))
             .replace('{' + 'attributeName' + '}', encodeURIComponent(String(attributeName)));
@@ -15556,12 +15712,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(updateAttribute, "UpdateAttribute")
         };
@@ -15573,14 +15729,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15599,7 +15761,7 @@ export class ContactsApi {
      * @param updateBatchContacts Values to update multiple contacts
      * @param {*} [options] Override http request options.
      */
-    public updateBatchContacts (updateBatchContacts: UpdateBatchContacts, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateBatchContacts (updateBatchContacts: UpdateBatchContacts, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/batch';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15614,12 +15776,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(updateBatchContacts, "UpdateBatchContacts")
         };
@@ -15631,14 +15793,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15658,7 +15826,7 @@ export class ContactsApi {
      * @param updateContact Values to update a contact
      * @param {*} [options] Override http request options.
      */
-    public updateContact (identifier: string, updateContact: UpdateContact, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateContact (identifier: string, updateContact: UpdateContact, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/{identifier}'
             .replace('{' + 'identifier' + '}', encodeURIComponent(String(identifier)));
         const localVarQueryParameters: any = {};
@@ -15679,12 +15847,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(updateContact, "UpdateContact")
         };
@@ -15696,14 +15864,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15723,7 +15897,7 @@ export class ContactsApi {
      * @param updateFolder Name of the folder
      * @param {*} [options] Override http request options.
      */
-    public updateFolder (folderId: number, updateFolder: CreateUpdateFolder, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateFolder (folderId: number, updateFolder: CreateUpdateFolder, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/folders/{folderId}'
             .replace('{' + 'folderId' + '}', encodeURIComponent(String(folderId)));
         const localVarQueryParameters: any = {};
@@ -15744,12 +15918,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(updateFolder, "CreateUpdateFolder")
         };
@@ -15761,14 +15935,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15788,7 +15968,7 @@ export class ContactsApi {
      * @param updateList Values to update a list
      * @param {*} [options] Override http request options.
      */
-    public updateList (listId: number, updateList: UpdateList, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateList (listId: number, updateList: UpdateList, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/contacts/lists/{listId}'
             .replace('{' + 'listId' + '}', encodeURIComponent(String(listId)));
         const localVarQueryParameters: any = {};
@@ -15809,12 +15989,12 @@ export class ContactsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(updateList, "UpdateList")
         };
@@ -15826,14 +16006,20 @@ export class ContactsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15903,7 +16089,7 @@ export class ConversationsApi {
      * @param body Agent fields.
      * @param {*} [options] Override http request options.
      */
-    public conversationsAgentOnlinePingPost (body: Body12, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public conversationsAgentOnlinePingPost (body: Body12, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/conversations/agentOnlinePing';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15918,12 +16104,12 @@ export class ConversationsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "Body12")
         };
@@ -15935,14 +16121,20 @@ export class ConversationsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -15961,7 +16153,7 @@ export class ConversationsApi {
      * @param id ID of the message
      * @param {*} [options] Override http request options.
      */
-    public conversationsMessagesIdDelete (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public conversationsMessagesIdDelete (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/conversations/messages/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -15977,12 +16169,12 @@ export class ConversationsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -15993,14 +16185,20 @@ export class ConversationsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16019,7 +16217,7 @@ export class ConversationsApi {
      * @param id ID of the message
      * @param {*} [options] Override http request options.
      */
-    public conversationsMessagesIdGet (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: ConversationsMessage;  }> {
+    public conversationsMessagesIdGet (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: ConversationsMessage;  }> {
         const localVarPath = this.basePath + '/conversations/messages/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -16035,12 +16233,12 @@ export class ConversationsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -16051,14 +16249,20 @@ export class ConversationsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: ConversationsMessage;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: ConversationsMessage;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16079,7 +16283,7 @@ export class ConversationsApi {
      * @param body 
      * @param {*} [options] Override http request options.
      */
-    public conversationsMessagesIdPut (id: string, body?: Body9, options: any = {}) : Promise<{ response: http.IncomingMessage; body: ConversationsMessage;  }> {
+    public conversationsMessagesIdPut (id: string, body?: Body9, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: ConversationsMessage;  }> {
         const localVarPath = this.basePath + '/conversations/messages/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -16095,12 +16299,12 @@ export class ConversationsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "Body9")
         };
@@ -16112,14 +16316,20 @@ export class ConversationsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: ConversationsMessage;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: ConversationsMessage;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16139,7 +16349,7 @@ export class ConversationsApi {
      * @param body Message fields.
      * @param {*} [options] Override http request options.
      */
-    public conversationsMessagesPost (body: Body8, options: any = {}) : Promise<{ response: http.IncomingMessage; body: ConversationsMessage;  }> {
+    public conversationsMessagesPost (body: Body8, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: ConversationsMessage;  }> {
         const localVarPath = this.basePath + '/conversations/messages';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -16154,12 +16364,12 @@ export class ConversationsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "Body8")
         };
@@ -16171,14 +16381,20 @@ export class ConversationsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: ConversationsMessage;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: ConversationsMessage;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16198,7 +16414,7 @@ export class ConversationsApi {
      * @param id ID of the message
      * @param {*} [options] Override http request options.
      */
-    public conversationsPushedMessagesIdDelete (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public conversationsPushedMessagesIdDelete (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/conversations/pushedMessages/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -16214,12 +16430,12 @@ export class ConversationsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -16230,14 +16446,20 @@ export class ConversationsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16256,7 +16478,7 @@ export class ConversationsApi {
      * @param id ID of the message sent previously
      * @param {*} [options] Override http request options.
      */
-    public conversationsPushedMessagesIdGet (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: ConversationsMessage;  }> {
+    public conversationsPushedMessagesIdGet (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: ConversationsMessage;  }> {
         const localVarPath = this.basePath + '/conversations/pushedMessages/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -16272,12 +16494,12 @@ export class ConversationsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -16288,14 +16510,20 @@ export class ConversationsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: ConversationsMessage;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: ConversationsMessage;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16316,7 +16544,7 @@ export class ConversationsApi {
      * @param body 
      * @param {*} [options] Override http request options.
      */
-    public conversationsPushedMessagesIdPut (id: string, body: Body11, options: any = {}) : Promise<{ response: http.IncomingMessage; body: ConversationsMessage;  }> {
+    public conversationsPushedMessagesIdPut (id: string, body: Body11, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: ConversationsMessage;  }> {
         const localVarPath = this.basePath + '/conversations/pushedMessages/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -16337,12 +16565,12 @@ export class ConversationsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "Body11")
         };
@@ -16354,14 +16582,20 @@ export class ConversationsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: ConversationsMessage;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: ConversationsMessage;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16381,7 +16615,7 @@ export class ConversationsApi {
      * @param body 
      * @param {*} [options] Override http request options.
      */
-    public conversationsPushedMessagesPost (body: Body10, options: any = {}) : Promise<{ response: http.IncomingMessage; body: ConversationsMessage;  }> {
+    public conversationsPushedMessagesPost (body: Body10, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: ConversationsMessage;  }> {
         const localVarPath = this.basePath + '/conversations/pushedMessages';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -16396,12 +16630,12 @@ export class ConversationsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "Body10")
         };
@@ -16413,14 +16647,20 @@ export class ConversationsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: ConversationsMessage;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: ConversationsMessage;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16490,7 +16730,7 @@ export class DealsApi {
      * @summary Get deal attributes
      * @param {*} [options] Override http request options.
      */
-    public crmAttributesDealsGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: DealAttributes;  }> {
+    public crmAttributesDealsGet (options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: DealAttributes;  }> {
         const localVarPath = this.basePath + '/crm/attributes/deals';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -16500,12 +16740,12 @@ export class DealsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -16516,14 +16756,20 @@ export class DealsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: DealAttributes;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: DealAttributes;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16549,7 +16795,7 @@ export class DealsApi {
      * @param sortBy The field used to sort field names.
      * @param {*} [options] Override http request options.
      */
-    public crmDealsGet (filtersAttributes?: string, filtersLinkedCompaniesIds?: string, filtersLinkedContactsIds?: string, offset?: number, limit?: number, sort?: 'asc' | 'desc', sortBy?: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: DealsList;  }> {
+    public crmDealsGet (filtersAttributes?: string, filtersLinkedCompaniesIds?: string, filtersLinkedContactsIds?: string, offset?: number, limit?: number, sort?: 'asc' | 'desc', sortBy?: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: DealsList;  }> {
         const localVarPath = this.basePath + '/crm/deals';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -16587,12 +16833,12 @@ export class DealsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -16603,14 +16849,20 @@ export class DealsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: DealsList;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: DealsList;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16630,7 +16882,7 @@ export class DealsApi {
      * @param id 
      * @param {*} [options] Override http request options.
      */
-    public crmDealsIdDelete (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public crmDealsIdDelete (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/crm/deals/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -16646,12 +16898,12 @@ export class DealsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -16662,14 +16914,20 @@ export class DealsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16688,7 +16946,7 @@ export class DealsApi {
      * @param id 
      * @param {*} [options] Override http request options.
      */
-    public crmDealsIdGet (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: Deal;  }> {
+    public crmDealsIdGet (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: Deal;  }> {
         const localVarPath = this.basePath + '/crm/deals/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -16704,12 +16962,12 @@ export class DealsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -16720,14 +16978,20 @@ export class DealsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: Deal;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: Deal;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16748,7 +17012,7 @@ export class DealsApi {
      * @param body Updated deal details.
      * @param {*} [options] Override http request options.
      */
-    public crmDealsIdPatch (id: string, body: Body4, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public crmDealsIdPatch (id: string, body: Body4, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/crm/deals/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -16769,12 +17033,12 @@ export class DealsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PATCH',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "Body4")
         };
@@ -16786,14 +17050,20 @@ export class DealsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16813,7 +17083,7 @@ export class DealsApi {
      * @param body Linked / Unlinked contacts and companies ids.
      * @param {*} [options] Override http request options.
      */
-    public crmDealsLinkUnlinkIdPatch (id: string, body: Body5, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public crmDealsLinkUnlinkIdPatch (id: string, body: Body5, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/crm/deals/link-unlink/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -16834,12 +17104,12 @@ export class DealsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PATCH',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "Body5")
         };
@@ -16851,14 +17121,20 @@ export class DealsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16877,7 +17153,7 @@ export class DealsApi {
      * @param body Deal create data.
      * @param {*} [options] Override http request options.
      */
-    public crmDealsPost (body: Body3, options: any = {}) : Promise<{ response: http.IncomingMessage; body: InlineResponse201;  }> {
+    public crmDealsPost (body: Body3, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: InlineResponse201;  }> {
         const localVarPath = this.basePath + '/crm/deals';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -16892,12 +17168,12 @@ export class DealsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "Body3")
         };
@@ -16909,14 +17185,20 @@ export class DealsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: InlineResponse201;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: InlineResponse201;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -16935,7 +17217,7 @@ export class DealsApi {
      * @summary Get pipeline stages
      * @param {*} [options] Override http request options.
      */
-    public crmPipelineDetailsGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: Pipeline;  }> {
+    public crmPipelineDetailsGet (options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: Pipeline;  }> {
         const localVarPath = this.basePath + '/crm/pipeline/details';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -16945,12 +17227,12 @@ export class DealsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -16961,14 +17243,20 @@ export class DealsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: Pipeline;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: Pipeline;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17039,7 +17327,7 @@ export class EcommerceApi {
      * @param orderBatch 
      * @param {*} [options] Override http request options.
      */
-    public createBatchOrder (orderBatch: OrderBatch, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public createBatchOrder (orderBatch: OrderBatch, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/orders/status/batch';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -17054,12 +17342,12 @@ export class EcommerceApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(orderBatch, "OrderBatch")
         };
@@ -17071,14 +17359,20 @@ export class EcommerceApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17097,7 +17391,7 @@ export class EcommerceApi {
      * @param order 
      * @param {*} [options] Override http request options.
      */
-    public createOrder (order: Order, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public createOrder (order: Order, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/orders/status';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -17112,12 +17406,12 @@ export class EcommerceApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(order, "Order")
         };
@@ -17129,14 +17423,20 @@ export class EcommerceApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17155,7 +17455,7 @@ export class EcommerceApi {
      * @param createUpdateBatchCategory Values to create a batch of categories
      * @param {*} [options] Override http request options.
      */
-    public createUpdateBatchCategory (createUpdateBatchCategory: CreateUpdateBatchCategory, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateUpdateBatchCategoryModel;  }> {
+    public createUpdateBatchCategory (createUpdateBatchCategory: CreateUpdateBatchCategory, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateUpdateBatchCategoryModel;  }> {
         const localVarPath = this.basePath + '/categories/batch';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -17170,12 +17470,12 @@ export class EcommerceApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(createUpdateBatchCategory, "CreateUpdateBatchCategory")
         };
@@ -17187,14 +17487,20 @@ export class EcommerceApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateUpdateBatchCategoryModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateUpdateBatchCategoryModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17214,7 +17520,7 @@ export class EcommerceApi {
      * @param createUpdateBatchProducts Values to create a batch of products
      * @param {*} [options] Override http request options.
      */
-    public createUpdateBatchProducts (createUpdateBatchProducts: CreateUpdateBatchProducts, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateUpdateBatchProductsModel;  }> {
+    public createUpdateBatchProducts (createUpdateBatchProducts: CreateUpdateBatchProducts, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateUpdateBatchProductsModel;  }> {
         const localVarPath = this.basePath + '/products/batch';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -17229,12 +17535,12 @@ export class EcommerceApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(createUpdateBatchProducts, "CreateUpdateBatchProducts")
         };
@@ -17246,14 +17552,20 @@ export class EcommerceApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateUpdateBatchProductsModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateUpdateBatchProductsModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17273,7 +17585,7 @@ export class EcommerceApi {
      * @param createUpdateCategory Values to create/update a category
      * @param {*} [options] Override http request options.
      */
-    public createUpdateCategory (createUpdateCategory: CreateUpdateCategory, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateCategoryModel;  }> {
+    public createUpdateCategory (createUpdateCategory: CreateUpdateCategory, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateCategoryModel;  }> {
         const localVarPath = this.basePath + '/categories';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -17288,12 +17600,12 @@ export class EcommerceApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(createUpdateCategory, "CreateUpdateCategory")
         };
@@ -17305,14 +17617,20 @@ export class EcommerceApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateCategoryModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateCategoryModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17332,7 +17650,7 @@ export class EcommerceApi {
      * @param createUpdateProduct Values to create/update a product
      * @param {*} [options] Override http request options.
      */
-    public createUpdateProduct (createUpdateProduct: CreateUpdateProduct, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateProductModel;  }> {
+    public createUpdateProduct (createUpdateProduct: CreateUpdateProduct, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateProductModel;  }> {
         const localVarPath = this.basePath + '/products';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -17347,12 +17665,12 @@ export class EcommerceApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(createUpdateProduct, "CreateUpdateProduct")
         };
@@ -17364,14 +17682,20 @@ export class EcommerceApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateProductModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateProductModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17390,7 +17714,7 @@ export class EcommerceApi {
      * @summary Activate the eCommerce app
      * @param {*} [options] Override http request options.
      */
-    public ecommerceActivatePost (options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public ecommerceActivatePost (options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/ecommerce/activate';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -17400,12 +17724,12 @@ export class EcommerceApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -17416,14 +17740,20 @@ export class EcommerceApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17445,7 +17775,7 @@ export class EcommerceApi {
      * @param ids Filter by category ids
      * @param {*} [options] Override http request options.
      */
-    public getCategories (limit?: number, offset?: number, sort?: 'asc' | 'desc', ids?: Array<string>, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetCategories;  }> {
+    public getCategories (limit?: number, offset?: number, sort?: 'asc' | 'desc', ids?: Array<string>, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetCategories;  }> {
         const localVarPath = this.basePath + '/categories';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -17471,12 +17801,12 @@ export class EcommerceApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -17487,14 +17817,20 @@ export class EcommerceApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetCategories;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetCategories;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17514,7 +17850,7 @@ export class EcommerceApi {
      * @param id Category ID
      * @param {*} [options] Override http request options.
      */
-    public getCategoryInfo (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetCategoryDetails;  }> {
+    public getCategoryInfo (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetCategoryDetails;  }> {
         const localVarPath = this.basePath + '/categories/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -17530,12 +17866,12 @@ export class EcommerceApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -17546,14 +17882,20 @@ export class EcommerceApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetCategoryDetails;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetCategoryDetails;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17573,7 +17915,7 @@ export class EcommerceApi {
      * @param id Product ID
      * @param {*} [options] Override http request options.
      */
-    public getProductInfo (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetProductDetails;  }> {
+    public getProductInfo (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetProductDetails;  }> {
         const localVarPath = this.basePath + '/products/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -17589,12 +17931,12 @@ export class EcommerceApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -17605,14 +17947,20 @@ export class EcommerceApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetProductDetails;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetProductDetails;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17635,7 +17983,7 @@ export class EcommerceApi {
      * @param ids Filter by product ids
      * @param {*} [options] Override http request options.
      */
-    public getProducts (limit?: number, offset?: number, sort?: 'asc' | 'desc', ids?: Array<string>, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetProducts;  }> {
+    public getProducts (limit?: number, offset?: number, sort?: 'asc' | 'desc', ids?: Array<string>, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetProducts;  }> {
         const localVarPath = this.basePath + '/products';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -17661,12 +18009,12 @@ export class EcommerceApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -17677,14 +18025,20 @@ export class EcommerceApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetProducts;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetProducts;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17755,7 +18109,7 @@ export class EmailCampaignsApi {
      * @param emailCampaigns Values to create a campaign
      * @param {*} [options] Override http request options.
      */
-    public createEmailCampaign (emailCampaigns: CreateEmailCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
+    public createEmailCampaign (emailCampaigns: CreateEmailCampaign, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/emailCampaigns';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -17770,12 +18124,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(emailCampaigns, "CreateEmailCampaign")
         };
@@ -17787,14 +18141,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17814,7 +18174,7 @@ export class EmailCampaignsApi {
      * @param campaignId id of the campaign
      * @param {*} [options] Override http request options.
      */
-    public deleteEmailCampaign (campaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteEmailCampaign (campaignId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -17830,12 +18190,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -17846,14 +18206,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17873,7 +18239,7 @@ export class EmailCampaignsApi {
      * @param recipientExport Values to send for a recipient export request
      * @param {*} [options] Override http request options.
      */
-    public emailExportRecipients (campaignId: number, recipientExport?: EmailExportRecipients, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }> {
+    public emailExportRecipients (campaignId: number, recipientExport?: EmailExportRecipients, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreatedProcessId;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/exportRecipients'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -17889,12 +18255,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(recipientExport, "EmailExportRecipients")
         };
@@ -17906,14 +18272,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreatedProcessId;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17933,7 +18305,7 @@ export class EmailCampaignsApi {
      * @param campaignId Id of the A/B test campaign
      * @param {*} [options] Override http request options.
      */
-    public getAbTestCampaignResult (campaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: AbTestCampaignResult;  }> {
+    public getAbTestCampaignResult (campaignId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: AbTestCampaignResult;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/abTestCampaignResult'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -17949,12 +18321,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -17965,14 +18337,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: AbTestCampaignResult;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: AbTestCampaignResult;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -17993,7 +18371,7 @@ export class EmailCampaignsApi {
      * @param statistics Filter on the type of statistics required. Example **globalStats** value will only fetch globalStats info of the campaign in returned response.
      * @param {*} [options] Override http request options.
      */
-    public getEmailCampaign (campaignId: number, statistics?: 'globalStats' | 'linksStats' | 'statsByDomain' | 'statsByDevice' | 'statsByBrowser', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetEmailCampaign;  }> {
+    public getEmailCampaign (campaignId: number, statistics?: 'globalStats' | 'linksStats' | 'statsByDomain' | 'statsByDevice' | 'statsByBrowser', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetEmailCampaign;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -18013,12 +18391,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -18029,14 +18407,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetEmailCampaign;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetEmailCampaign;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18063,7 +18447,7 @@ export class EmailCampaignsApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getEmailCampaigns (type?: 'classic' | 'trigger', status?: 'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess', statistics?: 'globalStats' | 'linksStats' | 'statsByDomain', startDate?: string, endDate?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetEmailCampaigns;  }> {
+    public getEmailCampaigns (type?: 'classic' | 'trigger', status?: 'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess', statistics?: 'globalStats' | 'linksStats' | 'statsByDomain', startDate?: string, endDate?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetEmailCampaigns;  }> {
         const localVarPath = this.basePath + '/emailCampaigns';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -18105,12 +18489,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -18121,14 +18505,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetEmailCampaigns;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetEmailCampaigns;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18148,7 +18538,7 @@ export class EmailCampaignsApi {
      * @param campaignId Id of the campaign or template
      * @param {*} [options] Override http request options.
      */
-    public getSharedTemplateUrl (campaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetSharedTemplateUrl;  }> {
+    public getSharedTemplateUrl (campaignId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetSharedTemplateUrl;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/sharedUrl'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -18164,12 +18554,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -18180,14 +18570,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetSharedTemplateUrl;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetSharedTemplateUrl;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18207,7 +18603,7 @@ export class EmailCampaignsApi {
      * @param campaignId Id of the campaign
      * @param {*} [options] Override http request options.
      */
-    public sendEmailCampaignNow (campaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public sendEmailCampaignNow (campaignId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/sendNow'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -18223,12 +18619,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -18239,14 +18635,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18266,7 +18668,7 @@ export class EmailCampaignsApi {
      * @param sendReport Values for send a report
      * @param {*} [options] Override http request options.
      */
-    public sendReport (campaignId: number, sendReport: SendReport, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public sendReport (campaignId: number, sendReport: SendReport, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/sendReport'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -18287,12 +18689,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(sendReport, "SendReport")
         };
@@ -18304,14 +18706,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18331,7 +18739,7 @@ export class EmailCampaignsApi {
      * @param emailTo 
      * @param {*} [options] Override http request options.
      */
-    public sendTestEmail (campaignId: number, emailTo: SendTestEmail, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public sendTestEmail (campaignId: number, emailTo: SendTestEmail, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/sendTest'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -18352,12 +18760,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(emailTo, "SendTestEmail")
         };
@@ -18369,14 +18777,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18396,7 +18810,7 @@ export class EmailCampaignsApi {
      * @param status Status of the campaign
      * @param {*} [options] Override http request options.
      */
-    public updateCampaignStatus (campaignId: number, status: UpdateCampaignStatus, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateCampaignStatus (campaignId: number, status: UpdateCampaignStatus, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}/status'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -18417,12 +18831,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(status, "UpdateCampaignStatus")
         };
@@ -18434,14 +18848,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18461,7 +18881,7 @@ export class EmailCampaignsApi {
      * @param emailCampaign Values to update a campaign
      * @param {*} [options] Override http request options.
      */
-    public updateEmailCampaign (campaignId: number, emailCampaign: UpdateEmailCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateEmailCampaign (campaignId: number, emailCampaign: UpdateEmailCampaign, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -18482,12 +18902,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(emailCampaign, "UpdateEmailCampaign")
         };
@@ -18499,14 +18919,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18525,7 +18951,7 @@ export class EmailCampaignsApi {
      * @param uploadImage Parameters to upload an image
      * @param {*} [options] Override http request options.
      */
-    public uploadImageToGallery (uploadImage: UploadImageToGallery, options: any = {}) : Promise<{ response: http.IncomingMessage; body: UploadImageModel;  }> {
+    public uploadImageToGallery (uploadImage: UploadImageToGallery, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: UploadImageModel;  }> {
         const localVarPath = this.basePath + '/emailCampaigns/images';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -18540,12 +18966,12 @@ export class EmailCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(uploadImage, "UploadImageToGallery")
         };
@@ -18557,14 +18983,20 @@ export class EmailCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: UploadImageModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: UploadImageModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18641,7 +19073,7 @@ export class FilesApi {
      * @param sort Sort the results in the ascending/descending order. Default order is **descending** by creation if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public crmFilesGet (entity?: 'companies' | 'deals' | 'contacts', entityIds?: string, dateFrom?: number, dateTo?: number, offset?: number, limit?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: FileList;  }> {
+    public crmFilesGet (entity?: 'companies' | 'deals' | 'contacts', entityIds?: string, dateFrom?: number, dateTo?: number, offset?: number, limit?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: FileList;  }> {
         const localVarPath = this.basePath + '/crm/files';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -18679,12 +19111,12 @@ export class FilesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -18695,14 +19127,20 @@ export class FilesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: FileList;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: FileList;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18722,7 +19160,7 @@ export class FilesApi {
      * @param id File id to get file data.
      * @param {*} [options] Override http request options.
      */
-    public crmFilesIdDataGet (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: FileData;  }> {
+    public crmFilesIdDataGet (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: FileData;  }> {
         const localVarPath = this.basePath + '/crm/files/{id}/data'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -18738,12 +19176,12 @@ export class FilesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -18754,14 +19192,20 @@ export class FilesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: FileData;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: FileData;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18781,7 +19225,7 @@ export class FilesApi {
      * @param id File id to delete.
      * @param {*} [options] Override http request options.
      */
-    public crmFilesIdDelete (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public crmFilesIdDelete (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/crm/files/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -18797,12 +19241,12 @@ export class FilesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -18813,14 +19257,20 @@ export class FilesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18839,7 +19289,7 @@ export class FilesApi {
      * @param id File id to download.
      * @param {*} [options] Override http request options.
      */
-    public crmFilesIdGet (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: FileDownloadableLink;  }> {
+    public crmFilesIdGet (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: FileDownloadableLink;  }> {
         const localVarPath = this.basePath + '/crm/files/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -18855,12 +19305,12 @@ export class FilesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -18871,14 +19321,20 @@ export class FilesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: FileDownloadableLink;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: FileDownloadableLink;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -18901,7 +19357,7 @@ export class FilesApi {
      * @param companyId Company id linked to a file
      * @param {*} [options] Override http request options.
      */
-    public crmFilesPost (file: Buffer, dealId?: string, contactId?: number, companyId?: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: FileData;  }> {
+    public crmFilesPost (file: Buffer, dealId?: string, contactId?: number, companyId?: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: FileData;  }> {
         const localVarPath = this.basePath + '/crm/files';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -18933,12 +19389,12 @@ export class FilesApi {
             localVarFormParams['companyId'] = ObjectSerializer.serialize(companyId, "string");
         }
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -18949,14 +19405,20 @@ export class FilesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: FileData;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: FileData;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19027,7 +19489,7 @@ export class InboundParsingApi {
      * @param downloadToken Token to fetch a particular attachment
      * @param {*} [options] Override http request options.
      */
-    public getInboundEmailAttachment (downloadToken: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
+    public getInboundEmailAttachment (downloadToken: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: Buffer;  }> {
         const localVarPath = this.basePath + '/inbound/attachments/{downloadToken}'
             .replace('{' + 'downloadToken' + '}', encodeURIComponent(String(downloadToken)));
         const localVarQueryParameters: any = {};
@@ -19043,12 +19505,12 @@ export class InboundParsingApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             encoding: null,
         };
 
@@ -19059,14 +19521,20 @@ export class InboundParsingApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: Buffer;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19091,7 +19559,7 @@ export class InboundParsingApi {
      * @param sort Sort the results in the ascending/descending order of record creation
      * @param {*} [options] Override http request options.
      */
-    public getInboundEmailEvents (sender?: string, startDate?: string, endDate?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetInboundEmailEvents;  }> {
+    public getInboundEmailEvents (sender?: string, startDate?: string, endDate?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetInboundEmailEvents;  }> {
         const localVarPath = this.basePath + '/inbound/events';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -19125,12 +19593,12 @@ export class InboundParsingApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -19141,14 +19609,20 @@ export class InboundParsingApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetInboundEmailEvents;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetInboundEmailEvents;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19168,7 +19642,7 @@ export class InboundParsingApi {
      * @param uuid UUID to fetch events specific to recieved email
      * @param {*} [options] Override http request options.
      */
-    public getInboundEmailEventsByUuid (uuid: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetInboundEmailEventsByUuid;  }> {
+    public getInboundEmailEventsByUuid (uuid: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetInboundEmailEventsByUuid;  }> {
         const localVarPath = this.basePath + '/inbound/events/{uuid}'
             .replace('{' + 'uuid' + '}', encodeURIComponent(String(uuid)));
         const localVarQueryParameters: any = {};
@@ -19184,12 +19658,12 @@ export class InboundParsingApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -19200,14 +19674,20 @@ export class InboundParsingApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetInboundEmailEventsByUuid;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetInboundEmailEventsByUuid;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19277,7 +19757,7 @@ export class MasterAccountApi {
      * @summary Get the details of requested master account
      * @param {*} [options] Override http request options.
      */
-    public corporateMasterAccountGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: MasterDetailsResponse;  }> {
+    public corporateMasterAccountGet (options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: MasterDetailsResponse;  }> {
         const localVarPath = this.basePath + '/corporate/masterAccount';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -19287,12 +19767,12 @@ export class MasterAccountApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -19303,14 +19783,20 @@ export class MasterAccountApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: MasterDetailsResponse;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: MasterDetailsResponse;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19331,7 +19817,7 @@ export class MasterAccountApi {
      * @param limit Number of sub-accounts to be displayed on each page
      * @param {*} [options] Override http request options.
      */
-    public corporateSubAccountGet (offset: number, limit: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: SubAccountsResponse;  }> {
+    public corporateSubAccountGet (offset: number, limit: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: SubAccountsResponse;  }> {
         const localVarPath = this.basePath + '/corporate/subAccount';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -19359,12 +19845,12 @@ export class MasterAccountApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -19375,14 +19861,20 @@ export class MasterAccountApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: SubAccountsResponse;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: SubAccountsResponse;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19402,7 +19894,7 @@ export class MasterAccountApi {
      * @param id Id of the sub-account organization to be deleted
      * @param {*} [options] Override http request options.
      */
-    public corporateSubAccountIdDelete (id: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public corporateSubAccountIdDelete (id: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/corporate/subAccount/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -19418,12 +19910,12 @@ export class MasterAccountApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -19434,14 +19926,20 @@ export class MasterAccountApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19460,7 +19958,7 @@ export class MasterAccountApi {
      * @param id Id of the sub-account organization
      * @param {*} [options] Override http request options.
      */
-    public corporateSubAccountIdGet (id: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: SubAccountDetailsResponse;  }> {
+    public corporateSubAccountIdGet (id: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: SubAccountDetailsResponse;  }> {
         const localVarPath = this.basePath + '/corporate/subAccount/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -19476,12 +19974,12 @@ export class MasterAccountApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -19492,14 +19990,20 @@ export class MasterAccountApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: SubAccountDetailsResponse;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: SubAccountDetailsResponse;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19520,7 +20024,7 @@ export class MasterAccountApi {
      * @param updatePlanDetails Values to update a sub-account plan
      * @param {*} [options] Override http request options.
      */
-    public corporateSubAccountIdPlanPut (id: number, updatePlanDetails: SubAccountUpdatePlanRequest, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public corporateSubAccountIdPlanPut (id: number, updatePlanDetails: SubAccountUpdatePlanRequest, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/corporate/subAccount/{id}/plan'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -19541,12 +20045,12 @@ export class MasterAccountApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(updatePlanDetails, "SubAccountUpdatePlanRequest")
         };
@@ -19558,14 +20062,20 @@ export class MasterAccountApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19584,7 +20094,7 @@ export class MasterAccountApi {
      * @param createApiKeyRequest Values to generate API key for sub-account
      * @param {*} [options] Override http request options.
      */
-    public corporateSubAccountKeyPost (createApiKeyRequest: CreateApiKeyRequest, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateApiKeyResponse;  }> {
+    public corporateSubAccountKeyPost (createApiKeyRequest: CreateApiKeyRequest, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateApiKeyResponse;  }> {
         const localVarPath = this.basePath + '/corporate/subAccount/key';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -19599,12 +20109,12 @@ export class MasterAccountApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(createApiKeyRequest, "CreateApiKeyRequest")
         };
@@ -19616,14 +20126,20 @@ export class MasterAccountApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateApiKeyResponse;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateApiKeyResponse;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19643,7 +20159,7 @@ export class MasterAccountApi {
      * @param subAccountCreate values to create new sub-account
      * @param {*} [options] Override http request options.
      */
-    public corporateSubAccountPost (subAccountCreate: CreateSubAccount, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateSubAccountResponse;  }> {
+    public corporateSubAccountPost (subAccountCreate: CreateSubAccount, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateSubAccountResponse;  }> {
         const localVarPath = this.basePath + '/corporate/subAccount';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -19658,12 +20174,12 @@ export class MasterAccountApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(subAccountCreate, "CreateSubAccount")
         };
@@ -19675,14 +20191,20 @@ export class MasterAccountApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateSubAccountResponse;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateSubAccountResponse;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19702,7 +20224,7 @@ export class MasterAccountApi {
      * @param ssoTokenRequest Values to generate SSO token for sub-account
      * @param {*} [options] Override http request options.
      */
-    public corporateSubAccountSsoTokenPost (ssoTokenRequest: SsoTokenRequest, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetSsoToken;  }> {
+    public corporateSubAccountSsoTokenPost (ssoTokenRequest: SsoTokenRequest, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetSsoToken;  }> {
         const localVarPath = this.basePath + '/corporate/subAccount/ssoToken';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -19717,12 +20239,12 @@ export class MasterAccountApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(ssoTokenRequest, "SsoTokenRequest")
         };
@@ -19734,14 +20256,20 @@ export class MasterAccountApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetSsoToken;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetSsoToken;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19818,7 +20346,7 @@ export class NotesApi {
      * @param sort Sort the results in the ascending/descending order. Default order is **descending** by creation if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public crmNotesGet (entity?: 'companies' | 'deals' | 'contacts', entityIds?: string, dateFrom?: number, dateTo?: number, offset?: number, limit?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: NoteList;  }> {
+    public crmNotesGet (entity?: 'companies' | 'deals' | 'contacts', entityIds?: string, dateFrom?: number, dateTo?: number, offset?: number, limit?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: NoteList;  }> {
         const localVarPath = this.basePath + '/crm/notes';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -19856,12 +20384,12 @@ export class NotesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -19872,14 +20400,20 @@ export class NotesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: NoteList;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: NoteList;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19899,7 +20433,7 @@ export class NotesApi {
      * @param id Note ID to delete
      * @param {*} [options] Override http request options.
      */
-    public crmNotesIdDelete (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public crmNotesIdDelete (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/crm/notes/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -19915,12 +20449,12 @@ export class NotesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -19931,14 +20465,20 @@ export class NotesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -19957,7 +20497,7 @@ export class NotesApi {
      * @param id Note ID to get
      * @param {*} [options] Override http request options.
      */
-    public crmNotesIdGet (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: Note;  }> {
+    public crmNotesIdGet (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: Note;  }> {
         const localVarPath = this.basePath + '/crm/notes/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -19973,12 +20513,12 @@ export class NotesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -19989,14 +20529,20 @@ export class NotesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: Note;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: Note;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20017,7 +20563,7 @@ export class NotesApi {
      * @param body Note data to update a note
      * @param {*} [options] Override http request options.
      */
-    public crmNotesIdPatch (id: string, body: NoteData, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public crmNotesIdPatch (id: string, body: NoteData, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/crm/notes/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -20038,12 +20584,12 @@ export class NotesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PATCH',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "NoteData")
         };
@@ -20055,14 +20601,20 @@ export class NotesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20081,7 +20633,7 @@ export class NotesApi {
      * @param body Note data to create a note.
      * @param {*} [options] Override http request options.
      */
-    public crmNotesPost (body: NoteData, options: any = {}) : Promise<{ response: http.IncomingMessage; body: NoteId;  }> {
+    public crmNotesPost (body: NoteData, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: NoteId;  }> {
         const localVarPath = this.basePath + '/crm/notes';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -20096,12 +20648,12 @@ export class NotesApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "NoteData")
         };
@@ -20113,14 +20665,20 @@ export class NotesApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: NoteId;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: NoteId;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20191,7 +20749,7 @@ export class ProcessApi {
      * @param processId Id of the process
      * @param {*} [options] Override http request options.
      */
-    public getProcess (processId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetProcess;  }> {
+    public getProcess (processId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetProcess;  }> {
         const localVarPath = this.basePath + '/processes/{processId}'
             .replace('{' + 'processId' + '}', encodeURIComponent(String(processId)));
         const localVarQueryParameters: any = {};
@@ -20207,12 +20765,12 @@ export class ProcessApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -20223,14 +20781,20 @@ export class ProcessApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetProcess;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetProcess;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20252,7 +20816,7 @@ export class ProcessApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getProcesses (limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetProcesses;  }> {
+    public getProcesses (limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetProcesses;  }> {
         const localVarPath = this.basePath + '/processes';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -20274,12 +20838,12 @@ export class ProcessApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -20290,14 +20854,20 @@ export class ProcessApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetProcesses;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetProcesses;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20369,7 +20939,7 @@ export class ResellerApi {
      * @param addCredits Values to post to add credit to a specific child account
      * @param {*} [options] Override http request options.
      */
-    public addCredits (childIdentifier: string, addCredits: AddCredits, options: any = {}) : Promise<{ response: http.IncomingMessage; body: RemainingCreditModel;  }> {
+    public addCredits (childIdentifier: string, addCredits: AddCredits, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: RemainingCreditModel;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/credits/add'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         const localVarQueryParameters: any = {};
@@ -20390,12 +20960,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(addCredits, "AddCredits")
         };
@@ -20407,14 +20977,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: RemainingCreditModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: RemainingCreditModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20435,7 +21011,7 @@ export class ResellerApi {
      * @param ip IP to associate
      * @param {*} [options] Override http request options.
      */
-    public associateIpToChild (childIdentifier: string, ip: ManageIp, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public associateIpToChild (childIdentifier: string, ip: ManageIp, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/ips/associate'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         const localVarQueryParameters: any = {};
@@ -20456,12 +21032,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(ip, "ManageIp")
         };
@@ -20473,14 +21049,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20500,7 +21082,7 @@ export class ResellerApi {
      * @param addChildDomain Sender domain to add for a specific child account. This will not be displayed to the parent account.
      * @param {*} [options] Override http request options.
      */
-    public createChildDomain (childIdentifier: string, addChildDomain: AddChildDomain, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public createChildDomain (childIdentifier: string, addChildDomain: AddChildDomain, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         const localVarQueryParameters: any = {};
@@ -20521,12 +21103,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(addChildDomain, "AddChildDomain")
         };
@@ -20538,14 +21120,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20564,7 +21152,7 @@ export class ResellerApi {
      * @param resellerChild reseller child to add
      * @param {*} [options] Override http request options.
      */
-    public createResellerChild (resellerChild?: CreateChild, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateReseller;  }> {
+    public createResellerChild (resellerChild?: CreateChild, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateReseller;  }> {
         const localVarPath = this.basePath + '/reseller/children';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -20574,12 +21162,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(resellerChild, "CreateChild")
         };
@@ -20591,14 +21179,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateReseller;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateReseller;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20619,7 +21213,7 @@ export class ResellerApi {
      * @param domainName Pass the existing domain that needs to be deleted
      * @param {*} [options] Override http request options.
      */
-    public deleteChildDomain (childIdentifier: string, domainName: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteChildDomain (childIdentifier: string, domainName: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains/{domainName}'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)))
             .replace('{' + 'domainName' + '}', encodeURIComponent(String(domainName)));
@@ -20641,12 +21235,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -20657,14 +21251,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20683,7 +21283,7 @@ export class ResellerApi {
      * @param childIdentifier Either auth key or child id of reseller&#39;s child
      * @param {*} [options] Override http request options.
      */
-    public deleteResellerChild (childIdentifier: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteResellerChild (childIdentifier: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         const localVarQueryParameters: any = {};
@@ -20699,12 +21299,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -20715,14 +21315,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20742,7 +21348,7 @@ export class ResellerApi {
      * @param ip IP to dissociate
      * @param {*} [options] Override http request options.
      */
-    public dissociateIpFromChild (childIdentifier: string, ip: ManageIp, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public dissociateIpFromChild (childIdentifier: string, ip: ManageIp, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/ips/dissociate'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         const localVarQueryParameters: any = {};
@@ -20763,12 +21369,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(ip, "ManageIp")
         };
@@ -20780,14 +21386,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20806,7 +21418,7 @@ export class ResellerApi {
      * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param {*} [options] Override http request options.
      */
-    public getChildAccountCreationStatus (childIdentifier: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetChildAccountCreationStatus;  }> {
+    public getChildAccountCreationStatus (childIdentifier: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetChildAccountCreationStatus;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/accountCreationStatus'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         const localVarQueryParameters: any = {};
@@ -20822,12 +21434,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -20838,14 +21450,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetChildAccountCreationStatus;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetChildAccountCreationStatus;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20865,7 +21483,7 @@ export class ResellerApi {
      * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param {*} [options] Override http request options.
      */
-    public getChildDomains (childIdentifier: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetChildDomains;  }> {
+    public getChildDomains (childIdentifier: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetChildDomains;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         const localVarQueryParameters: any = {};
@@ -20881,12 +21499,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -20897,14 +21515,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetChildDomains;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetChildDomains;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20924,7 +21548,7 @@ export class ResellerApi {
      * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param {*} [options] Override http request options.
      */
-    public getChildInfo (childIdentifier: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetChildInfo;  }> {
+    public getChildInfo (childIdentifier: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetChildInfo;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         const localVarQueryParameters: any = {};
@@ -20940,12 +21564,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -20956,14 +21580,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetChildInfo;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetChildInfo;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -20984,7 +21614,7 @@ export class ResellerApi {
      * @param offset Index of the first document in the page
      * @param {*} [options] Override http request options.
      */
-    public getResellerChilds (limit?: number, offset?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetChildrenList;  }> {
+    public getResellerChilds (limit?: number, offset?: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetChildrenList;  }> {
         const localVarPath = this.basePath + '/reseller/children';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -21002,12 +21632,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -21018,14 +21648,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetChildrenList;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetChildrenList;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21045,7 +21681,7 @@ export class ResellerApi {
      * @param childIdentifier Either auth key or id of reseller&#39;s child
      * @param {*} [options] Override http request options.
      */
-    public getSsoToken (childIdentifier: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetSsoToken;  }> {
+    public getSsoToken (childIdentifier: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetSsoToken;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/auth'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         const localVarQueryParameters: any = {};
@@ -21061,12 +21697,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -21077,14 +21713,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetSsoToken;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetSsoToken;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21105,7 +21747,7 @@ export class ResellerApi {
      * @param removeCredits Values to post to remove email or SMS credits from a specific child account
      * @param {*} [options] Override http request options.
      */
-    public removeCredits (childIdentifier: string, removeCredits: RemoveCredits, options: any = {}) : Promise<{ response: http.IncomingMessage; body: RemainingCreditModel;  }> {
+    public removeCredits (childIdentifier: string, removeCredits: RemoveCredits, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: RemainingCreditModel;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/credits/remove'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         const localVarQueryParameters: any = {};
@@ -21126,12 +21768,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(removeCredits, "RemoveCredits")
         };
@@ -21143,14 +21785,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: RemainingCreditModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: RemainingCreditModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21171,7 +21819,7 @@ export class ResellerApi {
      * @param updateChildAccountStatus values to update in child account status
      * @param {*} [options] Override http request options.
      */
-    public updateChildAccountStatus (childIdentifier: string, updateChildAccountStatus: UpdateChildAccountStatus, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateChildAccountStatus (childIdentifier: string, updateChildAccountStatus: UpdateChildAccountStatus, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/accountStatus'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         const localVarQueryParameters: any = {};
@@ -21192,12 +21840,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(updateChildAccountStatus, "UpdateChildAccountStatus")
         };
@@ -21209,14 +21857,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21237,7 +21891,7 @@ export class ResellerApi {
      * @param updateChildDomain value to update for sender domain
      * @param {*} [options] Override http request options.
      */
-    public updateChildDomain (childIdentifier: string, domainName: string, updateChildDomain: UpdateChildDomain, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateChildDomain (childIdentifier: string, domainName: string, updateChildDomain: UpdateChildDomain, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}/domains/{domainName}'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)))
             .replace('{' + 'domainName' + '}', encodeURIComponent(String(domainName)));
@@ -21264,12 +21918,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(updateChildDomain, "UpdateChildDomain")
         };
@@ -21281,14 +21935,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21308,7 +21968,7 @@ export class ResellerApi {
      * @param resellerChild values to update in child profile
      * @param {*} [options] Override http request options.
      */
-    public updateResellerChild (childIdentifier: string, resellerChild: UpdateChild, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateResellerChild (childIdentifier: string, resellerChild: UpdateChild, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/reseller/children/{childIdentifier}'
             .replace('{' + 'childIdentifier' + '}', encodeURIComponent(String(childIdentifier)));
         const localVarQueryParameters: any = {};
@@ -21329,12 +21989,12 @@ export class ResellerApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(resellerChild, "UpdateChild")
         };
@@ -21346,14 +22006,20 @@ export class ResellerApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21423,7 +22089,7 @@ export class SMSCampaignsApi {
      * @param createSmsCampaign Values to create an SMS Campaign
      * @param {*} [options] Override http request options.
      */
-    public createSmsCampaign (createSmsCampaign: CreateSmsCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
+    public createSmsCampaign (createSmsCampaign: CreateSmsCampaign, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/smsCampaigns';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -21438,12 +22104,12 @@ export class SMSCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(createSmsCampaign, "CreateSmsCampaign")
         };
@@ -21455,14 +22121,20 @@ export class SMSCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21482,7 +22154,7 @@ export class SMSCampaignsApi {
      * @param campaignId id of the SMS campaign
      * @param {*} [options] Override http request options.
      */
-    public deleteSmsCampaign (campaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteSmsCampaign (campaignId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -21498,12 +22170,12 @@ export class SMSCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -21514,14 +22186,20 @@ export class SMSCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21540,7 +22218,7 @@ export class SMSCampaignsApi {
      * @param campaignId id of the SMS campaign
      * @param {*} [options] Override http request options.
      */
-    public getSmsCampaign (campaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetSmsCampaign;  }> {
+    public getSmsCampaign (campaignId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetSmsCampaign;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -21556,12 +22234,12 @@ export class SMSCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -21572,14 +22250,20 @@ export class SMSCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetSmsCampaign;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetSmsCampaign;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21604,7 +22288,7 @@ export class SMSCampaignsApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getSmsCampaigns (status?: 'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess', startDate?: string, endDate?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetSmsCampaigns;  }> {
+    public getSmsCampaigns (status?: 'suspended' | 'archive' | 'sent' | 'queued' | 'draft' | 'inProcess', startDate?: string, endDate?: string, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetSmsCampaigns;  }> {
         const localVarPath = this.basePath + '/smsCampaigns';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -21638,12 +22322,12 @@ export class SMSCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -21654,14 +22338,20 @@ export class SMSCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetSmsCampaigns;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetSmsCampaigns;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21682,7 +22372,7 @@ export class SMSCampaignsApi {
      * @param recipientExport Values to send for a recipient export request
      * @param {*} [options] Override http request options.
      */
-    public requestSmsRecipientExport (campaignId: number, recipientExport?: RequestSmsRecipientExport, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }> {
+    public requestSmsRecipientExport (campaignId: number, recipientExport?: RequestSmsRecipientExport, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreatedProcessId;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/exportRecipients'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -21698,12 +22388,12 @@ export class SMSCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(recipientExport, "RequestSmsRecipientExport")
         };
@@ -21715,14 +22405,20 @@ export class SMSCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreatedProcessId;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreatedProcessId;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21742,7 +22438,7 @@ export class SMSCampaignsApi {
      * @param campaignId id of the campaign
      * @param {*} [options] Override http request options.
      */
-    public sendSmsCampaignNow (campaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public sendSmsCampaignNow (campaignId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/sendNow'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -21758,12 +22454,12 @@ export class SMSCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -21774,14 +22470,20 @@ export class SMSCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21801,7 +22503,7 @@ export class SMSCampaignsApi {
      * @param sendReport Values for send a report
      * @param {*} [options] Override http request options.
      */
-    public sendSmsReport (campaignId: number, sendReport: SendReport, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public sendSmsReport (campaignId: number, sendReport: SendReport, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/sendReport'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -21822,12 +22524,12 @@ export class SMSCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(sendReport, "SendReport")
         };
@@ -21839,14 +22541,20 @@ export class SMSCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21866,7 +22574,7 @@ export class SMSCampaignsApi {
      * @param phoneNumber Mobile number of the recipient with the country code. This number must belong to one of your contacts in SendinBlue account and must not be blacklisted
      * @param {*} [options] Override http request options.
      */
-    public sendTestSms (campaignId: number, phoneNumber: SendTestSms, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public sendTestSms (campaignId: number, phoneNumber: SendTestSms, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/sendTest'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -21887,12 +22595,12 @@ export class SMSCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(phoneNumber, "SendTestSms")
         };
@@ -21904,14 +22612,20 @@ export class SMSCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21931,7 +22645,7 @@ export class SMSCampaignsApi {
      * @param updateSmsCampaign Values to update an SMS Campaign
      * @param {*} [options] Override http request options.
      */
-    public updateSmsCampaign (campaignId: number, updateSmsCampaign: UpdateSmsCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateSmsCampaign (campaignId: number, updateSmsCampaign: UpdateSmsCampaign, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -21952,12 +22666,12 @@ export class SMSCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(updateSmsCampaign, "UpdateSmsCampaign")
         };
@@ -21969,14 +22683,20 @@ export class SMSCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -21996,7 +22716,7 @@ export class SMSCampaignsApi {
      * @param status Status of the campaign.
      * @param {*} [options] Override http request options.
      */
-    public updateSmsCampaignStatus (campaignId: number, status: UpdateCampaignStatus, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateSmsCampaignStatus (campaignId: number, status: UpdateCampaignStatus, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smsCampaigns/{campaignId}/status'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -22017,12 +22737,12 @@ export class SMSCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(status, "UpdateCampaignStatus")
         };
@@ -22034,14 +22754,20 @@ export class SMSCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22111,7 +22837,7 @@ export class SendersApi {
      * @param sender sender&#39;s name
      * @param {*} [options] Override http request options.
      */
-    public createSender (sender?: CreateSender, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateSenderModel;  }> {
+    public createSender (sender?: CreateSender, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateSenderModel;  }> {
         const localVarPath = this.basePath + '/senders';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -22121,12 +22847,12 @@ export class SendersApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(sender, "CreateSender")
         };
@@ -22138,14 +22864,20 @@ export class SendersApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateSenderModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateSenderModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22165,7 +22897,7 @@ export class SendersApi {
      * @param senderId Id of the sender
      * @param {*} [options] Override http request options.
      */
-    public deleteSender (senderId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteSender (senderId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/senders/{senderId}'
             .replace('{' + 'senderId' + '}', encodeURIComponent(String(senderId)));
         const localVarQueryParameters: any = {};
@@ -22181,12 +22913,12 @@ export class SendersApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -22197,14 +22929,20 @@ export class SendersApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22222,7 +22960,7 @@ export class SendersApi {
      * @summary Get all the dedicated IPs for your account
      * @param {*} [options] Override http request options.
      */
-    public getIps (options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetIps;  }> {
+    public getIps (options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetIps;  }> {
         const localVarPath = this.basePath + '/senders/ips';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -22232,12 +22970,12 @@ export class SendersApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -22248,14 +22986,20 @@ export class SendersApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetIps;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetIps;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22275,7 +23019,7 @@ export class SendersApi {
      * @param senderId Id of the sender
      * @param {*} [options] Override http request options.
      */
-    public getIpsFromSender (senderId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetIpsFromSender;  }> {
+    public getIpsFromSender (senderId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetIpsFromSender;  }> {
         const localVarPath = this.basePath + '/senders/{senderId}/ips'
             .replace('{' + 'senderId' + '}', encodeURIComponent(String(senderId)));
         const localVarQueryParameters: any = {};
@@ -22291,12 +23035,12 @@ export class SendersApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -22307,14 +23051,20 @@ export class SendersApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetIpsFromSender;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetIpsFromSender;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22335,7 +23085,7 @@ export class SendersApi {
      * @param domain Filter your senders for a specific domain
      * @param {*} [options] Override http request options.
      */
-    public getSenders (ip?: string, domain?: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetSendersList;  }> {
+    public getSenders (ip?: string, domain?: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetSendersList;  }> {
         const localVarPath = this.basePath + '/senders';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -22353,12 +23103,12 @@ export class SendersApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -22369,14 +23119,20 @@ export class SendersApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetSendersList;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetSendersList;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22397,7 +23153,7 @@ export class SendersApi {
      * @param sender sender&#39;s name
      * @param {*} [options] Override http request options.
      */
-    public updateSender (senderId: number, sender?: UpdateSender, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateSender (senderId: number, sender?: UpdateSender, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/senders/{senderId}'
             .replace('{' + 'senderId' + '}', encodeURIComponent(String(senderId)));
         const localVarQueryParameters: any = {};
@@ -22413,12 +23169,12 @@ export class SendersApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(sender, "UpdateSender")
         };
@@ -22430,14 +23186,20 @@ export class SendersApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22519,7 +23281,7 @@ export class TasksApi {
      * @param sortBy The field used to sort field names.
      * @param {*} [options] Override http request options.
      */
-    public crmTasksGet (filterType?: string, filterStatus?: 'done' | 'undone', filterDate?: 'overdue' | 'today' | 'tomorrow' | 'week' | 'range', filterAssignTo?: string, filterContacts?: string, filterDeals?: string, filterCompanies?: string, dateFrom?: number, dateTo?: number, offset?: number, limit?: number, sort?: 'asc' | 'desc', sortBy?: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: TaskList;  }> {
+    public crmTasksGet (filterType?: string, filterStatus?: 'done' | 'undone', filterDate?: 'overdue' | 'today' | 'tomorrow' | 'week' | 'range', filterAssignTo?: string, filterContacts?: string, filterDeals?: string, filterCompanies?: string, dateFrom?: number, dateTo?: number, offset?: number, limit?: number, sort?: 'asc' | 'desc', sortBy?: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: TaskList;  }> {
         const localVarPath = this.basePath + '/crm/tasks';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -22581,12 +23343,12 @@ export class TasksApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -22597,14 +23359,20 @@ export class TasksApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: TaskList;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: TaskList;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22624,7 +23392,7 @@ export class TasksApi {
      * @param id 
      * @param {*} [options] Override http request options.
      */
-    public crmTasksIdDelete (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public crmTasksIdDelete (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/crm/tasks/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -22640,12 +23408,12 @@ export class TasksApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -22656,14 +23424,20 @@ export class TasksApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22682,7 +23456,7 @@ export class TasksApi {
      * @param id 
      * @param {*} [options] Override http request options.
      */
-    public crmTasksIdGet (id: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: Task;  }> {
+    public crmTasksIdGet (id: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: Task;  }> {
         const localVarPath = this.basePath + '/crm/tasks/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -22698,12 +23472,12 @@ export class TasksApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -22714,14 +23488,20 @@ export class TasksApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: Task;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: Task;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22742,7 +23522,7 @@ export class TasksApi {
      * @param body Updated task details.
      * @param {*} [options] Override http request options.
      */
-    public crmTasksIdPatch (id: string, body: Body7, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public crmTasksIdPatch (id: string, body: Body7, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/crm/tasks/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
         const localVarQueryParameters: any = {};
@@ -22763,12 +23543,12 @@ export class TasksApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PATCH',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "Body7")
         };
@@ -22780,14 +23560,20 @@ export class TasksApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22806,7 +23592,7 @@ export class TasksApi {
      * @param body Task name.
      * @param {*} [options] Override http request options.
      */
-    public crmTasksPost (body: Body6, options: any = {}) : Promise<{ response: http.IncomingMessage; body: InlineResponse2011;  }> {
+    public crmTasksPost (body: Body6, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: InlineResponse2011;  }> {
         const localVarPath = this.basePath + '/crm/tasks';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -22821,12 +23607,12 @@ export class TasksApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(body, "Body6")
         };
@@ -22838,14 +23624,20 @@ export class TasksApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: InlineResponse2011;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: InlineResponse2011;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22864,7 +23656,7 @@ export class TasksApi {
      * @summary Get all task types
      * @param {*} [options] Override http request options.
      */
-    public crmTasktypesGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: TaskTypes;  }> {
+    public crmTasktypesGet (options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: TaskTypes;  }> {
         const localVarPath = this.basePath + '/crm/tasktypes';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -22874,12 +23666,12 @@ export class TasksApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -22890,14 +23682,20 @@ export class TasksApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: TaskTypes;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: TaskTypes;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -22968,7 +23766,7 @@ export class TransactionalEmailsApi {
      * @param blockDomain 
      * @param {*} [options] Override http request options.
      */
-    public blockNewDomain (blockDomain: BlockDomain, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public blockNewDomain (blockDomain: BlockDomain, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/blockedDomains';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -22983,12 +23781,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(blockDomain, "BlockDomain")
         };
@@ -23000,14 +23798,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23026,7 +23830,7 @@ export class TransactionalEmailsApi {
      * @param smtpTemplate values to update in transactional email template
      * @param {*} [options] Override http request options.
      */
-    public createSmtpTemplate (smtpTemplate: CreateSmtpTemplate, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
+    public createSmtpTemplate (smtpTemplate: CreateSmtpTemplate, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/smtp/templates';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -23041,12 +23845,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(smtpTemplate, "CreateSmtpTemplate")
         };
@@ -23058,14 +23862,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23085,7 +23895,7 @@ export class TransactionalEmailsApi {
      * @param domain The name of the domain to be deleted
      * @param {*} [options] Override http request options.
      */
-    public deleteBlockedDomain (domain: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteBlockedDomain (domain: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/blockedDomains/{domain}'
             .replace('{' + 'domain' + '}', encodeURIComponent(String(domain)));
         const localVarQueryParameters: any = {};
@@ -23101,12 +23911,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -23117,14 +23927,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23143,7 +23959,7 @@ export class TransactionalEmailsApi {
      * @param deleteHardbounces values to delete hardbounces
      * @param {*} [options] Override http request options.
      */
-    public deleteHardbounces (deleteHardbounces?: DeleteHardbounces, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteHardbounces (deleteHardbounces?: DeleteHardbounces, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/deleteHardbounces';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -23153,12 +23969,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(deleteHardbounces, "DeleteHardbounces")
         };
@@ -23170,14 +23986,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23196,7 +24018,7 @@ export class TransactionalEmailsApi {
      * @param identifier The &#x60;batchId&#x60; of scheduled emails batch (Should be a valid UUIDv4) or the &#x60;messageId&#x60; of scheduled email.
      * @param {*} [options] Override http request options.
      */
-    public deleteScheduledEmailById (identifier: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteScheduledEmailById (identifier: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/email/{identifier}'
             .replace('{' + 'identifier' + '}', encodeURIComponent(String(identifier)));
         const localVarQueryParameters: any = {};
@@ -23212,12 +24034,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -23228,14 +24050,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23254,7 +24082,7 @@ export class TransactionalEmailsApi {
      * @param templateId id of the template
      * @param {*} [options] Override http request options.
      */
-    public deleteSmtpTemplate (templateId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteSmtpTemplate (templateId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/templates/{templateId}'
             .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
         const localVarQueryParameters: any = {};
@@ -23270,12 +24098,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -23286,14 +24114,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23315,7 +24149,7 @@ export class TransactionalEmailsApi {
      * @param tag Tag of the emails
      * @param {*} [options] Override http request options.
      */
-    public getAggregatedSmtpReport (startDate?: string, endDate?: string, days?: number, tag?: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetAggregatedReport;  }> {
+    public getAggregatedSmtpReport (startDate?: string, endDate?: string, days?: number, tag?: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetAggregatedReport;  }> {
         const localVarPath = this.basePath + '/smtp/statistics/aggregatedReport';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -23341,12 +24175,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -23357,14 +24191,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetAggregatedReport;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetAggregatedReport;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23383,7 +24223,7 @@ export class TransactionalEmailsApi {
      * @summary Get the list of blocked domains
      * @param {*} [options] Override http request options.
      */
-    public getBlockedDomains (options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetBlockedDomains;  }> {
+    public getBlockedDomains (options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetBlockedDomains;  }> {
         const localVarPath = this.basePath + '/smtp/blockedDomains';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -23393,12 +24233,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -23409,14 +24249,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetBlockedDomains;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetBlockedDomains;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23446,7 +24292,7 @@ export class TransactionalEmailsApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getEmailEventReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, email?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'spam' | 'requests' | 'opened' | 'clicks' | 'invalid' | 'deferred' | 'blocked' | 'unsubscribed' | 'error' | 'loadedByProxy', tags?: string, messageId?: string, templateId?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetEmailEventReport;  }> {
+    public getEmailEventReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, email?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'spam' | 'requests' | 'opened' | 'clicks' | 'invalid' | 'deferred' | 'blocked' | 'unsubscribed' | 'error' | 'loadedByProxy', tags?: string, messageId?: string, templateId?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetEmailEventReport;  }> {
         const localVarPath = this.basePath + '/smtp/statistics/events';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -23500,12 +24346,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -23516,14 +24362,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetEmailEventReport;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetEmailEventReport;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23549,7 +24401,7 @@ export class TransactionalEmailsApi {
      * @param offset Index of the first document on the page
      * @param {*} [options] Override http request options.
      */
-    public getScheduledEmailByBatchId (batchId: string, startDate?: string, endDate?: string, sort?: 'asc' | 'desc', status?: 'processed' | 'inProgress' | 'queued', limit?: number, offset?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetScheduledEmailByBatchId;  }> {
+    public getScheduledEmailByBatchId (batchId: string, startDate?: string, endDate?: string, sort?: 'asc' | 'desc', status?: 'processed' | 'inProgress' | 'queued', limit?: number, offset?: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetScheduledEmailByBatchId;  }> {
         const localVarPath = this.basePath + '/smtp/emailStatus/{batchId}'
             .replace('{' + 'batchId' + '}', encodeURIComponent(String(batchId)));
         const localVarQueryParameters: any = {};
@@ -23589,12 +24441,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -23605,14 +24457,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetScheduledEmailByBatchId;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetScheduledEmailByBatchId;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23634,7 +24492,7 @@ export class TransactionalEmailsApi {
      * @param endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month.
      * @param {*} [options] Override http request options.
      */
-    public getScheduledEmailByMessageId (messageId: string, startDate?: string, endDate?: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetScheduledEmailByMessageId;  }> {
+    public getScheduledEmailByMessageId (messageId: string, startDate?: string, endDate?: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetScheduledEmailByMessageId;  }> {
         const localVarPath = this.basePath + '/smtp/emailStatus/{messageId}'
             .replace('{' + 'messageId' + '}', encodeURIComponent(String(messageId)));
         const localVarQueryParameters: any = {};
@@ -23658,12 +24516,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -23674,14 +24532,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetScheduledEmailByMessageId;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetScheduledEmailByMessageId;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23707,7 +24571,7 @@ export class TransactionalEmailsApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getSmtpReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, tag?: string, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetReports;  }> {
+    public getSmtpReport (limit?: number, offset?: number, startDate?: string, endDate?: string, days?: number, tag?: string, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetReports;  }> {
         const localVarPath = this.basePath + '/smtp/statistics/reports';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -23745,12 +24609,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -23761,14 +24625,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetReports;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetReports;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23788,7 +24658,7 @@ export class TransactionalEmailsApi {
      * @param templateId id of the template
      * @param {*} [options] Override http request options.
      */
-    public getSmtpTemplate (templateId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetSmtpTemplateOverview;  }> {
+    public getSmtpTemplate (templateId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetSmtpTemplateOverview;  }> {
         const localVarPath = this.basePath + '/smtp/templates/{templateId}'
             .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
         const localVarQueryParameters: any = {};
@@ -23804,12 +24674,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -23820,14 +24690,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetSmtpTemplateOverview;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetSmtpTemplateOverview;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23850,7 +24726,7 @@ export class TransactionalEmailsApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getSmtpTemplates (templateStatus?: boolean, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetSmtpTemplates;  }> {
+    public getSmtpTemplates (templateStatus?: boolean, limit?: number, offset?: number, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetSmtpTemplates;  }> {
         const localVarPath = this.basePath + '/smtp/templates';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -23876,12 +24752,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -23892,14 +24768,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetSmtpTemplates;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetSmtpTemplates;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -23924,7 +24806,7 @@ export class TransactionalEmailsApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getTransacBlockedContacts (startDate?: string, endDate?: string, limit?: number, offset?: number, senders?: Array<string>, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetTransacBlockedContacts;  }> {
+    public getTransacBlockedContacts (startDate?: string, endDate?: string, limit?: number, offset?: number, senders?: Array<string>, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetTransacBlockedContacts;  }> {
         const localVarPath = this.basePath + '/smtp/blockedContacts';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -23958,12 +24840,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -23974,14 +24856,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetTransacBlockedContacts;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetTransacBlockedContacts;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24001,7 +24889,7 @@ export class TransactionalEmailsApi {
      * @param uuid Unique id of the transactional email that has been sent to a particular contact
      * @param {*} [options] Override http request options.
      */
-    public getTransacEmailContent (uuid: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetTransacEmailContent;  }> {
+    public getTransacEmailContent (uuid: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetTransacEmailContent;  }> {
         const localVarPath = this.basePath + '/smtp/emails/{uuid}'
             .replace('{' + 'uuid' + '}', encodeURIComponent(String(uuid)));
         const localVarQueryParameters: any = {};
@@ -24017,12 +24905,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -24033,14 +24921,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetTransacEmailContent;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetTransacEmailContent;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24067,7 +24961,7 @@ export class TransactionalEmailsApi {
      * @param offset Index of the first document in the page
      * @param {*} [options] Override http request options.
      */
-    public getTransacEmailsList (email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string, sort?: 'asc' | 'desc', limit?: number, offset?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetTransacEmailsList;  }> {
+    public getTransacEmailsList (email?: string, templateId?: number, messageId?: string, startDate?: string, endDate?: string, sort?: 'asc' | 'desc', limit?: number, offset?: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetTransacEmailsList;  }> {
         const localVarPath = this.basePath + '/smtp/emails';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -24109,12 +25003,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -24125,14 +25019,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetTransacEmailsList;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetTransacEmailsList;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24153,7 +25053,7 @@ export class TransactionalEmailsApi {
      * @param sendTestEmail 
      * @param {*} [options] Override http request options.
      */
-    public sendTestTemplate (templateId: number, sendTestEmail: SendTestEmail, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public sendTestTemplate (templateId: number, sendTestEmail: SendTestEmail, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/templates/{templateId}/sendTest'
             .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
         const localVarQueryParameters: any = {};
@@ -24174,12 +25074,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(sendTestEmail, "SendTestEmail")
         };
@@ -24191,14 +25091,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24217,7 +25123,7 @@ export class TransactionalEmailsApi {
      * @param sendSmtpEmail Values to send a transactional email
      * @param {*} [options] Override http request options.
      */
-    public sendTransacEmail (sendSmtpEmail: SendSmtpEmail, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateSmtpEmail;  }> {
+    public sendTransacEmail (sendSmtpEmail: SendSmtpEmail, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateSmtpEmail;  }> {
         const localVarPath = this.basePath + '/smtp/email';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -24232,12 +25138,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(sendSmtpEmail, "SendSmtpEmail")
         };
@@ -24249,14 +25155,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateSmtpEmail;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateSmtpEmail;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24276,7 +25188,7 @@ export class TransactionalEmailsApi {
      * @param email contact email (urlencoded) to unblock.
      * @param {*} [options] Override http request options.
      */
-    public smtpBlockedContactsEmailDelete (email: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public smtpBlockedContactsEmailDelete (email: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/blockedContacts/{email}'
             .replace('{' + 'email' + '}', encodeURIComponent(String(email)));
         const localVarQueryParameters: any = {};
@@ -24292,12 +25204,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -24308,14 +25220,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24334,7 +25252,7 @@ export class TransactionalEmailsApi {
      * @param messageId MessageId of the transactional log to delete
      * @param {*} [options] Override http request options.
      */
-    public smtpLogMessageIdDelete (messageId: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public smtpLogMessageIdDelete (messageId: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/log/{messageId}'
             .replace('{' + 'messageId' + '}', encodeURIComponent(String(messageId)));
         const localVarQueryParameters: any = {};
@@ -24350,12 +25268,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -24366,14 +25284,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24393,7 +25317,7 @@ export class TransactionalEmailsApi {
      * @param smtpTemplate values to update in transactional email template
      * @param {*} [options] Override http request options.
      */
-    public updateSmtpTemplate (templateId: number, smtpTemplate: UpdateSmtpTemplate, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateSmtpTemplate (templateId: number, smtpTemplate: UpdateSmtpTemplate, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/smtp/templates/{templateId}'
             .replace('{' + 'templateId' + '}', encodeURIComponent(String(templateId)));
         const localVarQueryParameters: any = {};
@@ -24414,12 +25338,12 @@ export class TransactionalEmailsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(smtpTemplate, "UpdateSmtpTemplate")
         };
@@ -24431,14 +25355,20 @@ export class TransactionalEmailsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24516,7 +25446,7 @@ export class TransactionalSMSApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getSmsEvents (limit?: number, startDate?: string, endDate?: string, offset?: number, days?: number, phoneNumber?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'sent' | 'accepted' | 'unsubscription' | 'replies' | 'blocked' | 'rejected', tags?: string, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetSmsEventReport;  }> {
+    public getSmsEvents (limit?: number, startDate?: string, endDate?: string, offset?: number, days?: number, phoneNumber?: string, event?: 'bounces' | 'hardBounces' | 'softBounces' | 'delivered' | 'sent' | 'accepted' | 'unsubscription' | 'replies' | 'blocked' | 'rejected', tags?: string, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetSmsEventReport;  }> {
         const localVarPath = this.basePath + '/transactionalSMS/statistics/events';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -24562,12 +25492,12 @@ export class TransactionalSMSApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -24578,14 +25508,20 @@ export class TransactionalSMSApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetSmsEventReport;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetSmsEventReport;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24608,7 +25544,7 @@ export class TransactionalSMSApi {
      * @param tag Filter on a tag
      * @param {*} [options] Override http request options.
      */
-    public getTransacAggregatedSmsReport (startDate?: string, endDate?: string, days?: number, tag?: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetTransacAggregatedSmsReport;  }> {
+    public getTransacAggregatedSmsReport (startDate?: string, endDate?: string, days?: number, tag?: string, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetTransacAggregatedSmsReport;  }> {
         const localVarPath = this.basePath + '/transactionalSMS/statistics/aggregatedReport';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -24634,12 +25570,12 @@ export class TransactionalSMSApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -24650,14 +25586,20 @@ export class TransactionalSMSApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetTransacAggregatedSmsReport;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetTransacAggregatedSmsReport;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24681,7 +25623,7 @@ export class TransactionalSMSApi {
      * @param sort Sort the results in the ascending/descending order of record creation. Default order is **descending** if &#x60;sort&#x60; is not passed
      * @param {*} [options] Override http request options.
      */
-    public getTransacSmsReport (startDate?: string, endDate?: string, days?: number, tag?: string, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetTransacSmsReport;  }> {
+    public getTransacSmsReport (startDate?: string, endDate?: string, days?: number, tag?: string, sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetTransacSmsReport;  }> {
         const localVarPath = this.basePath + '/transactionalSMS/statistics/reports';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -24711,12 +25653,12 @@ export class TransactionalSMSApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -24727,14 +25669,20 @@ export class TransactionalSMSApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetTransacSmsReport;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetTransacSmsReport;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24754,7 +25702,7 @@ export class TransactionalSMSApi {
      * @param sendTransacSms Values to send a transactional SMS
      * @param {*} [options] Override http request options.
      */
-    public sendTransacSms (sendTransacSms: SendTransacSms, options: any = {}) : Promise<{ response: http.IncomingMessage; body: SendSms;  }> {
+    public sendTransacSms (sendTransacSms: SendTransacSms, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: SendSms;  }> {
         const localVarPath = this.basePath + '/transactionalSMS/sms';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -24769,12 +25717,12 @@ export class TransactionalSMSApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(sendTransacSms, "SendTransacSms")
         };
@@ -24786,14 +25734,20 @@ export class TransactionalSMSApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: SendSms;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: SendSms;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24864,7 +25818,7 @@ export class WebhooksApi {
      * @param createWebhook Values to create a webhook
      * @param {*} [options] Override http request options.
      */
-    public createWebhook (createWebhook: CreateWebhook, options: any = {}) : Promise<{ response: http.IncomingMessage; body: CreateModel;  }> {
+    public createWebhook (createWebhook: CreateWebhook, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: CreateModel;  }> {
         const localVarPath = this.basePath + '/webhooks';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -24879,12 +25833,12 @@ export class WebhooksApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'POST',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(createWebhook, "CreateWebhook")
         };
@@ -24896,14 +25850,20 @@ export class WebhooksApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CreateModel;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: CreateModel;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24923,7 +25883,7 @@ export class WebhooksApi {
      * @param webhookId Id of the webhook
      * @param {*} [options] Override http request options.
      */
-    public deleteWebhook (webhookId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteWebhook (webhookId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/webhooks/{webhookId}'
             .replace('{' + 'webhookId' + '}', encodeURIComponent(String(webhookId)));
         const localVarQueryParameters: any = {};
@@ -24939,12 +25899,12 @@ export class WebhooksApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -24955,14 +25915,20 @@ export class WebhooksApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -24981,7 +25947,7 @@ export class WebhooksApi {
      * @param webhookId Id of the webhook
      * @param {*} [options] Override http request options.
      */
-    public getWebhook (webhookId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetWebhook;  }> {
+    public getWebhook (webhookId: number, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetWebhook;  }> {
         const localVarPath = this.basePath + '/webhooks/{webhookId}'
             .replace('{' + 'webhookId' + '}', encodeURIComponent(String(webhookId)));
         const localVarQueryParameters: any = {};
@@ -24997,12 +25963,12 @@ export class WebhooksApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -25013,14 +25979,20 @@ export class WebhooksApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetWebhook;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetWebhook;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -25041,7 +26013,7 @@ export class WebhooksApi {
      * @param sort Sort the results in the ascending/descending order of webhook creation
      * @param {*} [options] Override http request options.
      */
-    public getWebhooks (type?: 'marketing' | 'transactional' | 'inbound', sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetWebhooks;  }> {
+    public getWebhooks (type?: 'marketing' | 'transactional' | 'inbound', sort?: 'asc' | 'desc', options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetWebhooks;  }> {
         const localVarPath = this.basePath + '/webhooks';
         const localVarQueryParameters: any = {};
         const localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -25059,12 +26031,12 @@ export class WebhooksApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -25075,14 +26047,20 @@ export class WebhooksApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetWebhooks;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetWebhooks;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -25103,7 +26081,7 @@ export class WebhooksApi {
      * @param updateWebhook Values to update a webhook
      * @param {*} [options] Override http request options.
      */
-    public updateWebhook (webhookId: number, updateWebhook: UpdateWebhook, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public updateWebhook (webhookId: number, updateWebhook: UpdateWebhook, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/webhooks/{webhookId}'
             .replace('{' + 'webhookId' + '}', encodeURIComponent(String(webhookId)));
         const localVarQueryParameters: any = {};
@@ -25124,12 +26102,12 @@ export class WebhooksApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'PUT',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
             body: ObjectSerializer.serialize(updateWebhook, "UpdateWebhook")
         };
@@ -25141,14 +26119,20 @@ export class WebhooksApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -25218,7 +26202,7 @@ export class WhatsappCampaignsApi {
      * @param campaignId id of the campaign
      * @param {*} [options] Override http request options.
      */
-    public deleteWhatsappCampaign (campaignId: any, options: any = {}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+    public deleteWhatsappCampaign (campaignId: any, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }> {
         const localVarPath = this.basePath + '/whatsappCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -25234,12 +26218,12 @@ export class WhatsappCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'DELETE',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -25250,14 +26234,20 @@ export class WhatsappCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body?: any;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -25276,7 +26266,7 @@ export class WhatsappCampaignsApi {
      * @param campaignId Id of the campaign
      * @param {*} [options] Override http request options.
      */
-    public getWhatsappCampaign (campaignId: any, options: any = {}) : Promise<{ response: http.IncomingMessage; body: GetWhatsappCampaignOverview;  }> {
+    public getWhatsappCampaign (campaignId: any, options: any = {}) : Promise<{ response: localVarRequest.AxiosResponse; body: GetWhatsappCampaignOverview;  }> {
         const localVarPath = this.basePath + '/whatsappCampaigns/{campaignId}'
             .replace('{' + 'campaignId' + '}', encodeURIComponent(String(campaignId)));
         const localVarQueryParameters: any = {};
@@ -25292,12 +26282,12 @@ export class WhatsappCampaignsApi {
 
         const localVarUseFormData = false;
 
-        const localVarRequestOptions: localVarRequest.Options = {
+        const localVarRequestOptions: localVarRequest.AxiosRequestConfig = {
             method: 'GET',
-            qs: localVarQueryParameters,
+            params: localVarQueryParameters,
             headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
+            url: localVarPath,
+            
             json: true,
         };
 
@@ -25308,14 +26298,20 @@ export class WhatsappCampaignsApi {
         this.authentications.default.applyToRequest(localVarRequestOptions);
 
         if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: GetWhatsappCampaignOverview;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
+			if (localVarUseFormData) {
+				const formData = new FormData();
+
+				Object.entries(localVarFormParams).forEach(([key, value]: [string , any]) => {
+					formData.append(key, value);
+				});
+
+				(<any>localVarRequestOptions).data = formData;
+			} else {
+				localVarRequestOptions.data = localVarFormParams;
+			}
+		}
+        return new Promise<{ response: localVarRequest.AxiosResponse; body: GetWhatsappCampaignOverview;  }>((resolve, reject) => {
+            localVarRequest.default(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
