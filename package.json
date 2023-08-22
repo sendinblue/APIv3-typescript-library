@@ -1,6 +1,6 @@
 {
     "name": "@sendinblue/client",
-    "version": "3.3.1",
+    "version": "3.3.2",
     "description": "NodeJS client for Sendinblue V3 api",
     "main": "dist/api.js",
     "types": "dist/api.d.ts",
@@ -27,22 +27,22 @@
     },
     "license": "MIT",
     "dependencies": {
-        "bluebird": "^3.5.0",
-        "lodash": "^4.17.21",
-        "request": "^2.81.0",
         "@types/bluebird": "*",
-        "@types/request": "*"
+        "@types/request": "*",
+        "axios": "^1.4.0",
+        "bluebird": "^3.5.0",
+        "lodash": "^4.17.21"
     },
     "devDependencies": {
         "@types/bluebird": "*",
-        "@types/request": "*",
         "@types/node": "*",
+        "@types/request": "*",
         "@typescript-eslint/eslint-plugin": "^4.20.0",
         "@typescript-eslint/parser": "^4.20.0",
         "eslint": "^7.23.0",
         "eslint-plugin-unused-imports": "^1.1.0",
         "minimist": "^1.2.5",
         "rimraf": "^3.0.2",
-        "typescript": "^3.5.1"
+        "typescript": "^5.1.6"
     }
 }
